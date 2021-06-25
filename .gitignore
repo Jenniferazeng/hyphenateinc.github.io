@@ -1,3 +1,7 @@
 #generated files
 _site/
 .DS_Store
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor   
