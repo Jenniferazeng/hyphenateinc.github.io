@@ -1,0 +1,129 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+
+entries:
+- title: Sidebar
+  product: Android
+  version: 1.0
+  folders:
+
+  - title:
+    output: pdf
+    type: frontmatter
+    folderitems:
+    - title:
+      url: /titlepage.html
+      output: pdf
+      type: frontmatter
+    - title:
+      url: /tocpage.html
+      output: pdf
+      type: frontmatter
+
+  - title: Product Overview
+    output: web, pdf
+    folderitems:
+    - title: AgoraChat Overview
+      url: /android_product_overview.html
+      output: web
+
+    - title: Pricing
+      url: /android_pricing.html
+      output: web, pdf
+
+    - title: Release Note
+      url: /android_release_note.html
+      output: web, pdf
+
+  - title: Quickstart Guide
+    output: web, pdf
+
+    folderitems:
+    - title: Run the Sample Project
+      url: /android_run_the_sample_project.html
+      output: web, pdf
+
+  - title: Basic Features
+    output: web, pdf
+
+    folderitems:
+    - title: User
+      url: /android_user.html
+      output: web, pdf
+
+    - title: Relationship
+      url: /android_relationship.html
+      output: web, pdf
+
+    - title: Message
+      url: /android_message.html
+      output: web, pdf
+
+    - title: Group
+      url: /android_group.html
+      output: web, pdf
+
+    - title: Chatroom
+      url: /android_chatroom.html
+      output: web, pdf
+
+    - title: IMKit
+      url: /android_imkit.html
+      output: web, pdf  
+
+    - title: CallKit
+      url: /android_callkit.html
+      output: web, pdf
+
+    - title: Multi-Device
+      url: /android_multi_device.html
+      output: web, pdf
+
+    - title: Push notification
+      url: /android_push_notification.html
+      output: web, pdf
+
+  - title: Advanced Features
+    output: web, pdf
+
+    folderitems:
+    - title: Webhook
+      url: /android_webhook.html
+      output: web, pdf
+      
+    - title: Multi-device Sync
+      url: /android_multi_device.html
+      output: web, pdf
+      
+    - title: Message Roaming
+      url: /android_message_roaming.html
+      output: web, pdf
+
+    - title: Message Withdraw
+      url: /android_message_withdraw.html
+      output: web, pdf
+
+    - title: Sensitive Words
+      url: /android_sensitive_words.html
+      output: web, pdf
+
+  - title: Best Practices
+    output: web, pdf
+
+    folderitems:
+    - title: UIkit
+      url: /android_uikit.html
+      output: web, pdf
+
+  - title: Reference Docs
+    output: web, pdf
+
+    folderitems:
+    - title: API Reference
+      url: /android_api_reference.html
+      output: web, pdf
+
+    - title: Error Code
+      url: /android_error_code.html
+      output: web, pdf
+
