@@ -120,7 +120,7 @@ entries:
 
     folderitems:
     - title: API Reference
-      url: /p1_sample4.html
+      url: /web_reference/
       output: web, pdf
 
     - title: Error Code
