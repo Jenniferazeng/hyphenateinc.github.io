@@ -120,7 +120,7 @@ entries:
 
     folderitems:
     - title: API Reference
-      url: /android_api_reference.html
+      url: /android_reference/
       output: web, pdf
 
     - title: Error Code
