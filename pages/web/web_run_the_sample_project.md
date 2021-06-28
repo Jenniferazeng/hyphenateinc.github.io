@@ -1,10 +1,10 @@
 ---
-title: server side introduction
-keywords: server
-sidebar: server_sidebar
+title: web Run the Sample Project
+keywords: web
+sidebar: web_sidebar
 toc: true
-permalink: server_product_overview.html
-folder: server
+permalink: web_run_the_sample_project.html
+folder: web
 ---
 # Android SDK's Introduction and import
 

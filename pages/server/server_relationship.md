@@ -1,9 +1,9 @@
 ---
-title: server side introduction
+title: server Relationship
 keywords: server
 sidebar: server_sidebar
 toc: true
-permalink: server_product_overview.html
+permalink: server_relationship.html
 folder: server
 ---
 # Android SDK's Introduction and import

@@ -1,10 +1,10 @@
 ---
-title: server side introduction
-keywords: server
-sidebar: server_sidebar
+title: web Produce Overview
+keywords: web
+sidebar: web_sidebar
 toc: true
-permalink: server_product_overview.html
-folder: server
+permalink: web_api_reference.html
+folder: web
 ---
 # Android SDK's Introduction and import
 
