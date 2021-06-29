@@ -25,72 +25,15 @@ entries:
 
     folderitems:
     - title: AgoraChat Overview
-<<<<<<< HEAD
-      url: /server_product_overview.html
-      output: web
-
-    - title: Pricing
-      url: /server_pricing.html
-      output: web, pdf
-
-    - title: Release Note
-      url: /server_release_note.html
-      output: web, pdf
-
-  - title: Quickstart Guide
-    output: web, pdf
-
-    folderitems:
-    - title: Run the Sample Project
-      url: /server_run_the_sample_project.html
-      output: web, pdf
-=======
-    - title: Introduction
       url: /server_introduction.html
       output: web, pdf
 
     - title: Version Updates
       url: /server_version_updates
       output: web, pdf  
->>>>>>> 030050e (added server client navigation bar and complete the introduction, version update, user system integration, user attribute setting document update)
 
   - title: IM Function
     output: web, pdf
-<<<<<<< HEAD
-
-    folderitems:
-    - title: User
-      url: /server_user.html
-      output: web, pdf
-
-    - title: Relationship
-      url: /server_relationship.html
-      output: web, pdf
-
-    - title: Message
-      url: /server_message.html
-      output: web, pdf
-
-    - title: Group
-      url: /server_group.html
-      output: web, pdf
-
-    - title: Chatroom
-      url: /server_chatroom.html
-      output: web, pdf
-
-  - title: Reference Docs
-    output: web, pdf
-
-    folderitems:
-    - title: API Reference
-      url: /server_api_reference.html
-      output: web, pdf
-
-    - title: Error Code
-      url: /server_error_code.html
-      output: web, pdf
-=======
     
     folderitems:  
     - title: User System Integration
@@ -140,5 +83,4 @@ entries:
     - title: Common Error Codes of Server-side REST API
       url: /server_error_codes.html
       output: web, pdf    
->>>>>>> 030050e (added server client navigation bar and complete the introduction, version update, user system integration, user attribute setting document update)
 
