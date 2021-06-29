@@ -16,7 +16,7 @@ Download link：[download page](http://www.easemob.com/download/im)
 
 ## Android SDK introduction
 
-Agora SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+Agora SDK provides a complete development framework for users to develop chat-related applications. It includes the following parts:
 
 ![](/im/android/sdk/development-framework.png){.align-center}
 
@@ -63,8 +63,6 @@ Then add the following code to the `build.gradle` of your module
 
 ``` java
 android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
     
     //Requires java8 support since 3.6.0
     compileOptions {
@@ -121,7 +119,7 @@ Permission configuration (more permissions may be needed in actual development, 
     android:versionCode="100"
     android:versionName="1.0.0">
   
-    <!-- IM SDK required start -->
+    <!-- chat SDK required start -->
     <!-- Allow the program to vibrate -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Access to the network -->
@@ -152,7 +150,7 @@ Permission configuration (more permissions may be needed in actual development, 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
+    <!-- chat SDK required end -->
  
     <application
         android:icon="@drawable/ic_launcher"
