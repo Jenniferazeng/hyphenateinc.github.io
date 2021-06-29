@@ -22,8 +22,10 @@ entries:
 
   - title: Product Overview
     output: web, pdf
+
     folderitems:
     - title: AgoraChat Overview
+<<<<<<< HEAD
       url: /server_product_overview.html
       output: web
 
@@ -42,9 +44,19 @@ entries:
     - title: Run the Sample Project
       url: /server_run_the_sample_project.html
       output: web, pdf
+=======
+    - title: Introduction
+      url: /server_introduction.html
+      output: web, pdf
 
-  - title: Basic Features
+    - title: Version Updates
+      url: /server_version_updates
+      output: web, pdf  
+>>>>>>> 030050e (added server client navigation bar and complete the introduction, version update, user system integration, user attribute setting document update)
+
+  - title: IM Function
     output: web, pdf
+<<<<<<< HEAD
 
     folderitems:
     - title: User
@@ -78,4 +90,55 @@ entries:
     - title: Error Code
       url: /server_error_code.html
       output: web, pdf
+=======
+    
+    folderitems:  
+    - title: User System Integration
+      url: /server_user_system_integration.html
+      output: web, pdf
+
+    - title: Setting user attributes
+      url: /server_setting_user_attributes.html
+      output: web, pdf   
+
+    - title: Send a message
+      url: /server_send_message.html
+      output: web, pdf  
+
+    - title: Group Management
+      url: /server_group_management.html
+      output: web, pdf   
+
+    - title: Chat Room Management
+      url: /server_chatroom_management.html
+      output: web, pdf   
+
+    - title: Chat Log
+      url: /server_chat_log.html
+      output: web, pdf   
+
+    - title: Upload and Download files
+      url: /server_upload_and_download_files.html
+      output: web, pdf
+
+  - title: Server SDK
+    output: web, pdf
+    
+    folderitems: 
+    - title: SDK Instruction
+      url: /server_sdk_instruction.html
+      output: web, pdf  
+  
+  - title: Help
+    output: web, pdf
+    
+    folderitems: 
+    - title: REST interface flow limiting instructions
+      url: /server_rest_interface_flow_limiting_instructions.html
+      output: web, pdf    
+    
+    - title: Common Error Codes of Server-side REST API
+      url: /server_error_codes.html
+      output: web, pdf    
+>>>>>>> 030050e (added server client navigation bar and complete the introduction, version update, user system integration, user attribute setting document update)
 
