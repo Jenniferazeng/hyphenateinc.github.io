@@ -49,8 +49,7 @@ The shown functions include:
 
 -   Web IM Demo supports browser local cache(IndexDB)
 
-Agora Web IM demo source code is open-source on GitHub [react version](https://github.com/easemob/webim)
-[vue version](https://github.com/easemob/webim-vue-demo) to help developers better learn and understand Easemob SDK.
+Agora Web IM demo source code is open-source on GitHub [react version](https://github.com/HyphenateInc/Hyphenate-Demo-Web)
 
 Demo uses the react framework and supports advanced browsers such as Microsoft Edge, Chrome54+, and Firefox. 
 The SDK supports IE9+. 

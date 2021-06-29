@@ -781,7 +781,7 @@ When the SDK receives a new message, it will forward it to the logged-in user di
 
 `Need to contact a business colleague to open separately`
 
-After sending a message to a target user or group, the target user or group will be added to the conversation list automatically. In addition, the conversation list can be queried by calling getSessionList. It is recommended that a page only requires to be called once at the initialization. To use this function, you need to contact your business manager to activate it. (You can scan the QR code to contact your business manager on the home page of the Easemob Communication Cloud Management Backstage)
+After sending a message to a target user or group, the target user or group will be added to the conversation list automatically. In addition, the conversation list can be queried by calling getSessionList. It is recommended that a page only requires to be called once at the initialization. To use this function, you need to contact your business manager to activate it. (You can scan the QR code to contact your business manager on the home page of the Agora Communication Cloud Management Backstage)
 Special note: Do not use a mixed-case ID for the login ID. If the mixed-case ID is used in the pull session list, the pull session list will be empty.
 
 ``` javascript
