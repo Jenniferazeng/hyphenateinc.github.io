@@ -6,315 +6,693 @@ toc: true
 permalink: android_push_notification.html
 folder: android
 ---
-# Android SDK's Introduction and import
+# Third-party push integration
 
-------------------------------------------------------------------------
+-------------------------------------------------- ----------------------
 
-## DEMO（EaseIM App） experience
+## Description
 
-Download link：[download page](http://www.easemob.com/download/im)
+When the app is running in the background, Agora chat SDK maintains a persistent connection to the chat server through a background service by default. However, in order to solve the problem of poor standby performance, Android gradually banned the operation of app-level background services with the upgrade of the Android version. Therefore, some Android systems with higher versions may not receive messages. In order to improve the receiving rate of messages, our SDK has added support for third-party push services, including Xiaomi push, Huawei push, OPPO push, Meizu push, VIVO push, Google
+FCM push.
 
-## Android SDK introduction
+At present, the main implementations of Xiaomi, Meizu, OPPO, and VIVO push are integrated in Agora chat SDK which try to provide developers with the simplest form of integrated three-party push. The implementation of push with Huawei and Google FCM are still in the Demo layer and needs to be integrated by the developer. For details, please refer to Agora’s Google FCM and Huawei’s push integration document.
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+**Note:** `SDK V3.5.4 and above only support pushes of various third-party platforms. But SDK V3.5.4 will throw exception when Huawei registers for push. This bug has been fixed in V3.5.5 and later versions. It is recommended that users who are not integrated or users who are already in V3.5.4 upgrade the SDK to later versions. `
 
-![](/im/android/sdk/development-framework.png){.align-center}
+### Use conditions of each push:
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
+- Google FCM: Google Play Service and a network that can connect to Google servers are required
 
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
+- Xiaomi push: available on Xiaomi system
 
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
+- Huawei push: available on Huawei system
 
-![Modular Design](/im/android/sdk/image005.png){.align-center}
+- Meizu push: available on Meizu system
 
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
+- OPPO push: available on OPPO system
 
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
+- VIVO push: available on VIVO system
 
-## Video tutorial
+- The SDK will check the push support status of the device following this order to  
 
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
+- If the third-party push is not set or the conditions for using the third-party push are not met, Agora chat SDK will use some methods to keep the persistent connection with the chat server to ensure timely delivery of messages
 
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
+`Recommendation: If your App has overseas usage scenarios, it is recommended to enable FCM push. Due to different push conditions, it is recommended to enable both Xiaomi and Huawei push. `
+  
+  ### Message push process:
+  
+  ![Message Push Flowchart](/im/android/push/image010.png){.align-center}
+  
+  1. Determine what kind of push the device supports, (the app is configured with third-party push and meets the conditions to use the push)
+  2. get the push token according to the integrated third-party push SDK
+  3. Upload the name of the certificate (the chat server will determine which push channel to use) and push the token to the chat server
+4. When sending a message to a device, the chat server will first determine whether the target device is online. If the target device is not online, please determine which push channel the target device uses (according to the name of the certificate uploaded by the target device). Use this push channel to push messages to the target device through a third-party push server
+  
+#### The capabilities that the chat server should have:
+  
+- Have the capability to send push messages to your app
+  
+  
+    * The developer configures the push certificate of the App through  the developer console, and the push certificate will require the name of the certificate (or appKey). The certificate name is the only condition used by the chat server to determine which push channel the target device uses, so ''the certificate name must be the same as the certificate name'' uploaded by the Android terminal device
+* Push token individual to the corresponding terminal Android device
+    * Need to be reported by the Android device
+* Which push channel does the push token belong to?
+    * Need to be reported by the Android device
 
-## Android SDK import
+#### Things to do for Android devices:
+  
+  - Determine which push channel the current device supports
+  - Get push token by integrating third-party push SDK
+  - Upload the certificate name (note that it is the same as the certificate name configured through the develp console) and push the token to the chat server (this step must be after the successful login of the chat SDK)
 
-### <u>Preparation before integration</u>
+## Configure push interface
 
-[Register and create application](/im/quickstart/guide/experience)
+The interface of the developer configuration push :
 
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
-```
-
-Then add the following code to the `build.gradle` of your module
-
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+            builder.enableVivoPush() // The information about the push certificate is configured in AndroidManifest.xml
+                    .enableMeiZuPush(String appId, String appKey)
+                    .enableMiPush(String appId, String appKey)
+                    .enableOppoPush(String appKey, String appSecret)
+                    .enableHWPush() //Developers need to call this method to enable Huawei push
+                    .enableFCM(String senderId); //Developers need to call this method to enable FCM push
     
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+    ChatOptions options = new ChatOptions();
+    options.setPushConfig(builder.build());
+
+The developer needs to replace the relevant information in the above configuration with the configuration of each platform applied by the developer. It is recommended that developers should configure as many third-party pushes as possible to ensure the arrival rate of offline messages.
+
+**Please note: Developers need to configure relevant push information before SDK initialization.**
+
+Developers can call the following code to listen push related events (only support Xiaomi, Meizu, OPPO, VIVO):
+
+    PushHelper.getInstance().setPushListener(new PushListener() {
+         @Override
+         public void onError(PushHelper pushType, long errorCode) {
+             EMLog.e("PushClient", "Push client occur a error: "+ pushType +"-"+ errorCode);
+    // TODO: The developer will receive the error message of the push in this callback. For the error code of each push type, developer can go to the official website of each push platform to check the reason of the error.
+         }
+    
+         @Override
+         public boolean isSupportPush(PushHelper pushType, PushConfig pushConfig) {
+             return super.isSupportPush(pushType, pushConfig);
+    // TODO: Developers can rewrite this method to control whether the device supports a specific push judgment.
+         }
+    });
+
+## About confusion
+
+- If you have turned on confusion in your project, please add the following rules to your confusion rules:
+
+
+```
+    # 环信 push
+    -dontwarn io.agora.push.***
+    -keep class io.agora.push.*** {*;}
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+- About the confusion rules of third-party push integrated in Agora Push, you can check it on each developer push platform
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
+## Google FCM push integration
 
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
+`SDK 3.4.2 version starts to use FCM to push preferentially by default. On some Huawei devices with Google Play Service, developers can turn off the use of FCM push by setting ChatOptions#setUseFCM(false) to achieve the purpose of using Huawei push. `
 
-``Major changes``
+### Description
 
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
+- The use of FCM is mainly designed for overseas users;
+- FCM requires the device to have Google Play services, Google Play Store and
+      A network that can connect to Google servers.
 
-1、Add the mavenCentral() warehouse to the project's build.gradle
+### Server
 
+1. Log in to [Firebase Management Background](https://console.firebase.google.com/)
+
+2. Click **Add Project** on the Firebase welcome interface, input the corresponding content and click **Create
+Project**.
+
+3. In the Firebase welcome interface, select **Add Firebase to your Android App**.
+
+4. After selecting the application type, you need to input the package name, project nickname, SHA-1, and then click **Register App**.
+
+5. Enter the guide page, as shown in the figure below, click the button to download the google-services.json file to the local. *Pay attention to where the json file is placed in the Android project.*
+
+![](/im/200androidcleintintegration/3.3.5_config_download.png){width="400"}
+
+6. Skip the guide page, click on the Cloud Messaging tab page, copy Server Key and Sender ID
+
+![](/im/200androidcleintintegration/3.3.5_cloud_messaging.png){width="400"}
+
+7. Log in to [Developer console](http://console.easemob.com/), home page-application list-view application-instant messaging-message push-add push certificate, the name of the certificate is required to fill in the copy above Sender
+ID,  fill in the Server Key copied above for certificate key.
+
+![](/im/android/push/添加谷歌证书.png)
+
+![](/im/200androidcleintintegration/3.3.5_certificate_add_success.png){width="600"}
+
+### Mobile
+
+1. Add Google Play Service related dependency libraries
+
+Used to check whether the device supports Google FCM push, `This step does not exist in the official FCM integration document. Due to the special domestic use environment, we have added this configuration for auxiliary detection.`
+
+Addconfiguration of `compile'com.google.android.gms:play-services-base:11.4.0`\' to the corresponding build.gradle file of the project. The configuration in the SDK demo is in easeui/build.gradle ,as follows:
+```
+    dependencies {
+        // add this line
+        compile'com.google.android.gms:play-services-base:11.4.0'
+    }
+```
+`Note: version of Google push related dependency library must correspond (in this document are: 11.4.0), otherwise there may be a class conflict error. `
+
+2. Add FCM related library file configuration in project-level build.gradle:
+
+    ```
     buildscript {
         repositories {
-            ...
-            mavenCentral()
+            jcenter()
+        }
+        dependencies {
+            // add this line
+            classpath'com.google.gms:google-services:3.1.1'
         }
     }
-
-
+    
     allprojects {
         repositories {
-            ...
-            mavenCentral()
+            // add this line
+            maven {url'https://maven.google.com'}
+        }
+    }
+    ```
+
+3. Add FCM related library file configuration in app-level build.gradle: Push
+
+    ```
+    dependencies {
+    // Add this line, Google Firebase cloud messaging
+        compile'com.google.firebase:firebase-messaging:11.4.0'
+    }
+    
+    // This line is added at the end of the file
+    apply plugin:'com.google.gms.google-services'
+    ```
+
+`Note: version of Google push related dependency library must correspond (in this document are: 11.4.0), otherwise there may be a class conflict error. `
+
+4. Place the downloaded google-services.json in the root directory of app-level
+
+![](/im/200androidcleintintegration/3.3.5_config_location.png){width="400"}
+
+5. Implement a custom service inherited from FirebaseInstanceIdService. This class is used to listen to the creation and update of FCM tokens. One device corresponds to one FCM token, which is used by the server to push messages to the device. Therefore, the token needs to be uploaded to the chat server in time after it is created or updated.
+
+Custom FirebaseInstanceIdService:
+
+    public class FCMTokenRefreshService extends FirebaseInstanceIdService {
+        private static final String TAG = "FCMTokenRefreshService";
+    
+        @Override
+        public void onTokenRefresh() {
+            super.onTokenRefresh();
+            String token = FirebaseInstanceId.getInstance().getToken();
+            Log.i(TAG, "onTokenRefresh: "+ token);
+            // Important, send the fcm token to the server
+            ChatClient.getInstance().sendFCMTokenToServer(token);
         }
     }
 
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
+AndroidManifest.xml:
 
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
+    <service android:name=".fcm.FCMTokenRefreshService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+    </service>
 
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
+6. Implement a custom service inherited from FirebaseMessagingService. This class is used by FCM to receive application push messages in the background. And register the service to AndroidManifest.xml.
 
-1、 version with audio and video communication
+Custom FirebaseMessagingService:
 
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
+    public class FCMMSGService extends FirebaseMessagingService {
+        private static final String TAG = "FCMMSGService";
+    
+        @Override
+        public void onMessageReceived(RemoteMessage remoteMessage) {
+            super.onMessageReceived(remoteMessage);
+            if (remoteMessage.getData().size()> 0) {
+                String message = remoteMessage.getData().get("alert");
+                Log.i(TAG, "onMessageReceived: "+ message);
+            }
+        }
+    }
 
-注：hyphenate-sdk supports versions before 3.8.0
+AndroidManifest.xml:
 
-2、version without audio and video communication
+    <service android:name=".fcm.FCMMSGService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
 
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
+7.From the ChatOptions#setUseFCM(true) interface setting to allow the use of FCM push. The SDK will check the FCM push conditions and use FCM push if the FCM push conditions are met. For interface usage, please refer to DemoHelper in Demo.
 
-注：hyphenate-sdk-lite supports versions before 3.8.0
+8. Enable FCM push
 
-### SDK directory explanation
+- `SDK3.5.4 and later versions:`
 
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
+```{=html}
+<!-- -->
 ```
 
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+    builder.enableFCM(String senderId);
+    options.setPushConfig(builder.build());
 
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
+- SDK3.5.3 and below:
 
-### Summary of common problems
+```{=html}
+<!-- -->
+```
 
-1\. The user use HttpClient to report an error after integrating the SDK
+    ChatOptions options = new ChatOptions();
+    options.setFCMNumber(senderId);
 
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
+### Push service test
 
-For versions before 3.6.8, please configure as follows:
+In order to ensure the successful integration of the push service, the test can be done following  steps below,
 
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
+1. Run the app and log in
+2. Kill the app process (to end the process by sliding the Android task list, rather than pressing the Home button to let the app enter the background; `Through Settings->App->Forcibly stop and end the app process, the app cannot receive FCM pushes, please refer to Google for details.)
+3. Send a message to the login account, and the app will receive the message delivered through the push service
 
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
+## Huawei HMS push integration
 
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
+### Create a Huawei application
 
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
+The first is to go to the Huawei developer background to create an application and turn on push
+Service, and upload the corresponding certificate fingerprint. For details, please refer to the official introduction of Huawei: [Huawei HMS Message Push Service Integration](http://developer.huawei.com/consumer/cn/service/hms/catalog/huaweipush.html?page=hmssdk_huaweipush_devprepare)
 
-2\. In Android 9.0, compulsory use of https
+### Upload push certificate
 
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
+After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application--->Push certificate--->Huawei--->Add a new certificate , And then enter the `APPID`， `SecretKey`and and the package name of the program in the application information you created in [Huawei Developer Background](http://developer.huawei.com/consumer/cn/devunion/openPlatform/html/memberCenter.html#/appManager) ;
 
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
+### Enable Huawei push (SDK3.5.4 and above)
 
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+    builder.enableHWPush();
+    options.setPushConfig(builder.build());
 
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
+### important updates SDK3.4.x Huawei pushes 
 
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
+In order to facilitate users to upgrade Huawei Push related SDKs, chat SDK will transfer the integration of Huawei Push from `SDK` to the `application layer`in versions 3.4.x above. The SDK provides an interface for uploading Huawei push tokens for users to call, which is convenient for users to upgrade the system by themselves when Huawei pushes upgrades. In future versions, developers need to integrate Huawei push related functions by themselves, and then call the following method to send the token to the chat server:
 
 ``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+// Upload the token method, the token is received through the broadcast receiver
+ChatClient.getInstance().sendHMSPushTokenToServer("Huawei appId", "registered Huawei token");
 ```
+
+`PS:` It should be noted that this method must be called after the login is successful, so the request for Huawei token needs to be placed after the login is successful. Thus, we request Huawei to push the token and generally put it in the MainActivity class. The chat Demo of Agora has also been integrated Huawei's latest SDK is pushed. Developers can also refer to the demo for integration. The token is get in the broadcast receiver. The demo contains the `HMSPushReceiver` class. You can look at the demo code.
+
+This is Huawei’s official integration document. Developers can integrate Huawei Push according to Huawei’s official document. Huawei Push Notification Service Integration Official Document.
+
+In the demo, Huawei's HMSAgent is made into the reference of a module   (`There is no encapsulation or modification of Huawei HMSproxy here`). Developers can use it directly, or download the latest official Huawei `HMSproxy` for integration. If you use the module in the demo, you need to modify the following places:
+
+    <application>
+        <!-- Appid parameter needs to be registered to access HMSSDK. "10492024" in the value is replaced with the appid of the actual application, which is derived from the rights and interests details of the application on the developer alliance website. Format android:value="appid=xxxxxx"-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=10492024" />
+        <!-- Providers need to be registered to access HMSSDK . authorities must not be the same as other applications, so here io.agora.chatdemo should be replaced with the package name of your application -->
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="io.agora.chatdemo.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+        <!-- Providers need to be registered to access HMSSDK.authorities must not be the same as other applications, so here io.agora.chatdemo should be replaced with the package name of your application -->
+        <provider
+            android:name="com.huawei.updatesdk.fileprovider.UpdateSdkFileProvider"
+            android:authorities="io.agora.chatdemo.updateSdk.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"/>
+            ...
+    </application>
+
+Demo puts several methods of calling Huawei Push in the `HMSPushHelper` class when integrating Huawei Push. Developers can refer to the use of these configurations. After configuring these, you can use Huawei Push to receive offline push notifications on `Huawei devices that meet the conditions`; the requirements here mean: Huawei devices must install Huawei mobile services above 2.6.+ , And open the `self-launch permission` of the current app;
+
+### Huawei push corner mark
+
+The application entry activity needs to be set in the message extension. For example, the chat demo is io.agora.chatdemo.ui.SplashActivity
+
+    // Set custom push notification
+    JSONObject extObject = new JSONObject();
+    try {
+        extObject.put("em_huawei_push_badge_class", "io.agora.chatdemo.ui.SplashActivity");
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    // Set the push extension to the message
+    message.setAttribute("em_apns_ext", extObject);
+
+Refer to [Huawei official document](http://obs.cn-north-1.myhwclouds.com/consumer/docattachment/87918b190abda6d7b7a568a7ef1dfc314cd9ad040faccf1a999dcff158ec7d79/badge.pdf)
+
+### Huawei 4.0 push integration
+
+From Huawei EMUI of version 10.0, Huawei Push has divided the notification message intelligence into two levels: general and important. [Huawei notification message intelligent classification](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/android-intelligent-classification-0000001050040120)
+
+**note:**
+`To use Huawei Push on EMUI 10, you need to upgrade to Huawei 4.0 Push, and contact us to configure a push interface with importance notification message level for your certificate.`
+
+You can refer to latest demo to integrate Huawei push of version 4.0:
+
+1. Copy the "agconnect-services.json" file under the Huawei push background project application to the application-level root directory
+
+2. Configure the following in build.gradle in the project-level root directory
+
+    ```
+    allprojects {
+        repositories {
+            google()
+            jcenter()
+            maven {url'https://developer.huawei.com/repo/'}
+        }
+    }
+    buildscript {
+        repositories {
+            google()
+            jcenter()
+            maven {url'https://developer.huawei.com/repo/'}
+        }
+        dependencies {
+            classpath'com.huawei.agconnect:agcp:1.3.1.300'
+        }
+    }
+    ```
+
+    
+
+3. Add the following compilation dependencies to the application-level build.gradle
+
+    ```
+    apply plugin:'com.huawei.agconnect'
+    
+    dependencies {
+         //Do not delete other existing dependencies
+         implementation'com.huawei.hms:push:4.0.2.300'
+    }
+    ```
+
+4. The HMSPushHelper in the demo encapsulates the code for Huawei to apply for the token, you can refer to the implementation
+
+5. Need to inherit HmsMessageService, rewrite onNewToken, upload and push token in it, please refer to HMSPushService in the demo, and configure it in the list file
+
+    ```
+    <!--Huawei HMS Config-->
+            <service android:name=".service.HMSPushService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+                </intent-filter>
+            </service>
+    <!-- huawei push end -->
+    ```
+
+**`Note:`** Our default push copy will be intelligently classified as general. What the APP receives is a silent notification. You need to set a custom push title and content for the message. For specific classification criteria, please consult Huawei's official website.
+
+## Xiaomi Push Integration
+
+Xiaomi Push needs to import the jar package pushed by Xiaomi on the Android side. Add the permissions and configurations related to Xiaomi in the AndroidManifest.xml. And please refer to the Android API document to set the appid and appkey pushed by Xiaomi. For more details, please refer to Xiaomi official documents.
+
+For server-side certificate configuration, please use the developer console.
+
+## Meizu Push Integration
+
+Meizu Push includes these two push types: Flyme push and integrated push. The difference between the two is: Flyme push is Meizu's own push; except for Meizu's Flyme push, integrated push can also be configured to integrate third-party push such as Xiaomi and Huawei. Chat SDK uses Flyme push [reference document](http://open-wiki.flyme.cn/index.php?title=Flyme%E6%8E%A8%E9%80%81%E6%8E%A5%E5%85%A5%E6%96%87%E6%A1%A3)
+
+**Note: **Chat SDK supports **Meizu** from version **3.5.4**
+Push, if you are using a previous version of the SDK, please upgrade first.
+
+### Create Meizu App
+
+The first is to go to the Meizu developer background to create an application and turn on push
+Service, and upload the corresponding certificate fingerprint. For details, please refer to the official introduction of Meizu: [Flyme Push Service Integration](http://open-wiki.flyme.cn/index.php?title=Flyme%E6%8E%A8%E9%80%81%E6%8E%A5%E5%85%A5%E6%96%87%E6%A1%A3)
+
+### Upload push certificate
+
+After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application --->Push certificate--->Meizu--->New certificate , And then enter the `APP ID` and `APP SECRET` of the application you created in [flyme push platform](http://push.meizu.com/#/config/app?appId=8843&_k=dnrz9k) and the `of the program Package name`;
+
+### Access process
+
+1. Add dependency in app level/build.gradle:
+
+    ```
+    dependencies{
+    // The aar is hosted in jcenter, please make sure that the jcenter repository has been configured for the current project.
+    implementation'com.meizu.flyme.internet:push-internal:3.7.0@aar'
+    }
+    ```
+
+    
+
+2. Add under the manifest tag of AndroidManifest.xml:
+
+    ```
+    <!-- Meizu push configuration start-->
+        <!-- Compatible with versions below flyme5.0, Meizu's internal integration pushSDK is required, otherwise you cannot receive the message -->
+        <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+        <permission
+            android:name="${applicationId}.push.permission.MESSAGE"
+            android:protectionLevel="signature" />
+        <uses-permission android:name="${applicationId}.push.permission.MESSAGE" />
+        <!-- Compatible with flyme3.0 configuration permissions -->
+        <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+        <permission
+            android:name="${applicationId}.permission.C2D_MESSAGE"
+            android:protectionLevel="signature" />
+        <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+    <!-- Meizu push configuration end-->
+    ```
+
+    
+
+3. Add under the application tag of AndroidManifest.xml:
+
+    ```
+    <!-- MEIZU push configuration start -->
+             <receiver android:name="io.agora.push.platform.meizu.MzMsgReceiver">
+                 <intent-filter>
+                     <!-- Receive push message -->
+                     <action android:name="com.meizu.flyme.push.intent.MESSAGE"
+                         />
+                     <!-- Receive register message -->
+                     <action
+                         android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                     <!-- Receive unregister message -->
+                     <action
+                         android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK"/>
+                     <!-- Compatible with low version Flyme3 push service configuration -->
+                     <action android:name="com.meizu.c2dm.intent.REGISTRATION"
+                         />
+                     <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+                     <category android:name="${applicationId}"></category>
+                 </intent-filter>
+             </receiver>
+             <!-- MEIZU push configuration end -->
+    ```
+
+4. Enable Meizu push:
+
+    ```
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+    builder.enableMeiZuPush(String appId,String appKey);
+    options.setPushConfig(builder.build());
+    ```
+    
+    
+
+Pay attention to replace the APP ID and APP KEY above with the content applied by the developer.
+
+Note: If the developer integrates Meizu Flyme push and implements MzPushMessageReceiver, please replace the parent class with MzMsgReceiver provided by chat SDK. Developers please determine the business logic by themselves. If the business logic is not owned by the developer, please pass it to the chat SDK for processing through the super method.
+
+## OPPO Push Integration
+
+**Note: **Chat SDK supports **OPPO** push from version **3.5.4**. If you are using a previous version of the SDK, please upgrade first. `OPPO push is adapted to android Q in 2.1.0. To receive OPPO push on android Q, you need to upgrade the chat SDK to 3.7.1 and later versions, and use OPPO to push the 2.1.0 package. `
+
+### Create OPPO App
+
+The first is to go to the OPPO developer background to create an application and turn on push
+Service, and upload the corresponding certificate fingerprint. For details, please refer to the official introduction of OPPO: [OPPO Push Service Integration](https://open.oppomobile.com/wiki/doc#id=10195)
+
+### Upload push certificate
+
+After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application--->Push certificate--->OPPO--->New certificate , And then enter your [OPPO
+Developer console](https://open.oppomobile.com/service/oms?service_id=1000004&app_type=app&app_id=30004346) the `appkey` and `mastersecret` of the application created and the `package name` of the program;
+
+### Access process
+
+If Google FCM push is also configured, please also replace the package_name field in google-services.json. The OPPO device does not open the permission to allow notifications by default after installing the application. Before testing, please go to the settings to open the notification permission of the application. [OPPO Push Official Document](https://open.oppomobile.com/wiki/doc#id=10196)
+
+1. Configure the OPPO push jar package: Go to the OPPO push official website to download the push SDK package, put the jar package in the libs directory and sync. You can also directly use jar package pushed by OPPO which is integrated in Agora Android IM Demo
+
+2. Add under the manifest tag of AndroidManifest.xml:
+
+    ```
+    <!-- OPPO push configuration start -->
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <!-- OPPO push configuration end -->
+    ```
+
+3. Add under the application tag of AndroidManifest.xml:
+
+    ```
+    <!-- OPPO push configuration start -->
+    <service
+        android:name="com.heytap.mcssdk.PushService"
+        android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+        <intent-filter>
+            <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE"/>
+        </intent-filter>
+    </service>
+    <service
+        android:name="com.heytap.mcssdk.AppPushService"
+        android:permission="com.heytap.mcs.permission.SEND_MCS_MESSAGE">
+        <intent-filter>
+            <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE"/>
+        </intent-filter>
+    </service>
+    <!-- OPPO push configuration end -->
+    ```
+
+4. Enable OPPO push:
+
+    ```
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+    builder.enableOppoPush(String appKey,String appSecret);
+    options.setPushConfig(builder.build());
+    ```
+    
+    
+
+Pay attention to replace the APP KEY and APP SECRET above with the content applied by the developer.
+
+## VIVO Push Integration
+
+**Note:** Chat SDK supports **VIVO** push from version **3.5.4**. If you are using a previous version of the SDK, please upgrade first. `Vivo pushes operating messages by default, and you need to contact us to configure it as a system message (re-uploading the certificate also needs to be re-configured)`
+
+### Create VIVO application
+
+The first is to go to the VIVO developer background to create an application and turn on push
+Service, and upload the corresponding certificate fingerprint. For details, please refer to the official introduction of VIVO: [VIVO Push Service Integration](https://dev.vivo.com.cn/documentCenter/doc/281)
+
+### Upload push certificate
+
+After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application--->Push Certificate--->VIVO--->Add Certificate , And then enter the `APP ID`, `APP KEY` and `APP SECRET` of the application you created in [VIVO Developer Backstage](https://vpush.vivo.com.cn/#/appdetail) and the `of the program Package name`;
+
+### Access process
+
+The VIVO device does not have the notification permission enabled by default after the application is installed. Please go to the settings to open the notification permission of the application before testing. [VIVO Push Official Document](https://dev.vivo.com.cn/documentCenter/doc/158)
+
+1. Configure VIVO push jar package: Go to the VIVO push official website to download the push SDK package, put the jar package in the libs directory and sync. You can also directly use the jar package pushed by VIVO integrated in Agora Android chat Demo.
+
+2. Add under the application tag of AndroidManifest.xml:
+
+    
+
+        <!-- VIVO push configuration start -->
+                <service
+                    android:name="com.vivo.push.sdk.service.CommandClientService"
+                    android:exported="true" />
+                <activity
+                    android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+                    android:exported="false"
+                    android:screenOrientation="portrait"
+                    android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+                <!--Push configuration-->
+                <meta-data
+                    android:name="com.vivo.push.api_key"
+                    android:value="appKey applied by the developer" />
+                <meta-data
+                    android:name="com.vivo.push.app_id"
+                    android:value="appId applied by the developer" />
+            
+                <receiver android:name="io.agora.push.platform.vivo.VivoMsgReceiver">
+                    <intent-filter>
+                        <!-- Receive push message -->
+                        <action android:name="com.vivo.pushclient.action.RECEIVE" />
+                    </intent-filter>
+                </receiver>
+            <!-- VIVO push configuration end -->
+
+3. Enable VIVO push:
+
+    ```
+    PushConfig.Builder builder = new PushConfig.Builder(context);
+    builder.enableVivoPush();
+    options.setPushConfig(builder.build());
+    ```
+
+Note: If the developer integrates VIVO push and implements OpenClientPushMessageReceiver. Please replace the parent class with VivoMsgReceiver provided by chat SDK. Developers should determine the business logic by themselves. If the business logic is not owned by the developer, please pass it to the chat SDK for processing through the super method.
+
+## Unbind token
+
+When using third-party push, you need to unbind the device token when you log out, and call the `ChatClient#getInstance()#logout(true)` or `ChatClient#getInstance()#logout(true,callback)` method. If it is kicked, the requirement is set to
+false.
+
+-------------------------------------------------- ----------------------
+
+## Push configuration options
+
+Users can add specific fields to the message extension to implement message push configuration.
+
+### Send silent message (not push)
+
+([Android Send Message](/im/android/basics/message))
+
+    ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);
+    TextMessageBody txtBody = new TextMessageBody("test");
+    message.setTo("6006");
+    // Set custom extension fields
+    message.setAttribute("em_ignore_notification", true);
+    // Set the message callback
+    message.setMessageStatusCallback(new CallBack() {...});
+    // Send a message
+    ChatClient.getInstance().chatManager().sendMessage(message);
+
+### forced to push
+
+([Android Send Message](/im/android/basics/message))
+
+    ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);
+    TextMessageBody txtBody = new TextMessageBody("test");
+    message.setTo("6006");
+    // Set custom extension fields
+    message.setAttribute("em_force_notification", true);
+    // Set the message callback
+    message.setMessageStatusCallback(new CallBack() {...});
+    // Send a message
+    ChatClient.getInstance().chatManager().sendMessage(message);
+
+### Custom push notification
+
+([Android Send Message](/im/android/basics/message))
+
+    // Here is just a TXT message as an example, the setting methods of IMAGE FILE and other types of messages are the same
+    ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);
+    TextMessageBody txtBody = new TextMessageBody("Message Content");
+    message.setTo("6006");
+    // Set custom push notification
+    JSONObject extObject = new JSONObject();
+    try {
+        extObject.put("em_push_name", "Offline Push Title");
+        extObject.put("em_push_content", "Offline Push Content Part");
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    // Set the push extension to the message
+    message.setAttribute("em_apns_ext", extObject);
+    // Set the message callback
+    message.setMessageStatusCallback(new CallBack() {...});
+    // Send a message
+    ChatClient.getInstance().chatManager().sendMessage(message);
+
 
 ------------------------------------------------------------------------
