@@ -1,3 +1,12 @@
+---
+title: emojis
+keywords: web
+sidebar: web_sidebar
+toc: true
+permalink: web_emojis.html
+folder: web
+---
+
 ## Import third-party emoticons
 
 -   Create a new folder under the project to store emoticon image files.
