@@ -28,11 +28,11 @@ entries:
       output: web
 
     - title: Pricing
-      url: /p1_sample1.html
+      url: /web_pricing.html
       output: web, pdf
 
     - title: Release Note
-      url: /p1_sample2.html
+      url: /web_release_note.html
       output: web, pdf
 
   - title: Quickstart Guide
@@ -40,7 +40,7 @@ entries:
 
     folderitems:
     - title: Run the Sample Project
-      url: /p1_sample4.html
+      url: /web_run_the_sample_project.html
       output: web, pdf
 
   - title: Basic Features
@@ -48,71 +48,23 @@ entries:
 
     folderitems:
     - title: User
-      url: /p1_sample4.html
+      url: /web_user.html
       output: web, pdf
 
     - title: Relationship
-      url: /p1_sample4.html
+      url: /web_relationship.html
       output: web, pdf
 
     - title: Message
-      url: /p1_sample4.html
+      url: /web_message.html
       output: web, pdf
 
     - title: Group
-      url: /p1_sample4.html
+      url: /web_group.html
       output: web, pdf
 
     - title: Chatroom
-      url: /p1_sample4.html
-      output: web, pdf
-
-    - title: IMKit
-      url: /p1_sample4.html
-      output: web, pdf  
-
-    - title: CallKit
-      url: /p1_sample4.html
-      output: web, pdf
-
-    - title: Multi-Device
-      url: /p1_sample4.html
-      output: web, pdf
-
-    - title: Push notification
-      url: /p1_sample4.html
-      output: web, pdf
-
-  - title: Advanced Features
-    output: web, pdf
-
-    folderitems:
-    - title: Webhook
-      url: /p1_sample4.html
-      output: web, pdf
-      
-    - title: Multi-device Sync
-      url: /p1_sample4.html
-      output: web, pdf
-      
-    - title: Message Roaming
-      url: /p1_sample4.html
-      output: web, pdf
-
-    - title: Message Withdraw
-      url: /p1_sample4.html
-      output: web, pdf
-
-    - title: Sensitive Words
-      url: /p1_sample4.html
-      output: web, pdf
-
-  - title: Best Practices
-    output: web, pdf
-
-    folderitems:
-    - title: UIkit
-      url: /p1_sample4.html
+      url: /web_chatroom.html
       output: web, pdf
 
   - title: Reference Docs
@@ -120,10 +72,10 @@ entries:
 
     folderitems:
     - title: API Reference
-      url: /p1_sample4.html
+      url: /web_api_reference/
       output: web, pdf
 
     - title: Error Code
-      url: /p1_sample4.html
+      url: /web_error_code.html
       output: web, pdf
 
