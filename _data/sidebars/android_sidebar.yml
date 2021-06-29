@@ -47,13 +47,6 @@ entries:
     output: web, pdf
 
     folderitems:
-    - title: User
-      url: /android_user.html
-      output: web, pdf
-
-    - title: Relationship
-      url: /android_relationship.html
-      output: web, pdf
 
     - title: Message
       url: /android_message.html
@@ -65,6 +58,10 @@ entries:
 
     - title: Chatroom
       url: /android_chatroom.html
+      output: web, pdf
+
+    - title: Relationship
+      url: /android_relationship.html
       output: web, pdf
 
     - title: IMKit
@@ -81,6 +78,10 @@ entries:
 
     - title: Push notification
       url: /android_push_notification.html
+      output: web, pdf
+    
+    - title: User Metadata
+      url: /android_user.html
       output: web, pdf
 
   - title: Advanced Features
