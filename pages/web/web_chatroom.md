@@ -6,6 +6,7 @@ toc: true
 permalink: web_chatroom.html
 folder: web
 ---
+
 # Chat room management
 
 Agora Web IM SDK supports the integration of chat room management functions. The following operations can be executed after the integration: 
@@ -507,4 +508,3 @@ conn.listen({
   }}
 })
 ```
-

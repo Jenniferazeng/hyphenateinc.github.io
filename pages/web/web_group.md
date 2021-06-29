@@ -6,6 +6,7 @@ toc: true
 permalink: web_group.html
 folder: web
 ---
+
 # Group
 
 Agora Web IM SDK supports the integration of group's functions. After integration, the following operations can be execute: 
@@ -822,5 +823,4 @@ See [send message](/im/web/basics/message#send message).
 -   Single chat: chat, group chat: groupchat, and chat room: chatroom;
 
 -   According to the types of the messages, they will be processed differently.
-
 

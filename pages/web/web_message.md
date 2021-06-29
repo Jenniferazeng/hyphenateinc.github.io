@@ -6,6 +6,7 @@ toc: true
 permalink: web_message.html
 folder: web
 ---
+
 # Message
 
 Message is one of the most important functions in client integration. The main methods of using WebIM messages are as follows:
@@ -939,3 +940,4 @@ msg.set({
 
 conn.send(msg.body);
 ```
+

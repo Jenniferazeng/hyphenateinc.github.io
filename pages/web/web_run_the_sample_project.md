@@ -6,6 +6,7 @@ toc: true
 permalink: web_run_the_sample_project.html
 folder: web
 ---
+
 # Web IM Integration Introduction
 
 ## Set up a local test environment

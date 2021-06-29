@@ -7,6 +7,7 @@ permalink: web_relationship.html
 folder: web
 ---
 
+
 # Friends management 
 
 Friends management gives you a better experience in IM functions. 
