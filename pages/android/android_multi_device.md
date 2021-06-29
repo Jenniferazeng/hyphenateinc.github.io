@@ -14,7 +14,7 @@ folder: android
 
 When the PC terminal and the mobile terminal log in to the same account, the device ID of the PC terminal can be got through a specific method on the mobile terminal. The device ID is equivalent to a special friend Username and can be used directly for chat, and the usage method is similar to friend.
 
-#### Interface
+### Interface
 
 ``` java
 class ContactManager:
@@ -35,7 +35,7 @@ class ContactManager:
      public void aysncGetSelfIdsOnOtherPlatform(final ValueCallBack<List<String>> callback);
 ```
 
-#### Usage example
+### Usage example
 
 ``` java
      List<String> selfIds = ChatClient.getInstance().contactManager().getSelfIdsOnOtherPlatform();
@@ -45,7 +45,7 @@ class ContactManager:
 
 Account A is logged in to device A and device B at the same time. Account A performs some operations on device A. Device B will receive notifications corresponding to these operations. The specific instructions are as follows:
 
-#### Interface MultiDeviceListener
+### Interface MultiDeviceListener
 
 ``` java
 interface MultiDeviceListener {
@@ -188,7 +188,7 @@ interface MultiDeviceListener {
 }
 ```
 
-#### Usage example
+### Usage example
 
 ``` objc
 //Register to listen
