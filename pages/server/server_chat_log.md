@@ -18,14 +18,36 @@ If the export of chat logs is abnormal, it is possible that the interface has be
 
 The description of the main fields of the chat log data format can be found in the returned data structure example
 
-  Parameter     Description
------------ -----------------------------------------------------------------------------
-  msg_id           Message ID
-  timestamp    Message Delivery Time
-  from              Sender username
-  to                   The username of the recipient or the ID of the receiving group
-  chat_type      Used to determine whether it is a single chat, group chat, or chatroom. chat: single chat; groupchat: group chat; chatroom: chatroom
-  payload         message bodies, different message types; message ext, custom extended attributes, etc.
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>msg_id</td>
+    <td>Message ID</td>
+  </tr>
+  <tr>
+    <td>timestamp</td>
+    <td>Message Delivery Time</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>Sender username</td>
+  </tr>
+  <tr>
+    <td>to</td>
+    <td>The username of the recipient or the ID of the receiving group</td>
+  </tr>
+  <tr>
+    <td>chat_type</td>
+    <td>Used to determine whether it is a single chat, group chat, or chatroom. chat: single chat; groupchat: group chat; chatroom: chatroom</td>
+  </tr>
+  <tr>
+    <td>payload</td>
+    <td>message bodies, different message types; message ext, custom extended attributes, etc.</td>
+  </tr>
+</table>  
 
 Example of chat log return data format
 
@@ -57,10 +79,20 @@ Example of chat log return data format
 
 The bodies parameter of the above message corresponds to the text type message parameter description
 
-  Parameter    Description
------- -----------------------
-  msg               Message content
-  type               \"txt\"，text message type
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"txt",text message type</td>
+  </tr>
+</table>  
 
 Example of text type message format
 
@@ -77,14 +109,36 @@ Example of text type message format
 
 Corresponding to the bodies parameter of the above message, the description of the parameters of the picture type message
 
-  Parameter      Description
-------------- ----------------------------------------------------------
-  file_length      size of the image attachment (in bytes)
-  filename         \"image.jpg\",the name of the image with the image format
-  secret              A string is returned after uploading an image, only if it contains secret can the image be downloaded
-  size                  the size of the image length and width
-  type                \"img\",the type of the image message
-  url                   The address of the image upload message, which will return the UUID after successful upload.
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>file_length</td>
+    <td>size of the image attachment (in bytes)</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>"image.jpg",the name of the image with the image format</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>A string is returned after uploading an image, only if it contains secret can the image be downloaded</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>the size of the image length and width</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"img",the type of the image message</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The address of the image upload message, which will return the UUID after successful upload</td>
+  </tr>
+</table>  
 
 Example of image type message format
 
@@ -105,12 +159,28 @@ Example of image type message format
 
 Corresponding to the bodies parameter of the above message, the geolocation type message parameter description
 
-  Parameter      Description
------- --------------------------------
-  addr                 "address" Description of the text content of the address to be sent
-  lat   				  latitude
-  lng    				longitude
-  type  			   \"loc\"， location message type
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>addr</td>
+    <td>"address" Description of the text content of the address to be sent</td>
+  </tr>
+  <tr>
+    <td>lat</td>
+    <td>latitude</td>
+  </tr>
+  <tr>
+    <td>lng</td>
+    <td>longitude</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"loc",location message type</td>
+  </tr>
+</table>  
 
 Example of geographic location type message format
 
@@ -129,14 +199,36 @@ Example of geographic location type message format
 
 Corresponding to the bodies parameter of the above message, the voice type message parameter description
 
-  Parameter 	Description
-------------- --------------------------------------------------------------
-  file_length     Voice attachment size (in bytes)
-  filename      \"audio,amr\", voice file with file format
-  secret       	 will return a string after uploading the voice, only contains secret can download this voice file
-  length       	 voice time (in seconds)
-  type         	\"audio\",voice message type
-  url          		The address of the voice file to be uploaded, the UUID will be returned after successful upload.
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>file_length</td>
+    <td>Voice attachment size (in bytes)</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>"audio.amr", voice file with file format</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>will return a string after uploading the voice, only contains secret can download this voice file</td>
+  </tr>
+  <tr>
+    <td>length</td>
+    <td>voice time (in seconds)</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"audio",voice message type</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The address of the voice file to be uploaded, the UUID will be returned after successful upload</td>
+  </tr>
+</table>
 
 Voice type message format example
 
@@ -157,17 +249,48 @@ Voice type message format example
 
 Corresponding to the bodies parameter of the above message, the video type message parameter description
 
-  Parameter 	Description
--------------- ----------------------------------------------------------------------
-  file_length   	   Video attachment size (in bytes)
-  filename       	\"video,mp4\", video file with file format
-  secret        		 Will return a string after uploading the video, only contains secret can download this video file
-  length        	      The length of the video playback (in seconds)
-  size          		     Video thumbnail length and width size
-  thumb                  The remote address of the video thumbnail that will be returned as a UUID after uploading the video thumbnail.
-  thumb_secret     The string to be returned after uploading the video thumbnail, only if it contains a secret can the video thumbnail be downloaded
-  type           		 \"video\",video message type
-  url            	     	The address of the uploaded video, the UUID will be returned after a successful upload.
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>file_length</td>
+    <td>Video attachment size (in bytes)</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>"video.mp4", video file with file format</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>Will return a string after uploading the video, only contains secret can download this video file</td>
+  </tr>
+  <tr>
+    <td>length</td>
+    <td>The length of the video playback (in seconds)</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>Video thumbnail length and width size</td>
+  </tr>
+  <tr>
+    <td>thumb</td>
+    <td>The remote address of the video thumbnail that will be returned as a UUID after uploading the video thumbnail</td>
+  </tr>
+  <tr>
+    <td>thumb_secret</td>
+    <td>The string to be returned after uploading the video thumbnail, only if it contains a secret can the video thumbnail be downloaded</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"video",video message type</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The address of the uploaded video, the UUID will be returned after a successful upload</td>
+  </tr>
+</table>
 
 Video type message format example
 
@@ -191,13 +314,32 @@ Video type message format example
 
 Corresponding to the bodies parameter of the above message, the description of the file type message parameters
 
-  Parameter 	Description
-------------- ----------------------------------------------------------
-  file_length   File size (in bytes)
-  filename      \"file.zip\", file name with file format
-  secret           After uploading a file, a string is returned and only the file containing secret can be downloaded.
-  type             \"file\",image message type
-  url           	The address of the uploaded file, and the UUID will be returned after a successful upload.
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>file_length</td>
+    <td>File size (in bytes)</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>"file.zip", file name with file format</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>After uploading a file, a string is returned and only the file containing secret can be downloaded</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>"file",image message type</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The address of the uploaded file, and the UUID will be returned after a successful upload</td>
+  </tr>
+</table>
 
 Example of file type message format
 
@@ -221,9 +363,18 @@ The export chat log interface is not a real-time interface, and there is a certa
 
 Chat logs need to be exported using the REST API, which can be tested online by using the [Easemob REST API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
-  Name 						Request 																			Description
------------------- ---------------------------------------------- --------------------------------------------
-  Get history message file    /{org_name}/{app_name}/chatmessages/\${time}   A file that returns data based on the time range of the request, download to view
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Name</th>
+    <th>Request</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Get history message file</td>
+    <td>/{org_name}/{app_name}/chatmessages/${time}</td>
+    <td>A file that returns data based on the time range of the request, download to view</td>
+  </tr>
+</table>
 
 ##  Get the history message file
 
@@ -242,25 +393,46 @@ details page ](http://www.google.com) in the administrative backend of Easemob .
 
 #### HTTP Request
 
-  ![](/im/server/ready/get.png){.align-left width="90"}   **/{org_name}/{app_name}/chatmessages/\${time}**
-------------------------------------------------------- --------------------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>GET</th>
+    <th>/{org_name}/{app_name}/chatmessages/${time}</th>
+  </tr>
+</table>
 
 You need to fill in the {time} corresponding to the time period you need to get in the request.
 
 #### Request Headers
 
-  Parameter 		Description
---------------- ------------------
-  Content-Type    application/json
-  Authorization   Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
-  Parameter 	Description
------- ----------------------
-  url    			   The address to download the chat log file
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The address to download the chat log file</td>
+  </tr>
+</table>
 
 #### Request Example
 
@@ -314,8 +486,7 @@ Note: the url has an expiration time, the Expires timestamp in the url is the ex
 }
 ```
 
-If the return result is \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause a little and retry. See [Interface flow restriction description](/im/450errorcode/45restastrict) for details
+If the return result is <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [Interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
