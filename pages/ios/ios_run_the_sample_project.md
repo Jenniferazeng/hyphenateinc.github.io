@@ -10,7 +10,7 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -32,9 +32,8 @@ iOS SDK，且对UI进行了改版优化。如果您已集成环信 iOS SDK
 
 ## DEMO 体验
 
-[EaseIM 源码地址](https://github.com/easemob/chat-ios.git)
-
-**注：**更多Demo体验，请前往[下载页](http://www.easemob.com/download/im)
+[ChatDemo-UI3.0 源码地址](https://github.com/HyphenateInc/Hyphenate-Demo-iOS.git)
+-->**注：**更多Demo体验，请前往[下载页](https://www.pgyer.com/tsui)
 
 ## 注册并创建应用
 
@@ -52,12 +51,12 @@ IM 用户：一个 appkey
 
 在环信 Console 后台，点击创建好的应用 → IM 用户 → 创建 IM 用户
 
-![](/im/ios/sdk/创建用户.png)
+![](https://docs-im.easemob.com/_media/im/ios/sdk/创建用户.png)
 
 建议创建两个 IM 用户，用于后面集成 SDK 之后聊天使用。例如登录 user1
 ，在初始化聊天页面时传入 user2 ，user1 给 user2 发消息测试。
 
-![](/im/ios/sdk/用户.png)
+![](https://docs-im.easemob.com/_media/im/ios/sdk/用户.png)
 
 ------------------------------------------------------------------------
 
@@ -89,28 +88,19 @@ SDK
 
 ![模块化设计](/im/ios/sdk/image005.png){.align-center}
 
--   EMClient: 是 SDK
+-   AgoraChatClient: 是 SDK
     的入口，主要完成登录、退出、连接管理等功能。也是获取其他模块的入口。
 
-```{=html}
-<!-- -->
-```
--   EMChatManager: 管理消息的收发，完成会话管理等功能。
+-   AgoraChatManager: 管理消息的收发，完成会话管理等功能。
 
-```{=html}
-<!-- -->
-```
--   EMContactManager: 负责好友的添加删除，黑名单的管理。
 
-```{=html}
-<!-- -->
-```
--   EMGroupManager: 负责群组的管理，创建、删除群组，管理群组成员等功能。
+-   AgoraContactManager: 负责好友的添加删除，黑名单的管理。
 
-```{=html}
-<!-- -->
-```
--   EMChatroomManager: 负责聊天室的管理。
+
+-   AgoraGroupManager: 负责群组的管理，创建、删除群组，管理群组成员等功能。
+
+
+-   AgoraChatroomManager: 负责聊天室的管理。
 
 注意：如果您是从 SDK2.x 升级到 3.0，可以参考[环信 SDK
 2.x到3.0升级文档](/im/ios/sdk/upgradeguide)。
@@ -136,7 +126,7 @@ Cocoapods，如果没有安装过Cocoapods，参考安装使用指南：<https:/
 在 `Xcode` 项目的根目录下，新建一个空文件，命名为
 `Podfile`，向此文件添加以下行：
 
-    pod 'HyphenateChat'
+    pod 'AgoraChat'
 
 在 `Podfile` 目录下，执行以下指令：
 
@@ -150,128 +140,89 @@ Cocoapods，如果没有安装过Cocoapods，参考安装使用指南：<https:/
 
 [下载环信demo](http://www.easemob.com/download/im)
 
--   HyphenateChat 开发使用SDK
+-   AgoraChat 开发使用SDK
 
-开发者最开始集成，如果选择手动导入文件集成的方式，只需要向工程中添`HyphenateChat`就可以，下面会介绍具体的集成方式。
+开发者最开始集成，如果选择手动导入文件集成的方式，只需要向工程中添`AgoraChat.framework`就可以，下面会介绍具体的集成方式。
 
-demo 中的SDK文件夹为Hyphenate SDK，将SDK
+demo 中的SDK文件夹为AgoraChat SDK，将SDK
 文件夹拖入到工程中，并勾选截图中标注的三项。
 
-![](/im/ios/sdk/选项.png)
+![](https://docs-im.easemob.com/_media/im/ios/sdk/选项.png)
 
 #### 设置工程属性
 
 Xcode中，向 General → Embedded Binaries 中添加依赖库。
 
 **注意要将\'Do Not Embed\'改成\'Embed & Sign\'**
-![](/im/ios/sdk/04380a97-8a50-4e50-bcb0-5c9d6d4d9818.png){width="600"}
+![](./images/embeded_framework.png)
 
 ------------------------------------------------------------------------
 
 ### Demo 目录介绍
 
-目录 EaseIM --->Class 中的 Demo 目录介绍
+目录 ChatDemo-UI3.0 --->Class 中的 Demo 目录介绍
 
 ![](/im/ios/sdk/2e702406-82da-4f6b-9ae7-a2c42850f39b.png){width="600"}
 
 -   Account：主要是 demo 的注册，登录
 
-```{=html}
-<!-- -->
-```
+
 -   AppDelegate：主要是 demo 中初始化环信SDK，注册推送等
 
-```{=html}
-<!-- -->
-```
 -   Communicate：demo 的语音视频通话功能页面（包含 1v1
     实时通话以及多人实时通话的功能）
 
-```{=html}
-<!-- -->
-```
+
 -   Chat：demo 的聊天功能页面
 
-```{=html}
-<!-- -->
-```
+
 -   Contact：demo 的好友功能页面
 
-```{=html}
-<!-- -->
-```
 -   Conversation：demo 的会话列表功能页面
 
-```{=html}
-<!-- -->
-```
--   EaseIMHelper：demo
+
+-   ChatDemo-UI3.0Helper：demo
     的单例类，主要是全局监听接收消息，好友，群组，聊天室等相关事件的回调，从而进行对应的处理
 
-```{=html}
-<!-- -->
-```
 -   Group：demo 的群组功能页面
 
-```{=html}
-<!-- -->
-```
+
 -   Helper：demo 的功能性文件，全局通用的配置
 
-```{=html}
-<!-- -->
-```
+
 -   Home：demo 的根控制器页面
 
-```{=html}
-<!-- -->
-```
+
 -   Notification：demo 的好友，群组相关请求通知的页面
 
-```{=html}
-<!-- -->
-```
+
 -   Settings：demo 的功能设置页面
 
 ------------------------------------------------------------------------
 
 ## 集成 UI
 
-环信的 UI 模块在 demo 中的该路径下 EaseIM\-\--Class
+环信的 UI 模块在 demo 中的该路径下 ChatDemo-UI3.0\-\--Class
 
 demo 中有几大 UI 功能模块，在集成时将对应的模块添加到工程中即可。
 
 -   Helper\-\-\-\-\--自定义库和页面，第三方库，全局通用模块
 
-```{=html}
-<!-- -->
-```
+
 -   Chat\-\-\-\-\--聊天模块
 
-```{=html}
-<!-- -->
-```
 -   Conversation\-\-\-\-\--会话列表模块
 
-```{=html}
-<!-- -->
-```
+
 -   Communicate\-\-\-\-\--实时音视频模块（包含 1v1
     实时通话以及多人实时通话的功能）
 
-```{=html}
-<!-- -->
-```
 -   Contact\-\-\-\-\--好友列表模块
 
-```{=html}
-<!-- -->
-```
+
 -   Group\-\-\-\-\--群组模块
 
-```{=html}
-<!-- -->
-```
+
 -   Chatroom\-\-\-\-\--聊天室模块
 
 在集成时，必须要先向自己的工程中导入 `Helper`
@@ -279,27 +230,24 @@ demo 中有几大 UI 功能模块，在集成时将对应的模块添加到工�
 
 环信的 UI 模块依赖于以下三方库：
 
+-   MWPhotoBrowser
+
 -   Masonry
 
-```{=html}
-<!-- -->
-```
+
 -   MJRefresh
 
-```{=html}
-<!-- -->
-```
+
 -   MBProgressHUD
 
-```{=html}
-<!-- -->
-```
+
 -   SDWebImage
 
-```{=html}
-<!-- -->
-```
--   FLAnimatedImage
+
+-   WHToast
+
+
+
 
 保证这些三方库在自己的工程中存在。
 
@@ -317,25 +265,16 @@ demo 中有几大 UI 功能模块，在集成时将对应的模块添加到工�
 
 -   Privacy - Photo Library Usage Description 需要访问您的相册
 
-```{=html}
-<!-- -->
-```
+
 -   Privacy - Microphone Usage Description 需要访问您的麦克风
 
-```{=html}
-<!-- -->
-```
+
 -   Privacy - Camera Usage Description 需要访问您的摄像机
 
-```{=html}
-<!-- -->
-```
+
 -   Privacy - Location Always Usage Description
     需要您的同意,才能在使用期间访问位置
 
-```{=html}
-<!-- -->
-```
 -   Privacy - Location When In Use Usage Description
     需要您的同意,才能始终访问位置
 
@@ -350,7 +289,7 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
 在 pch 文件文件中添加如下代码：
 
     #ifdef __OBJC__
-    #import <HyphenateChat/HyphenateChat.h>
+    #import <AgoraChat/AgoraChat.h>
     // UI 头文件
     #import "EMHeaders.h"
     #endif
@@ -377,10 +316,10 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
         // appkey替换成自己在环信管理后台注册应用中的appkey
-    EMOptions *options = [EMOptions optionsWithAppkey:@"appkey"];
+    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"appkey"];
     // apnsCertName是证书名称，可以先传nil，等后期配置apns推送时在传入证书名称
         options.apnsCertName = nil;
-        [[EMClient sharedClient] initializeSDKWithOptions:options];
+        [[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
         return YES;
     }
 
@@ -390,7 +329,7 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
 
     // 传入在应用（appkey）下注册的IM用户user1，密码123，用于登录环信服务器
 
-    [[EMClient sharedClient] loginWithUsername:@"user1" password:@"123" completion:^(NSString *aUsername, EMError *aError) {
+    [[AgoraChatClient sharedClient] loginWithUsername:@"user1" password:@"123" completion:^(NSString *aUsername, EMError *aError) {
         if (!aError) {
             NSLog(@"登录成功");
         } else {
@@ -401,7 +340,9 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
 -   如果在集成调试阶段，可以在初始化环信 SDK 完成之后，就调用登录方法。
 
 ```{=html}
-<!-- -->
+- (AgoraError *)loginWithUsername:(NSString *)aUsername
+                         token:(NSString *)aToken;
+
 ```
 -   如果项目上线，建议开发者在登录自己服务器成功之后，再调用环信 SDK
     登录方法使用用户绑定的环信id登录环信服务器（开发者给自己用户在自己服务器创建账号的同时，调用环信的
@@ -416,9 +357,10 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
 向工程中导入 `Chat` 文件
 
     // ConversationId接收消息方的环信ID:@"user2"
-    // type聊天类型:EMConversationTypeChat    单聊类型
+    // type聊天类型:AgoraConversationTypeChat    单聊类型
     // createIfNotExist 如果会话不存在是否创建会话：YES
-    EMChatViewController *chatController = [[EMChatViewController alloc] initWithConversationId:@"user2" conversationType:EMConversationTypeChat createIfNotExist:YES];
+    AgoraChatViewController *chatViewController = [[AgoraChatViewController alloc] initWithConversationId:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+    [self.navigationController  pushViewController:chatViewController animated:NO];
 
     [self.navigationController pushViewController:chatController animated:YES];
 
@@ -428,69 +370,56 @@ user1 给 user2 发消息，没有导航的话，可以用 `present`
 
 ------------------------------------------------------------------------
 
-## 集成实时音视频通话
-
-向工程中导入 `Communicate` 文件
-
-在初始化 SDK 完成之后，在初始化SDK所在的类引入头文件：
-
-    #import "SingleCallController.h"  // 1v1实时通话功能的头文件
-    #import "ConferenceController.h"  // 多人实时通话功能的头文件
-     添加：
-    [SingleCallController sharedManager];  // 初始化1v1实时通话功能的单例
-    [ConferenceController sharedManager];  // 初始化多人实时通话功能的单例
-
-在聊天页面中下方，点击视频通话图标按钮即可使用。
-
-------------------------------------------------------------------------
 
 ## 集成其他模块
 
 集成这些模块，涉及到一些回调方法的监听与页面的跳转，需要在初始化环信SDK之后，添加
-\[EMDemoHelper shareHelper\];
+\[AgoraChatDemoHelper shareHelper\];
 
 ### 会话列表
 
 向工程中导入 `Conversation` 文件
 
-头文件：`#import "EMConversationsViewController.h"`
+头文件：`#import "AgoraChatsViewController.h"`
 
 初始化页面跳转(导航跳转示例)：
 
-    EMConversationsViewController *conversationVC = [[EMConversationsViewController alloc] init];
-    [self.navigationController pushViewController:conversationVC animated:YES];
+     AgoraChatsViewController  *chatsVC = [[AgoraChatsViewController alloc] init];
+
+    [self.navigationController pushViewController: chatsVC animated:YES];
 
 ### 好友列表
 
 向工程中导入 `Contact` 文件
 
-头文件：`#import "EMContactsViewController.h"`
+头文件：`#import "AgoraContactsViewController.h"`
 
 初始化页面跳转(导航跳转示例)：
 
-    EMContactsViewController *contactVC= [[EMContactsViewController alloc] init];
-    [self.navigationController pushViewController:contactVC animated:YES];
+     AgoraContactsViewController   *contactsVC = [[AgoraContactsViewController alloc] init];
+
+    [self.navigationController pushViewController: contactsVC animated:YES];
 
 ### 群组
 
 向工程中导入 `Group` 文件
 
-头文件：`#import "EMGroupsViewController.h"`
+头文件：`#import "AgoraGroupsViewController.h"`
 
 初始化页面跳转(导航跳转示例)：
 
-    EMGroupsViewController *groupVC= [[EMContactsViewController alloc] init];
+    AgoraGroupsViewController *groupVC= [[AgoraGroupsViewController alloc] init];
     [self.navigationController pushViewController:groupVC animated:YES];
 
 ### 聊天室
 
 向工程中导入 `Chatroom` 文件
 
-头文件：`#import "EMChatroomsViewController.h"`
+头文件：`#import "AgoraChatroomsViewController.h"`
 
 初始化页面跳转(导航跳转示例)：
 
-    EMChatroomsViewController *chatRoomVC= [[EMChatroomsViewController alloc] init];
+    AgoraChatroomsViewController *chatRoomVC= [[AgoraChatroomsViewController alloc] init];
     [self.navigationController pushViewController:chatRoomVC animated:YES];
 
 ------------------------------------------------------------------------
@@ -517,25 +446,16 @@ Xcode12需在Build Settings - Excluded Architectures
 就可以了。
 
 后续在 SDK 当前路径下执行以下命令删除x86_64平台\
-实时音视频版本`Hyphenate.framework`
 
-    【首先进入Hyphenate.framework所在目录】
+不包含实时音视频版本 `AgoraChat.framework`
+
+    【首先进入AgoraChat.framework所在目录】
     // 移除支持x86_64的二进制文件
-    lipo Hyphenate.framework/Hyphenate -remove x86_64 -output Hyphenate
-    //替换framwork内部二进制文件
-    mv Hyphenate Hyphenate.framework/Hyphenate
-    //查看剥离后的二进制文件支持的CPU架构，如果显示arm64，就完成剥离，可上传AppStore
-    lipo -info Hyphenate.framework/Hyphenate
-
-不包含实时音视频版本 `HyphenateLite.framework`
-
-    【首先进入HyphenateLite.framework所在目录】
-    // 移除支持x86_64的二进制文件
-    lipo HyphenateLite.framework/HyphenateLite -remove x86_64 -output HyphenateLite
+    lipo AgoraChat.framework/AgoraChat -remove x86_64 -output AgoraChat
     //替换framwork内部二进制文件[记得备份]
-    mv HyphenateLite HyphenateLite.framework/HyphenateLite
+    mv AgoraChat AgoraChat.framework/AgoraChat
     //查看剥离后的二进制文件支持的CPU架构，如果显示arm64，就完成剥离，可上传AppStore
-    lipo -info HyphenateLite.framework/HyphenateLite
+    lipo -info AgoraChat.framework/AgoraChat
 
 ------------------------------------------------------------------------
 
