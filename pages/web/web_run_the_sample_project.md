@@ -80,11 +80,11 @@ This method only references the Web SDK, the parameters in the WebIMConfig file 
 For the 3.0 SDK, deploy the following configuration in the WebIMConfig.js file
 
 ``` javascript
-socketServer: '//im-api-v2.easemob.com/ws',    // socket Server address
+socketServer: '//im-api-v2.easecdn.com/ws',    // socket Server address
 
-restServer: '//a1.easemob.com',               // rest Server address
+restServer: '//a1.easecdn.com',               // rest Server address
 
-appkey: 'easemob-demo#chatdemoui',        // App key
+appkey: '1193210624041558#chatdemo',        // App key
 
 https : false,                            // Whether to use https
 
@@ -108,11 +108,11 @@ useOwnUploadFun: false         // Whether to use your own upload method (such as
 `` REST API request domain name and WebSocket access domain name of different data centers of Agora:``
 |Data center|REST API request address|WebSocket access domain name|
 | -------- | -------| ----- |
- |Domestic Zone 1|a1.easemob.com|im-api-v2.easemob.com| 
- |Domestic Zone 2|a31.easemob.com|im-api-v2-31.easemob.com| 
+ |Domestic Zone 1|a1.easecdn.com|im-api-v2.easecdn.com| 
+ |Domestic Zone 2|a31.easecdn.com|im-api-v2-31.easecdn.com| 
  |Domestic VIP Zone|Please contact the business manager|Please contact the business manager|
   |Customer service|Please contact the business manager|Please contact the business manager| 
-  |Singapore Zone 1|a1-sgp.easemob.com|im-api-sgp-v2.easemob.com| 
+  |Singapore Zone 1|a1-sgp.easecdn.com|im-api-sgp-v2.easecdn.com| 
 
 ``The data center where the application is located can be viewed in Agora 
 User Management Background>Application Information: ``

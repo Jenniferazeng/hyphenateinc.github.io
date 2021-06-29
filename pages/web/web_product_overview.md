@@ -43,30 +43,17 @@ The shown functions include:
 
 -   View public groups by page, search public groups by id 
 
--   Friends can have video chat through webrtc(only https + Webkit browsers are supported)
-
 -   Add ip policy function for http access to prevent DNS hijacking（`isHttpDNS:true`）
 
 -   Web IM Demo supports mobile device layout 
 
 -   Web IM Demo supports browser local cache(IndexDB)
 
-Agora Web IM demo source code is open-source on GitHub [react version](https://github.com/easemob/webim)
-[vue version](https://github.com/easemob/webim-vue-demo) to help developers better learn and understand Easemob SDK.
+Agora Web IM demo source code is open-source on GitHub [react version](https://github.com/HyphenateInc/Hyphenate-Demo-Web)
 
 Demo uses the react framework and supports advanced browsers such as Microsoft Edge, Chrome54+, and Firefox. 
 The SDK supports IE9+. 
-The video call function only supports https+Webkit browser.
 
-Web IM Demo and a brief description of SDK directory：
-
--   Demo: demo independent project, including scripts, styles, language packs, Appkey configuration files
-    （/demo/src/config/WebIMConfig.js, package.json etc.
-
--   SDK: Folder includes: IM SDK webimSDK，Single video call SDK,
-    EMedia_x1v1, Multiplayer video and audio call SDK, EMedia_sdk-dev.
-
--   simpleDemo: A simple demo that provides the most direct example of calling the API.
 
 ## Compatibility
 
@@ -95,12 +82,9 @@ Still have questions, don't know how to solve it?
 2\. The work order description should include but is not limited to the following information
 
 -   Access address of your page？
--   Provide the apiUrl, xmppUrl, appKey and your test login account password in your webim.config.js ？
+-   Provide the apiUrl, socketUrl, appKey and your test login account password in your webim.config.js ？
 -   Is the connection to your page established normally, and is the onOpen monitoring triggered?
 -   Provide the log information of all consoles (see the figure below for how to open the console)
 
-Open the console and take Chrome as an example
-
-![Open the Chrome console](/im/400webimintegration/631797ea288988d131b35ec9ffbd6211.jpg)
 
 

@@ -33,7 +33,7 @@ Multiple friend system managing operations, which covers various integration sce
 
   | Name | FieldName | DataType | Description |
   | ---- | --------- | -------- | ----------- |
-  | Agora ID | username  |  String |    Easemob ID is the only identification of Agora users, which is unique within the  scope of AppKey |
+  | User ID | username  |  String |  User ID is the only identification of Agora users, which is unique within the scope of AppKey |
 
 ## Query friends list 
 
