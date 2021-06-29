@@ -28,9 +28,9 @@ entries:
       url: /server_introduction.html
       output: web, pdf
 
-    - title: Version Updates
-      url: /server_version_updates
-      output: web, pdf  
+    # - title: Version Updates
+    #   url: /server_version_updates
+    #   output: web, pdf  
 
   - title: IM Function
     output: web, pdf

@@ -14,60 +14,104 @@ folder: server
 Chat Related information
 The API can send text messages, send image messages, send voice messages, send video messages, send pass-through messages and send extended messages.
 
-To send a file type message, you need to upload the file to the Easemob server first, refer to the documentation: [file upload and download](/im/server/basics/fileoperation)
+To send a file type message, you need to upload the file to the Easemob server first, refer to the documentation: [file upload and download](/server/server_upload_and_download_files.html)
 
 REST interface to send messages, will not determine whether the Easemob id exists under appkey.
 
 ## Process description
 
-  Message type				 		Description
-
------------------------- ---------------------------------------------------------------------------------------------
-
- Send text/transparent			 directly edit message content  to send
- Send image/voice/video message 				You need to upload these three types of files first, get the corresponding parameters from the return value of the interface, edit them in the message body according to the API requirements and then send
+ <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Message type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Send text/transparent</td>
+    <td>directly edit message content  to send</td>
+  </tr>
+  <tr>
+    <td>Send image/voice/video message</td>
+    <td>You need to upload these three types of files first, get the corresponding parameters from the return value of the interface, edit them in the message body according to the API requirements and then send</td>
+  </tr>
+</table>
 
 ## Sending text messages
 
-Sends a message to one or more users, or one or more groups. With the optional "from" field, the receiver can see that who the sender is. Also, extension fields are supported, and with the ext attribute, the APP can send its own message structure. \<WRAP clear/>
-**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error, and needs to be split into several smaller requests for retries, while the length of the user message + extension field is within 4k bytes. See [interface stream limit description](/im/server/help/restastrict) for details.
+Sends a message to one or more users, or one or more groups. With the optional "from" field, the receiver can see that who the sender is. Also, extension fields are supported, and with the ext attribute, the APP can send its own message structure.
+
+**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error, and needs to be split into several smaller requests for retries, while the length of the user message + extension field is within 4k bytes. See [interface stream limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 		Description
-
---------------- ------------------
-
-  Content-Type 	application/json
-  Authorization 	Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 		Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-target_type 		The type of target to send; 		users: to send messages to users, 		chatgroups: to send messages to groups, 			chatrooms: to send messages to chat rooms
-target 				The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-msg 					Message content
-type Message 	type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message
-from 					indicates the message sender; without this field Server will default to \"from\":\"admin\". There is a from field but the value of the null string (\"\"), the request will fail
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin". There is a from field but the value of the null string (""), the request will fail</td>
+  </tr>
+</table>
 
 #### Response Body
 
-View the information contained in the data field in the return value
-
-  Parameter Description
-
----------- ------------------
-
-  username 		The username of the recipient of the message
-  success 			means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Example request
 
@@ -120,8 +164,7 @@ Return value 401, means unauthorized \ [no token, token error, token expired \]
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details 
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details 
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)
 
@@ -129,49 +172,97 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 
 ## Sending image messages
 
-Sends a message to one or more users, or one or more groups. With the optional "from" field, the receiver can see that who the sender is. Also, extension fields are supported, and with the ext attribute, the APP can send its own message structure. \<WRAP clear/>
-**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error, and needs to be split into several smaller requests for retries, while the length of the user message + extension field is within 4k bytes. See [interface stream limit description](/im/server/help/restastrict) for details.
+Sends a message to one or more users, or one or more groups. With the optional "from" field, the receiver can see that who the sender is. Also, extension fields are supported, and with the ext attribute, the APP can send its own message structure.
+
+**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error, and needs to be split into several smaller requests for retries. See [interface stream limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter Description
-
---------------- ------------------
-
-  Content-Type application/json
-  Authorization Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 		Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-target_type 			The type of target to send; 	users: to send messages to users,     chatgroups: to send messages to groups, 			chatrooms: to send messages to chat rooms
-target 					The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-msg 						Message content
-type 						Message type; txt:text message, img:image message, loc:location message, audio:voice message, video:video message, file:file message
-url 							domain/orgname/appname/chatfiles/UUUID returned from a successful file upload. reference request example
-filename 				  Image name
-secret 					   The secret returned after a successful file upload
-size the size of the image; height: height, width: width
-from 						indicates the sender of the message; without this field Server will default to \"from\":\"admin\". The request fails when there is a from field but the value is an empty string (\"\")
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>domain/orgname/appname/chatfiles/UUUID returned from a successful file upload. reference request example</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>Image name</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>The secret returned after a successful file upload</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>the size of the image; height: height, width: width</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin". There is a from field but the value of the null string (""), the request will fail</td>
+  </tr>
+</table>
 
 #### Response Body
 
-View the information contained in the data field in the return value
-
-  Parameter 		Description
-
----------- ------------------
-
-  username 			The username of the recipient of the message
-  success 				means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request example
 
@@ -223,8 +314,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages'   -H 'Aut
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
@@ -232,49 +322,99 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 
 ## Sending a voice message
 
-To send a voice file, you need to upload the voice file first, and then send this message. (The UUID in the URL and the secret can be get from the response after uploading) \<WRAP clear/>
-Note: In the calling procedure, if the request body exceeds 5kb, it will result in a 413 error and request needs to be split into several smaller requests to retry. See [interface flow limit description](/im/server/help/restastrict) for details.
+To send a voice file, you need to upload the voice file first, and then send this message. (The UUID in the URL and the secret can be get from the response after uploading)
+
+**Note**: In the calling procedure, if the request body exceeds 5kb, it will result in a 413 error and request needs to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 				Description
-
---------------- ------------------
-
-  Content-Type 			application/json
-  Authorization 			Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 				Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-  target_type 				The type of target to send; 		users: to send messages to users, 		chatgroups: to send messages to groups, 		chatrooms: to send messages to chat rooms
-  target 						The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  msg 							Message content
-  type 							Message type; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message
-  url 								The UUID returned by the successful file upload
-  filename 						The name of the voice
-  secret 						The secret returned after successful upload of the file
-  length 						voice time (in seconds)
-  from 							means the message sender; without this field Server will default to \"from\":\"admin\". The request fails when there is a from field but the value is an empty string (\"\")
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The UUID returned by the successful file upload</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>The name of the voice</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>The secret returned after a successful file upload</td>
+  </tr>
+  <tr>
+    <td>length</td>
+    <td>voice time (in seconds)</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin". There is a from field but the value of the null string (""), the request will fail</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
- Parameter 		Description
-
----------- ------------------
-
-  username 			The username of the recipient of the message
-  success 				means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request Example
 
@@ -327,8 +467,7 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) 
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) 
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)
 
@@ -336,50 +475,101 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 
 ## Sending a video message
 
-To send a video message, you need to upload a video file and a video thumbnail file first, then send this message. (The UUID and secret in the URL can be get from the response after uploading) \<WRAP clear/>
-Note: In the calling procedure, a request body that exceeds 5kb will result in a 413 error which will need to be split into several smaller requests to retry. See [interface flow limit description](/im/server/help/restastrict) for details.
+To send a video message, you need to upload a video file and a video thumbnail file first, then send this message. (The UUID and secret in the URL can be get from the response after uploading)
+
+**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error which will need to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter Description
-
---------------- ------------------
-
-  Content-Type application/json
-  Authorization Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 				Description
-
--------------- ------------------------------------------------------------------------------------------------------------------- ------------------------------------------------------
-
-  target_type 				The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms
-  target 							The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  type								message type; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message
-  filename 						the name of the video file
-  thumb 						The UUID returned by the successful video thumbnail upload
-  length 						The length of the video playback
-  secret 						The secret returned after successfully uploading the video file
-  file_length 				Video file size (in bytes)
-  thumb_secret 			The secret returned after successfully uploading a video thumbnail
-  url 								UUID returned after successful upload of video file
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>filename</td>
+    <td>the name of the video file</td>
+  </tr>
+  <tr>
+    <td>secret</td>
+    <td>The secret returned after successfully uploading the video file</td>
+  </tr>
+  <tr>
+    <td>length</td>
+    <td>The length of the video playback</td>
+  </tr>
+  <tr>
+    <td>thumb_secret</td>
+    <td>The secret returned after successfully uploading a video thumbnail</td>
+  </tr>
+    <tr>
+    <td>url</td>
+    <td>UUID returned after successful upload of video file</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the sender of the message; without this field Server will default to "from":"admin". The request fails when there is a from field but the value is an empty string ("")</td>
+  </tr>
+</table>
 
 #### Response Body
 
-View the information contained in the data field in the return value
-
-  Parameter 			Description
-
----------- ------------------
-
-  username 				The username of the recipient of the message
-  success 					means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request example
 
@@ -432,8 +622,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Autho
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
@@ -441,45 +630,83 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 
 ## Send location message
 
-Location message: get the latitude and longitude of the address, fill in the correct address to send. \<WRAP clear/>
-**Note**: In the calling procedure, a request body that exceeds 5kb will lead to 413 error, need to split into several smaller requests to retry, while the length of user message + extended field is within 4k bytes. See [interface flow limit description](/im/server/help/restastrict) for details.
+Location message: get the latitude and longitude of the address, fill in the correct address to send.
+
+**Note**: In the calling procedure, a request body that exceeds 5kb will lead to 413 error, need to split into several smaller requests to retry, while the length of user message + extended field is within 4k bytes. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 		Description
-
---------------- ------------------
-
-  Content-Type 	application/json
-  Authorization 	Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 				Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-  target_type 				The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms
-  target 						The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  msg 							Message content
-  type 							Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message
-  from 							indicates the message sender; without this field Server will default to \"from\":\"admin\", The request fails when there is a from field but the value is an empty string (\"\")
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>means the message sender; without this field Server will default to "from":"admin". The request fails when there is a from field but the value is an empty string ("")</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
-  Parameter 			Description
-
----------- ------------------
-
-  username 			The username of the recipient of the message
-  success 				means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request example
 
@@ -531,54 +758,91 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## 发送透传消息
+## Sending pass-through messages
 
 Pass-through messages: no client-side alerts (ring, vibrate, notification bar, etc.) and no APNS push (Apple push), but can be listened to on the client side, the specific function can be customized according to your own.
-\<WRAP clear/> Note: In the calling procedure, if the request body exceeds 5kb will result in a 413 error and needs to be split into several smaller requests to retry. See [interface flow limit description](/im/server/help/restastrict)。
+
+**Note**: In the calling procedure, if the request body exceeds 5kb will result in a 413 error and needs to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html)。
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 			Description
-
---------------- ------------------
-
-  Content-Type 		application/json
-  Authorization 		Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 			Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-  target_type 			The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms
-  target 					The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  msg						 Message content
-  type 						Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message, cmd: pass-through message
-  from 						indicates the message sender; without this field Server will default to \"from\":\"admin\", The request fails when there is a from field but the value is an empty string (\"\")
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message, cmd: pass-through message</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin", The request fails when there is a from field but the value is an empty string ("")</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
-  Parameter Description
-
----------- ------------------
-
-  username The username of the recipient of the message
-  success means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request example
 
@@ -631,8 +895,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)
 
@@ -641,48 +904,98 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 ## Sending custom messages
 
 Custom message: If the normal message type does not meet the user's message needs, you can use a custom message to customize the message type, mainly through the customEvent field of message.
-\<WRAP clear/> Note: In the calling procedure, if the request body exceeds 5kb will result in a 413 error and will need to be split into several smaller requests to retry. See [interface flow limit description](/im/server/help/restastrict) for details.
+
+**Note**: In the calling procedure, if the request body exceeds 5kb will result in a 413 error and will need to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 		Description
-
---------------- ------------------
-
-  Content-Type 	application/json
-  Authorization 	Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 			Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------
-
-  target_type 			The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms
-  target 					The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  msg 						Message content
-  type 						Message type; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message, custom: custom message
-  customEvent 			user custom event type, must be string, value must satisfy the regular expression \[a-zA-Z0-9-\_/\. \]{1,32}, shortest 1 character longest 32 characters
-  customExts 				user custom event attribute, type must be Map\<String,String>, can contain up to 16 elements. customExts is optional and can be left out if not needed
-  from 							means the message sender; without this field Server will default to \"from\":\"admin\", The request fails when there is a from field but the value is an empty string (\"\")
-  ext 								Extended attribute, defined by APP itself. It is fine that there is not this field, but if there is, the value can not be \"ext:null\"\this form, otherwise the error
-  attr1 							The extended content of the message, you can add fields to extend the main parsing part of the message. It must be basic type data
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message, custom: custom message</td>
+  </tr>
+  <tr>
+    <td>customEvent</td>
+    <td>user custom event type, must be string, value must satisfy the regular expression \[a-zA-Z0-9-\_/\. \]{1,32}, shortest 1 character longest 32 characters</td>
+  </tr>
+  <tr>
+    <td>customExts</td>
+    <td>user custom event attribute, type must be Map\<String,String>, can contain up to 16 elements. customExts is optional and can be left out if not needed</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin", The request fails when there is a from field but the value is an empty string ("")</td>
+  </tr>
+  <tr>
+    <td>ext</td>
+    <td>Extended attribute, defined by APP itself. It is fine that there is not this field, but if there is, the value can not be "ext:null" this form, otherwise the error</td>
+  </tr>
+  <tr>
+    <td>attr1</td>
+    <td>The extended content of the message, you can add fields to extend the main parsing part of the message. It must be basic type data</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
-  Parameter 			Description
-
----------- ------------------
-
-  username 			The username of the recipient of the message
-  success 				means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request example
 
@@ -734,8 +1047,7 @@ curl -L -X POST 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Accep
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)http://api-docs.easemob.com/)
 
@@ -744,47 +1056,90 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 ## Sending extended messages
 
 Extended messages: If the normal message type does not meet the user's messaging needs, extended messages can be used. Extensions are supported for any type of message, mainly through the ext field of message.
-\<WRAP clear/> Note: In the calling procedure, a request body that exceeds 5kb will result in a 413 error and will need to be split into several smaller requests to retry. See [interface flow limit description](/im/server/help/restastrict) for details.
+
+**Note**: In the calling procedure, a request body that exceeds 5kb will result in a 413 error and will need to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   **/{org_name}/{app_name}/messages**
--------------------------------------------------------- -------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/messages</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 		Description
-
---------------- ------------------
-
-  Content-Type 	application/json
-  Authorization 	Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Body
 
-  Parameter 		Description
-
-------------- -------------------------------------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------
-
-  target_type 				The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms
-  target 						The target to send; note that here you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array \[\'u1\'\]\; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid
-  msg 							Message content
-  type 							Message type, not limited to text messages. Any message type can be extended; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message
-  msg 							message; feel free to pass it in
-  from 						indicates the message sender; without this field Server will default to \"from\":\"admin\". The request fails when there is a from field but the value is an empty string (\"\")
-  ext 								Extended attribute, defined by APP itself.  It is fine that there is not this field, but if there is, the value can not be \"ext:null\"\this form. Key value type must be NSString, Value value type must be NSString or NSNumber type BOOL, int, unsigned in, long long, double. .
-  attr1 							The extended content of the message, which can add fields, extends the main parsing part of the message and must be basic type data
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>target_type</td>
+    <td>The type of target to send; users: to send messages to users, chatgroups: to send messages to groups, chatrooms: to send messages to chat rooms</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>The target to send; note that you need to use an array, the maximum number of users added to the array is 600 by default, even if there is only one user, use the array ['u1']; when sending to users, the array element is the user name, when sending to groups, the array element is grouppid</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>Message content</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Message type, not limited to text messages. Any message type can be extended; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message</td>
+  </tr>
+  <tr>
+    <td>from</td>
+    <td>indicates the message sender; without this field Server will default to "from":"admin", The request fails when there is a from field but the value is an empty string ("")</td>
+  </tr>
+  <tr>
+    <td>ext</td>
+    <td>Extended attribute, defined by APP itself.  It is fine that there is not this field, but if there is, the value can not be \"ext:null\"\this form. Key value type must be NSString, Value value type must be NSString or NSNumber type BOOL, int, unsigned in, long long, double</td>
+  </tr>
+  <tr>
+    <td>attr1</td>
+    <td>The extended content of the message, you can add fields to extend the main parsing part of the message. It must be basic type data</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the data field in the return value
 
-  Parameter 			Description
-
----------- ------------------
-
-  username 			The username of the recipient of the message
-  success 					means the message was sent successfully
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>username</td>
+    <td>The username of the recipient of the message</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>means the message was sent successfully</td>
+  </tr>
+</table>
 
 #### Request Example
 
@@ -837,8 +1192,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/server/help/restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Testing online with Easemob REST API](http://api-docs.easemob.com/)
 
@@ -846,21 +1200,33 @@ em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for
 
 Easemob provides the following types of extension fields.
 
-  Extension Field 				Description
-
-------------------------- -------------------------------------------------------------------------------
-
-  em_push_content 		[custom push display](/im/ios/apns/content#custom display)
-  em_push_category 		[add category field to APNs Payload](/im/ios/apns/content#add category field)
-  em_push_sound		 	[customize push sound](/im/ios/apns/content#customize push sound)
-  em_push_mutable_content	 [enable APNs notification extension](/im/ios/apns/content#enable APNs notification extension)
-  em_ignore_notification 	[send silent message](/im/ios/apns/content#send_silent_message)
-  em_force_notification 	[set force push APNs](/im/ios/apns/content#set force push APNs)
-
-------------------------------------------------------------------------
-
-\<WRAP group> \<WRAP half column>
-Previous page: [User System Integration](/im/server/ready/user) \</WRAP
-
-\<WRAP half column> Next page: [Group management](/im/server/basics/group) \</WRAP
-\</WRAP
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Extension Field</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>em_push_content</td>
+    <td><a href="/im/ios/apns/content#custom display"> custom push display </a></td>
+  </tr>
+  <tr>
+    <td>em_push_category</td>
+    <td><a href="/im/ios/apns/content#add category field"> add category field to APNs Payload </a></td>
+  </tr>
+  <tr>
+    <td>em_push_sound</td>
+    <td><a href="/im/ios/apns/content#customize push sound"> customize push sound </a></td>
+  </tr>
+  <tr>
+    <td>em_push_mutable_content</td>
+    <td><a href="/im/ios/apns/content#enable APNs notification extension"> enable APNs notification extension </a></td>
+  </tr>
+  <tr>
+    <td>em_ignore_notification</td>
+    <td><a href="/im/ios/apns/content#send_silent_message"> send silent message </a></td>
+  </tr>
+  <tr>
+    <td>em_force_notification</td>
+    <td><a href="/im/ios/apns/content#set force push APNs"> set force push APNs </a></td>
+  </tr>
+</table>
