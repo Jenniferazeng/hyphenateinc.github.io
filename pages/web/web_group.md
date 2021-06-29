@@ -6,315 +6,821 @@ toc: true
 permalink: web_group.html
 folder: web
 ---
-# Android SDK's Introduction and import
+
+# Group
+
+Agora Web IM SDK supports the integration of group's functions. After integration, the following operations can be execute: 
+
+-   Group management 
+
+-   Group member management
+
+-   Add group processing
+
+-   Mute management
+
+-   Blacklist management
+
+-   Blacklist management
+
+Though these operations, you can use any combinations to achieve IM requirements in a variety of scenarios.
+
+
+**Note**: `1, the number of group owners and administrators cannot exceed 100, which means no more than 99 administrators. 2. The maximum number of group members (including the group owner) is set to 200 by default, and the maximum value is 3000. ` 
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## Group management 
 
-Download link：[download page](http://www.easemob.com/download/im)
+Group management includes the following operations:
 
-## Android SDK introduction
+-   Get the list of groups that the user has joined
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+-   Paging access to the public group
 
-![](/im/android/sdk/development-framework.png){.align-center}
+-   Create group
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
+-   Get group information
 
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
+-   Edit group information
 
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
+-   Remove member
 
-![Modular Design](/im/android/sdk/image005.png){.align-center}
+-   Disband group
 
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
+-   Leave group 
 
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
+Examples of all the operations will be explained individually below.
 
-## Video tutorial
+### Get the list of groups that the user has joined
 
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
+Call the `getGroup` function to get the list of all public groups joined by the currently logged-in user, an example is as follows: 
 
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
-```
-
-Then add the following code to the `build.gradle` of your module
-
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
-    
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
-```
-
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
-
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
-
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
-
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+``` javascript
+// List all groups joined by the currently logged-in user
+conn.getGroup().then((res) => {
+    console.log(res)
+})
 ```
 
 ------------------------------------------------------------------------
+
+### Paging access to the public group
+
+Call the `listGroups` function to page to obtain a list of all public groups in the APP, an example is as follows: 
+
+``` javascript
+let limit = 20,
+    cursor = globalCursor;
+let options = {
+    limit: limit,                                            // Expected number of records per page
+    cursor: cursor,                                          // cursor
+};
+conn.listGroups(options).then((res) => {
+    console.log(res)
+})
+```
+
+**Note：**
+
+-   cursor: If there is data in the next page, the API return value will include 
+    this field, pass this field to get the data of the next page, the default value is `null`, when it is `null`, get the data of the first page 
+
+------------------------------------------------------------------------
+
+### Create group 
+
+Call the `createGroupNew` function to create a group, the sample code is as follows:
+
+``` javascript
+let options = {
+    data: {
+        groupname: 'groupName',          // Group name
+        desc: 'group description',       // Group description 
+        members: ['user1', 'user2'],     // Array of usernames 
+        public: true,                    // When pub is true, it is created as a public group
+        approval: true,                  // If approval is true, adding a group requires approval; When it is false, adding a group does not require approval 
+        allowinvites: allowInvites,      // true: allow group members to invite people to join this group, false: only the group owner can add people to the group. Note that the public group (public: true) does not allow group members to invite others to join this group 
+        inviteNeedConfirm: false         // Invite to join the group, whether the invitee needs to be confirmed. true means that the invitee's consent is required to join the group 
+    },
+    success(res){},
+    error(err){},
+};
+conn.createGroupNew(options).then((res) => {
+    console.log(res)
+})
+```
+
+**Note：**
+
+-   After the group is successfully created, the `onCreateGroup` function will be called in the callback functions 
+
+------------------------------------------------------------------------
+
+### Get group information 
+
+Call `getGroupInfo` to get group details according to the group id, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId'    // Group id
+};
+conn.getGroupInfo(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Edit group information
+
+Only the administrator of the group can modify the group name and group profile, call `modifyGroup` to modify the group information, an example is as follows: 
+``` javascript
+// Modify group information
+let option = {
+    groupId: 'groupId',
+    groupName: 'ChangeTest',                         // Group name
+    description: 'Change group information test'     // Group introduction
+};
+conn.modifyGroup(option).then((res) => {
+    console.log(res)
+})
+```
+
+**Note：**
+
+-   The ID of the group manager can be obtained when the group is obtained so that the front-end can decide whether to display the modify information button. 
+
+------------------------------------------------------------------------
+
+### Remove group members
+
+Only the administrator of the group can remove group members. Call `removeSingleGroupMember` to remove group members. An example is as follows: 
+
+``` javascript
+// Remove group members
+let option = {
+    groupId: 'groupId',
+    username: 'username'                         // Group member name 
+};
+conn.removeSingleGroupMember(option).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Disband group
+
+-   Only the administrator of the group has the rights to kick members out of the group; 
+
+-   All group members withdraw from the group after the group is disbanded.
+
+Call `dissolveGroup` to dissolve the group, an example is as follows: 
+
+``` javascript
+// Disband a group
+let option = {
+    groupId: 'groupId'
+};
+conn.dissolveGroup(option).then((res) => {
+    console.log(res)
+})
+```
+
+**Note：**
+
+-   The ID of the group manager can be obtained when the group is obtained, so that the front end can decide whether to display the dismiss button. 
+
+------------------------------------------------------------------------
+
+### Leave group 
+
+Group members can voluntarily exit the group, call `quitGroup` to exit the group, an example is as follows: 
+
+``` javascript
+// Members voluntarily withdraw from the group 
+let option = {
+    groupId: 'groupId' 
+};
+conn.quitGroup(option).then((res) => {
+    console.log(res)
+})
+
+```
+
+------------------------------------------------------------------------
+
+## Group announcement management
+
+Group announcement management includes the following operations: 
+
+-   Upload/modify group announcement 
+
+-   Get group announcement
+
+Examples of all the operations will be explained individually below. 
+
+### Upload/modify group announcement
+
+Call the updateGroupAnnouncement function to upload/modify group announcements, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId',                 // Group id   
+    announcement: 'announcement'        // Announcement content                    
+};
+conn.updateGroupAnnouncement(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get group announcement
+
+Call the fetchGroupAnnouncement function to get the group announcement, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId'            // Group id                          
+};
+conn.fetchGroupAnnouncement(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+## Group file management
+
+Group file management includes the following operations:
+
+-   Upload group file
+
+-   Download group file
+
+-   Delete group file
+
+-   Get group file list
+
+Examples of all the operations will be explained one by one below. 
+
+### Upload group file
+
+Call the uploadGroupSharedFile function to upload group files, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId',                        // Group id 
+    file: file,                                // <input type="file"/> obtained file object 
+    onFileUploadProgress: function(resp) {},   // Callback of upload progress
+    onFileUploadComplete: function(resp) {},   // Callback when upload is complete
+    onFileUploadError: function(e) {},         // Callback of failed upload
+    onFileUploadCanceled: function(e) {}       // Upload cancel callback
+};
+conn.uploadGroupSharedFile(options);
+```
+
+------------------------------------------------------------------------
+
+### Download group file
+
+Call the downloadGroupSharedFile function to download the group file, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId',                        // Group id 
+    fileId: 'fileId',                          // File id                        
+    onFileDownloadComplete: function(resp) {}, // Callback for successful download
+    onFileDownloadError: function(e) {},       // Download failed callback
+};
+conn.downloadGroupSharedFile(options);
+```
+
+------------------------------------------------------------------------
+
+### Delete group file
+
+Call the deleteGroupSharedFile function to delete the group file, an example is as follows: 
+
+``` javascript
+let options = {
+    groupId: 'groupId',                        // Group id 
+    fileId: 'fileId'                           // File id                        
+};
+conn.deleteGroupSharedFile(options)then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get group file list
+
+Call the fetchGroupSharedFileList function to get the group file list, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: 'groupId'                 // Group id                        
+};
+conn.fetchGroupSharedFileList(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+## Group member management
+
+Group member management includes the following operations:
+
+-   Query group members
+
+-   Make a member as manager
+
+-   Revoke the administrator
+
+-   Get all administrators in the group
+
+Examples of all the operations will be explained individually below.
+
+### Query group members
+
+Call the `listGroupMember` function to page to get all members of the current group, an example is as follows:
+
+``` javascript
+let pageNum = 1,
+    pageSize = 1000;
+let options = {
+    pageNum: pageNum,                                               // Page number
+    pageSize: pageSize,                                             // Expected number of records per page
+    groupId: 'groupId'                                       
+};
+conn.listGroupMember(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Make a member as manager
+
+Call `setAdmin` to set members as administrators, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",            // Group id
+    username: "user"               // User name
+};
+conn.setAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Revoke the administrator
+
+Call `removeAdmin` to revoke the administrator, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",             // Group id
+    username: "user"                // User name
+};
+conn.removeAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get all managers of the group
+
+Call `getGroupAdmin` to get all the administrators in the group, an example is as follows:
+``` javascript
+let options = {
+    groupId: "groupId"                 // Group id
+};
+conn.getGroupAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+## Add group processing
+
+Add group includes the following operations:
+
+-   Add friends to the group
+
+-   Apply to join the group
+
+-   Agree users to join the group
+
+-   Deny users to join the group
+
+Examples of all the operations will be explained indiviudally below.
+
+### Add friends to the group
+
+The administrator can add friends to the group. Call `inviteToGroup` to add friends to the group, an example is as follows:
+
+``` javascript
+let option = {
+    users: ['user1', 'user2'],
+    groupId: 'groupId'
+};
+conn.inviteToGroup(option).then((res) => {
+    console.log(res)
+})
+
+```
+
+------------------------------------------------------------------------
+
+### Apply to the group to join the group
+
+Call `joinGroup` to send a group membership application to the group, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",         // Group ID
+    message: "I am Tom"         // Request message
+};
+conn.joinGroup(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Agree users to join the group
+
+Only the administrator has the authority to approve the user's request to join the group.
+
+Call `agreeJoinGroup` to agree to the user's request to join the group, an example is as follows:
+
+``` javascript
+let options = {
+    applicant: 'userId',                          // Username for applying to join the group
+    groupId: 'groupId'                            // Group ID
+};
+conn.agreeJoinGroup(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Deny users to join the group
+
+Only the administrator has the authority to reject the user's request to join the group.
+
+Call `rejectJoinGroup` to reject the user's request to join the group, an example is as follows：
+
+``` javascript
+let options = {
+    applicant: 'user',                 // Username for applying to join the group
+    groupId: 'groupId'                 // Group ID
+};
+conn.rejectJoinGroup(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+## Mute management
+
+Mute management includes the following operations:
+
+-   Mute members
+
+-   Unmute members
+
+-   Get banned members of the group
+
+Examples of the erations will be explained one by one below.
+
+### Mute members
+
+Call `mute` to mute members, an example is as follows:
+
+``` javascript
+let options = {
+    username: "user",                      // Member username
+    muteDuration: 886400000,               // The duration of the mute, in milliseconds
+    groupId: "groupId"
+};
+conn.mute(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Unmute members
+
+Call `removeMute` to unmute a member, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",                  // Group ID
+    username: "user"                     // Member username
+};
+conn.removeMute(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get banned members of the group
+
+Call `getMuted` to get all banned members in the group, the example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId"                // Group ID
+};
+conn.getMuted(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Turn on and off all mute
+
+The owner and administrator can turn on and off the mute of all members.
+
+``` javascript
+//Mute all members in the group
+let options = {
+    groupId: "groupId", //Group id
+};
+conn.disableSendGroupMsg(options).then((res) => {
+    console.log(res)
+})
+
+//Unmute all members in the group
+conn.enableSendGroupMsg(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Whitelist management
+
+Users can be added to the whitelist. The user whitelist will become effective once the administrator turns on all members' mute, and the whitelist can run to allow the users on the list to send messages.
+In addition, the users on the whitelist can be removed. the users can check whether you are in the whitelist, and get the whitelist list.
+
+``` javascript
+//Add users to the whitelist
+let options = {
+    groupId: "groupId",          // Group id
+    users: ["user1", "user2"]    // Member id list
+};
+conn.addUsersToGroupWhitelist(options);
+
+//Remove user from whitelist
+let options = {
+    groupId: "groupId", // Group id
+    userName: "user"    // The member to be removed
+}
+conn.rmUsersFromGroupWhitelist(options);
+
+//Get the list of whitelisted members from the server
+let options = {
+    groupId: "groupId"  // Group id
+}
+conn.getGroupWhitelist(options);
+
+//Query whether group members are whitelisted users, operation authority: app admin can query all users; app user can query themselves
+let options = {
+    groupId: "groupId", // Group id
+    userName: "user"    // The member to be queried
+}
+conn.isGroupWhiteUser(options);
+```
+
+------------------------------------------------------------------------
+
+## Blacklist management
+
+Blacklist management includes the following operations:
+
+-   Add members to the group blacklist (single)
+
+-   Add members to the group blacklist (bulk)
+
+-   Remove members from group blacklist (single)
+
+-   Remove members from group blacklist (bulk)
+
+-   Get group blacklist
+
+Examples of all the operations will be explained one by one below.
+
+### Add members to the group blacklist (single)
+
+Call `groupBlockSingle` to add a single member to the group blacklist, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: 'groupId',                     // Group ID
+    username: 'username'                    // The user name to be added to the blacklist
+};
+conn.groupBlockSingle(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Add members to the group blacklist (bulk)
+
+Call `groupBlockMulti` to add members to the group blacklist in batches, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: 'groupId',                           // GroupID
+    usernames: ['user1', 'user2', ...users]       // Array of usernames to be added to the blacklist
+};
+conn.groupBlockMulti(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Remove members from group blacklist (single)
+
+Call `removeGroupBlockSingle` to remove a single member from the group blacklist, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",                     // Group ID              
+    username: "user"                        // Username that needs to be removed
+}
+conn.removeGroupBlockSingle(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Remove members from group blacklist (bulk)
+
+Call `removeGroupBlockMulti` to remove members from the group blacklist in batches, an example is as follows:
+
+``` javascript
+let options = {
+    groupId: "groupId",                         // Group ID
+    username: ["user1", "user2"]                // Array of usernames to be removed
+}
+conn.removeGroupBlockMulti(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get group blacklist
+
+Call `getGroupBlacklistNew` to get the group blacklist, an example is as follows:
+
+``` javascript
+// Get group blacklist
+let option = {
+    groupId: 'groupId',
+};
+conn.getGroupBlacklistNew(option).then((res) => {
+    console.log(res)
+})
+
+```
+
+------------------------------------------------------------------------
+
+## Group event monitor
+
+Group-related events can be monitored in the registered monitoring event onPresence:
+``` javascript
+conn.listen({
+  onPresence: function(msg){
+    switch(msg.type){
+    case 'rmGroupMute':
+      // Unblock group one-click muting
+      break;
+    case 'muteGroup':
+      // Group one-click muting
+      break;
+    case 'rmUserFromGroupWhiteList':
+      // Delete group whitelist member
+      break;
+    case 'addUserToGroupWhiteList':
+      // Add group whitelist members
+      break;
+    case 'deleteFile':
+      // Delete group file
+      break;
+    case 'uploadFile':
+      // Upload group file
+      break;
+    case 'deleteAnnouncement':
+      // Delete group announcement
+      break;
+    case 'updateAnnouncement':
+      // Update group announcement
+      break;
+    case 'removeMute':
+      // Unmute
+      break;
+    case 'addMute':
+      // Mute
+      break;
+    case 'removeAdmin':
+      // Remove manager
+      break;
+    case 'addAdmin':
+      // Add manager
+      break;
+    case 'changeOwner':
+      // Transfer group
+      break;
+    case 'direct_joined':
+      // Pulled directly into the group
+      break;
+    case 'leaveGroup':
+      // Exit group
+      break;
+    case 'memberJoinPublicGroupSuccess':
+      // Successfully joined the public group
+      break;
+    case 'removedFromGroup':
+      // Remove from group
+      break;
+    case 'invite_decline':
+      // Decline to join group invitation
+      break;
+    case 'invite_accept':
+      // Receive group invitation (group includes permissions)
+      break;
+    case 'invite':
+      // Receive group invitation
+      break;
+    case 'joinPublicGroupDeclined':
+      // Reject group application
+      break;
+    case 'joinPublicGroupSuccess':
+      // Agree to join the group application
+      break;
+    case 'joinGroupNotifications':
+      // Apply to join the group
+      break;
+    case 'leave':
+      // Exit group
+      break;
+    case 'join':
+      // Join group
+      break;
+    case 'deleteGroupChat':
+      // Disband the group
+      break;
+    default:
+      break;
+  }}
+})
+```
+
+------------------------------------------------------------------------
+
+## Group news
+
+Group messages include the following operations:
+
+-   Send message
+
+-   Receiving and messages
+
+All operations will be explained one by one below.
+
+### Send a message
+
+See [send message](/im/web/basics/message#send message).
+
+### Receiving and processing messages
+
+-   Group chat receiving and processing messages are the same as single chat;
+
+-  The message body and the single chat message are distinguished according to the type of message;
+
+-   Single chat: chat, group chat: groupchat, and chat room: chatroom;
+
+-   According to the types of the messages, they will be processed differently.
+

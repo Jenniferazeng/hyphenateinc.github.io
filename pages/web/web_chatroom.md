@@ -6,315 +6,505 @@ toc: true
 permalink: web_chatroom.html
 folder: web
 ---
-# Android SDK's Introduction and import
+
+# Chat room management
+
+Agora Web IM SDK supports the integration of chat room management functions. The following operations can be executed after the integration: 
+
+-   Get chat room list
+
+-   Join the chat room 
+
+-   Exit the chat room
+
+-   Send message 
+
+-   Receive and process messages
+
+-   Related chat room callbacks
+
+Through these operations, you can use any combinations to achieve IM requirements in a variety of scenarios.
+
+## Create chat room 
+
+Creating chat room requires [Super administrator rights](http://docs-im.easemob.com/im/server/basics/chatroom#%E7%AE%A1%E7%90%86%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98)，
+Call the \"createChatRoom\" function to create a chat room, the example is as follows: 
+
+``` javascript
+let options = {
+    name: 'chatRoomName', // Chat room name
+    description: 'description', // Chat room description
+    maxusers: 200, // The maximum number of chat room members (including the creator of the chat room), the default value is 200, the maximum value is 5000
+    members: ['user1', 'user2'] // Members of the chat room, this attribute is optional, but if you add this option, there is at least one array element 
+}
+conn.createChatRoom(options).then((res) => {
+    console.log(res)
+})
+```
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## Destroy chat room 
 
-Download link：[download page](http://www.easemob.com/download/im)
+Destroy the chat room requires[Super administrator rights]
+(http://docs-im.easemob.com/im/server/basics/chatroom#%E7%AE%A1%E7%90%86%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98)，
+Call the \"destroyChatRoom\" function to destroy the chat room, the example is as follows: 
 
-## Android SDK introduction
-
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
-
-![](/im/android/sdk/development-framework.png){.align-center}
-
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
-
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
-
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
-```
-
-Then add the following code to the `build.gradle` of your module
-
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
-    
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+``` javascript
+let options = {
+    chatRoomId: '1234567890'   // Chat room id
 }
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+conn.destroyChatRoom(options).then((res) => {
+    console.log(res)
+})
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+## Get chat room lists
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
+Call the `getChatRooms` function to get chat room list, the example is as follows: 
 
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
+``` javascript
+// List all chat rooms, support paging query 
+let option = {
+    pagenum: 1,                                 // Number of pages
+    pagesize: 20                                // Number per page
+};
+conn.getChatRooms(option).then((res) => {
+    console.log(res)
+})
 
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
-
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
 ```
 
 ------------------------------------------------------------------------
+
+## Get chat room details
+
+Call the `getChatRoomDetails` function to get the chat room details, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId'   // Chat room id
+}
+conn.getChatRoomDetails(options).then((res) => {
+    console.log(res)
+})
+```
+
+## Change chat room details
+
+Call the `modifyChatRoom` function to change the chat room details, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId',     // Chat room id
+    chatRoomName: 'chatRoomName', // Chat room name
+    description: 'description',   // Chat room description
+    maxusers: 200                 // Maximum number of chat rooms
+}
+conn.modifyChatRoom(options).then((res) => {
+    console.log(res)
+})
+```
+
+## Join the chat room
+
+Call `joinChatRoom` to join the chat room, an example is as follows: 
+
+``` javascript
+let options = {
+    roomId: 'roomId',   // Chat room id
+    message: 'reason'   // Reason (optional parameter) 
+}
+conn.joinChatRoom(options).then((res) => {
+    console.log(res)
+})
+
+```
+
+------------------------------------------------------------------------
+
+## Exit the chat room
+
+Call `quitChatRoom` to exit the chat room, an example is as follows: 
+
+``` javascript
+let options = {
+    roomId: 'roomId' // Chat room id
+}
+conn.quitChatRoom(options).then((res) => {
+    console.log(res)
+})
+
+```
+
+------------------------------------------------------------------------
+
+## Get chat room members
+
+Call the `listChatRoomMember` tab to get the members of the chat room, an example is as follows: 
+
+``` javascript
+let options = {
+    pageNum: 1,
+    pageSize: 10,
+    chatRoomId: 'chatRoomId'
+}
+conn.listChatRoomMember(options).then((res) => {
+    console.log(res)
+})
+
+```
+
+## Set up chat room manager
+
+Call `setChatRoomAdmi` to set the chat room administrator, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId', // Chat room id
+    username: 'user1'         // User id 
+}
+conn.setChatRoomAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+## Remove chat room manager
+
+Call `removeChatRoomAdmin` to remove the chat room administrator, an example is as follows:
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId', // Chat room id
+    username: 'user1'         // User id 
+}
+conn.removeChatRoomAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+## Get all managers in the chat room
+
+Call `getChatRoomAdmin` to get all the administrators in the chat room, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId'   // Chat room id
+}
+conn.getChatRoomAdmin(options).then((res) => {
+    console.log(res)
+})
+```
+
+## Send message
+
+See[Send message](/im/web/basics/message#send message)。
+
+------------------------------------------------------------------------
+
+## Chat room announcement
+
+The chat room announcement management includes the following processing operations:
+
+-   Upload/modify chat room announcements 
+
+-   Get chat room announcements
+
+Examples of all the operations will be explained individually below. 
+
+### Upload/modify chat room announcement
+
+Call the updateChatRoomAnnouncement function to upload/modify the chat room announcement, an example is as follows: 
+
+``` javascript
+let options = {
+    roomId: 'roomId',                 // Chat room id   
+    announcement: 'hello everyone'    // Announcement content                         
+};
+conn.updateChatRoomAnnouncement(options)then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get chat room announcements
+
+Call the `fetchChatRoomAnnouncement` function to get the chat room announcement, an example is as follows: 
+
+``` javascript
+var options = {
+    roomId: 'roomId'            // Chat room id                         
+};
+conn.fetchChatRoomAnnouncement(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+## Chat room muted
+
+### Mute members
+
+Call `muteChatRoomMember` to prohibit chat room users from speaking. An example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: "chatRoomId", // Chat room id
+    username: 'username',     // id of the banned chat room member
+    muteDuration: -1000       // The duration of the ban, in ms. "-1000" means permanent 
+};
+conn.muteChatRoomMember(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Unmute members
+
+Call `removeMuteChatRoomMember` to unmute chat room users, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: "1000000000000", // Chat room id
+    username: 'username'         // id of the banned chat room member
+};
+conn.removeMuteChatRoomMember(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Get all banned members of the chat room
+
+Call `getChatRoomMuted` to get all banned members in the chat room, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: "chatRoomId" // Chat room id
+};
+conn.getChatRoomMuted(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Turn on and off all mute
+
+The owner and administrator can turn on and off the mute of all members.
+
+``` javascript
+// Mute all members in the chat room 
+let options = {
+    chatRoomId: "chatRoomId"  // Chat room id
+};
+conn.disableSendChatRoomMsg(options).then((res) => {
+    console.log(res)
+})
+
+// Unmute all members in the chat room
+conn.enableSendChatRoomMsg(options).then((res) => {
+    console.log(res)
+})
+```
+
+------------------------------------------------------------------------
+
+### Whitelist management
+
+Users can be added to the whitelist. The user whitelist will become effective once the administrator turns on all members' mute, and the whitelist can run to allow the users on the list to send messages.
+In addition, the users on the whitelist can be removed. the users can check whether you are in the whitelist, and get the whitelist list.
+
+``` javascript
+// Add user to the whitelist
+let options = {
+    chatRoomId: "chatRoomId",   // Chat room id
+    users: ["user1", "user2"]   // Member id list 
+};
+conn.addUsersToChatRoomWhitelist(options);
+
+// Remove user from whitelist
+let options = {
+    chatRoomId: "chatRoomId",  // Group id 
+    userName: "user"           // Member to be removed
+}
+conn.rmUsersFromChatRoomWhitelist(options);
+
+// Get the list of whitelisted members from the server
+let options = {
+    chatRoomId: "chatRoomId"   // Chat room id
+}
+conn.getChatRoomWhitelist(options);
+
+// Query whether a member is a whitelist user, operation authority: app admin can query all users; app user can query themselves 
+let options = {
+    chatRoomId: "chatRoomId", // Chat room id
+    userName: "user"          // Member to be queried
+}
+conn.isChatRoomWhiteUser(options);
+```
+
+------------------------------------------------------------------------
+
+## Blacklist management
+
+Blacklist management includes the following  operations:
+
+-   Add members to the group blacklist (single)
+
+-   Add members to the group blacklist (bulk)
+
+-   Remove members from group blacklist (single)
+
+-   Remove members from group blacklist (bulk)
+
+-   Get blacklist of chat rooms
+
+Examples of all operations will be explained individually below.
+
+### Add members to the chat room blacklist (single)
+
+Call chatRoomBlockSingle to add a single member to the chat room blacklist, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId',       // Chat room id
+    username: 'username'            // User name to be added to the blacklist 
+};
+conn.chatRoomBlockSingle(options);
+```
+
+------------------------------------------------------------------------
+
+### Add members to the chat room blacklist (bulk)
+
+Call chatRoomBlockMulti to add a batches of member to the chat room blacklist, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: 'chatRoomId',          // Chat room id
+    usernames: ['user1', 'user2']      // Array of user ids
+};
+conn.chatRoomBlockMulti(options);
+```
+
+------------------------------------------------------------------------
+
+### Remove members from the chat room blacklist (single)
+
+Call `removeChatRoomBlockSingle` to remove a single member from the chat room blacklist, an example is as follows：
+
+``` javascript
+let options = {
+    chatRoomId: "chatRoomId",                     // Group id               
+    username: "user"                              // Username that needs to be removed 
+}
+conn.removeChatRoomBlockSingle(options);
+```
+
+------------------------------------------------------------------------
+
+### Remove members from the chat room blacklist (bulk)
+
+Call `removeChatRoomBlockMulti` to remove members from the chat room blacklist in batches. An example is as follows:
+``` javascript
+let options = {
+    chatRoomId: "chatRoomId",                      // Chat room id
+    usernames: ["user1", "user2"]                  // Array of usernames to be removed 
+}
+conn.removeChatRoomBlockMulti(options);
+```
+
+------------------------------------------------------------------------
+
+### Get blacklist of chat rooms
+
+Call `getChatRoomBlacklistNew` to get the chat room blacklist, an example is as follows: 
+
+``` javascript
+let options = {
+    chatRoomId: "chatRoomId",                    // Chat room id
+};
+conn.getChatRoomBlacklistNew(options);
+```
+
+------------------------------------------------------------------------
+
+## Receive and process messages
+
+-   Group chat receive and process messages are the same as single chat; 
+
+-   The message body and the single chat message are distinguished according to the type of message;
+
+-   Single chat: chat, group chat: groupchat, and chat room: chatroom; 
+
+-   according to the types of the messages, they will be processed differently.
+
+## Chat room event monitor
+
+You can monitor chat room related events in the registered monitoring event onPresence:
+
+``` javascript
+conn.listen({
+  onPresence: function(msg){
+    switch(msg.type){
+    case 'rmChatRoomMute':
+      // Release the one-click muting in chat rooms
+      break;
+    case 'muteChatRoom':
+      // One-click muting in chat rooms 
+      break;
+    case 'rmUserFromChatRoomWhiteList':
+      // Delete members from the chat room whitelist
+      break;
+    case 'addUserToChatRoomWhiteList':
+      // Add members to chat room whitelist
+      break;
+    case 'deleteFile':
+      // Delete chat room files
+      break;
+    case 'uploadFile':
+      // Upload chat room files
+      break;
+    case 'deleteAnnouncement':
+      // Delete chat room announcement
+      break;
+    case 'updateAnnouncement':
+      // Update chat room announcement 
+      break;
+    case 'removeMute':
+      // Unmute
+      break;
+    case 'addMute':
+      // Mute
+      break;
+    case 'removeAdmin':
+      // Remove admin
+      break;
+    case 'addAdmin':
+      // Add admin
+      break;
+    case 'changeOwner':
+      // Change the owner of the chat room
+      break;
+    case 'leaveChatRoom':
+      // Leave the chat room
+      break;
+    case 'memberJoinChatRoomSuccess':
+      // Join the chat room
+      break;
+    case 'leave':
+      // Leave the group
+      break;
+    case 'join':
+      // Join the group
+      break;
+    default:
+      break;
+  }}
+})
+```

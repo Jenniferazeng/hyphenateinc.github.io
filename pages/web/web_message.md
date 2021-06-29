@@ -6,315 +6,938 @@ toc: true
 permalink: web_message.html
 folder: web
 ---
-# Android SDK's Introduction and import
+
+# Message
+
+Message is one of the most important functions in client integration. The main methods of using WebIM messages are as follows:
+
+-   Construct the message
+
+-   Send message 
+
+-   Recall the message
+
+-   Receive the message
+
+-   Handle the message
+
+-   Message roaming 
+
+-   New message notification
+
+-   Message receipt
+
+Through the integration of messages, you can have the fastest integrated experience of  how smooth IM can achieve in sending and receiving messages. 
+
+## Construct the message 
+
+``` javascript
+let id = WebIM.conn.getUniqueId()
+let msg = new WebIM.message('txt', id);
+msg.set(option); //Message content option, will be introduced in detail below 
+```
+
+**Note:** The field is not necessary when sending ext extended message. However, if there is, the value cannot be in the form of \"ext:null\", otherwise the errors occur. 
+
+## Send message
+
+Agora supports sending messages to **single chat**, **group** **chat** and **chat room**: 
+
+-   Text message
+
+-   Emoji message
+
+-   Sticker message
+
+-   URL image message
+
+-   Command message
+
+-   Attachment message
+
+-   Custom message
+
+Diversified message types, covering the message requirements in a variety of scenarios.
+
+### Send text messages (single chat, extended) 
+
+The example of sending a text message in a single chat:
+
+``` javascript
+// Sending text messages in the single chat
+function sendPrivateText() {
+    let id = conn.getUniqueId();                 // Generate local message id 
+    let msg = new WebIM.message('txt', id);      // Create text message 
+    msg.set({
+        msg: 'message content',                  // Message content 
+        to: 'username',                          // The recipient of the message (user id)
+        chatType: 'singleChat',                  // Set to single chat
+        ext: {
+            key: value,
+            key2: {
+                key3: value3
+            }
+        },                                  //Extend message
+        success: function (id, serverMsgId) {
+            console.log('send private text Success');  
+        }, 
+        fail: function(e){
+            //Reason for failure:
+            //e.type === '603' banned
+            //e.type === '605' group does not exist
+            //e.type === '602' not in a group or chat room
+            //e.type === '504' the withdrawal time exceeded the withdrawal time when the message was withdrawn
+            //e.type === '505' unopened message withdrawn
+            //e.type === '506' not in the whitelist of the group or chat room
+            //e.type === '503' unknown error 
+            console.log("Send private text error");  
+        }
+    });
+    conn.send(msg.body);
+};
+```
+
+### Send text message (group) 
+
+The example of sending group text messages: 
+
+``` javascript
+// Group sends text message 
+function sendGroupText() {
+    let id = conn.getUniqueId();            // Generate local message id
+    let msg = new WebIM.message('txt', id); // Create text message
+    let option = {
+        msg: 'message content',             // Message content 
+        to: 'group id',                     // The recipient of the message (group id)
+        chatType: 'groupChat',              // Set group chat type to group chat
+        ext: {},                            // Extend message 
+        success: function () {
+            console.log('send room text success');
+        },                                  // For the related definition of success, the SDK will register the message id in the log for the backup process
+        fail: function () {
+            console.log('failed');
+        }                                   // For the definition of failure, the sdk will register the message id in the log for the backup process
+    };
+    msg.set(option);
+    conn.send(msg.body);
+};
+```
+
+### Send text messages (chat room）
+
+The example of sending chat room text messages：
+
+``` javascript
+// Sending text message in chat room
+function sendRoomText() {
+    let id = conn.getUniqueId();         // Generate local message id 
+    let msg = new WebIM.message('txt', id); // Create text message 
+    let option = {
+        msg: 'message content',          // Message content
+        to: 'chatroom id',               // Receive message object (chat room id)
+        chatType: 'chatRoom',            // Set group chat type to chat room
+        ext: {},                         // Extend message 
+        success: function () {
+            console.log('send room text success');
+        },                               // For the related definition of success, the SDK will register the message id in the log for the backup process
+        fail: function () {
+            console.log('failed');
+        }                                // For the definition of failure, the sdk will register the message id in the log for the backup process
+    };
+    msg.set(option);
+    conn.send(msg.body);
+};
+```
+
+**Note：** The performance examples of single chat and group chat are almost the same . The difference is that the recipients of the message are different. The object of single chat to is \*\*user ID **, and the object of group/chat room to is **group/chat room ID\*\*
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+### Send emoji messages
 
-Download link：[download page](http://www.easemob.com/download/im)
+Sending emoji messages is the same as sending text messages. The emoji text needs to be parsed into pictures on the other‘s client.
 
-## Android SDK introduction
+The example for sending emoji messages in a single chat is as follows:
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
-
-![](/im/android/sdk/development-framework.png){.align-center}
-
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
-
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
-
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
+``` javascript
+conn.listen({
+    onEmojiMessage: function (message) {
+        console.log('Emoji');
+        var data = message.data;
+        for(var i = 0 , l = data.length ; i < l ; i++){
+            console.log(data[i]);
+        }
+    },   //Receive emoji messages
+});
+// Single chat to send text messages
+var sendPrivateText = function () {
+    var id = conn.getUniqueId();                 // Generate local message id
+    var msg = new WebIM.message('txt', id);      // Create text message
+    msg.set({
+        msg: 'message content',                  // Message content 
+        to: 'username',                          // The recipient of the message (user id)
+        chatType: 'singleChat',
+        success: function (id, serverMsgId) {
+            console.log('send private text Success');
+        },
+        fail: function(e){
+            console.log("Send private text error");
+        }
+    });
+    conn.send(msg.body);
+};
 ```
 
-Then add the following code to the `build.gradle` of your module
+**Note：** When the Emoji attribute is added to WebIM, if the sent message contains specific strings in WebIM.Emoji, the connection will automatically combine these strings and other characters into an array in order, and the structure of each array element is{type:\'emoji(or txt)\',  data:\'msg(or src)\'}
 
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
+When type=\'emoji\', data means **path of emoji image**;
+
+When type=\'txt\', data means **text message**.
+
+------------------------------------------------------------------------
+
+### Send sticker message
+
+The Web IM SDK itself does not support screenshots. The following code could enable the user to paste the picture into the input box and send it.
+
+The example for sending a sticker message in a single chat:
+
+``` javascript
+// Send stickers in single chat
+document.addEventListener('paste', function (e) {
+    if (e.clipboardData && e.clipboardData.types) {
+        if (e.clipboardData.items.length > 0) {
+            if (/^image\/\w+$/.test(e.clipboardData.items[0].type)) {
+                var blob = e.clipboardData.items[0].getAsFile();
+                var url = window.URL.createObjectURL(blob);
+                var id = conn.getUniqueId();             // Generate local message id
+                var msg = new WebIM.message('img', id);  // Create image message
+                msg.set({
+                    file: {data: blob, url: url},
+                    to: 'username',                      // The recipient of the message
+                    chatType: 'singleChat',
+                    onFileUploadError: function (error) {
+                        console.log('Error');
+                    },
+                    onFileUploadComplete: function (data) {
+                        console.log('Complete');
+                    },
+                    success: function (id) {
+                        console.log('Success');
+                    },
+                    fail: function(e){
+                        console.log("Fail"); // Fail to send a message if the user is banned or blocked 
+                    }
+                });
+                conn.send(msg.body);
+            }
+        }
+    }
+});
+```
+
+------------------------------------------------------------------------
+
+### Send URL image message
+
+APP client side needs to be downloaded by the developer, and the Web client side needs to be set `useOwnUploadFun: true` in WebIMConfig.js.
+
+The example of single chat to send image message through URL:
+
+``` javascript
+//  Send image messages via URL in single chat
+ var sendPrivateUrlImg = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('img', id);        // Create image message
+    var option = {
+        body: {
+          type: 'file',
+          url: url,
+          size: {
+            width: msg.width,
+            height: msg.height,
+           },
+          length: msg.length,
+          filename: msg.file.filename,
+          filetype: msg.filetype
+        },
+        to: 'username',  // The recipient of the message
+    };
+    msg.set(option);
+    conn.send(msg.body);
+ }
+```
+
+------------------------------------------------------------------------
+
+### Send command message
+
+The example of sending command message:
+
+``` javascript
+var id = conn.getUniqueId();            //Generate local message id
+var msg = new WebIM.message('cmd', id); //Create command message
+
+msg.set({
+  to: 'username',                        //The recipient of the message
+  action : 'action',                     //User-defined, cmd message is required
+  ext :{'extmsg':'extends messages'},    //User self-extended message content (same usage in group chat)
+  success: function ( id,serverMsgId ) {}, //Message sent successfully callback
+  fail: function(e){
+      console.log("Fail"); //Fail to send a message if the user is banned or blocked
+  }
+});   
+
+conn.send(msg.body);
+```
+
+------------------------------------------------------------------------
+
+### Send attachment message
+
+The attachment message is an important message type in the message. The attachment message mainly includes the following types:
+
+* Image message
+* File message
+* Audio message
+* Video message
+
+**·** The SDK automatically executes to send an attachment message in two steps:
+
+1. Upload the attachment to the server, and get the attachment information returned by the service, etc.;
+2. Send the attachment message, the message body contains the basic information of the attachment, server path, secret, etc.
+
+Note: There is a difference between the attachment message sent by the web terminal and the applet. The attachment message sent by the applet needs to upload the attachment to the ring letter server. The following is an image message to show how the applet sends the attachment message
+
+The example of sending a image message in single chat:
+
+``` javascript
+// Web single chat to send image messages
+var sendPrivateImg = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('img', id);        // Create image message
+    var input = document.getElementById('image');  // Select the input of the picture
+    var file = WebIM.utils.getFileUrl(input);      // Convert pictures to binary files
+    var allowType = {
+        'jpg': true,
+        'gif': true,
+        'png': true,
+        'bmp': true
+    };
+    if (file.filetype.toLowerCase() in allowType) {
+        var option = {
+            file: file,
+            length: '3000',                       // Video file, unit (ms)
+            ext: {
+                file_length: file.data.size       // File size
+            },
+            to: 'username',                       // The recipient of the message
+            chatType: 'singleChat',               // Set to single chat
+            onFileUploadError: function () {      // Message upload failed
+                console.log('onFileUploadError');
+            },
+            onFileUploadComplete: function () {   // Message uploaded successfully
+                console.log('onFileUploadComplete');
+            },
+            success: function () {                // Message sent successfully
+                console.log('Success');
+            },
+            fail: function(e){
+                console.log("Fail");              //Fail to send a message if the user is banned or blocked
+            },
+            flashUpload: WebIM.flashUpload
+        };
+        msg.set(option);
+        conn.send(msg.body);
+    }
+};
+
+// Send image messages in applet single chat
+sendImage(){
+    const me = this;
+    wx.chooseImage({
+        count: 1,
+        sizeType: ["original", "compressed"],
+        sourceType: ["album"],
+        success(res){
+            me.upLoadImage(res);
+        }
+    });
+}
+upLoadImage(res){
+    const me = this;
+    let tempFilePaths = res.tempFilePaths;
+    let token = WebIM.conn.context.accessToken
+    wx.getImageInfo({
+    src: res.tempFilePaths[0],
+    success(res){
+        let allowType = {jpg: true, gif: true, png: true, bmp: true};
+        let str = WebIM.config.appkey.split("#");
+        let width = res.width;
+        let height = res.height;
+        let index = res.path.lastIndexOf(".");
+        let filetype = (~index && res.path.slice(index + 1)) || "";
+        let domain = wx.WebIM.conn.apiUrl + '/'
+        if(filetype.toLowerCase() in allowType){
+            wx.uploadFile({
+                url: domain + str[0] + "/" + str[1] + "/chatfiles",
+                filePath: tempFilePaths[0],
+                name: "file",
+                header: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: "Bearer " + token
+                },
+                success(res){
+                    if(res.statusCode === 400){
+                        // The image upload to Alibaba Cloud inspection is illegal
+                        let errData = JSON.parse(res.data);
+                        if (errData.error === 'content improper') {
+                            wx.showToast({
+                                title: 'illegal image'
+                            });
+                            return
+                        }
+                    }
+                    let data = res.data;
+                    let dataObj = JSON.parse(data);
+                    let id = WebIM.conn.getUniqueId(); // Generate local message id
+                    let msg = new WebIM.message(msgType.IMAGE, id);
+                    let file = {
+                        type: msgType.IMAGE,
+                        size: {
+                            width: width,
+                            height: height
+                        },
+                        url: dataObj.uri + "/" + dataObj.entities[0].uuid,
+                        filetype: filetype,
+                        filename: tempFilePaths[0]
+                    };
+                    msg.set({
+                        apiUrl: WebIM.config.apiURL,
+                        body: file,
+                        from: me.data.username.myName,
+                        to: me.getSendToParam(),
+                        chatType: me.data.chatType,
+                        success: function (argument) {},
+                        fail: function(e){
+                            console.log("Fail"); //Fail to send a message if mute or block the message
+                        }
+                    });
+                    WebIM.conn.send(msg.body);
+                }
+            });
+        }
+    }
+});
+}
+```
+
+The example of a file message sent by a single chat is as follows:
+
+``` javascript
+// Single chat to send file message
+var sendPrivateFile = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('file', id);        // Create file message
+    var input = document.getElementById('file');  // Select the input of the file
+    var file = WebIM.utils.getFileUrl(input);      // Convert files to binary files
+    var allowType = {
+        'jpg': true,
+        'gif': true,
+        'png': true,
+        'bmp': true,
+        'zip': true,
+        'txt': true,
+        'doc': true,
+        'pdf': true
+    };
+    if (file.filetype.toLowerCase() in allowType) {
+        var option = {
+            file: file,
+            to: 'username',                       // The recipient of the message
+            chatType: 'singleChat',               // Set to single chat
+            onFileUploadError: function () {      // Message upload failed
+                console.log('onFileUploadError');
+            },
+            onFileUploadComplete: function () {   // Message uploaded successfully
+                console.log('onFileUploadComplete');
+            },
+            success: function () {                // Message sent successfully
+                console.log('Success');
+            },
+            fail: function(e){
+                console.log("Fail");              //Fail to send a message if mute or block the message
+            },
+            flashUpload: WebIM.flashUpload,
+            ext: {file_length: file.data.size}
+        };
+        msg.set(option);
+        conn.send(msg.body);
+    }
+};
+```
+
+The example of sending an audio message in a single chat is as follows:
+
+``` javascript
+// Single chat to send audio message
+var sendPrivateAudio = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('audio', id);      // Create audio message
+    var input = document.getElementById('audio');  // Select audio input
+    var file = WebIM.utils.getFileUrl(input);      // Convert audio to binary file
+    var allowType = {
+        'mp3': true,
+        'amr': true,
+        'wmv': true
+    };
+    if (file.filetype.toLowerCase() in allowType) {
+        var option = {
+            file: file,
+            length: '3',                          // Audio file duration, unit (s)
+            to: 'username',                       // The recipient of the message
+            chatType: 'singleChat',               // Set to single chat
+            onFileUploadError: function () {      // Message upload failed
+                console.log('onFileUploadError');
+            },
+            onFileUploadComplete: function () {   // Message uploaded successfully
+                console.log('onFileUploadComplete');
+            },
+            success: function () {                // Message sent successfully
+                console.log('Success');
+            },
+            fail: function(e){
+                console.log("Fail");              //Fail to send a message if mute or block the message
+            },
+            flashUpload: WebIM.flashUpload,
+            ext: {file_length: file.data.size}
+        };
+        msg.set(option);
+        conn.send(msg.body);
+    }
+};
+```
+
+The example of sending a video message in a single chat is as follows:
+
+``` javascript
+// Single chat to send video message
+var sendPrivateVideo = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('video', id);      // Create video message
+    var input = document.getElementById('video');  // Select video input
+    var file = WebIM.utils.getFileUrl(input);      // Convert video to binary file
+    var allowType = {
+        'mp4': true,
+        'wmv': true,
+        'avi': true,
+        'rmvb':true,
+        'mkv':true
+    };
+    if (file.filetype.toLowerCase() in allowType) {
+        var option = {
+            file: file,
+            to: 'username',                       // The recipient of the message
+            chatType: singleChat,                 // Set to single chat
+            onFileUploadError: function () {      // Message upload failed
+                console.log('onFileUploadError');
+            },
+            onFileUploadComplete: function () {   // Message uploaded successfully
+                console.log('onFileUploadComplete');
+            },
+            success: function () {                // Message sent successfully
+                console.log('Success');
+            },
+            fail: function(e){
+                console.log("Fail");              // Fail to send a message if mute or block the message
+            },
+            flashUpload: WebIM.flashUpload,
+            ext: {file_length: file.data.size}
+        };
+        msg.set(option);
+        conn.send(msg.body);
+    }
+};
+```
+
+### Send custom message
+
+The example of a custom message sent by a single chat is as follows:
+
+``` javascript
+var sendCustomMsg = function () {
+    var id = conn.getUniqueId();                 // Generate local message id
+    var msg = new WebIM.message('custom', id);   // Create custom message
+    var customEvent = "customEvent";             // Create custom event
+    var customExts = {};                         // Message content, key/value needs string type
+    msg.set({
+        to: 'username',                          // The recipient of the message(user id)
+        customEvent,
+        customExts,
+        ext:{},                                  // Message extension
+        roomType: false,
+        success: function (id, serverMsgId) {},
+        fail: function(e){}
+    });
+    conn.send(msg.body);
+};
+```
+
+------------------------------------------------------------------------
+
+## Message withdrawn
+
+SDK value-added services.
+
+``` javascript
+/**
+  * Send a withdrawal message
+ * @param {Object} option - 
+ * @param {Object} option.mid -   Recall message id
+ * @param {Object} option.to -   The recipient of the message
+ * @param {Object} option.type -  chat (single chat) groupchat (group) chatroom (chat room)
+ * @param {Object} option.success - Recall the successful callback
+ * @param {Object} option.fail- Recall the failed callback (more than two minutes)
+ */
+WebIM.conn.recallMessage(option)
+```
+
+------------------------------------------------------------------------
+
+## Receive message
+
+Check the callback function, the callback function code for receiving various messages is as follows:
+
+``` javascript
+conn.listen({
+    onOpened: function ( message ) {          //Successful connection callback
+    },  
+    onClosed: function ( message ) {},         //Connection closed callback
+    onTextMessage: function ( message ) {},    //Receive text message
+    onEmojiMessage: function ( message ) {},   //Receive emoji message
+    onPictureMessage: function ( message ) {}, //Receive image message
+    onCmdMessage: function ( message ) {},     //Receive command message
+    onAudioMessage: function ( message ) {},   //Receive audio message 
+    onLocationMessage: function ( message ) {},//Receive receive location
+    onFileMessage: function ( message ) {},    //Receive file message
+    onCustomMessage: function ( message ) {},  //Receive custom message
+    onVideoMessage: function (message) {
+        var node = document.getElementById('privateVideo');
+        var option = {
+            url: message.url,
+            headers: {
+              'Accept': 'audio/mp4'
+            },
+            onFileDownloadComplete: function (response) {
+                var objectURL = WebIM.utils.parseDownloadResponse.call(conn, response);
+                node.src = objectURL;
+            },
+            onFileDownloadError: function () {
+                console.log('File down load error.')
+            }
+        };
+        WebIM.utils.download.call(conn, option);
+    },   //Receive video message
+    onPresence: function ( message ) {},       //Processing "broadcast" or "publish-subscribe" messages, such as contact subscription requests, processing groups, chat rooms being kicked and disbanded, etc.
+    onRoster: function ( message ) {},         //Process friend request
+    onInviteMessage: function ( message ) {},  //Process group invitations
+    onOnline: function () {},                  //The local network connection is successful
+    onOffline: function () {},                 //The local network is offline
+    onError: function ( message ) {},          //Failed callback
+    onBlacklistUpdate: function (list) {       //Blacklist change
+        // Query the blacklist, block a friend, and remove a friend from the blacklist will call back this function. The list is all the information of the existing friends in the blacklist
+        console.log(list);
+    },
+    onRecallMessage: function( message ){},    //Reveive message withdrawal receipt
+    onReceivedMessage: function(message){},    //Reveive message delivery server receipt
+    onDeliveredMessage: function(message){},   //Reveive message delivery client receipt
+    onReadMessage: function(message){},        //Reveive message read receipt
+    onCreateGroup: function(message){},        //Receipt of successful group creation (createGroupNew needs to be called) 
+    onMutedMessage: function(message){},       //If a user is banned in group A, this callback will be sent to group A and the message will not be delivered to other members of the group
+    onChannelMessage: function(message){}      //Receive the read receipt of the entire conversation, and the message will be received in this callback when the other party sends a channel ack 
+});
+```
+
+-------------
+
+## Process the message
+
+Here are examples of some special messages processing 
+-   Emoji message
+
+-   Image message 
+
+-   Audio message
+
+### Emoji message
+
+Processing example of receiving emoji message：
+
+``` javascript
+conn.listen({
+    onEmojiMessage: function (message) {
+        console.log('Emoji');
+        var data = message.data;
+        for(var i = 0 , l = data.length ; i < l ; i++){
+            console.log(data[i]);
+        }
+    },   //Receive emoji message
+});
+```
+
+**Note:** When the Emoji attribute is added to WebIM, if the sent message contains specific strings in WebIM.Emoji, connection will automatically combine these strings and other text into an array in order, each array The structure of the element is
+**{type:\'emoji(or txt)\',  <data:type>}**
+
+When type=\'emoji\', data means **path of emoji image**;
+
+When type=\'txt\', data means **text message**. 
+
+### Image message
+
+The example of processing received image message:
+
+``` javascript
+conn.listen({
+    onPictureMessage: function (message) {
+        console.log("Location of Picture is ", message.url);
+    }, //Reveive image message
+});
+```
+
+### Audio message
+
+Examples of processing received audio messages: 
+
+``` javascript
+conn.listen({
+  onAudioMessage: function ( message ) {
+    // Receive audio messages here
+  }
+})
+
+// web
+addAudioMessage: (message, bodyType) => {
+  return (dispatch, getState) => {
+    let options = {
+          url: message.url,
+          headers: {
+            Accept: 'audio/mp3'
+          },
+          onFileDownloadComplete: function (response) {
+            let objectUrl = WebIM.utils.parseDownloadResponse.call(WebIM.conn, response)
+            message.audioSrcUrl = message.url
+              message.url = objectUrl
+            },
+          onFileDownloadError: function () {}
+        }
+      WebIM.utils.download.call(WebIM.conn, options)
+   }
+}
+```
+
+**Note：**
+
+-   Pictures and audio messages need to be downloaded first, and then displayed 
+    or played.
+
+------------------------------------------------------------------------
+
+## Message roaming
+
+Roaming message, `SDK value-added function`.
+``` javascript
+/**
+ * Get conversation history messages
+ * @param {Object} options
+ * @param {String} options.queue   - The user id of the other party (if the user id contains uppercase letters, please change to lowercase letters)/group id/chat room id
+ * @param {String} options.count   - Number of items pulled at a time
+ * @param {Boolean} options.isGroup - Whether it is a group chat, the default is false
+ * @param {Function} options.success
+ * @param {Funciton} options.fail
+ */
+var options = {
+    queue: "user1", //Pay special attention to the queue attribute value mixed with uppercase and lowercase letters, and pure uppercase letters, which will cause the pull roaming to be an empty array, so pay attention to replace the attribute value to pure lowercase
+    isGroup: false,
+    count: 10,
+    success: function(res){
+       console.log(res) //Get historical news of successful pull
+    },
+    fail: function(){}
+}
+WebIM.conn.fetchHistoryMessages(options)
+```
+
+PS：If need to reset the cursor of the pull history message interface, you can reset it through the "WebIM.conn.mr_cache = \[\]" method.
+
+------------------------------------------------------------------------
+
+## New message reminder
+
+When the SDK receives a new message, it will forward it to the logged-in user directly. After receiving the message, the demo will display the number of messages in red behind the friend or group. The developer change the its styles. 
+
+------------------------------------------------------------------------
+
+## Conversation list
+
+`Need to contact a business colleague to open separately`
+
+After sending a message to a target user or group, the target user or group will be added to the conversation list automatically. In addition, the conversation list can be queried by calling getSessionList. It is recommended that a page only requires to be called once at the initialization. To use this function, you need to contact your business manager to activate it. (You can scan the QR code to contact your business manager on the home page of the Easemob Communication Cloud Management Backstage)
+Special note: Do not use a mixed-case ID for the login ID. If the mixed-case ID is used in the pull session list, the pull session list will be empty.
+
+``` javascript
+WebIM.conn.getSessionList().then((res) => {
+    console.log(res)
+    /**
+    Return parameter description
+    channel_infos - all sessions
+    channel_id - session id, username@easemob.com means single chat, groupid@conference.easemob.com means group chat
+    meta - the last message
+    unread_num - the number of unread messages in the current session
     
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    data{
+        channel_infos:[
+            {
+                channel_id: 'easemob-demo#chatdemoui_username@easemob.com',
+                meta: {},
+                unread_num: 0
+            },
+            {
+                channel_id: 'easemob-demo#chatdemoui_93734273351681@conference.easemob.com',
+                meta: {
+                    from: "easemob-demo#chatdemoui_zdtest@easemob.com/webim_1610159114836",
+                    id: "827197124377577640",
+                    payload: "{"bodies":[{"msg":"1","type":"txt"}],"ext":{},"from":"zdtest","to":"93734273351681"}",
+                    timestamp: 1610161638919,
+                    to: "easemob-demo#chatdemoui_93734273351681@conference.easemob.com"
+                },
+                unread_num: 0
+            }
+        ]
     }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+    */
+    
+})
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
-
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
-
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
-
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
-```
+When it is needed to clear the number of unread messages of the conversation, Please check the channel ack in the message receipt 
 
 ------------------------------------------------------------------------
+
+## Message receipt
+
+Single chat:
+
+-Delivered receipt: Configure delivery to true in webim.config.js, and the delivery receipt will be automatically sent when a message is received. The callback function for the other party to receive the delivery receipt is onDeliveredMessage 
+
+```{=html}
+<!-- -->
+```
+-   Read receipt:
+
+1. When you think the user has read a specific message(s), you can generate a read receipt and send it back to the other party, and the other party will receive the read receipt in the onReadMessage callback
+2. You can also reply to the channel ack message for the entire conversation, indicating that all the messages in the conversation have been read. This receipt message is to clear the unread messages in the conversation list obtained through getSessionList. For example, call getSessionList to get the conversation list, and the number of unread messages in one of the conversations is 5, then you can reply a channel message when you click on this conversation, this conversation The number of unread messages will be cleared. 
+
+**Single chat to send read receipt**
+
+``` javascript
+var bodyId = message.id;         // The id of the message that needs to send the read receipt
+var msg = new WebIM.message('read',conn.getUniqueId());
+msg.set({
+    id: bodyId
+    ,to: message.from
+});
+conn.send(msg.body);
+```
+
+**Group chat read receipt**`SDK value-added functions`:
+
+-   Sending groups can receive messages with read receipts (group owner or administrator rights are required) 
+
+``` javascript
+ sendGroupReadMsg = () => {
+  let id = conn.getUniqueId();                 // Generate local message id
+  let msg = new WebIM.message('txt', id);      // Create text message
+  msg.set({
+     msg: 'message content',                  // Message content 
+     to: 'username',                          // The recipient of the message (user id)
+     chatType: 'groupChat',                   // Set to group chat 
+     success: function (id, serverMsgId) {
+         console.log('send private text Success');
+     },
+     fail: function(e){
+         console.log("Send private text error");
+     }
+  });
+  msg.body.msgConfig = { allowGroupAck: true } // read receipt is required to set this message 
+  conn.send(msg.body);
+}
+ 
+```
+
+-   Send the receipt after receiving the message that requires receipt
+
+``` javascript
+ sendReadMsg = () => {
+  let msg = new WebIM.message("read", WebIM.conn.getUniqueId());
+  msg.set({
+      id：message.id,         // The id of the message that needs to send the read receipt
+      to: 'groupId',
+      msgConfig: { allowGroupAck: true },
+      ackContent: JSON.stringify({}) // Receipt content
+  })
+  msg.setChatType('groupChat')
+  WebIM.conn.send(msg.body);
+}
+```
+
+-   There are two situations to monitor the receipt of group messages: 1. Listen 
+    to the receipt in the onReadMessage function online; 2. When receive the group message receipt offline, listen to the receipt in the onStatisticMessage function after logging in. 
+
+``` javascript
+// Monitor onReadMessage when you are online 
+onReadMessage: (message) => {
+  const { mid } = message;
+  const msg = {
+    id: mid
+  };
+  if(message.groupReadCount){
+    // Message reads 
+    msg.groupReadCount = message.groupReadCount[message.mid];
+  }
+}
+      
+// Receive the receipt offline, then monitor it here after logging in 
+onStatisticMessage: (message) => {
+  let statisticMsg = message.location && JSON.parse(message.location);
+  let groupAck = statisticMsg.group_ack || [];
+}
+```
+
+-   View users who have read the message
+
+``` jacascript
+WebIM.conn.getGroupMsgReadUser({
+    msgId,  // message id
+    groupId // group id
+}).then((res)=>{
+    console.log(res)
+})
+```
+
+**Send the entire conversation read receipt**
+
+``` javascript
+var msg = new WebIM.message('channel',conn.getUniqueId());
+msg.set({
+    to: 'username'
+});
+
+// If it is group chat 
+msg.set({
+    to: 'groupid'，
+    chatType: 'groupChat'
+});
+
+conn.send(msg.body);
+```
+
