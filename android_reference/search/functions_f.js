@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['recallmessage',['recallMessage',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#a766fec8e12f97cd1db6e472db1959e4f',1,'io::agora::chat::ChatManager']]],
+  ['removechatroomadmin',['removeChatRoomAdmin',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a9e728fb2214c54d25659e3abfa5efa0c',1,'io::agora::chat::ChatRoomManager']]],
+  ['removechatroomchangelistener',['removeChatRoomChangeListener',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a9b41e689198c07540d4b9363a84631b4',1,'io::agora::chat::ChatRoomManager']]],
+  ['removechatroomlistener',['removeChatRoomListener',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a5d054c734d8d3a593cf574b1e0f61367',1,'io::agora::chat::ChatRoomManager']]],
+  ['removechatroommembers',['removeChatRoomMembers',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#ab59c77e32a2b1baf0cc6ab99ae66c433',1,'io::agora::chat::ChatRoomManager']]],
+  ['removeconnectionlistener',['removeConnectionListener',['../classio_1_1agora_1_1chat_1_1_chat_client.html#a36c8e1815c8d54e43d02f66168695fdc',1,'io::agora::chat::ChatClient']]],
+  ['removecontactlistener',['removeContactListener',['../classio_1_1agora_1_1chat_1_1_contact_manager.html#a67ec4a5cf5b008f894f2d68def4495c0',1,'io::agora::chat::ContactManager']]],
+  ['removeconversationlistener',['removeConversationListener',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#a79476748c67f77c060f64e275fb70296',1,'io::agora::chat::ChatManager']]],
+  ['removefromchatroomwhitelist',['removeFromChatRoomWhiteList',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a82341e516f88a62b61b7d6f8c2f79c0b',1,'io::agora::chat::ChatRoomManager']]],
+  ['removefromgroupwhitelist',['removeFromGroupWhiteList',['../classio_1_1agora_1_1chat_1_1_group_manager.html#ad825de0843e01eae40fb011b90815cd8',1,'io::agora::chat::GroupManager']]],
+  ['removegroupadmin',['removeGroupAdmin',['../classio_1_1agora_1_1chat_1_1_group_manager.html#ab4aa9e1b9de627bd58fa3bae878338b6',1,'io::agora::chat::GroupManager']]],
+  ['removegroupchangelistener',['removeGroupChangeListener',['../classio_1_1agora_1_1chat_1_1_group_manager.html#a253478970c77e2fe61f88ed1b026581b',1,'io::agora::chat::GroupManager']]],
+  ['removemessage',['removeMessage',['../classio_1_1agora_1_1chat_1_1_conversation.html#abb3c9448ab472a362f85370eddf6911c',1,'io::agora::chat::Conversation']]],
+  ['removemessagelistener',['removeMessageListener',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#a5aa03279de8c351abde0d04b7090a201',1,'io::agora::chat::ChatManager']]],
+  ['removemultidevicelistener',['removeMultiDeviceListener',['../classio_1_1agora_1_1chat_1_1_chat_client.html#a0345f8902b8ef3298e8607bb6328b8cc',1,'io::agora::chat::ChatClient']]],
+  ['removeuserfromblacklist',['removeUserFromBlackList',['../classio_1_1agora_1_1chat_1_1_contact_manager.html#a9cbcb1523176032a47e459f770a9fc4a',1,'io::agora::chat::ContactManager']]],
+  ['removeuserfromgroup',['removeUserFromGroup',['../classio_1_1agora_1_1chat_1_1_group_manager.html#a57cd87f6277ce4c3436d40ee124defbf',1,'io::agora::chat::GroupManager']]],
+  ['removeusersfromgroup',['removeUsersFromGroup',['../classio_1_1agora_1_1chat_1_1_group_manager.html#a93cd7351f85ebfda0011cf30a768bbe0',1,'io::agora::chat::GroupManager']]]
+];

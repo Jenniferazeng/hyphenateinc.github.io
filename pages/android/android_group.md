@@ -6,315 +6,549 @@ toc: true
 permalink: android_group.html
 folder: android
 ---
-# Android SDK's Introduction and import
+# Group Management
 
-------------------------------------------------------------------------
+Many groups operation need authentication ahead , including whether the current user is in the group and whether they have administrator or owner permissions.
+It is recommended that after the user logs in successfully, call ChatClient.getInstance().groupManager().getJoinedGroupsFromServer();
+Refresh the list of local groups to ensure that the authentication works normally.
 
-## DEMO（EaseIM App） experience
 
-Download link：[download page](http://www.easemob.com/download/im)
+**Note**: `1, the number of group owners and administrators cannot exceed 100. no more than 99 administrators. 2. The maximum number of group members (including the group owner), the default value is 200, and the maximum value is 3000. `
 
-## Android SDK introduction
+-------------------------------------------------- ----------------------
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+## Send and receive messages
 
-![](/im/android/sdk/development-framework.png){.align-center}
+For sending and receiving messages and chat records, see [Message](/im/android/basics/message) .
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
-
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
-
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
-```
-
-Then add the following code to the `build.gradle` of your module
+## New group
 
 ``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
+/**
+ * Create a group
+ * @param groupName    group name
+ * @param desc         group introduction
+ * @param allMembers   is the initial member of the group, if you only pass an null array by yourself (up to 100 members can be passed)
+ * @param reason       reason for inviting members to join
+ * @param option       group type option, you can set the maximum number of group users (default 200, maximum 3000) and group type @see {@link GroupStyle}
+ * 						option.inviteNeedConfirm indicates whether the other party's approval is required for inviting the other party into the group. By default, the invited party join the group automatically.
+ * 						option.extField can set extended fields for the group when creating a group, which is convenient for customization.
+ * @return 				created group
+ * @throws ChatException
+ */
+GroupOptions option = new GroupOptions();
+option.maxUsers = 200;
+option.style = GroupStyle.GroupStylePrivateMemberCanInvite;
+
+ChatClient.getInstance().groupManager().createGroup(groupName, desc, allMembers, reason, option);
+```
+
+Note: If option.inviteNeedConfirm is set to false, the invitee is directly added to the group. In this case, it  will not work that invitee set the non-automatic group joining .
+
+- The GroupStyle in option are:
+
+  -`GroupStylePrivateOnlyOwnerInvite`------Private group, only the owner can invite people;
+  -`GroupStylePrivateMemberCanInvite`------Private group, group members can also invite people into the group;
+  -`GroupStylePublicJoinNeedApproval`------Public group, to join this group, except for the invitation of the group owner, you can only join this group through application;
+  -`GroupStylePublicOpenJoin` ------Public group, anyone can join this group.
+
+## Add administrator permissions
+
+``` java
+/**
+  * Add group administrator, owner permission is required
+  * @param groupId
+  * @param admin
+  * @return
+  * @throws ChatException
+  */
+ChatClient.getInstance().groupManager().addGroupAdmin(final String groupId, final String admin);//Asynchronous processing required
+```
+
+## Remove administrator permissions
+
+``` java
+/**
+  * To delete group administrators, owner permissions are required
+  * @param groupId
+  * @param admin
+  * @return
+  * @throws ChatException
+  */
+ChatClient.getInstance().groupManager().removeGroupAdmin(String groupId, String admin);//Asynchronous processing required
+```
+
+## Change group owner
+
+``` java
+/**
+  * Group ownership to others
+  * @param groupId
+  * @param newOwner
+  * @return
+  * @throws ChatException
+  */
+ChatClient.getInstance().groupManager().changeOwner(String groupId, String newOwner);//Asynchronous processing required
+```
+
+## add people in the group
+
+``` java
+//when group owner adds people, call this method
+ChatClient.getInstance().groupManager().addUsersToGroup(groupId, newmembers);//Asynchronous processing is required
+//In a private group, if the group member invitation is open, the group member invitation calls the following method
+ChatClient.getInstance().groupManager().inviteUser(groupId, newmembers, null);//Asynchronous processing is required
+```
+
+## kick people in the group
+
+``` java
+//Remove username from the group
+ChatClient.getInstance().groupManager().removeUserFromGroup(groupId, username);//Asynchronous processing is required
+```
+
+## Join a group
+
+Can only be used to join public groups.
+
+``` java
+//If the public group is free to join, group.isMembersOnly() is false, join directly
+ChatClient.getInstance().groupManager().joinGroup(groupid);//Asynchronous processing is required
+//Need to apply and verify to join, group.isMembersOnly() is true, call the following method
+ChatClient.getInstance().groupManager().applyJoinToGroup(groupid, "Request to join");//Asynchronous processing is required
+```
+
+## Leave the group
+
+``` java
+ChatClient.getInstance().groupManager().leaveGroup(groupId);//Asynchronous processing is required
+```
+
+## Disband group
+
+``` java
+ChatClient.getInstance().groupManager().destroyGroup(groupId);//Asynchronous processing is required
+```
+
+## Get a complete list of group members
+
+``` java
+//If there are many group members, you need to repeat the getting operation many times to get all of them
+
+List<String> memberList = new ArrayList<>;
+CursorResult<String> result = null;
+final int pageSize = 20;
+do {
+     result = ChatClient.getInstance().groupManager().fetchGroupMembers(groupId,
+             result != null? result.getCursor(): "", pageSize);
+     memberList.addAll(result.getData());
+} while (!TextUtils.isnull(result.getCursor()) && result.getData().size() == pageSize);
+```
+
+## Get group list
+
+``` java
+//Get the list of groups you have joined and created from the server. The group SDK got from this api will be automatically saved to the memory and db.
+List<Group> grouplist = ChatClient.getInstance().groupManager().getJoinedGroupsFromServer();//Asynchronous processing is required
+
+//Load group list from local
+List<Group> grouplist = ChatClient.getInstance().groupManager().getAllGroups();
+
+//Get the list of public groups
+//pageSize is the number of groups to be fetched, cursor is used to tell the server where to start fetching
+CursorResult<GroupInfo> result = ChatClient.getInstance().groupManager().getPublicGroupsFromServer(pageSize, cursor);//Asynchronous processing is required
+List<GroupInfo> groupsList = List<GroupInfo> returnGroups = result.getData();
+String cursor = result.getCursor();
+```
+
+## Modify group name｜Description
+
+``` java
+//Modify group name
+ChatClient.getInstance().groupManager().changeGroupName(groupId,changedGroupName);//Asynchronous processing is required
+
+//Modify group description
+ChatClient.getInstance().groupManager().changeGroupDescription(groupId,description);//Asynchronous processing is required
+```
+
+## Group Information
+
+Get information of a single group. The return result of getGroupFromServer(groupId) includes the group name, group description, group owner, and administrator list, but does not include group members.
+
+getGroupFromServer(String groupId, boolean fetchMembers). If fetchMembers is true, the group members will also be get when fetching group information, the maximum number is 200.
+
+``` java
+//get the basic group information from the local according to the group ID
+Group group = ChatClient.getInstance().groupManager().getGroup(groupId);
+//get the basic group information from the server according to the group ID
+Group group = ChatClient.getInstance().groupManager().getGroupFromServer(groupId);
+
+group.getOwner();//Get the owner
+List<String> members = group.getMembers();//Get the group members in memory
+List<String> adminList = group.getAdminList();//Get the list of administrators
+boolean isMsgBlocked = group.isMsgBlocked();//Get whether the group message has been blocked
+...
+```
+
+For details of other methods, please refer to the [Agora Interface Document](http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1chat_1_1_e_m_group_manager.html).
+
+## Block group messages
+
+The call of Owner permission is not allowed.
+
+``` java
+/**
+* After blocking group messages, you cannot receive messages from this group (still a member of the group, but no longer receive messages)
+* @param groupId, group ID
+* @throws ChatException
+*/
+ChatClient.getInstance().groupManager().blockGroupMessage(groupId);//Asynchronous processing is required
+```
+
+## Unblock group
+
+``` java
+/**
+* Unblock group messages and you can receive all group messages normally
+* @param groupId
+* @throws ChatException
+*/
+ChatClient.getInstance().groupManager().unblockGroupMessage(groupId);//Asynchronous processing is required
+```
+
+## Group blacklist
+
+### add a user into the group blacklist
+
+``` java
+/**
+* Add users to the blacklist of the group. Users who are added to the blacklist cannot join the group and cannot send and receive messages from this group
+* (Only the group owner can set the group blacklist)
+* @param groupId,     ID of the group
+* @param username,    username to be blocked
+* @exception ChatException     will be thrown if an error occurs
+*/
+ChatClient.getInstance().groupManager().blockUser(groupId, username);//Asynchronous processing is required
+```
+
+### Remove users from the blacklist
+
+``` java
+/**
+* Remove users from the blacklist（Only the group owner can call this function）
+* @param groupId,     Group ID
+* @param username,    Username to be unblocked
+*/
+ChatClient.getInstance().groupManager().unblockUser(groupId, username);//Asynchronous processing required
+```
+
+### Get the blacklisted user list of the group
+
+``` java
+/**
+* Get the blacklist of the group
+* (Only the group owner can call this function)
+* @return List<String>
+* @throws ChatException    get failed
+*/
+ChatClient.getInstance().groupManager().getBlockedUsers(groupId);//Asynchronous processing is required
+```
+
+## Group mute operation
+
+### Add group members to the mute list
+
+``` java
+/**
+ * to mute group members, the group owner or administrator permissions are required
+ * @param               groupId
+ * @param muteMembers   muted user list
+ * @param duration      The duration of silence, in milliseconds
+ * @return
+ * @throws ChatException
+ */
+ChatClient.getInstance().groupManager().muteGroupMembers(String groupId, List<String> muteMembers, long duration);//Asynchronous processing is required
+```
+
+### Remove group members from the mute list
+
+``` java
+/**
+ * To unmute, you need the group owner or administrator permissions
+ * @param groupId
+ * @param members
+ * @return
+ * @throws ChatException
+ */
+
+ChatClient.getInstance().groupManager().unMuteGroupMembers(String groupId, List<String> members);//Asynchronous processing is required
+```
+
+### Get the list of banned group members
+
+``` java
+/**
+  * To get the mute list of the group, the group owner or administrator permissions are required
+  * @param groupId
+  * @param pageNum
+  * @param pageSize
+  * @return Map.entry.key        is the muted member id, and Map.entry.value is the time of the mute action lasting, in milliseconds.
+  * @throws ChatException
+  */
+ChatClient.getInstance().groupManager().fetchGroupMuteList(String groupId, int pageNum, int pageSize)
+```
+
+### Turn on and off all mute
+
+The owner and administrator can turn on and off the mute of all members.
+
+``` java
+     /**
+     * \~chinese
+     * Mute all members
+     * @param groupId group id
+     */
+    public void muteAllMembers(final String groupId, final ValueCallBack<Group> callBack)
     
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+    /**
+     * \~chinese
+     * Lift all members' ban
+     * @param groupId group id
+     */
+    public void unmuteAllMembers(final String groupId, final ValueCallBack<Group> callBack)
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+### Whitelist Management
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
-
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
+Users can be added to the whitelist. The user whitelist takes effect when the administrator turns on all members' mute, and the whitelist can be run to allow members in it to send messages to users.
+In addition, you can remove the user from the whitelist, check whether you are in the whitelist, and get the whitelist list.
 
 ``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+         /**
+     * \~chinese
+     * Add users to the whitelist
+     * @param groupId group id
+     * @param members member id list
+     */
+    public void addToGroupWhiteList(final String groupId, final List<String> members, final CallBack callBack)
+
+        /**
+     * \~chinese
+     * Remove users from the whitelist
+     * @param groupId group id
+     * @param members member id list
+     */
+    public void removeFromGroupWhiteList(final String groupId, final List<String> members, final CallBack callBack)
+
+        /**
+     * \~chinese
+     * Check if you are in the whitelist
+     * @param groupId group id
+     */
+    public void checkIfInGroupWhiteList(final String groupId, ValueCallBack<Boolean> callBack)
+
+        /**
+     * \~chinese
+     * Get the list of whitelisted members from the server
+     * @param groupId group id
+     */
+    public void fetchGroupWhiteList(final String groupId, final ValueCallBack<List<String>> callBack)
 ```
+
+## Set/Update Group Announcement
+
+``` java
+/**
+  * Update group announcement
+  * @param groupId group id
+  * @param announcement Announcement content
+  * @throws ChatException
+  */
+ChatClient.getInstance().groupManager().updateGroupAnnouncement(groupId, announcement);
+```
+
+## Get group announcement
+
+``` java
+ChatClient.getInstance().groupManager().fetchGroupAnnouncement(groupId)
+
+```
+
+## Upload shared files
+
+``` java
+/**
+  * Upload the shared file to the group, note that the callback is only for the progress callback
+  * @param groupId group id
+  * @param filePath file local path
+  * @param callBack callback
+  */
+ChatClient.getInstance().groupManager().uploadGroupSharedFile(groupId, filePath, callBack)
+
+```
+
+## Delete group shared files
+
+``` java
+/**
+  * Delete this shared file from the group
+  * @param groupId group id
+  * @param fileId file id
+  */
+ChatClient.getInstance().groupManager().deleteGroupSharedFile(groupId, fileId);
+
+```
+
+## Get the group shared file list
+
+``` java
+/**
+  * Get the group's shared file list from the server
+  * @param groupId group id
+  * @param pageNum page number
+  * @param pageSize page size
+  *
+  */
+ChatClient.getInstance().groupManager().fetchGroupSharedFileList(groupId, pageNum, pageSize)
+
+```
+
+## Download group shared files
+
+``` java
+/**
+  * Download a shared file in the group, note that the callback is only for progress callback
+  * @param groupId    group id
+  * @param fileId     file id
+  * @param savePath   file saved path
+  * @param callBack   callback
+  */
+ChatClient.getInstance().groupManager().downloadGroupSharedFile(groupId, fileId, savePath, callBack);
+```
+
+## Update group extension field
+
+``` java
+ChatClient.getInstance().groupManager().updateGroupExtension(groupId, extension);
+```
+
+## Group event monitoring
+
+``` java
+ChatClient.getInstance().groupManager().addGroupChangeListener(new GroupChangeListener() {
+@Override
+    public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
+        //Received an invitation to join the group
+    }
+
+    @Override
+    public void onRequestToJoinReceived(String groupId, String groupName, String applyer, String reason) {
+        //Users apply to join the group
+    }
+
+    @Override
+    public void onRequestToJoinAccepted(String groupId, String groupName, String accepter) {
+        //Add group application is approved
+    }
+
+    @Override
+    public void onRequestToJoinDeclined(String groupId, String groupName, String decliner, String reason) {
+        //The group application is rejected
+    }
+
+    @Override
+    public void onInvitationAccepted(String groupId, String inviter, String reason) {
+        //Group invitation is approved
+    }
+
+    @Override
+    public void onInvitationDeclined(String groupId, String invitee, String reason) {
+        //Group invitation rejected
+    }
+    
+    @Override
+    public void onAutoAcceptInvitationFromGroup(String groupId, String inviter, String inviteMessage) {
+        //Notice to automatically join the group when receiving an invitation
+    }
+
+    @Override
+    public void onMuteListAdded(String groupId, final List<String> mutes, final long muteExpire) {
+        //Notice of muting a member
+    }
+
+    @Override
+    public void onMuteListRemoved(String groupId, final List<String> mutes) {
+        //The notification of removing the members from the mute list
+    }
+    
+    @Override
+    public void onWhiteListAdded(String groupId, List<String> whitelist) {
+          //Members are added to the whitelist
+    }
+
+    @Override
+    public void onWhiteListRemoved(String groupId, List<String> whitelist) {
+         //The member is removed from the whitelist
+    }
+
+    @Override
+    public void onAllMemberMuteStateChanged(String groupId, boolean isMuted) {
+          //Whether the mute of all members is enabled
+    }
+
+    @Override
+    public void onAdminAdded(String groupId, String administrator) {
+        //notification of adding the administrator
+    }
+
+    @Override
+    public void onAdminRemoved(String groupId, String administrator) {
+        //Notice of removal of administrator 
+    }
+
+    @Override
+    public void onOwnerChanged(String groupId, String newOwner, String oldOwner) {
+        //Notification of group owner change
+    }
+    @Override
+    public void onMemberJoined(final String groupId, final String member){
+        //Notify of new members joining the group
+    }
+    @Override
+    public void onMemberExited(final String groupId, final String member) {
+        //notification of Group member exiting 
+    }
+
+    @Override
+    public void onAnnouncementChanged(String groupId, String announcement) {
+        //notification of Group announcement changed
+    }
+
+    @Override
+    public void onSharedFileAdded(String groupId, EMMucSharedFile sharedFile) {
+        //notification of adding shared files
+    }
+
+    @Override
+    public void onSharedFileDeleted(String groupId, String fileId) {
+        //notification of Group shared file deleted
+    }
+});
+```
+
+## Demo and SDK download
+
+[Download Demo and SDK](http://www.easemob.com/download/im)
+
+For detailed document, please refer to [Java Doc](/im/android/sdk/apidoc)
+
+-------------------------------------------------- ----------------------
+
+\<WRAP group> \<WRAP half column>
+Previous page: [Friends Management](/im/android/basics/buddy) \</WRAP>
+
+\<WRAP half column> Next page: [Chat room management](/im/android/basics/chatroom)
+\</WRAP> \</WRAP>
+
 
 ------------------------------------------------------------------------

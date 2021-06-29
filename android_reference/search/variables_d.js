@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['up',['UP',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html#a6ca5f65950f2cff43d4a3e69365aded3',1,'io::agora::chat::Conversation::EMSearchDirection']]],
+  ['user_5falready_5fexist',['USER_ALREADY_EXIST',['../classio_1_1agora_1_1_error.html#a842caced889a9757c9a955e4e74c0538',1,'io::agora::Error']]],
+  ['user_5falready_5flogin',['USER_ALREADY_LOGIN',['../classio_1_1agora_1_1_error.html#a344033fd7e39eb3a140538a046067719',1,'io::agora::Error']]],
+  ['user_5fauthentication_5ffailed',['USER_AUTHENTICATION_FAILED',['../classio_1_1agora_1_1_error.html#a8e5d7973673323cc4f4a4583ed3a467a',1,'io::agora::Error']]],
+  ['user_5fbind_5fanother_5fdevice',['USER_BIND_ANOTHER_DEVICE',['../classio_1_1agora_1_1_error.html#a9432face725c44cb59d0433e09d82430',1,'io::agora::Error']]],
+  ['user_5fbinddevicetoken_5ffailed',['USER_BINDDEVICETOKEN_FAILED',['../classio_1_1agora_1_1_error.html#a78ee0e79290815affcd59f55fa957593',1,'io::agora::Error']]],
+  ['user_5fillegal_5fargument',['USER_ILLEGAL_ARGUMENT',['../classio_1_1agora_1_1_error.html#abb3554015b4a3e37973acfab4ce6ef1f',1,'io::agora::Error']]],
+  ['user_5fkicked_5fby_5fchange_5fpassword',['USER_KICKED_BY_CHANGE_PASSWORD',['../classio_1_1agora_1_1_error.html#a47c0fb3b405f6922e813d1c4e1864ee2',1,'io::agora::Error']]],
+  ['user_5fkicked_5fby_5fother_5fdevice',['USER_KICKED_BY_OTHER_DEVICE',['../classio_1_1agora_1_1_error.html#a90d5536feafc87b5d613784d1345f653',1,'io::agora::Error']]],
+  ['user_5flogin_5fanother_5fdevice',['USER_LOGIN_ANOTHER_DEVICE',['../classio_1_1agora_1_1_error.html#aefc30e5a293f48d2a2f737e99383e995',1,'io::agora::Error']]],
+  ['user_5flogin_5ftoo_5fmany_5fdevices',['USER_LOGIN_TOO_MANY_DEVICES',['../classio_1_1agora_1_1_error.html#a0f1339a87a187b3f8089c86d6431af8d',1,'io::agora::Error']]],
+  ['user_5fmuted',['USER_MUTED',['../classio_1_1agora_1_1_error.html#a3c1b12275c60f7b99b293326fc9d39a9',1,'io::agora::Error']]],
+  ['user_5fname_5ftoo_5flong',['USER_NAME_TOO_LONG',['../classio_1_1agora_1_1_error.html#aa00722ba50482bef9b5dcd9b40cd3f2a',1,'io::agora::Error']]],
+  ['user_5fnot_5ffound',['USER_NOT_FOUND',['../classio_1_1agora_1_1_error.html#a351df5f6ac8d3bc5e1399324a884a44d',1,'io::agora::Error']]],
+  ['user_5fnot_5flogin',['USER_NOT_LOGIN',['../classio_1_1agora_1_1_error.html#ac4ffa19cc96c524f73bdbb615aa4eecd',1,'io::agora::Error']]],
+  ['user_5fpermission_5fdenied',['USER_PERMISSION_DENIED',['../classio_1_1agora_1_1_error.html#a6924c1684c86a75d23c7162e32d52182',1,'io::agora::Error']]],
+  ['user_5freg_5ffailed',['USER_REG_FAILED',['../classio_1_1agora_1_1_error.html#a201776605098c9a85a1184f8215f3929',1,'io::agora::Error']]],
+  ['user_5fremoved',['USER_REMOVED',['../classio_1_1agora_1_1_error.html#a8e2591b3692138acfe3188e874b1e50e',1,'io::agora::Error']]],
+  ['user_5funbind_5fdevicetoken_5ffailed',['USER_UNBIND_DEVICETOKEN_FAILED',['../classio_1_1agora_1_1_error.html#a498ace39d1a85d9d347c02f4ab91a332',1,'io::agora::Error']]],
+  ['user_5fupdateinfo_5ffailed',['USER_UPDATEINFO_FAILED',['../classio_1_1agora_1_1_error.html#a5f76abd8228b43d9727d7c1a0c905f4a',1,'io::agora::Error']]]
+];
