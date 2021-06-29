@@ -83,12 +83,9 @@ Still have questions, don't know how to solve it?
 2\. The work order description should include but is not limited to the following information
 
 -   Access address of your page？
--   Provide the apiUrl, xmppUrl, appKey and your test login account password in your webim.config.js ？
+-   Provide the apiUrl, socketUrl, appKey and your test login account password in your webim.config.js ？
 -   Is the connection to your page established normally, and is the onOpen monitoring triggered?
 -   Provide the log information of all consoles (see the figure below for how to open the console)
 
-Open the console and take Chrome as an example
-
-![Open the Chrome console](/im/400webimintegration/631797ea288988d131b35ec9ffbd6211.jpg)
 
 
