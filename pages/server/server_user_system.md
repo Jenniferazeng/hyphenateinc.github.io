@@ -13,7 +13,7 @@ Introduce the data structure and usage rules of Appkey and Chat user ID.
 
 ### Appkey data structure
 
-When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the string can only consist of lowercase alphanumeric, the AppKey is the unique identifier of the Chat application. The first half **org_name** is the unique tenant identifier under the multi-tenant system, and the second half **app_name** is the unique identifier of the app under the tenant (the app id filled in when creating an app in the Chat backend is the app_name). In the following REST API, **/{org_name}/{app_name}** requests are made for a unique appkey. At present, the appkey registered by Chat cannot be deleted by users themselves at the moment, If you are interested in APP deletion, you need to contact Chat to complete the operation.
+When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the string can only consist of lowercase alphanumeric, the AppKey is the unique identifier of the Chat application. The first half **org_name** is the unique tenant identifier under the multi-tenant system, and the second half **app_name** is the unique identifier of the app under the tenant (the app id filled in when creating an app in the Chat backend is the app_name). In the following Platform API, **/{org_name}/{app_name}** requests are made for a unique appkey. At present, the appkey registered by Chat cannot be deleted by users themselves at the moment, If you are interested in APP deletion, you need to contact Chat to complete the operation.
 
 <table border="1px" cellspacing="0px" bordercolor="#000000">
   <tr>
@@ -83,18 +83,18 @@ It is strongly recommended to protect the org administrator, APP administrator u
 
 ------------------------------------------------------------------------
 
-# REST API
+# Platform API
 
-Introduces the REST API that needs to be used in the integration process of the IM user system. The documentation details that can be tested online using the [Chat REST API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
+Introduces the Platform API that needs to be used in the integration process of the IM user system. The documentation details that can be tested online using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
 ## Request Domain
 
-Chat's REST API requests for domain names from different data centers：
+Chat's Platform API requests for domain names from different data centers：
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>Data Center</th>
-    <th>REST API Request Address</th>
+    <th>Platform API Request Address</th>
   </tr>
   <tr>
     <td>Domestic Area 1</td>
@@ -122,15 +122,15 @@ The data center where the request is located can be viewed in the [Developer Con
 
 `Note：`
 
-`1.To meet the business needs of different customers, Chat has deployed data centers in multiple locations. The REST API request domain name varies from data center to data center. Please select the request domain name according to your data center.`
+`1.To meet the business needs of different customers, Chat has deployed data centers in multiple locations. The Platform API request domain name varies from data center to data center. Please select the request domain name according to your data center.`
 
-`2.Domestic VIP area, customer service area customers please contact the business manager to ask for the REST API request address.`
+`2.Domestic VIP area, customer service area customers please contact the business manager to ask for the Platform API request address.`
 
 `3.Support http,https.`
 
 ## Get administrator permission
 
-The REST API provided by Chat requires permission to access it, which is reflected by sending an HTTP request with a token The following describes how to get the token. Note: When describing the API, the Parameter such as {APP's client_id} and other Parameter need to be replaced with specific values.
+The Platform API provided by Chat requires permission to access it, which is reflected by sending an HTTP request with a token The following describes how to get the token. Note: When describing the API, the Parameter such as {APP's client_id} and other Parameter need to be replaced with specific values.
 
 `Important Reminder: The server will return the token expiration date when getting the token, please refer to the expires_in field returned by the interface for the specific value. Due to network latency, the system does not guarantee that the token is absolutely valid within the expiration date indicated by this value, if you find that the token is used abnormally, please get a new token, for example, "http response code" returns 401. In addition, please do not send requests frequently to the server to get token, the same account will be blocked if you send this request more often than a certain number of times. Please take care of it!!`
 
@@ -246,7 +246,7 @@ If the returned result is <table border="1" cellspacing="0" bordercolor="#000000
   </tr>
 </table>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -463,7 +463,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -627,7 +627,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -808,7 +808,7 @@ When there is a registered user3 in the request body, then the request will be s
 
 If the returned result is <font color='red'> 429, 503 </font> or other \<wrapem>5xx\</wrap>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -974,7 +974,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1149,7 +1149,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 > Pagination
 
@@ -1220,7 +1220,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1329,7 +1329,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1439,7 +1439,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1535,7 +1535,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1690,7 +1690,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1818,7 +1818,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
     <td>Bearer ${token}</td>
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1975,7 +1975,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2128,7 +2128,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2237,7 +2237,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2350,7 +2350,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2462,7 +2462,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2607,7 +2607,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2729,7 +2729,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2875,7 +2875,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3104,7 +3104,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3218,7 +3218,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3371,7 +3371,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3477,7 +3477,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3591,4 +3591,4 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat REST API](http://api-docs.easemob.com/)
+[Online testing using Chat Platform API](http://api-docs.easemob.com/)

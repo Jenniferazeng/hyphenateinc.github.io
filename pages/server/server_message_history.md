@@ -9,7 +9,7 @@ folder: server
 
 The export chat log interface is not a real-time interface, and there is a certain delay in getting success, so it cannot be used as a real-time pull message interface. The following APIs require enterprise administrator privileges to access.
 
-Chat logs need to be exported using the REST API, which can be tested online by using the [Chat REST API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
+Chat logs need to be exported using the Platform API, which can be tested online by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -26,7 +26,7 @@ Chat logs need to be exported using the REST API, which can be tested online by 
 
 ##  Get the history message file
 
-The REST API provided by Chat requires permission to access it, which is reflected by sending HTTP requests with a token
+The Platform API provided by Chat requires permission to access it, which is reflected by sending HTTP requests with a token
 The following describes how to get the token. Note: The API description uses {APP's client_id} and other parameters need to be replaced with specific values.
 
 **Important reminder: **When getting token, the server will return the token expiration date, refer to the expires_in field. 
@@ -136,7 +136,7 @@ Note: the url has an expiration time, the Expires timestamp in the url is the ex
 
 If the return result is <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [Interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 > Tips
 
@@ -150,7 +150,7 @@ The download address returned by the interface is valid for 30 minutes, and the 
 
 ------------------------------------------------------------------------
 
-Chat Info supports exporting chat logs via the REST interface.
+Chat Info supports exporting chat logs via the Platform API interface.
 If the export of chat logs is abnormal, it is possible that the interface has been restricted, so please pause a little and retry. See [interface flow restriction description](/im/450errorcode/45restastrict) for details.
 
 ##  Chat log data structure

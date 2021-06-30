@@ -13,7 +13,7 @@ Add the extraction interface of real-time audio and video call recording files
 
 ### Updated on 2018-12-10
 
-Update the description of REST API in the basic function of the server-side documents, add server-side request and return parameters
+Update the description of Platform API in the basic function of the server-side documents, add server-side request and return parameters
 
 ### Updated on 2018-11-30
 

@@ -178,7 +178,7 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,it may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat REST API].](http://api-docs.easemob.com/)
+[[Online testing using the Chat Platform API].](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -266,7 +266,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -390,7 +390,7 @@ curl -X POST -H 'Content-Type:  application/json' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -469,7 +469,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -549,5 +549,5 @@ curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWM
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Chat REST API](http://api-docs.easemob.com/)
+[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
 

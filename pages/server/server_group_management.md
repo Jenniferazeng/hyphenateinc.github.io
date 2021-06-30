@@ -7,7 +7,7 @@ permalink: server_group_management.html
 folder: server
 ---
 
-Chat provides REST API to manage groups in APP.
+Chat provides Platform API to manage groups in APP.
 
 There is a [limit](http://www.easemob.com/pricing/im) on the number of groups created by a single APP, if you need to increase it, you can contact business to solve it according to your specific business.`Only 500 groups can be joined by a single user ID`。
 
@@ -103,10 +103,10 @@ Group role permission range: group owner > group administrator > normal group me
 
 ------------------------------------------------------------------------
 
-# REST API
+# Platform API
 
-The REST APIs that are used in the IM group integration process
-The documentation is detailed and can be tested online by using the [Chat REST API](http://api-docs.easemob.com/) embedded in the documentation.
+The Platform APIs that are used in the IM group integration process
+The documentation is detailed and can be tested online by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation.
 
 ## Manage Groups
 
@@ -344,7 +344,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt4LqJIul7
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -459,7 +459,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt4LqJIul7
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -627,7 +627,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt4LqJIul7
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -778,7 +778,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -940,7 +940,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1029,7 +1029,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt4LqJI
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1117,7 +1117,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1206,7 +1206,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1358,7 +1358,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1488,7 +1488,7 @@ curl -X POST 'http://a1.easecdn.com/chat-demo/testapp/chatgroups/66021836783617/
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1563,7 +1563,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1676,7 +1676,7 @@ curl -X DELETE -H 'Content-Type: application/json' -H 'Accept: application/json'
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1854,7 +1854,7 @@ curl -X GET 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/10130212061185/u
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1972,7 +1972,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2105,7 +2105,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2235,7 +2235,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt4LqJI
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2382,7 +2382,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMtduapF
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2458,7 +2458,7 @@ curl -X GET 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/10130212061185/a
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2547,7 +2547,7 @@ curl -X POST 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/10130212061185/
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2612,7 +2612,7 @@ curl -X DELETE 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/1013021206118
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2742,7 +2742,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2879,7 +2879,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3012,7 +3012,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3175,7 +3175,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/))
+[Test online using Chat Platform API](http://api-docs.easemob.com/))
 
 ------------------------------------------------------------------------
 
@@ -3278,7 +3278,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3389,7 +3389,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3520,7 +3520,7 @@ curl -X POST 'HTTP://a1.easecdn.com/chat-demo/testuser/chatgroups/10130212061185
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3583,7 +3583,7 @@ curl -X DELETE 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/1013021206118
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -3663,4 +3663,4 @@ curl -X GET 'HTTP://a1.easecdn.com/chat-demo/testapp/chatgroups/10130212061185/m
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
