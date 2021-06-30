@@ -1,5 +1,5 @@
 ---
-title: Android Connect To Chat Server
+title: Connect To Chat Server
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -41,7 +41,7 @@ appContext = this;
 int pid = android.os.Process.myPid();
 String processAppName = getAppName(pid);
 // If the remote service is enabled in the APP, application:onCreate will be called twice
-// In order to prevent Agora SDK from being initialized twice, adding this judgment will ensure that the SDK is initialized once
+// In order to prevent chat SDK from being initialized twice, adding this judgment will ensure that the SDK is initialized once
 // The default APP will run under the default process name with the package name. If the process name found is not the process name of the APP, it will return immediately.
 
 if (processAppName == null ||!processAppName.equalsIgnoreCase(appContext.getPackageName())) {

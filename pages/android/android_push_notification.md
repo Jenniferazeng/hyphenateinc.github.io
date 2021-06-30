@@ -1,5 +1,5 @@
 ---
-title: Android Push Notification
+title: Push Notification
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -37,7 +37,7 @@ At present, the main implementations of Xiaomi, Meizu, OPPO, and VIVO push are i
   
 ### Message push process:
   
-![Message Push Flowchart](/im/android/push/image010.png){.align-center}
+![Message Push Flowchart](/images/android/TheProcessOfPushingMessage.jpeg)
   
 1. Determine what kind of push the device supports, (the app is configured with third-party push and meets the conditions to use the push)
 2. get the push token according to the integrated third-party push SDK
@@ -131,18 +131,15 @@ Project**.
 
 5. Enter the guide page, as shown in the figure below, click the button to download the google-services.json file to the local. *Pay attention to where the json file is placed in the Android project.*
 
-![](/im/200androidcleintintegration/3.3.5_config_download.png){width="400"}
+![](/images/android/firebase_register.png)
 
 6. Skip the guide page, click on the Cloud Messaging tab page, copy Server Key and Sender ID
 
-![](/im/200androidcleintintegration/3.3.5_cloud_messaging.png){width="400"}
+![](/images/android/firebase_get_sender_id.png)
 
 7. Log in to [Developer console](http://console.easemob.com/), home page-application list-view application-instant messaging-message push-add push certificate, the name of the certificate is required to fill in the copy above Sender
 ID,  fill in the Server Key copied above for certificate key.
 
-![](/im/android/push/添加谷歌证书.png)
-
-![](/im/200androidcleintintegration/3.3.5_certificate_add_success.png){width="600"}
 
 ### Mobile
 
@@ -193,7 +190,7 @@ Addconfiguration of `compile'com.google.android.gms:play-services-base:11.4.0`\'
 
 4. Place the downloaded google-services.json in the root directory of app-level
 
-![](/im/200androidcleintintegration/3.3.5_config_location.png){width="400"}
+![](/images/android/firebase_location.png)
 
 5. Implement a custom service inherited from FirebaseInstanceIdService. This class is used to listen to the creation and update of FCM tokens. One device corresponds to one FCM token, which is used by the server to push messages to the device. Therefore, the token needs to be uploaded to the chat server in time after it is created or updated.
 

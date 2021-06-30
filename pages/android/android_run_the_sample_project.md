@@ -1,5 +1,5 @@
 ---
-title: Android Run the Sample Project
+title: Run the Sample Project
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -11,9 +11,9 @@ folder: android
 
 You can get the source code in the following two ways:
 
--   Download the code compression package: [IM SDK and Demo
+-   Download the code compression package: [Chat SDK and Demo
         Download](https://www.easemob.com/download/im)
--   Download the source code: [github source address](https://github.com/easemob/chat-android)
+-   Download the source code: [github source address](https://github.com/HyphenateInc/Hyphenate-Demo-Android)
 
 Everyone is welcome to submit PR to improve and fix the problems in ChatDemo.
 
