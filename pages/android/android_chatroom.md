@@ -6,31 +6,31 @@ toc: true
 permalink: android_chatroom.html
 folder: android
 ---
-# Chat room management
+# Chat Room Management
 
 -------------------------------------------------- ----------------------
 
 The Agora chat room model supports 5000 members as the maximum. Unlike a group, after a member in the chat room is offline, the server will not send any pushes to this member after it detects that the member is offline.
 
--Support up to 5000 members;
--Agora’s chat room has three identities: owner, administrator and tourist;
--Support operations such as mute, blacklist, and kick;
--Client invitation is not supported;
--REST invitation is not supported.
--The chat room API is usually a synchronous operation and needs to be executed in a separate thread. If you need to use asynchronous API, please use the corresponding API  with async prefix
+- Support up to 5000 members;
+- Agora’s chat room has three identities: owner, administrator and tourist;
+- Support operations such as mute, blacklist, and kick;
+- Client invitation is not supported;
+- REST invitation is not supported.
+- The chat room API is usually a synchronous operation and needs to be executed in a separate thread. If you need to use asynchronous API, please use the corresponding API  with async prefix
 
 The main features of Agora chat room client include:
 
--Support for querying all APP chat rooms;
--Support for querying chat room details;
--Join the chat room;
--quit the chat room;
--Client API
+- Support for querying all APP chat rooms;
+- Support for querying chat room details;
+- Join the chat room;
+- Quit the chat room;
+- Client API
      They are all operated by `ChatRoomManager(ChatClient.getInstance().chatroomManager())`.
 
 ### Server-side API
 
-For REST operations related to server-side chat rooms, please refer to [chat room management](/im/server/basics/chatroom)
+For REST operations related to server-side chat rooms, please refer to [chat room management](https://hyphenateinc.github.io/server_chatroom_management.html)
 
 ### Join the chat room
 
@@ -50,7 +50,7 @@ ChatClient.getInstance().chatroomManager().joinChatRoom(roomId, new ValueCallBac
     });
 ```
 
-**Note: **For the chat room model, please be sure to wait until the Join callback is successful before you initialize conversation.
+**Note:** For the chat room model, please be sure to wait until the Join callback is successful before you initialize conversation.
 
 ### Leave the chat room
 
@@ -74,8 +74,7 @@ This method is asynchronous and will not block the current thread. There is no c
  * @return ChatRoom 						chat room
  * @throws ChatException
  */
-ChatClient.getInstance().chatroomManager().createChatRoom(String subject, String description, String welcomeMessage,
-                                 int maxUserCount, List<String> members);
+ChatClient.getInstance().chatroomManager().createChatRoom(String subject, String description, String welcomeMessage,nt maxUserCount, List<String> members);
 ```
 
 ### Destroy the chat room
@@ -97,8 +96,8 @@ CursorResult<ChatRoom> result = ChatClient.getInstance().chatroomManager().fetch
 
 parameter:
 
--pageSize: the item got this time
--cursor: the cursor ID needed in the background, get the pageSize item according to this ID, and pass null for the first time
+- pageSize: the item got this time
+- cursor: the cursor ID needed in the background, get the pageSize item according to this ID, and pass null for the first time
 
 return value:
 
@@ -124,9 +123,11 @@ room.getOwner();//Chat room creator
 
 Refer to [API document](http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1chat_1_1_e_m_chat_room.html)
 
-roomId chat room id
+parameter:
 
-fetchMembers whether to fetch chat room members
+- roomId chat room id
+
+- fetchMembers whether to fetch chat room members
 
 ``` java
 ChatClient.getInstance().chatroomManager().fetchChatRoomFromServer(roomId, fetchMembers)
@@ -145,7 +146,7 @@ ChatClient.getInstance().chatroomManager().changeChatroomDescription(String chat
 
 ### Chat room mute
 
-#### mute members
+#### Mute members
 
 ``` java
 /**
@@ -308,7 +309,7 @@ List<String> blackList = ChatClient.getInstance().chatroomManager().fetchChatRoo
 ChatClient.getInstance().chatroomManager().fetchChatRoomAnnouncement(roomId);
 ```
 
-It is also possible to get the message push of the chat room announcement through the chat room listening interface. See [Register for chat room listening](http://docs-im.easemob.com/im/android/basics/chatroom#Register for chat room monitoring)
+It is also possible to get the message push of the chat room announcement through the chat room listening interface. See [Register for chat room listening](https://hyphenateinc.github.io/android_chatroom.html#register-for-chat-room-listening)
 
 ### Update chat room announcement
 
@@ -317,7 +318,7 @@ ChatClient.getInstance().chatroomManager().updateChatRoomAnnouncement(chatRoomId
 
 ```
 
-It is also possible to get the message push of the chat room announcement through the chat room listening interface. See [Register for chat room listening](http://docs-im.easemob.com/im/android/basics/chatroom#Register for chat room monitoring)
+It is also possible to get the message push of the chat room announcement through the chat room listening interface. See [Register for chat room listening](https://hyphenateinc.github.io/android_chatroom.html#register-for-chat-room-listening)
 
 ### Register for chat room listening
 
@@ -355,15 +356,15 @@ ChatClient.getInstance().chatroomManager().addChatRoomChangeListener(new ChatRoo
     
     }
     
-     @Override
-     public void onWhiteListAdded(final String chatRoomId, final List<String> whitelist){
+    @Override
+    public void onWhiteListAdded(final String chatRoomId, final List<String> whitelist){
         
-     }
+    }
        
-     @Override
-     public void onWhiteListRemoved(final String chatRoomId, final List<String> whitelist) {
+    @Override
+    public void onWhiteListRemoved(final String chatRoomId, final List<String> whitelist) {
          
-     }
+    }
     
     @Override
     public void onAllMemberMuteStateChanged(final String chatRoomId, final boolean isMuted) {
@@ -400,9 +401,4 @@ ChatClient.getInstance().chatroomManager().removeChatRoomChangeListener(chatroom
 
 -------------------------------------------------- ----------------------
 
-\<WRAP group> \<WRAP half column>
-Previous page: [Group Management](/im/android/basics/group) \</WRAP>
-
-\<WRAP half column> Next page: [1V1 real-time call](/im/android/basics/audiovideo)
-\</WRAP> \</WRAP>
 
