@@ -34,7 +34,7 @@ When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the
 
 ### Chat user ID data structure
 
-As a chat channel, you only need to provide Chat user ID (also known as IM username) and password is all that is needed.
+As a chat channel, you only need to provide Chat user ID (also known as Chat username) and password is all that is needed.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -85,7 +85,7 @@ It is strongly recommended to protect the org administrator, APP administrator u
 
 # Platform API
 
-Introduces the Platform API that needs to be used in the integration process of the IM user system. The documentation details that can be tested online using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
+Introduces the Platform API that needs to be used in the integration process of the Chat user system. The documentation details that can be tested online using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
 ## Request Domain
 
@@ -246,13 +246,13 @@ If the returned result is <table border="1" cellspacing="0" bordercolor="#000000
   </tr>
 </table>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## User Management
 
-Chat provides several interfaces to manage the registration, acquisition, modification and deletion of IM users.
+Chat provides several interfaces to manage the registration, acquisition, modification and deletion of Chat users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -263,27 +263,27 @@ Chat provides several interfaces to manage the registration, acquisition, modifi
   <tr>
     <td>Register a single user</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Register an IM user in open registration and authorized registration modes</td>
+    <td>Register an Chat user in open registration and authorized registration modes</td>
   </tr>
   <tr>
     <td>Bulk registration of users</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Register multiple IM users, only authorized registration is supported</td>
+    <td>Register multiple Chat users, only authorized registration is supported</td>
   </tr>
   <tr>
     <td>Get a single user</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Get a single IM user</td>
+    <td>Get a single Chat user</td>
   </tr>
   <tr>
     <td>Bulk user acquisition</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Get multiple IM users under the application</td>
+    <td>Get multiple Chat users under the application</td>
   </tr>
   <tr>
     <td>Delete a single user</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Bulk delete multiple IM users</td>
+    <td>Bulk delete multiple Chat users</td>
   </tr>
   <tr>
     <td>Bulk delete users</td>
@@ -293,22 +293,22 @@ Chat provides several interfaces to manage the registration, acquisition, modifi
   <tr>
     <td>Modify user password</td>
     <td>/{org_name}/{app_name}/users/{username}/password</td>
-    <td>Modify the password of the IM user</td>
+    <td>Modify the password of the Chat user</td>
   </tr>
   <tr>
     <td>Set the name to show in push messages</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set the name displayed for IM users' push messages</td>
+    <td>Set the name displayed for Chat users' push messages</td>
   </tr>
   <tr>
     <td>Set how to display push messages</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set whether IM user push messages are displayed as notifications only or details</td>
+    <td>Set whether Chat user push messages are displayed as notifications only or details</td>
   </tr>
   <tr>
     <td>Set no disturbance</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set whether IM users enable Do Not Disturb mode and the time to turn it on/off</td>
+    <td>Set whether Chat users enable Do Not Disturb mode and the time to turn it on/off</td>
   </tr>
 </table> 
 
@@ -359,7 +359,7 @@ An interface that allows users to register an account by themselves with an acco
   </tr>
   <tr>
     <td>username</td>
-    <td>Chat user ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -367,7 +367,7 @@ An interface that allows users to register an account by themselves with an acco
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -394,7 +394,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -410,7 +410,7 @@ curl -X POST -i "https://a1.easecdn.com/chat-demo/testapp/users" -d '{"username"
 
 #### Examples of possible returned results
 
-**returns 200, indicating that the IM user was created successfully**
+**returns 200, indicating that the Chat user was created successfully**
 
 ``` json
 {
@@ -463,7 +463,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -506,7 +506,7 @@ The server side needs to verify a valid token permission to operate and authoriz
   </tr>
   <tr>
     <td>username</td>
-    <td>Chat user ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -514,7 +514,7 @@ The server side needs to verify a valid token permission to operate and authoriz
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -541,7 +541,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -563,7 +563,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 #### Examples of possible returned results
 
-**returns 200, indicating that the IM user was created successfully**
+**returns 200, indicating that the Chat user was created successfully**
 
 ``` json
 {
@@ -627,7 +627,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -670,7 +670,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>username</td>
-    <td>Chat user ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -678,7 +678,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -703,7 +703,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -808,13 +808,13 @@ When there is a registered user3 in the request body, then the request will be s
 
 If the returned result is <font color='red'> 429, 503 </font> or other \<wrapem>5xx\</wrap>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get a single user
 
-Interface to get the details of a single IM user.
+Interface to get the details of a single Chat user.
 
 #### HTTP Request
 
@@ -825,7 +825,7 @@ Interface to get the details of a single IM user.
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username you need to get when requesting.
+You need to fill in {username} corresponding to the Chat username you need to get when requesting.
 
 #### Request Headers
 
@@ -871,7 +871,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>notification_display_style</td>
@@ -974,7 +974,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -991,7 +991,7 @@ This interface returns by default sorted by creation time, if you need to specif
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username you need to get when requesting.
+You need to fill in {username} corresponding to the Chat username you need to get when requesting.
 
 #### Request Headers
 
@@ -1037,7 +1037,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>notification_display_style</td>
@@ -1149,7 +1149,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 > Pagination
 
@@ -1220,7 +1220,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1237,7 +1237,7 @@ When deleting a user, if the user is the owner of a group or chat room, the syst
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username that needs to be deleted when requesting.
+You need to fill in {username} corresponding to the Chat username that needs to be deleted when requesting.
 
 #### Request Headers
 
@@ -1329,7 +1329,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1439,13 +1439,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Modify user password
 
-You can change the login password of IM users through the server-side interface, without providing the original password.
+You can change the login password of Chat users through the server-side interface, without providing the original password.
 
 #### HTTP Request
 
@@ -1456,7 +1456,7 @@ You can change the login password of IM users through the server-side interface,
   </tr>
 </table>
 
-You need to fill in the request with {username}, the IM username that needs to change the password.
+You need to fill in the request with {username}, the Chat username that needs to change the password.
 
 #### Request Headers
 
@@ -1535,7 +1535,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1552,7 +1552,7 @@ Set the user's push nickname to be used when pushing offline.
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the request, and you need to modify the IM username of the push nickname.
+You need to fill in {username} corresponding to the request, and you need to modify the Chat username of the push nickname.
 
 #### Request Headers
 
@@ -1607,7 +1607,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -1690,7 +1690,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1707,7 +1707,7 @@ Set the way of pushing messages to the client, which is effective in time after 
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the request, the IM username that needs to be pushed.
+You need to fill in {username} corresponding to the request, the Chat username that needs to be pushed.
 
 #### Request Headers
 
@@ -1818,13 +1818,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
     <td>Bearer ${token}</td>
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Set no disturbance
 
-Set IM users to be free from interruptions, during which they will not receive offline message pushes.
+Set Chat users to be free from interruptions, during which they will not receive offline message pushes.
 
 #### HTTP Request
 
@@ -1835,7 +1835,7 @@ Set IM users to be free from interruptions, during which they will not receive o
   </tr>
 </table>
 
-You need to fill in {username} when requesting, and you need to set the IM user name for no disturbance
+You need to fill in {username} when requesting, and you need to set the Chat user name for no disturbance
 
 #### Request Headers
 
@@ -1975,13 +1975,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Contacts and Blacklist
 
-Chat provides several interfaces for adding and removing contacts and blacklists of IM users.
+Chat provides several interfaces for adding and removing contacts and blacklists of Chat users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -2023,7 +2023,7 @@ Chat provides several interfaces for adding and removing contacts and blacklists
 
 ### Add Contacts
 
-To add a contact, the contact must be an IM user who is under the same APPkey as you.
+To add a contact, the contact must be an Chat user who is under the same APPkey as you.
 
 The maximum number of contacts per user under the community version appkey is 1000, and the maximum number of contacts varies from version to version appkey, please refer to: [Function Introduction](https://www.easemob.com/pricing/im)
 
@@ -2089,7 +2089,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns 404, indicating that the IM user or the contact being added does not exist**
+**returns 404, indicating that the Chat user or the contact being added does not exist**
 
 ``` json
 {
@@ -2128,13 +2128,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Remove Contacts
 
-Removes an IM user from the IM user's buddy list.
+Removes an Chat user from the Chat user's buddy list.
 
 #### HTTP Request
 
@@ -2198,7 +2198,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-**returns a value of 404, indicating that this IM user or deleted contact does not exist**
+**returns a value of 404, indicating that this Chat user or deleted contact does not exist**
 
 ``` json
 {
@@ -2237,13 +2237,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get a list of contacts
 
-Get the list of IM user's contacts.
+Get the list of Chat user's contacts.
 
 #### HTTP Request
 
@@ -2311,7 +2311,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2350,13 +2350,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get Blacklist
 
-Get the blacklist of IM users.
+Get the blacklist of Chat users.
 
 #### HTTP Request
 
@@ -2423,7 +2423,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2462,13 +2462,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Add blacklist
 
-Add one or more users to the blacklist list of IM users, and the users in the blacklist cannot send messages to this IM user. The maximum number of blacklisted users is 500 per user.
+Add one or more users to the blacklist list of Chat users, and the users in the blacklist cannot send messages to this Chat user. The maximum number of blacklisted users is 500 per user.
 
 #### HTTP Request
 
@@ -2556,7 +2556,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2607,13 +2607,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Remove Blacklist
 
-Remove users from IM user's blacklist. After removing a user from the blacklist, the user is restored to the contact, or uncontact, relationship. You can send and receive messages normally.
+Remove users from Chat user's blacklist. After removing a user from the blacklist, the user is restored to the contact, or uncontact, relationship. You can send and receive messages normally.
 
 #### HTTP Request
 
@@ -2652,7 +2652,7 @@ You need to fill in the request with {owner_username}, the username you want to 
   </tr>
   <tr>
     <td>entities</td>
-    <td>Details of the IM users removed from the blacklist</td>
+    <td>Details of the Chat users removed from the blacklist</td>
   </tr>
 </table>
 
@@ -2690,7 +2690,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-**returns a value of 404, indicating that this IM user or the subtracted user does not exist**
+**returns a value of 404, indicating that this Chat user or the subtracted user does not exist**
 
 ``` json
 {
@@ -2729,7 +2729,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2756,7 +2756,7 @@ Chat provides several interfaces to view the online/offline status of users, the
   <tr>
     <th>Get the number of offline messages</th>
     <th>/{org_name}/{app_name}/users/{owner_username}/offline_msg_count</th>
-    <th>Get the number of offline messages for an IM user</th>
+    <th>Get the number of offline messages for an Chat user</th>
   </tr>
   <tr>
     <th>Get the status of offline messages</th>
@@ -2836,7 +2836,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2875,7 +2875,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2996,7 +2996,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
 
 ### Get the number of user offline messages
 
-Gets the number of offline messages for IM users.
+Gets the number of offline messages for Chat users.
 
 #### HTTP Request
 
@@ -3065,7 +3065,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3104,13 +3104,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get the status of an offline message
 
-Get the offline message status of IM users, view the status of offline messages of users offline messages
+Get the offline message status of Chat users, view the status of offline messages of users offline messages
 
 #### HTTP Request
 
@@ -3179,7 +3179,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3218,13 +3218,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Account Disabling and Unblocking
 
-Chat provides an interface for disabling and unblocking IM users. Disabling a user will immediately take them offline and prevent them from logging into Chat until they are unblocked. This is commonly used for immediate handling of abnormal users.
+Chat provides an interface for disabling and unblocking Chat users. Disabling a user will immediately take them offline and prevent them from logging into Chat until they are unblocked. This is commonly used for immediate handling of abnormal users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -3246,7 +3246,7 @@ Chat provides an interface for disabling and unblocking IM users. Disabling a us
 
 ### User account disable
 
-Disable an IM user's account. After disabling, the user cannot log in, and the account will resume normal use after the next unban.
+Disable an Chat user's account. After disabling, the user cannot log in, and the account will resume normal use after the next unban.
 
 #### HTTP Request
 
@@ -3332,7 +3332,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns a value of 400, indicating that this IM user does not exist**
+**returns a value of 400, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3371,13 +3371,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### User account unblock
 
-Unblock the IM user account from the disable to unblock operation, which requires the user to log in again.
+Unblock the Chat user account from the disable to unblock operation, which requires the user to log in again.
 
 #### HTTP Request
 
@@ -3416,7 +3416,7 @@ You need to fill in {username} corresponding to the username to be unblocked in 
   </tr>
   <tr>
     <td>action</td>
-    <td>operation, "activate user\" means unblock/activate IM user</td>
+    <td>operation, "activate user\" means unblock/activate Chat user</td>
   </tr>
 </table>
 
@@ -3438,7 +3438,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3477,13 +3477,13 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Forced downline
 
-Force the IM user status to offline and the user will need to log in again to use it properly.
+Force the Chat user status to offline and the user will need to log in again to use it properly.
 
 #### HTTP Request
 
@@ -3552,7 +3552,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3591,4 +3591,4 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
   </tr>
 </table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Chat Platform API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)

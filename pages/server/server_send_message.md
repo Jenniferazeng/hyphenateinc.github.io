@@ -162,7 +162,7 @@ Return value 400, means massage structure error
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details 
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -312,7 +312,7 @@ curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages'   -H 'Author
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -465,7 +465,7 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) 
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -620,7 +620,7 @@ curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Authoriz
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -756,7 +756,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -893,7 +893,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1045,7 +1045,7 @@ curl -L -X POST 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Accept: 
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1190,7 +1190,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ### iOS extension messages
 
@@ -1203,26 +1203,26 @@ Chat provides the following types of extension fields.
   </tr>
   <tr>
     <td>em_push_content</td>
-    <td><a href="/ios/apns/content#custom display"> custom push display </a></td>
+    <td><a href="/ios/ios_push_content.html#custom-display"> custom push display </a></td>
   </tr>
   <tr>
     <td>em_push_category</td>
-    <td><a href="/im/ios/apns/content#add category field"> add category field to APNs Payload </a></td>
+    <td><a href="/ios/ios_push_content.html#add-category-field"> add category field to APNs Payload </a></td>
   </tr>
   <tr>
     <td>em_push_sound</td>
-    <td><a href="/im/ios/apns/content#customize push sound"> customize push sound </a></td>
+    <td><a href="/ios/ios_push_content.html#custom-push-alert-sound"> customize push sound </a></td>
   </tr>
   <tr>
     <td>em_push_mutable_content</td>
-    <td><a href="/im/ios/apns/content#enable APNs notification extension"> enable APNs notification extension </a></td>
+    <td><a href="/ios/ios_push_content.html#enable-APNs-alert-extension"> enable APNs notification extension </a></td>
   </tr>
   <tr>
     <td>em_ignore_notification</td>
-    <td><a href="/im/ios/apns/content#send_silent_message"> send silent message </a></td>
+    <td><a href="/ios/ios_push_content.html#send-silent-message"> send silent message </a></td>
   </tr>
   <tr>
     <td>em_force_notification</td>
-    <td><a href="/im/ios/apns/content#set force push APNs"> set force push APNs </a></td>
+    <td><a href="/ios/ios_push_content.html#set-up-forced-push-APNs"> set force push APNs </a></td>
   </tr>
 </table>

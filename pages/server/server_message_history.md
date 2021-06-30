@@ -9,7 +9,7 @@ folder: server
 
 The export chat log interface is not a real-time interface, and there is a certain delay in getting success, so it cannot be used as a real-time pull message interface. The following APIs require enterprise administrator privileges to access.
 
-Chat logs need to be exported using the Platform API, which can be tested online by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
+Chat logs need to be exported using the Platform API, which can be tested online by using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -136,7 +136,7 @@ Note: the url has an expiration time, the Expires timestamp in the url is the ex
 
 If the return result is <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [Interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 > Tips
 

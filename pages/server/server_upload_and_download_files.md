@@ -7,7 +7,7 @@ permalink: server_upload_and_download_files.html
 folder: server
 ---
 
-Chat uses Platform API to upload and download files such as voice and images. Also, to ensure the security of chat files, our API ensures the following.
+Chat uses Platform API to upload and download files such as audio and images. Also, to ensure the security of chat files, our API ensures the following.
 
 - Only the logged-in user of the APP can upload files.
 - When uploading files, you can choose whether to restrict the access rights.
@@ -18,7 +18,7 @@ Chat uses Platform API to upload and download files such as voice and images. Al
 
 # Platform API
 
-The Platform API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation.
+The Platform API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -27,14 +27,14 @@ The Platform API document that needs to be used during the file upload and downl
     <th>Description</th>
   </tr>
   <tr>
-    <td>Upload voice/image files</td>
+    <td>Upload audio/image files</td>
     <td>/{org_name}/{app_name}/chatfiles</td>
-    <td>Upload voice/image files</td>
+    <td>Upload audio/image files</td>
   </tr>
   <tr>
-    <td>Download voice/image files</td>
+    <td>Download audio/image files</td>
     <td>/{org_name}/{app_name}/chatfiles/{filestream}</td>
-    <td>Download voice/image files</td>
+    <td>Download audio/image files</td>
   </tr>
   <tr>
     <td>Download thumbnails</td>
@@ -43,7 +43,7 @@ The Platform API document that needs to be used during the file upload and downl
   </tr>
 </table>
 
-## Upload voice/image files
+## Upload audio/image files
 
 **Note:**The uploading file size cannot exceed 10M, it will fail to upload if exceeded. Required HTTP Header: *Authorization -- the token getted* restrict-access -- whether to restrict access.
 Whether to restrict access. 
@@ -145,11 +145,11 @@ Example of possible returned results
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## Downloading voice/image files
+## Downloading audio/image files
 
 Here we need to note that we need to bring the share-secret and the token of the currently logged in user in the HTTP header to be able to download, and we need to set the value of accept in the header to application/octet-stream.
 
@@ -215,7 +215,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -282,5 +282,5 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat Platform API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 

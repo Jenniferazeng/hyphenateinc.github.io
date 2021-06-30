@@ -15,12 +15,9 @@ The REST architecture follows the CRUD principle.
 The CRUD principle requires only four actions for resources: Create, Read, Update, and Delete to complete their operations and processing. These four operations are atomic operations, and the operations on resources include getting, creating, modifying, and deleting resources, which correspond exactly to
 The GET, POST, PUT, and DELETE methods provided by the HTTP protocol, so REST limits HTTP operations on a URL resources to POST, GET, PUT, and DELETE. This design and development approach for web application reduces development complexity and improves system scalability.
 
-More background on REST API can be found in [RESTful API
-Design Guide](http://www.ruanyifeng.com/blog/2014/05/restful_api.html).
-
 ### Platform API
 
-The Platform API platform provides a multi-tenant user system where resources are described in the form of collections, which include DataBase, enterprises (orgs), application (apps), IM users (users), groups (chatgroups), messages (chatmessages), files (chatfiles), and so on. the inclusion relationship between them is:
+The Platform API platform provides a multi-tenant user system where resources are described in the form of collections, which include DataBase, enterprises (orgs), application (apps), Chat users (users), groups (chatgroups), messages (chatmessages), files (chatfiles), and so on. the inclusion relationship between them is:
 
 - DB = {org1, org2, ...}
 - org = {app1, app2, ...}
@@ -51,7 +48,7 @@ Calling the Platform API is essentially sending an HTTP request. Only you may co
 
 The objects that the verbs operate on are called "resources" in Platform API,which is URLs, and these are also part of the standard HTTP protocol. In fact, when we open a website in a browser, for example, [Chat's website](http://www.easemob.com), the browser is actually sending an HTTP GET request to the web server.
 
-Note that the Chat Platform API is JSON-based, so when constructing an HTTP request, you need to specify in the HTTP HEADER.
+Note that the Platform API is JSON-based, so when constructing an HTTP request, you need to specify in the HTTP HEADER.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -73,7 +70,7 @@ Note that the Chat Platform API is JSON-based, so when constructing an HTTP requ
 
 ### JAVA
 
-In Java, there are various Platform API client implementations, such as JBOss RestEasy, Sun Jersey, Dropwizard, Apache HTTPClient. We recommend using [Jersey](https://jersey.java.net/) to call the Chat Platform API service.
+In Java, there are various Platform API client implementations, such as JBOss RestEasy, Sun Jersey, Dropwizard, Apache HTTPClient. We recommend using [Jersey](https://jersey.java.net/) to call the Platform API service.
 
 Jersy 2.x implements the JAX-RS 2.0 specification and provides asynchronous support. However, Jersey 2.x requires JDK 1.7 support, so if your server-side application does not yet have access to JDK 1.7, then you need to use the Jersey 1.x version. There are also many people who use [Apache Http Client](http://hc.apache.org/), we do not recommend the direct use of this library, mainly because this library is relatively low-level, need to deal with a lot of their own things, the API is also relatively cumbersome.
 
