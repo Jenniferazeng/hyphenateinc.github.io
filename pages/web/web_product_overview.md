@@ -6,13 +6,13 @@ toc: true
 permalink: web_product_overview.html
 folder: web
 ---
-## Web IM Introduction 
+## Agora chat sdk Introduction 
 
-Agora Web IM SDK provides complete instant messaging function development capabilities, <u>shields/encapsulate and block</u> its internal complex details, and provides a relatively simple and concise API interface to facilitate third-party applications to quickly integrate instant messaging functions for PC/mobile Web applications
+Agora chat sdk provides complete instant messaging function development capabilities, <u>shields/encapsulate and block</u> its internal complex details, and provides a relatively simple and concise API interface to facilitate third-party applications to quickly integrate instant messaging functions for PC/mobile Web applications
 
 ## Function Description
 
-Agora Web IM SDK already supports the following functions: 
+Agora chat sdk already supports the following functions: 
 
 -   The SDK itself already supports the mutual sending of text, expressions, pictures, audio, and address messages between IE9+, 
     FireFox10+, Chrome54+, and Safari6+. 
@@ -24,7 +24,7 @@ Agora Web IM SDK already supports the following functions:
 
 -   The SDK handles messages as follows:
 
-     - Text and emotion messages can be sent and received directly. 
+    - Text and emotion messages can be sent and received directly. 
     - Attachment(pictures, audios, files, etc.). The SDK uploads the attachment to the server, and then sends the basic information of the attachment (the attachment URL and file name uploaded by the sender). The receiver downloads them from the server in the form of a stream to the local processing according to the attachment URL, secret, and its own login information. 
     
 * Provide Demo for reference. Demo has implemented chat, add/delete friends, group management, blacklist, audio and video   
@@ -53,38 +53,4 @@ Agora Web IM demo source code is open-source on GitHub [react version](https://g
 
 Demo uses the react framework and supports advanced browsers such as Microsoft Edge, Chrome54+, and Firefox. 
 The SDK supports IE9+. 
-
-
-## Compatibility
-
-Web IM SDk:
-
--   Support IE9+, and all other modern browsers, support mobile WeChat and QQ
-
-Web IM Demo:
-
--   Web IM H5 supports all modern browsers, mobile WeChat and QQ
--   IE6-11 is not supported currently, only support Microsoft Edge
-
-Web IM SimpleDemo:
-
--   IE9+
--   Support all modern browsers, support mobile WeChat and QQ 
-
-## Common Problems
-
-Reference：[Easemob Knowledge Base](https://im.tickets.easemob.com/kb/index.php)
-
-Still have questions, don't know how to solve it?
-
-1\. Go to [Work Order System](https://im.tickets.easemob.com/) and ask questions
-
-2\. The work order description should include but is not limited to the following information
-
--   Access address of your page？
--   Provide the apiUrl, socketUrl, appKey and your test login account password in your webim.config.js ？
--   Is the connection to your page established normally, and is the onOpen monitoring triggered?
--   Provide the log information of all consoles (see the figure below for how to open the console)
-
-
 
