@@ -1701,9 +1701,9 @@ Chat provides several interfaces to manage group members, including adding and r
     <td>Add users to the group member list</td>
   </tr>
   <tr>
-    <td>Batch add group members</td>
+    <td>Add group members'</td>
     <td>/{org_name}/{app_name}/chatgroups/{chatgroupid}/users</td>
-    <td>Batch add users to the group members list</td>
+    <td>Add users' to the group members list</td>
   </tr>
   <tr>
     <td>Remove a single group member</td>
@@ -1711,9 +1711,9 @@ Chat provides several interfaces to manage group members, including adding and r
     <td>Remove a user from the list of group members</td>
   </tr>
   <tr>
-    <td>Batch remove group members</td>
+    <td>Remove group members'</td>
     <td>/{org_name}/{app_name}/chatgroups/{group_id}/users/{usernames}</td>
-    <td>Batch remove users from the list of group members</td>
+    <td>Remove users' from the list of group members</td>
   </tr>
   <tr>
     <td>Get the list of group administrators</td>
@@ -1976,7 +1976,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Add group members in batches
+### Add group members'
 
 Add multiple members to a group, up to 60 members can be added at a time. If all users are already members of the group, the addition will fail and an error will be returned.
 
@@ -2239,7 +2239,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Batch Remove Group Members
+### Remove Group Members'
 
 Removes group members, separated by English commas between usernames. It is recommended to remove up to 60 group members at a time. If all the removed users are not group members, the removal will fail and an error will be returned.
 
@@ -2762,9 +2762,9 @@ Chat provides multiple interfaces to complete group blacklist management, includ
     <td>Add a user to a group's blacklist</td>
   </tr>
   <tr>
-    <td>Bulk add users to group blacklist</td>
+    <td>Add users' to group blacklist</td>
     <td>/{org_name}/{app_name}/chatgroups/{group_id}/blocks/users</td>
-    <td>Add users to group blacklist in bulk</td>
+    <td>Add users' to group blacklist</td>
   </tr>
   <tr>
     <td>Remove individual users from group blacklist</td>
@@ -2772,9 +2772,9 @@ Chat provides multiple interfaces to complete group blacklist management, includ
     <td>Remove users from the blacklist list</td>
   </tr>
   <tr>
-    <td>Batch remove users from group blacklists</td>
+    <td>Remove users' from group blacklists</td>
     <td>/{org_name}/{app_name}/chatgroups/{group_id}/blocks/users/{usernames}</td>
-    <td>Batch remove users from blacklists</td>
+    <td>Remove users' from blacklists</td>
   </tr>
 </table>
 
@@ -3016,7 +3016,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Batch add users to group blacklist
+### Add users' to group blacklist
 
 Add multiple users to a group's blacklist, up to 60 users can be added at once. Group owners cannot be added to the group's blacklist.
 
@@ -3282,7 +3282,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Batch remove users from group blacklist
+### Remove users' from group blacklist
 
 Remove multiple users from the group blacklist. For users in the group blacklist, if you need to add them to the group again, you need to remove them from the group blacklist first.
 

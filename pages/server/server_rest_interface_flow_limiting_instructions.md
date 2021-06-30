@@ -59,14 +59,14 @@ folder: server
   </tr>
   <tr>
     <td>Upload and download</td>
-    <td>Upload/download images, voice, files; download thumbnails</td>
+    <td>Upload/download images, audio, files; download thumbnails</td>
     <td>Single APP call limited to 10 times/s</td>
     <td>Single APP call limited to 30 times/s</td>
     <td>Single connection download limited to 500k/s; cluster download call limited to 300 times/s</td>
   </tr>
   <tr>
     <td>Sending messages</td>
-    <td>Sending text, picture, voice, video and transmissions (the limit of "daily system push messages" in the community version is 20,000 messages)</td>
+    <td>Sending text, picture, audio, video and transmissions (the limit of "daily system push messages" in the community version is 20,000 messages)</td>
     <td>Single APP call is limited to 10 times/s</td>
     <td>Single APP call is limited to 30 times/s</td>
     <td>Message + extended field length is limited to 4k bytes</td>
@@ -80,7 +80,7 @@ folder: server
   </tr>
   <tr>
     <td>Chat room related information</td>
-    <td>Create, modify, delete chat rooms; get chat room details and online user list<td>
+    <td>Create, modify, delete chat rooms; get chat room details and online user list</td>
     <td>single/batch join or quit chat rooms Single APP call limited to 10 times/sec</td>
     <td>Single APP call limited to 30 times/sec</td>
     <td>Single user can join up to 500 chat rooms</td>

@@ -897,9 +897,9 @@ Chat provides multiple interfaces to manage chat room members, including adding 
     <td>Adding Users to the Chat Room Member List</td>
   </tr>
   <tr>
-    <td>Bulk add chat room members</td>
+    <td>Add chat room members'</td>
     <td>/{org_name}/{app_name}/chatrooms/{chatroomid}/users</td>
-    <td>Batch add users to chat room member list</td>
+    <td>Add users' to chat room member list</td>
   </tr>
   <tr>
     <td>Deleting individual chat room members</td>
@@ -907,9 +907,9 @@ Chat provides multiple interfaces to manage chat room members, including adding 
     <td>Remove a user from the list of chat room members</td>
   </tr>
   <tr>
-    <td>Bulk delete chat room members</td>
+    <td>Delete chat room members'</td>
     <td>/{org_name}/{app_name}/chatrooms/{chatroomid}/users/{usernames}</td>
-    <td>Bulk delete users from the list of chat room members</td>
+    <td>Delete users' from the list of chat room members</td>
   </tr>
   <tr>
     <td>Get a list of chat room administrators</td>
@@ -1132,7 +1132,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Bulk add chat room members
+### Add chat room members'
 
 Add multiple users to the chat room, up to 60 users at a time.
 
@@ -1361,7 +1361,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Bulk Delete Chat Room Members
+### Delete Chat Room Members'
 
 Deletes multiple members from a chat room. If the deleted user is not in the chat room, or if the chat room does not exist, an error will be returned.
 
