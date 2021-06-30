@@ -6,7 +6,6 @@ toc: true
 permalink: android_message_withdraw.html
 folder: android
 ---
-# Withdraw message function
 
 The message withdrawal function can withdraw messages sent out within a certain period of time. The message withdrawal time limit is 2 minutes by default, which can be individually set in units of AppKey according to the developer's needs. If you need to modify it, please contact Agora Business.
 
