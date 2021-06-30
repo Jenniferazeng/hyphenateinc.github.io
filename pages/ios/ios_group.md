@@ -7,13 +7,11 @@ permalink: ios_group.html
 folder: ios
 ---
 
-**Note**: `1, the number of group owners and administrators cannot exceed 100, which means no more than 99 administrators. 2. The maximum number of group members (including the group owner) is set to 200 by default, and the maximum value is 3000. `
 
 # Group Management
 
 ------------------------------------------------------------------------
 
-DK3.3.0 adds many APIs for group operations, please check the link[3.3.0api modification](/im/300iosclientintegration/3.3.0apichange)
 
 The Easemob SDK header files mainly involved in group management are as follows:
 
