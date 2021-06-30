@@ -6,14 +6,6 @@ toc: true
 permalink: ios_offline_push.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
-
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 ## APNs Offline push
 

@@ -6,13 +6,6 @@ toc: true
 permalink: ios_run_the_sample_project.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
-
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 # iOS SDK 快速集成
 

@@ -6,14 +6,6 @@ toc: true
 permalink: ios_group.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
-
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 **Note**: `1, the number of group owners and administrators cannot exceed 100, which means no more than 99 administrators. 2. The maximum number of group members (including the group owner) is set to 200 by default, and the maximum value is 3000. `
 

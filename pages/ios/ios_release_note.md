@@ -9,8 +9,6 @@ folder: ios
 
 ===== Version V3.8.2 2021-06-05 =====
 
-SDK：
-
   * use different error code for same user logged in or different user.
   * add error code for pre-delivery webhook
   * fix the bug that can't fetch history message attachment 
