@@ -1,5 +1,5 @@
 ---
-title: Android Produce Overview
+title: Produce Overview
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -52,7 +52,7 @@ Download link：[download page](http://www.easemob.com/download/im)
 
 ## Android SDK introduction
 
-Agora SDK provides a complete development framework for users to develop chat-related applications. It includes the following parts:
+Chat SDK provides a complete development framework for users to develop chat-related applications. It includes the following parts:
 
 
 -   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
@@ -72,7 +72,7 @@ The SDK adopts a modular design, and the function of each module is relatively i
 
 ### Preparation before integration
 
-[Register and create application](/im/quickstart/guide/experience)
+[Register and create application](https://hyphenateinc.github.io/android_connect_to_chat_server.html)
 
 ### Manually copy the jar package and the import of so
 

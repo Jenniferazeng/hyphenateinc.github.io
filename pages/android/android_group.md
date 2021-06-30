@@ -1,5 +1,5 @@
 ---
-title: Android Group
+title: Group
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -11,8 +11,6 @@ Many groups operation need authentication ahead , including whether the current 
 It is recommended that after the user logs in successfully, call ChatClient.getInstance().groupManager().getJoinedGroupsFromServer();
 Refresh the list of local groups to ensure that the authentication works normally.
 
-
-**Note**: `1. the number of group owners and administrators cannot exceed 100. no more than 99 administrators. 2. The maximum number of group members (including the group owner), the default value is 200, and the maximum value is 3000. `
 
 -------------------------------------------------- ----------------------
 
@@ -29,7 +27,7 @@ For sending and receiving messages and chat records, see [Message](https://hyphe
  * @param desc         group introduction
  * @param allMembers   is the initial member of the group, if you only pass an null array by yourself (up to 100 members can be passed)
  * @param reason       reason for inviting members to join
- * @param option       group type option, you can set the maximum number of group users (default 200, maximum 3000) and group type @see {@link GroupStyle}
+ * @param option       group type option, you can set the maximum number of group users (default 200) and group type @see {@link GroupStyle}
  * 						option.inviteNeedConfirm indicates whether the other party's approval is required for inviting the other party into the group. By default, the invited party join the group automatically.
  * 						option.extField can set extended fields for the group when creating a group, which is convenient for customization.
  * @return 				created group

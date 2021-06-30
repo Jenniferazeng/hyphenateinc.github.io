@@ -64,7 +64,7 @@ entries:
       url: /android_chatroom.html
       output: web, pdf
 
-    - title: Relationship
+    - title: Contact
       url: /android_relationship.html
       output: web, pdf
     

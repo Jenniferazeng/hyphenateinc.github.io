@@ -1,5 +1,5 @@
 ---
-title: Android Relationship
+title: Contact
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -19,7 +19,7 @@ List<String> usernames = ChatClient.getInstance().contactManager().getAllContact
 
 SDK is not provided the service of finding contacts. If you need to find contacts, you need to call the user query interface of the developer's own server.
 
-In order to ensure that the found contacts can be added, the user data of the developer’s own server (the user’s chat ID), which can be imported into the chat server through the SDK's background interface.
+In order to ensure that the found contacts can be added, the user data of the developer’s own server (the user’s chat ID), which can be imported into the chat server through the SDK's backend API.
 
 ## Add contact
 

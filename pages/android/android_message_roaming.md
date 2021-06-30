@@ -1,5 +1,5 @@
 ---
-title: Android Message Roaming
+title: Message Roaming
 keywords: android
 sidebar: android_sidebar
 toc: true

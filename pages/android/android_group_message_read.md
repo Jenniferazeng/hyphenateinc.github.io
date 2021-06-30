@@ -1,5 +1,5 @@
 ---
-title: Android Group Message read
+title: Group Message read
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -56,7 +56,6 @@ After sending the group read receipt, the groupAckCount attribute of the corresp
 The group message read callback is in the message listening class MessageListener.
 
          /**
-          * \~chinese
           * Received the read receipt of the group message body, the recipient of the message has read the message.
           */
               void onGroupMessageRead(List<GroupReadAck> groupReadAcks) {
@@ -67,7 +66,6 @@ The group message read callback is in the message listening class MessageListene
 If you want to display the list of read receipts for group messages, you can get the details of read receipts through the following interface.
 
          /**
-          * \~chinese
           * get the group message receipt details from the server
           * @param msgId message id
           * @param pageSize getted page size
