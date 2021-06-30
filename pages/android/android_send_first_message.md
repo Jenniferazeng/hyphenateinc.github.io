@@ -6,7 +6,6 @@ toc: true
 permalink: android_send_first_message.html
 folder: android
 ---
-# Send Your First Message
 
 ## Follow these steps to send your first message
 

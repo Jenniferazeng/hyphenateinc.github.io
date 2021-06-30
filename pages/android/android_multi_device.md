@@ -6,9 +6,6 @@ toc: true
 permalink: android_multi_device.html
 folder: android
 ---
-# Multi-device
-
--------------------------------------------------- ----------------------
 
 ## The ID of the device logged in by the other end
 
@@ -73,8 +70,6 @@ interface MultiDeviceListener {
      * Friends are removed from the blacklist on other device
      */
      int CONTACT_ALLOW = 6;
-
-
 
     /**
      * Created a group
@@ -190,7 +185,7 @@ interface MultiDeviceListener {
 
 ### Usage example
 
-``` objc
+``` java
 //Register to listen
 ChatClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener()); // class MyMultiDeviceListener implements MultiDeviceListener
 

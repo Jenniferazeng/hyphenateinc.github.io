@@ -6,20 +6,19 @@ toc: true
 permalink: android_group.html
 folder: android
 ---
-# Group Management
 
 Many groups operation need authentication ahead , including whether the current user is in the group and whether they have administrator or owner permissions.
 It is recommended that after the user logs in successfully, call ChatClient.getInstance().groupManager().getJoinedGroupsFromServer();
 Refresh the list of local groups to ensure that the authentication works normally.
 
 
-**Note**: `1, the number of group owners and administrators cannot exceed 100. no more than 99 administrators. 2. The maximum number of group members (including the group owner), the default value is 200, and the maximum value is 3000. `
+**Note**: `1. the number of group owners and administrators cannot exceed 100. no more than 99 administrators. 2. The maximum number of group members (including the group owner), the default value is 200, and the maximum value is 3000. `
 
 -------------------------------------------------- ----------------------
 
 ## Send and receive messages
 
-For sending and receiving messages and chat records, see [Message](/im/android/basics/message) .
+For sending and receiving messages and chat records, see [Message](https://hyphenateinc.github.io/android_message.html) .
 
 ## New group
 
@@ -47,10 +46,10 @@ Note: If option.inviteNeedConfirm is set to false, the invitee is directly added
 
 - The GroupStyle in option are:
 
-  -`GroupStylePrivateOnlyOwnerInvite`------Private group, only the owner can invite people;
-  -`GroupStylePrivateMemberCanInvite`------Private group, group members can also invite people into the group;
-  -`GroupStylePublicJoinNeedApproval`------Public group, to join this group, except for the invitation of the group owner, you can only join this group through application;
-  -`GroupStylePublicOpenJoin` ------Public group, anyone can join this group.
+  - `GroupStylePrivateOnlyOwnerInvite`------Private group, only the owner can invite people;
+  - `GroupStylePrivateMemberCanInvite`------Private group, group members can also invite people into the group;
+  - `GroupStylePublicJoinNeedApproval`------Public group, to join this group, except for the invitation of the group owner, you can only join this group through application;
+  - `GroupStylePublicOpenJoin` ------Public group, anyone can join this group.
 
 ## Add administrator permissions
 
@@ -91,7 +90,7 @@ ChatClient.getInstance().groupManager().removeGroupAdmin(String groupId, String 
 ChatClient.getInstance().groupManager().changeOwner(String groupId, String newOwner);//Asynchronous processing required
 ```
 
-## add people in the group
+## Add people in the group
 
 ``` java
 //when group owner adds people, call this method
@@ -100,7 +99,7 @@ ChatClient.getInstance().groupManager().addUsersToGroup(groupId, newmembers);//A
 ChatClient.getInstance().groupManager().inviteUser(groupId, newmembers, null);//Asynchronous processing is required
 ```
 
-## kick people in the group
+## Kick people in the group
 
 ``` java
 //Remove username from the group
@@ -190,7 +189,7 @@ boolean isMsgBlocked = group.isMsgBlocked();//Get whether the group message has 
 ...
 ```
 
-For details of other methods, please refer to the [Agora Interface Document](http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1chat_1_1_e_m_group_manager.html).
+For details of other methods, please refer to the [Agora Interface Document](https://hyphenateinc.github.io/android_reference/classio_1_1agora_1_1chat_1_1_group_manager.html).
 
 ## Block group messages
 
@@ -535,20 +534,5 @@ ChatClient.getInstance().groupManager().addGroupChangeListener(new GroupChangeLi
     }
 });
 ```
-
-## Demo and SDK download
-
-[Download Demo and SDK](http://www.easemob.com/download/im)
-
-For detailed document, please refer to [Java Doc](/im/android/sdk/apidoc)
-
--------------------------------------------------- ----------------------
-
-\<WRAP group> \<WRAP half column>
-Previous page: [Friends Management](/im/android/basics/buddy) \</WRAP>
-
-\<WRAP half column> Next page: [Chat room management](/im/android/basics/chatroom)
-\</WRAP> \</WRAP>
-
 
 ------------------------------------------------------------------------
