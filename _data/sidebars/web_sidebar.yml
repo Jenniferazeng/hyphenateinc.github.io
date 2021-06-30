@@ -27,10 +27,6 @@ entries:
       url: /web_product_overview.html
       output: web
 
-    - title: Pricing
-      url: /web_pricing.html
-      output: web, pdf
-
     - title: Release Note
       url: /web_release_note.html
       output: web, pdf
@@ -43,18 +39,14 @@ entries:
       url: /web_run_the_sample_project.html
       output: web, pdf
 
+    - title: Send first message
+      url: /web_send_first_message.html
+      output: web, pdf
+
   - title: Basic Features
     output: web, pdf
 
     folderitems:
-    - title: User
-      url: /web_user.html
-      output: web, pdf
-
-    - title: Relationship
-      url: /web_relationship.html
-      output: web, pdf
-
     - title: Message
       url: /web_message.html
       output: web, pdf
@@ -67,6 +59,14 @@ entries:
       url: /web_chatroom.html
       output: web, pdf
 
+    - title: Relationship
+      url: /web_relationship.html
+      output: web, pdf
+
+    - title: User
+      url: /web_user.html
+      output: web, pdf
+
     - title: Emojis
       url: /web_emojis.html
       output: web, pdf
@@ -74,6 +74,22 @@ entries:
     - title: Utils
       url: /web_utils.html
       output: web, pdf
+  
+  - title: Advanced Features
+    output: web, pdf
+
+    folderitems:
+      - title: Message roaming
+        url: /web_message_roaming.html
+        output: web, pdf
+
+      - title: Group message read receipt
+        url: /web_grp_msg_read.html
+        output: web, pdf
+
+      - title: Message withdrawn
+        url: /web_message_withdrawn.html
+        output: web, pdf
 
   - title: Reference Docs
     output: web, pdf

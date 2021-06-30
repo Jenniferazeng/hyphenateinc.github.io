@@ -196,48 +196,6 @@ When type=\'txt\', data means **text message**.
 
 ------------------------------------------------------------------------
 
-### Send sticker message
-
-The Web IM SDK itself does not support screenshots. The following code could enable the user to paste the picture into the input box and send it.
-
-The example for sending a sticker message in a single chat:
-
-``` javascript
-// Send stickers in single chat
-document.addEventListener('paste', function (e) {
-    if (e.clipboardData && e.clipboardData.types) {
-        if (e.clipboardData.items.length > 0) {
-            if (/^image\/\w+$/.test(e.clipboardData.items[0].type)) {
-                var blob = e.clipboardData.items[0].getAsFile();
-                var url = window.URL.createObjectURL(blob);
-                var id = conn.getUniqueId();             // Generate local message id
-                var msg = new WebIM.message('img', id);  // Create image message
-                msg.set({
-                    file: {data: blob, url: url},
-                    to: 'username',                      // The recipient of the message
-                    chatType: 'singleChat',
-                    onFileUploadError: function (error) {
-                        console.log('Error');
-                    },
-                    onFileUploadComplete: function (data) {
-                        console.log('Complete');
-                    },
-                    success: function (id) {
-                        console.log('Success');
-                    },
-                    fail: function(e){
-                        console.log("Fail"); // Fail to send a message if the user is banned or blocked 
-                    }
-                });
-                conn.send(msg.body);
-            }
-        }
-    }
-});
-```
-
-------------------------------------------------------------------------
-
 ### Send URL image message
 
 APP client side needs to be downloaded by the developer, and the Web client side needs to be set `useOwnUploadFun: true` in WebIMConfig.js.
@@ -585,25 +543,6 @@ var sendCustomMsg = function () {
 
 ------------------------------------------------------------------------
 
-## Message withdrawn
-
-SDK value-added services.
-
-``` javascript
-/**
-  * Send a withdrawal message
- * @param {Object} option - 
- * @param {Object} option.mid -   Recall message id
- * @param {Object} option.to -   The recipient of the message
- * @param {Object} option.type -  chat (single chat) groupchat (group) chatroom (chat room)
- * @param {Object} option.success - Recall the successful callback
- * @param {Object} option.fail- Recall the failed callback (more than two minutes)
- */
-WebIM.conn.recallMessage(option)
-```
-
-------------------------------------------------------------------------
-
 ## Receive message
 
 Check the callback function, the callback function code for receiving various messages is as follows:
@@ -742,35 +681,6 @@ addAudioMessage: (message, bodyType) => {
 
 ------------------------------------------------------------------------
 
-## Message roaming
-
-Roaming message, `SDK value-added function`.
-``` javascript
-/**
- * Get conversation history messages
- * @param {Object} options
- * @param {String} options.queue   - The user id of the other party (if the user id contains uppercase letters, please change to lowercase letters)/group id/chat room id
- * @param {String} options.count   - Number of items pulled at a time
- * @param {Boolean} options.isGroup - Whether it is a group chat, the default is false
- * @param {Function} options.success
- * @param {Funciton} options.fail
- */
-var options = {
-    queue: "user1", //Pay special attention to the queue attribute value mixed with uppercase and lowercase letters, and pure uppercase letters, which will cause the pull roaming to be an empty array, so pay attention to replace the attribute value to pure lowercase
-    isGroup: false,
-    count: 10,
-    success: function(res){
-       console.log(res) //Get historical news of successful pull
-    },
-    fail: function(){}
-}
-WebIM.conn.fetchHistoryMessages(options)
-```
-
-PS：If need to reset the cursor of the pull history message interface, you can reset it through the "WebIM.conn.mr_cache = \[\]" method.
-
-------------------------------------------------------------------------
-
 ## New message reminder
 
 When the SDK receives a new message, it will forward it to the logged-in user directly. After receiving the message, the demo will display the number of messages in red behind the friend or group. The developer change the its styles. 
@@ -829,9 +739,6 @@ Single chat:
 
 -Delivered receipt: Configure delivery to true in webim.config.js, and the delivery receipt will be automatically sent when a message is received. The callback function for the other party to receive the delivery receipt is onDeliveredMessage 
 
-```{=html}
-<!-- -->
-```
 -   Read receipt:
 
 1. When you think the user has read a specific message(s), you can generate a read receipt and send it back to the other party, and the other party will receive the read receipt in the onReadMessage callback
@@ -847,81 +754,6 @@ msg.set({
     ,to: message.from
 });
 conn.send(msg.body);
-```
-
-**Group chat read receipt**`SDK value-added functions`:
-
--   Sending groups can receive messages with read receipts (group owner or administrator rights are required) 
-
-``` javascript
- sendGroupReadMsg = () => {
-  let id = conn.getUniqueId();                 // Generate local message id
-  let msg = new WebIM.message('txt', id);      // Create text message
-  msg.set({
-     msg: 'message content',                  // Message content 
-     to: 'username',                          // The recipient of the message (user id)
-     chatType: 'groupChat',                   // Set to group chat 
-     success: function (id, serverMsgId) {
-         console.log('send private text Success');
-     },
-     fail: function(e){
-         console.log("Send private text error");
-     }
-  });
-  msg.body.msgConfig = { allowGroupAck: true } // read receipt is required to set this message 
-  conn.send(msg.body);
-}
- 
-```
-
--   Send the receipt after receiving the message that requires receipt
-
-``` javascript
- sendReadMsg = () => {
-  let msg = new WebIM.message("read", WebIM.conn.getUniqueId());
-  msg.set({
-      id：message.id,         // The id of the message that needs to send the read receipt
-      to: 'groupId',
-      msgConfig: { allowGroupAck: true },
-      ackContent: JSON.stringify({}) // Receipt content
-  })
-  msg.setChatType('groupChat')
-  WebIM.conn.send(msg.body);
-}
-```
-
--   There are two situations to monitor the receipt of group messages: 1. Listen 
-    to the receipt in the onReadMessage function online; 2. When receive the group message receipt offline, listen to the receipt in the onStatisticMessage function after logging in. 
-
-``` javascript
-// Monitor onReadMessage when you are online 
-onReadMessage: (message) => {
-  const { mid } = message;
-  const msg = {
-    id: mid
-  };
-  if(message.groupReadCount){
-    // Message reads 
-    msg.groupReadCount = message.groupReadCount[message.mid];
-  }
-}
-      
-// Receive the receipt offline, then monitor it here after logging in 
-onStatisticMessage: (message) => {
-  let statisticMsg = message.location && JSON.parse(message.location);
-  let groupAck = statisticMsg.group_ack || [];
-}
-```
-
--   View users who have read the message
-
-``` jacascript
-WebIM.conn.getGroupMsgReadUser({
-    msgId,  // message id
-    groupId // group id
-}).then((res)=>{
-    console.log(res)
-})
 ```
 
 **Send the entire conversation read receipt**
