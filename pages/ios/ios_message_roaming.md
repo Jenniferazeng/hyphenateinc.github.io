@@ -1,16 +1,17 @@
 ---
-title: ios Group
+title: iOS Message Roaming
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_message_roaming.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -45,17 +46,17 @@ Download link：[download page](http://www.easemob.com/download/im)
  *  @param  aCompletionBlock    获取消息结束的callback
  */
 - (void)asyncFetchHistoryMessagesFromServer:(NSString *)aConversationId
-                           conversationType:(EMConversationType)aConversationType
+                           conversationType:(AgoraConversationType)aConversationType
                              startMessageId:(NSString *)aStartMessageId
                                    pageSize:(int)aPageSize
-                                 complation:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                                 complation:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
                                  
 // 调用示例：
-[[EMClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"conversationid"
-                                                        conversationType:EMConversationTypeChat
+[[AgoraChatClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"conversationid"
+                                                        conversationType:AgoraConversationTypeChat
                                                           startMessageId:nil
                                                                 pageSize:20
-                                                              completion:^(EMCursorResult *aResult, EMError *aError) {
+                                                              completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
         NSLog(@"漫游消息成功---");
     } else {

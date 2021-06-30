@@ -1,5 +1,19 @@
+---
+title: iOS Push Content
+keywords: ios
+sidebar: ios_sidebar
+toc: true
+permalink: ios_push_content.html
+folder: ios
+---
+# iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
+
+## DEMO（ChatDemo-UI3.0 App） experience
+
+
+Download link：[download page](http://www.easemob.com/download/im)
 
 ## Parse APNs content
 
@@ -167,11 +181,11 @@ Easemob provides the following extension fields:
 
 （[iOS Sending messages](/im/ios/basics/message#构造扩展消息)）
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -219,11 +233,11 @@ After set up, the APNs alert information you receive will be the information you
 
 ([iOS sending message](/im/ios/basics/message#构造消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -274,11 +288,11 @@ The custom display and custom extension will be sent to the other party at the s
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
     NSString *willSendText = [EaseConvertToCommonEmoticonsHelper convertToCommonEmoticons:text];
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension",@"em_push_content":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -370,11 +384,11 @@ Notification](https://developer.apple.com/documentation/usernotifications/settin
 
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_sound":@"custom.caf"}}; // the extension field for setting custom APNs alert sound, value is the name of the audio file in string type
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -429,11 +443,11 @@ After set up, the APNs push of this message will support UNNotificationServiceEx
 
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_mutable_content":@YES}}; // @YES is enable，@NO or not set, it will be the Remote Notification.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil]; 
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil]; 
 
 ------------------------------------------------------------------------
 
@@ -543,11 +557,11 @@ configure in  `Localizable.strings (English)`
 
 #### iOS send
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_title_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_title_loc_args":@[@"Shelly", @"Rick"], @"em_push_body_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_body_loc_args":@[@"Shelly", @"Rick"]}};
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ### parse
 
@@ -599,12 +613,12 @@ No APNs will be sent. After adding with sending a message, the message will not 
 
 ([iOS sending messages](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_ignore_notification":@YES};
-    message.chatType = EMChatTypeChat; // Set the message type
+    message.chatType = AgoraChatTypeChat; // Set the message type
     // Send message example
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -641,12 +655,12 @@ After that, the attribute will become invalid.
 
 ([iOS sending messages)
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_force_notification":@YES};
-    message.chatType = EMChatTypeChat; // Set the message type
+    message.chatType = AgoraChatTypeChat; // Set the message type
     // Send message example
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 

@@ -1,16 +1,17 @@
 ---
-title: ios Group
+title: iOS  Release Note
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_release_note.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 

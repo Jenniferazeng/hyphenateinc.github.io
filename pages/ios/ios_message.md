@@ -1,43 +1,44 @@
 ---
-title: ios Group
+title: iOS Message
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_message.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
 # Message
 
-Message: IM interaction entity, the corresponding type in the SDK is **EMMessage**. **EMMessage** consists of 
-EMMessageBody.
+Message: IM interaction entity, the corresponding type in the SDK is **AgoraMessage**. **AgoraMessage** consists of 
+AgoraMessageBody.
 
 The Easemob SDK header files involved in the message are as follows:
 
 ``` objc
 // Message building
-EMMessage.h
-EMMessageBody.h
-EMTextMessageBody.h
-EMImageMessageBody.h
-EMVoiceMessageBody.h
-EMVideoMessageBody.h
-EMFileMessageBody.h
-EMLocationMessageBody.h
-EMCmdMessageBody.h
+AgoraMessage.h
+AgoraMessageBody.h
+AgoraTextMessageBody.h
+AgoraImageMessageBody.h
+AgoraVoiceMessageBody.h
+AgoraVideoMessageBody.h
+AgoraFileMessageBody.h
+AgoraLocationMessageBody.h
+AgoraCmdMessageBody.h
 
 // The message method calling, such as adding proxy, removing proxy, sending messages, etc. It also includes conversation related operations, such as creating or obtaining a conversation, obtaining a list of conversation, etc.
-IEMChatManager.h
+IAgoraChatManager.h
 
 // The callback method of the protocol of the message, such as the callback method of listening and receiving messages, etc.
-EMChatManagerDelegate.h
+AgoraChatManagerDelegate.h
 ```
 
 ## Construct message
@@ -59,7 +60,7 @@ Description of the "Initialize Message Instance" method used in the following ex
 - (id)initWithConversationID:(NSString *)aConversationId
                         from:(NSString *)aFrom
                           to:(NSString *)aTo
-                        body:(EMMessageBody *)aBody
+                        body:(AgoraMessageBody *)aBody
                          ext:(NSDictionary *)aExt;
  
 ```
@@ -69,7 +70,7 @@ Conversation id. For example, if a sends a message to b, then the SDK will gener
 
 to: Represents the Easemob id of the receiver.
 
-from: Represents the currently logged-in EMClient ID, generally use \[EMClient
+from: Represents the currently logged-in Client ID, generally use \[AgoraChatClient
 sharedClient\].currentUsername; method to get.
 
 `Note: If you are sending a message to a group or chat room, then aConversationId and to should be replaced by the group id or chat room id`
@@ -89,15 +90,15 @@ In general, the currently logged-in Easemob id should send a message to which Ea
 - (instancetype)initWithText:(NSString *)aText;
 
 // Calling:
-EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"Message to send"];
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to send"];
 // Get the currently logged-in Easemob id
-NSString *from = [[EMClient sharedClient] currentUsername];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate Message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct emoticons
@@ -115,15 +116,15 @@ Sending emoticons is actually sending text messages. After receiving the text me
 - (instancetype)initWithText:(NSString *)aText;
 
 // Calling:
-EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"The emoticon message text string to be sent"];
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"The emoticon message text string to be sent"];
 // Get the currently logged-in Easemob id
-NSString *from = [[EMClient sharedClient] currentUsername];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //Generate Message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct a picture message
@@ -141,15 +142,15 @@ message.chatType = EMChatTypeChat;// Set as single chat message
                  displayName:(NSString *)aDisplayName;
                  
 // Calling:               
-EMImageMessageBody *body = [[EMImageMessageBody alloc] initWithData:data displayName:@"image.png"];
+AgoraImageMessageBody *body = [[AgoraImageMessageBody alloc] initWithData:data displayName:@"image.png"];
 // body.compressionRatio = 1.0f; 1.0 means the original image is sent without compression. The default value is 0.6, and the compression factor is 0.6 times
-NSString *from = [[EMClient sharedClient] currentUsername];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //Generate Message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct location message
@@ -169,14 +170,14 @@ message.chatType = EMChatTypeChat;// Set as single chat message
                          address:(NSString *)aAddress;
                          
 // Calling:                         
-EMLocationMessageBody *body = [[EMLocationMessageBody alloc] initWithLatitude:39 longitude:116 address:@"Address"];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraLocationMessageBody *body = [[AgoraLocationMessageBody alloc] initWithLatitude:39 longitude:116 address:@"Address"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct a voice message
@@ -194,15 +195,15 @@ message.chatType = EMChatTypeChat;// Set as single chat message
                       displayName:(NSString *)aDisplayName;
 
 // Calling:                      
-EMVoiceMessageBody *body = [[EMVoiceMessageBody alloc] initWithLocalPath:@"audioPath" displayName:@"audio"];
+AgoraVoiceMessageBody *body = [[AgoraVoiceMessageBody alloc] initWithLocalPath:@"audioPath" displayName:@"audio"];
 body.duration = duration;
-NSString *from = [[EMClient sharedClient] currentUsername];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct a video message
@@ -220,14 +221,14 @@ message.chatType = EMChatTypeChat;// Set as single chat message
                       displayName:(NSString *)aDisplayName;
                       
 // Calling:                      
-EMVideoMessageBody *body = [[EMVideoMessageBody alloc] initWithLocalPath:@"videoPath" displayName:@"video.mp4"];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraVideoMessageBody *body = [[AgoraVideoMessageBody alloc] initWithLocalPath:@"videoPath" displayName:@"video.mp4"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Structure file message
@@ -245,14 +246,14 @@ message.chatType = EMChatTypeChat;// Set as single chat message
                       displayName:(NSString *)aDisplayName;
                       
 // Calling:                      
-EMFileMessageBody *body = [[EMFileMessageBody alloc] initWithLocalPath:@"filePath" displayName:@"file"];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraFileMessageBody *body = [[AgoraFileMessageBody alloc] initWithLocalPath:@"filePath" displayName:@"file"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // generate message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct a pass-through message
@@ -273,14 +274,14 @@ A special type of message provided by the SDK, namely CMD, will not store db, no
 - (instancetype)initWithAction:(NSString *)aAction;
 
 // Calling:
-EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:action];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraCmdMessageBody *body = [[AgoraCmdMessageBody alloc] initWithAction:action];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // generate message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct a custom type message
@@ -294,14 +295,14 @@ The content of the custom message is in key and value format, and the user needs
 ``` objc
 // event is a custom message event that needs to be delivered, such as a gift message, you can set event = @"gift"
 // The params type is NSDictionary<String, String>
-EMCustomMessageBody *body = [[EMCustomMessageBody alloc] initWithEvent:event ext: params];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraCustomMessageBody *body = [[AgoraCustomMessageBody alloc] initWithEvent:event ext: params];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //Generate Message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];  // ext:Extended message section
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];  // ext:Extended message section
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Construct extended message
@@ -314,34 +315,34 @@ Here is an extended text message. If this custom message needs to use voice or p
 
 ``` objc
 // Take a single chat message as an example
-EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"Message to send"];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to send"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //generate Message
 NSDictionary *messageExt = @{@"key":@"value"};
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];  // ext:Extended message section
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];  // ext:Extended message section
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
 
 ### Insert message
 
 #### Method One
 
-Insert directly, inserting in this way will not verify the existence of the EMConversation object where the message is located, and insert the message directly into the database
+Insert directly, inserting in this way will not verify the existence of the AgoraConversation object where the message is located, and insert the message directly into the database
 
 ``` objc
-EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"Message to insert"];
-NSString *from = [[EMClient sharedClient] currentUsername];
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to insert"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //generate Message
-EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];
-message.chatType = EMChatTypeChat;// Set as single chat message
-//message.chatType = EMChatTypeGroupChat;// Set as group chat message
-//message.chatType = EMChatTypeChatRoom;// Set as chat room message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 
-[[EMClient sharedClient].chatManager importMessages:@[message] completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager importMessages:@[message] completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Import a set of messages to DB successfully");
     } else {
@@ -352,23 +353,23 @@ message.chatType = EMChatTypeChat;// Set as single chat message
 
 #### Method Two
 
-This insertion method will verify the existence of the EMConversation object where it is located. After insertion, the attribute in the EMConversation object will be updated, such as LatestMessage
+This insertion method will verify the existence of the AgoraConversation object where it is located. After insertion, the attribute in the AgoraConversation object will be updated, such as LatestMessage
 
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"Message to insert"];
-    NSString *from = [[EMClient sharedClient] currentUsername];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to insert"];
+    NSString *from = [[AgoraChatClient sharedClient] currentUsername];
         
     //generate Message
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
-    message.chatType = EMChatTypeChat;// Set as single chat message
-    //message.chatType = EMChatTypeGroupChat;// Set as group chat message
-    //message.chatType = EMChatTypeChatRoom;// Set as chat room message
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+    message.chatType = AgoraChatTypeChat;// Set as single chat message
+    //message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+    //message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
     //message.timestamp = 1509689222137; Message time
-    EMConversation *conversation =  [[EMClient sharedClient].chatManager getConversation:message.conversationId type:EMConversationTypeChat createIfNotExist:YES];
+    AgoraConversation *conversation =  [[AgoraChatClient sharedClient].chatManager getConversation:message.conversationId type:AgoraConversationTypeChat createIfNotExist:YES];
         // type: Conversation type
-        //      EMConversationTypeChat // single chat
-        //      EMConversationTypeGroupChat // group chat
-        //      EMConversationTypeChatRoom // chat room
+        //      AgoraConversationTypeChat // single chat
+        //      AgoraConversationTypeGroupChat // group chat
+        //      AgoraConversationTypeChatRoom // chat room
     [conversation insertMessage:message error:nil];
 
 ### Update message attribute
@@ -380,11 +381,11 @@ This insertion method will verify the existence of the EMConversation object whe
  *  @param aMessage         Messages
  *  @param aCompletionBlock The completed callback
  */
-- (void)updateMessage:(EMMessage *)aMessage
-           completion:(void (^)(EMMessage *aMessage, EMError *aError))aCompletionBlock;
+- (void)updateMessage:(AgoraMessage *)aMessage
+           completion:(void (^)(AgoraMessage *aMessage, AgoraError *aError))aCompletionBlock;
 
 //Call:
-[[EMClient sharedClient].chatManager updateMessage:nil completion:^(EMMessage *aMessage, EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager updateMessage:nil completion:^(AgoraMessage *aMessage, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Update message to DB successfully");
     } else {
@@ -399,14 +400,14 @@ The Easemob SDK header files involved in the session are as follows:
 
 ``` objc
 // Conversation, including session id, session type, etc.
-EMConversation.h
+AgoraConversation.h
 
 // Conversation method call, including creating or obtaining session, obtaining session list, etc.
-IEMChatManager.h
+IAgoraChatManager.h
 
 ```
 
-Conversation：The container for operating the chat message **EMMessage**, the corresponding type in the SDK is**EMConversation**.
+Conversation：The container for operating the chat message **AgoraMessage**, the corresponding type in the SDK is**AgoraConversation**.
 
 ### Create/Get a Conversation
 
@@ -422,8 +423,8 @@ Create a conversation based on conversationId.
  *
  *  @result Conversation object
  */
-- (EMConversation *)getConversation:(NSString *)aConversationId
-                               type:(EMConversationType)aType
+- (AgoraConversation *)getConversation:(NSString *)aConversationId
+                               type:(AgoraConversationType)aType
                    createIfNotExist:(BOOL)aIfCreate;
                    
 // Call:   
@@ -434,11 +435,11 @@ The group id of the group conversations to send messages to the group
 The chat room ID of the chat room which messages are sent to
 
 aType:
-//EMConversationTypeChat            single chat
-//EMConversationTypeGroupChat       group chat
-//EMConversationTypeChatRoom        chat room
+//AgoraConversationTypeChat            single chat
+//AgoraConversationTypeGroupChat       group chat
+//AgoraConversationTypeChatRoom        chat room
                 
-[[EMClient sharedClient].chatManager getConversation:@"8001" type:EMConversationTypeChat createIfNotExist:YES];
+[[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
 ```
 
 ### Delete conversation
@@ -455,10 +456,10 @@ aType:
  */
 - (void)deleteConversation:(NSString *)aConversationId
           isDeleteMessages:(BOOL)aIsDeleteMessages
-                completion:(void (^)(NSString *aConversationId, EMError *aError))aCompletionBlock;
+                completion:(void (^)(NSString *aConversationId, AgoraError *aError))aCompletionBlock;
                 
 // Call:
-[[EMClient sharedClient].chatManager deleteConversation:@"8001" isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager deleteConversation:@"8001" isDeleteMessages:YES completion:^(NSString *aConversationId, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Conversation deleted successfully");
     } else {
@@ -473,18 +474,18 @@ aType:
 /*!
  *  Delete a batch of conversations
  *
- *  @param aConversations       Conversation list <EMConversation>
+ *  @param aConversations       Conversation list <AgoraConversation>
  *  @param aIsDeleteMessages    Whether to delete messages in the conversation
  *  @param aCompletionBlock     the completed callback
  */
 - (void)deleteConversations:(NSArray *)aConversations
            isDeleteMessages:(BOOL)aIsDeleteMessages
-                 completion:(void (^)(EMError *aError))aCompletionBlock;
+                 completion:(void (^)(AgoraError *aError))aCompletionBlock;
                  
                  
-EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:@"8001" type:EMConversationTypeChat createIfNotExist:NO];
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:NO];
 // Call:
-[[EMClient sharedClient].chatManager deleteConversations:@[conversation] isDeleteMessages:YES completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager deleteConversations:@[conversation] isDeleteMessages:YES completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"A batch of Conversation deleted successfully");
     } else {
@@ -499,12 +500,12 @@ EMConversation *conversation = [[EMClient sharedClient].chatManager getConversat
 /*!
  *  Get all conversation, if they do not exist in memory, they will be loaded from DB
  *
- *  @result Conversation list<EMConversation>
+ *  @result Conversation list<AgoraConversation>
  */
 - (NSArray *)getAllConversations;
 
 // Call:
-NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+NSArray *conversations = [[AgoraChatClient sharedClient].chatManager getAllConversations];
 ```
 
 ### Get the number of unread messages in a single Conversation
@@ -520,16 +521,16 @@ NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversation
  *
  *  @result Conversation object
  */
-- (EMConversation *)getConversation:(NSString *)aConversationId
-                               type:(EMConversationType)aType
+- (AgoraConversation *)getConversation:(NSString *)aConversationId
+                               type:(AgoraConversationType)aType
                    createIfNotExist:(BOOL)aIfCreate;
                    
 // Get the number of unread messages in a single chat conversation                   
-EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:@"8001" type:EMConversationTypeChat createIfNotExist:YES];
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
 [conversation unreadMessagesCount];
 
 // Get the number of unread messages in a group chat conversation                   
-EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:@"121828583195137" type:EMConversationTypeGroupChat createIfNotExist:YES];
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"121828583195137" type:AgoraConversationTypeGroupChat createIfNotExist:YES];
 [conversation unreadMessagesCount];
 ```
 
@@ -538,16 +539,16 @@ EMConversation *conversation = [[EMClient sharedClient].chatManager getConversat
 The SDK currently does not provide a method to directly obtain the number of unread messages in all conversations. It can only obtain the conversation list first, and then traverse the number of unread messages in each conversation and accumulate them to calculate the number of unread messages in all conversations.
 
 ``` objc
-NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+NSArray *conversations = [[AgoraChatClient sharedClient].chatManager getAllConversations];
 NSInteger unreadCount = 0;
-for (EMConversation *conversation in conversations) {
+for (AgoraConversation *conversation in conversations) {
     unreadCount += conversation.unreadMessagesCount;
 }
 ```
 
 ### Message retrieval
 
-You can retrieve messages in a certain conversation by keyword, message type, and start and end time. Use the EMConversation session object to call.
+You can retrieve messages in a certain conversation by keyword, message type, and start and end time. Use the AgoraConversation session object to call.
 
 ``` objc
 /*!
@@ -560,14 +561,14 @@ You can retrieve messages in a certain conversation by keyword, message type, an
  */
 - (void)loadMessagesStartFromId:(NSString *)aMessageId
                           count:(int)aCount
-                searchDirection:(EMMessageSearchDirection)aDirection
-                     completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
                      
 // Call:
-EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:@"8001" type:EMConversationTypeChat createIfNotExist:YES];
-[conversation loadMessagesStartFromId:messageId count:10 searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
+[conversation loadMessagesStartFromId:messageId count:10 searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
     if (!aError) {
-        // EMMessage is stored in the aMessage array
+        // AgoraMessage is stored in the aMessage array
         NSLog(@"get the message from the database Successfully --- %@", aMessages);
     } else {
         NSLog(@"Reasons for the failure to delete the message from the database--- %@", aError.errorDescription);
@@ -584,12 +585,12 @@ EMConversation *conversation = [[EMClient sharedClient].chatManager getConversat
  *  @param aDirection       Message search direction
  *  @param aCompletionBlock the completed callback
  */
-- (void)loadMessagesWithType:(EMMessageBodyType)aType
+- (void)loadMessagesWithType:(AgoraMessageBodyType)aType
                    timestamp:(long long)aTimestamp
                        count:(int)aCount
                     fromUser:(NSString*)aUsername
-             searchDirection:(EMMessageSearchDirection)aDirection
-                  completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+             searchDirection:(AgoraMessageSearchDirection)aDirection
+                  completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
 
 /*!
  *  Get the message containing the specified content from the database, and the fetched messages are sorted by time. If the reference timestamp is a negative number, it will be fetched from the latest message forward. If aCount is less than or equal to 0, it will be treated as 1
@@ -605,8 +606,8 @@ EMConversation *conversation = [[EMClient sharedClient].chatManager getConversat
                       timestamp:(long long)aTimestamp
                           count:(int)aCount
                        fromUser:(NSString*)aSender
-                searchDirection:(EMMessageSearchDirection)aDirection
-                     completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
 
 /*!
  *  Get the messages within a specified time period from the database, and the retrieved messages are sorted by time. In order to prevent taking up too much memory, the user should set the maximum number of loaded messages
@@ -619,13 +620,13 @@ EMConversation *conversation = [[EMClient sharedClient].chatManager getConversat
 - (void)loadMessagesFrom:(long long)aStartTimestamp
                       to:(long long)aEndTimestamp
                    count:(int)aCount
-              completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+              completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
 
 ```
 
 ### Global Message retrieval
 
-The messages in all conversations can be retrieved by message type and keywords. Use \[EMClient
+The messages in all conversations can be retrieved by message type and keywords. Use \[AgoraChatClient
 sharedClient\].chatManager singleton Call.
 
 ``` objc
@@ -639,16 +640,16 @@ sharedClient\].chatManager singleton Call.
  *  @param aDirection       Message search direction
  *  @param aCompletionBlock the completed callback
  */
-- (void)loadMessagesWithType:(EMMessageBodyType)aType
+- (void)loadMessagesWithType:(AgoraMessageBodyType)aType
                    timestamp:(long long)aTimestamp
                        count:(int)aCount
                     fromUser:(NSString*)aUsername
-             searchDirection:(EMMessageSearchDirection)aDirection
-                  completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+             searchDirection:(AgoraMessageSearchDirection)aDirection
+                  completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
 // Call:
-[[EMClient sharedClient].chatManager loadMessagesWithKeyword:@"Hello" timestamp:1575997248290 count:10 fromUser:nil searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager loadMessagesWithKeyword:@"Hello" timestamp:1575997248290 count:10 fromUser:nil searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
     if (!aError) {
-        // EMMessage is stored in the aMessage array
+        // AgoraMessage is stored in the aMessage array
         NSLog(@"get the message from the database Successfully--- %@", aMessages);
     } else {
         NSLog(@"Reasons for the failure to delete the message from the database --- %@", aError.errorDescription);
@@ -669,12 +670,12 @@ sharedClient\].chatManager singleton Call.
                       timestamp:(long long)aTimestamp
                           count:(int)aCount
                        fromUser:(NSString*)aSender
-                searchDirection:(EMMessageSearchDirection)aDirection
-                     completion:(void (^)(NSArray *aMessages, EMError *aError))aCompletionBlock;
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
 // Call:
-[[EMClient sharedClient].chatManager loadMessagesWithType:EMMessageBodyTypeText timestamp:1575997248290 count:10 fromUser:nil searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager loadMessagesWithType:AgoraMessageBodyTypeText timestamp:1575997248290 count:10 fromUser:nil searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
     if (!aError) {
-        // EMMessage is stored in the aMessage array
+        // AgoraMessage is stored in the aMessage array
         NSLog(@"get the specified message from the database Successfully --- %@", aMessages);
     } else {
         NSLog(@"Reasons for the failure to delete the specified message from the database --- %@", aError.errorDescription);
@@ -697,14 +698,14 @@ The chat operation can only be performed after the successful login. When sendin
  *  @param aProgressBlock   Attachment upload progress callback block
  *  @param aCompletionBlock Send finished callback block
  */
-- (void)sendMessage:(EMMessage *)aMessage
+- (void)sendMessage:(AgoraMessage *)aMessage
            progress:(void (^)(int progress))aProgressBlock
-         completion:(void (^)(EMMessage *message, EMError *error))aCompletionBlock;
+         completion:(void (^)(AgoraMessage *message, AgoraError *error))aCompletionBlock;
 
 //Call:
-[[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+[[AgoraChatClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
     NSLog(@"Attachment upload progress --- %d", progress);
-} completion:^(EMMessage *message, EMError *error) {
+} completion:^(AgoraMessage *message, AgoraError *error) {
     if (!error) {
         NSLog(@"Message sent successfully");
     } else {
@@ -716,14 +717,14 @@ The chat operation can only be performed after the successful login. When sendin
 ### Receive message
 
 ``` objc
-protocol:EMChatManagerDelegate
+protocol:AgoraChatManagerDelegate
 
 proxy:
 // Registered message 
-[[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+[[AgoraChatClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 
 // Remove message proxy
-[[EMClient sharedClient].chatManager removeDelegate:self];
+[[AgoraChatClient sharedClient].chatManager removeDelegate:self];
 
 ```
 
@@ -758,21 +759,21 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
 ``` objc
 // Callback for receiving a message. Messages with attachments can be downloaded using the method of downloading attachments provided by the SDK (the details will be mentioned later)
 - (void)messagesDidReceive:(NSArray *)aMessages {
-    for (EMMessage *message in aMessages) {
-    EMMessageBody *msgBody = message.body;
+    for (AgoraMessage *message in aMessages) {
+    AgoraMessageBody *msgBody = message.body;
     switch (msgBody.type) {
-        case EMMessageBodyTypeText:
+        case AgoraMessageBodyTypeText:
         {
             // Text message received
-            EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
+            AgoraTextMessageBody *textBody = (AgoraTextMessageBody *)msgBody;
             NSString *txt = textBody.text;
             NSLog(@"The text received is txt -- %@",txt);
         }
         break;
-        case EMMessageBodyTypeImage:
+        case AgoraMessageBodyTypeImage:
         {
             // Get a picture message body
-            EMImageMessageBody *body = ((EMImageMessageBody *)msgBody);
+            AgoraImageMessageBody *body = ((AgoraImageMessageBody *)msgBody);
             NSLog(@"remote path of Large image  -- %@"   ,body.remotePath);
             NSLog(@"local path of Large image  -- %@"    ,body.localPath); // // Need to use the download method provided by the SDK to exist
             NSLog(@"The secret of the large picture -- %@"    ,body.secretKey);
@@ -788,18 +789,18 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
             NSLog(@"Download status of the small picture -- %lu",body.thumbnailDownloadStatus);
         }
         break;
-        case EMMessageBodyTypeLocation:
+        case AgoraMessageBodyTypeLocation:
         {
-            EMLocationMessageBody *body = (EMLocationMessageBody *)msgBody;
+            AgoraLocationMessageBody *body = (AgoraLocationMessageBody *)msgBody;
             NSLog(@"latitude-- %f",body.latitude);
             NSLog(@"longitude-- %f",body.longitude);
             NSLog(@"address-- %@",body.address);
             }
             break;
-        case EMMessageBodyTypeVoice:
+        case AgoraMessageBodyTypeVoice:
         {
             // sdk will automatically download audio
-            EMVoiceMessageBody *body = (EMVoiceMessageBody *)msgBody;
+            AgoraVoiceMessageBody *body = (AgoraVoiceMessageBody *)msgBody;
             NSLog(@"Audio remote path -- %@"      ,body.remotePath);
             NSLog(@"Audio local path -- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used (the audio will automatically call)
             NSLog(@"Audio secret -- %@"        ,body.secretKey);
@@ -808,9 +809,9 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
             NSLog(@"Audio duration -- %lu"      ,body.duration);
         }
         break;
-        case EMMessageBodyTypeVideo:
+        case AgoraMessageBodyTypeVideo:
         {
-            EMVideoMessageBody *body = (EMVideoMessageBody *)msgBody;
+            AgoraVideoMessageBody *body = (AgoraVideoMessageBody *)msgBody;
 
             NSLog(@"Video remote path -- %@"      ,body.remotePath);
             NSLog(@"Video local path-- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used
@@ -827,9 +828,9 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
             NSLog(@"Thumbnail download status -- %lu"      ,body.thumbnailDownloadStatus);
         }
         break;
-        case EMMessageBodyTypeFile:
+        case AgoraMessageBodyTypeFile:
         {
-            EMFileMessageBody *body = (EMFileMessageBody *)msgBody;
+            AgoraFileMessageBody *body = (AgoraFileMessageBody *)msgBody;
             NSLog(@"File remote path -- %@"      ,body.remotePath);
             NSLog(@"File local path -- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used
             NSLog(@"File secret -- %@"        ,body.secretKey);
@@ -837,10 +838,10 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
             NSLog(@"File download status-- %lu"   ,body.downloadStatus);
         }
         break;
-        case EMMessageBodyTypeCustom:
+        case AgoraMessageBodyTypeCustom:
         {
             // Custom type message received
-            EMCustomMessageBody *body = (EMCustomMessageBody *)msgBody;
+            AgoraCustomMessageBody *body = (AgoraCustomMessageBody *)msgBody;
             NSLog(@"event -- %@", body.event);
             NSLog(@"ext -- %@", body.ext);
         }
@@ -857,8 +858,8 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
 
 ``` objc
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
-    for (EMMessage *message in aCmdMessages) {
-        EMCmdMessageBody *body = (EMCmdMessageBody *)message.body;
+    for (AgoraMessage *message in aCmdMessages) {
+        AgoraCmdMessageBody *body = (AgoraCmdMessageBody *)message.body;
          NSLog(@"The action received is -- %@",body.action);
     }    
 }
@@ -868,7 +869,7 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
 
 ``` objc
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
-    for (EMMessage *message in aCmdMessages) {
+    for (AgoraMessage *message in aCmdMessages) {
         // Extended attributes in cmd messages
         NSDictionary *ext = message.ext;
         NSLog(@"The extended attributes in the cmd message are-- %@",ext)
@@ -876,7 +877,7 @@ When receiving a pass-through (cmd) message, the following callbacks will be use
 }
 // Message received callback
 - (void)messagesDidReceive:(NSArray *)aMessages {
-    for (EMMessage *message in aMessages) {
+    for (AgoraMessage *message in aMessages) {
         // Extended attributes in the message
         NSDictionary *ext = message.ext;
         NSLog(@"The extended attributes in the message are -- %@",ext);
@@ -898,12 +899,12 @@ After the SDK receives the message, it will download by default: the thumbnail o
  *  @param aProgressBlock      Attachment download progress callback block
  *  @param aCompletionBlock    Download complete callback block
  */
-- (void)downloadMessageThumbnail:(EMMessage *)aMessage
+- (void)downloadMessageThumbnail:(AgoraMessage *)aMessage
                         progress:(void (^)(int progress))aProgressBlock
-                      completion:(void (^)(EMMessage *message, EMError *error))aCompletionBlock;
+                      completion:(void (^)(AgoraMessage *message, AgoraError *error))aCompletionBlock;
                       
 // Call:                      
-[[EMClient sharedClient].chatManager downloadMessageThumbnail:message progress:nil completion:^(EMMessage *message, EMError *error) {
+[[AgoraChatClient sharedClient].chatManager downloadMessageThumbnail:message progress:nil completion:^(AgoraMessage *message, AgoraError *error) {
     if (!error) {
         NSLog(@"Thumbnail downloaded successfully");
     } else {
@@ -924,7 +925,7 @@ After the SDK receives the message, it will download by default: the thumbnail o
  *  @param aProgressBlock      Attachment download progress callback block
  *  @param aCompletionBlock    Download complete callback block
  */
-[[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMMessage *message, EMError *error) {
+[[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(AgoraMessage *message, AgoraError *error) {
         if (!error) {
         NSLog(@"Download the message attachment successfully");
     } else {
@@ -956,7 +957,7 @@ The message read receipt function is currently only available for single chat (C
 It is recommended to send the conversation ack first when entering the conversation
 
 ``` objc
-[[EMClient sharedClient].chatManager ackConversationRead:@"conversation id" completion:nil];
+[[AgoraChatClient sharedClient].chatManager ackConversationRead:@"conversation id" completion:nil];
 ```
 
 On the conversation page, when a message is received, you can send a message read ack according to the message type
@@ -973,11 +974,11 @@ On the conversation page, when a message is received, you can send a message rea
  */
 - (void)sendMessageReadAck:(NSString *)aMessageId
                     toUser:(NSString *)aUsername
-                completion:(void (^)(EMError *aError))aCompletionBlock;
+                completion:(void (^)(AgoraError *aError))aCompletionBlock;
                 
 // Call:                
 // Send a read receipt. It is written here just to show the progress of sending, and the developer needs to decide where to send it in the APP.
-[[EMClient sharedClient].chatManager sendMessageReadAck:@"messageId" toUser:@"username" completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager sendMessageReadAck:@"messageId" toUser:@"username" completion:^(AgoraError *aError) {
     if (!aError) {
          NSLog(@"Successfully sent the read receipt");
     } else {
@@ -1014,14 +1015,14 @@ Receive message read receipt
 /*!
  *  Received one or more read receipts
  *
- *  @param aMessages  Message list<EMMessage>
+ *  @param aMessages  Message list<AgoraMessage>
  */
 - (void)messagesDidRead:(NSArray *)aMessages;
 ```
 
 ### Set whether the group message needs a read receipt (value-added service)
 
-When the message is a group message, the message sender (currently the administrator and the group owner) can set whether the message needs a read receipt, if necessary, set the EMMessage attribute isNeedGroupAck to YES, and then send it.
+When the message is a group message, the message sender (currently the administrator and the group owner) can set whether the message needs a read receipt, if necessary, set the AgoraMessage attribute isNeedGroupAck to YES, and then send it.
 
     @property (nonatomic) BOOL isNeedGroupAck;
 
@@ -1051,14 +1052,14 @@ When the message is a group message, the message sender (currently the administr
 - (void)sendGroupMessageReadAck:(NSString *)aMessageId
                         toGroup:(NSString *)aGroupId
                         content:(NSString *)aContent
-                     completion:(void (^)(EMError *aError))aCompletionBlock;
+                     completion:(void (^)(AgoraError *aError))aCompletionBlock;
                      
     // Call
     // Send group message read receipt. It is written here just to show the progress of sending. The developer needs to decide where to send it in the APP.
-    [[EMClient sharedClient].chatManager sendGroupMessageReadAck:@"messageId"
+    [[AgoraChatClient sharedClient].chatManager sendGroupMessageReadAck:@"messageId"
                                                          toGroup:@"GroupId"
                                                          content:@"Receipt content"
-                                                      completion:^(EMError *aError)
+                                                      completion:^(AgoraError *aError)
     {
         if (!aError) {
             NSLog(@"sent the read receipt Successfully");
@@ -1068,7 +1069,7 @@ When the message is a group message, the message sender (currently the administr
     }];
 ```
 
-After sending the group read receipt, the groupAckCount attribute of EMMessage corresponding to message sender will change;
+After sending the group read receipt, the groupAckCount attribute of AgoraMessage corresponding to message sender will change;
 
 ``` objc
 @property (nonatomic, readonly) int groupAckCount;
@@ -1081,14 +1082,14 @@ After sending the group read receipt, the groupAckCount attribute of EMMessage c
  *  \~chinese
  *  Receipt of group message read receipt
  *
- *  @param aMessages  List of read messages<EMGroupMessageAck>
+ *  @param aMessages  List of read messages<AgoraGroupMessageAck>
  *
  *  \~english
  *  Invoked when receiving read acknowledgement in message list
  *
- *  @param aMessages  Acknowledged message list<EMGroupMessageAck>
+ *  @param aMessages  Acknowledged message list<AgoraGroupMessageAck>
  */
-- (void)groupMessageDidRead:(EMMessage *)aMessage
+- (void)groupMessageDidRead:(AgoraMessage *)aMessage
                   groupAcks:(NSArray *)aGroupAcks;
 ```
 
@@ -1110,7 +1111,7 @@ After sending the group read receipt, the groupAckCount attribute of EMMessage c
                                          groupId:(NSString *)aGroupId
                                  startGroupAckId:(NSString *)aGroupAckId
                                         pageSize:(int)aPageSize
-                                      completion:(void (^)(EMCursorResult *aResult, EMError *error, int totalCount))aCompletionBlock;
+                                      completion:(void (^)(AgoraCursorResult *aResult, AgoraError *error, int totalCount))aCompletionBlock;
 
 ### Message roaming
 
@@ -1129,13 +1130,13 @@ The SDK provides an interface for obtaining historical information from the serv
  *  @param  aCompletionBlock    Get the callback for the end of the message
  */
 - (void)asyncFetchHistoryMessagesFromServer:(NSString *)aConversationId
-                           conversationType:(EMConversationType)aConversationType
+                           conversationType:(AgoraConversationType)aConversationType
                              startMessageId:(NSString *)aStartMessageId
                                    pageSize:(int)aPageSize
-                                 complation:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                                 complation:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
                                  
 // Call:
-[[EMClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"6001" conversationType:EMConversationTypeChat startMessageId:messageId pageSize:10 completion:^(EMCursorResult *aResult, EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"6001" conversationType:AgoraConversationTypeChat startMessageId:messageId pageSize:10 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get the message from the server successfully");
     } else {
@@ -1156,10 +1157,10 @@ The SDK provides an interface for obtaining historical information from the serv
 *  @param aCompletionBlock     Completed callback
 */
 - (void)recallMessageWithMessageId:(NSString *)aMessageId
-                        completion:(void (^)(EMError *aError))aCompletionBlock;
+                        completion:(void (^)(AgoraError *aError))aCompletionBlock;
            
 // Call:
-[[EMClient sharedClient].chatManager recallMessageWithMessageId:messageId completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].chatManager recallMessageWithMessageId:messageId completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Withdraw the message successfully");
     } else {
@@ -1175,7 +1176,7 @@ Message withdrawal receipt
  *  withdrawn Received message 
 
  *
- *  @param aMessages  Withdraw messages list<EMMessage>
+ *  @param aMessages  Withdraw messages list<AgoraMessage>
  */
 - (void)messagesDidRecall:(NSArray *)aMessages;
 ```
@@ -1184,8 +1185,3 @@ Note: The message withdrawal is a value-added function, please contact Easemob B
 
 ------------------------------------------------------------------------
 
-\<WRAP group> \<WRAP half column> Previous Page：[iOS SDK
-Update log](/im/ios/sdk/releasenote) \</WRAP>
-
-\<WRAP half column> Next Page：[Friends management](/im/ios/basics/buddy) \</WRAP>
-\</WRAP>

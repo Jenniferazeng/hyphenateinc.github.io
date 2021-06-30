@@ -1,5 +1,5 @@
 ---
-title: ios Group
+title: iOS Product Overview
 keywords: ios
 sidebar: ios_sidebar
 toc: true
@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -81,10 +82,10 @@ When integrating, you must first import `Helper` module into your own project
 
 -   **EaseIMHelper**：EaseIM global help class, demo
     The singleton class is mainly to monitor the callback of related events such as receiving messages, friends, groups, and chat rooms globally to perform corresponding process;
--   **EMConversationsViewController**：The session list function page of the demo shows the implementation of extended item side-slip events and item click events;
--   **EMChatViewController**：The conversation list function page of the demo shows the implementation of extended item side-slip events and item click events;
--   **EMContactsViewController**：The contact page shown in the demo shows the long-press side-slip of adding items and the realization of item click events, etc.;
--   **EMGroupInfoViewController**：The following functions are implemented: adding group members, modifying group announcements and group introductions, uploading shared files, group management, setting message do not disturb and disbanding or exiting the group, etc.
+-   **AgoraConversationsViewController**：The session list function page of the demo shows the implementation of extended item side-slip events and item click events;
+-   **AgoraChatViewController**：The conversation list function page of the demo shows the implementation of extended item side-slip events and item click events;
+-   **AgoraContactsViewController**：The contact page shown in the demo shows the long-press side-slip of adding items and the realization of item click events, etc.;
+-   **AgoraGroupInfoViewController**：The following functions are implemented: adding group members, modifying group announcements and group introductions, uploading shared files, group management, setting message do not disturb and disbanding or exiting the group, etc.
 
 ## Display of some UIs
 

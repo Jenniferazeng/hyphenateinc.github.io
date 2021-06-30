@@ -1,16 +1,17 @@
 ---
-title: ios Group
+title: iOS  Pricing
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_pricing.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -30,11 +31,11 @@ The SDK adopts a modular design, and the function of each module is relatively i
 
 ![Modular Design](/im/iOS/sdk/image005.png){.align-center}
 
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
+-   AgoraClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
+-   AgoraChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
+-   AgoraContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
+-   AgoraGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
+-   AgoraChatroomManager: Responsible for the management of chat rooms.
 
 **note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
 Upgrade document](/im/iOS/sdk/upgradetov).
@@ -221,17 +222,17 @@ Permission configuration (more permissions may be needed in actual development, 
         iOS:name="Your Application">
   
     <!-- Set AppKey of Easemob application -->
-        <meta-data iOS:name="EASEMOB_APPKEY"  iOS:value="Your AppKey" />
+        <meta-data iOS:name="EASAgoraOB_APPKEY"  iOS:value="Your AppKey" />
         <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service iOS:name="com.hyphenate.chat.EMChatService" iOS:exported="true"/>
-        <service iOS:name="com.hyphenate.chat.EMJobService"
+        <service iOS:name="com.hyphenate.chat.AgoraChatService" iOS:exported="true"/>
+        <service iOS:name="com.hyphenate.chat.AgoraJobService"
             iOS:permission="iOS.permission.BIND_JOB_SERVICE"
             iOS:exported="true"
             />
         <!-- Declare the receiver required by the SDK -->
-        <receiver iOS:name="com.hyphenate.chat.EMMonitorReceiver">
+        <receiver iOS:name="com.hyphenate.chat.AgoraMonitorReceiver">
             <intent-filter>
-                <action iOS:name="iOS.intent.action.PACKAGE_REMOVED"/>
+                <action iOS:name="iOS.intent.action.PACKAGE_RAgoraOVED"/>
                 <data iOS:scheme="package"/>
             </intent-filter>
             <!-- Optional filter -->
@@ -244,7 +245,7 @@ Permission configuration (more permissions may be needed in actual development, 
 </manifest>
 ```
 
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
+About the method of getting the value corresponding to EASAgoraOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
 
 If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
 
@@ -285,17 +286,17 @@ Upgrade to iOSX and use SDK version 3.7.3 or above, reporting the problem that L
 The details of the error are as follows:
 
     java.lang.NoClassDefFoundError: Failed resolution of: LiOSx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.h(Unknown Source:13)
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.a(Unknown Source:2)
+            at com.hyphenate.chat.AgoraClient.onNewLogin(Unknown Source:62)
+            at com.hyphenate.chat.AgoraClient$7.run(Unknown Source:197)
             ......
          Caused by: java.lang.ClassNotFoundException: Didn't find class "iOSx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
             ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.h(Unknown Source:13) 
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.a(Unknown Source:2) 
+            at com.hyphenate.chat.AgoraClient.onNewLogin(Unknown Source:62) 
+            at com.hyphenate.chat.AgoraClient$7.run(Unknown Source:197) 
             ...... 
 
 Solution:\
@@ -315,7 +316,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -335,11 +337,11 @@ The SDK adopts a modular design, and the function of each module is relatively i
 
 ![Modular Design](/im/iOS/sdk/image005.png){.align-center}
 
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
+-   AgoraClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
+-   AgoraChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
+-   AgoraContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
+-   AgoraGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
+-   AgoraChatroomManager: Responsible for the management of chat rooms.
 
 **note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
 Upgrade document](/im/iOS/sdk/upgradetov).
@@ -526,17 +528,17 @@ Permission configuration (more permissions may be needed in actual development, 
         iOS:name="Your Application">
   
     <!-- Set AppKey of Easemob application -->
-        <meta-data iOS:name="EASEMOB_APPKEY"  iOS:value="Your AppKey" />
+        <meta-data iOS:name="EASAgoraOB_APPKEY"  iOS:value="Your AppKey" />
         <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service iOS:name="com.hyphenate.chat.EMChatService" iOS:exported="true"/>
-        <service iOS:name="com.hyphenate.chat.EMJobService"
+        <service iOS:name="com.hyphenate.chat.AgoraChatService" iOS:exported="true"/>
+        <service iOS:name="com.hyphenate.chat.AgoraJobService"
             iOS:permission="iOS.permission.BIND_JOB_SERVICE"
             iOS:exported="true"
             />
         <!-- Declare the receiver required by the SDK -->
-        <receiver iOS:name="com.hyphenate.chat.EMMonitorReceiver">
+        <receiver iOS:name="com.hyphenate.chat.AgoraMonitorReceiver">
             <intent-filter>
-                <action iOS:name="iOS.intent.action.PACKAGE_REMOVED"/>
+                <action iOS:name="iOS.intent.action.PACKAGE_RAgoraOVED"/>
                 <data iOS:scheme="package"/>
             </intent-filter>
             <!-- Optional filter -->
@@ -549,7 +551,7 @@ Permission configuration (more permissions may be needed in actual development, 
 </manifest>
 ```
 
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
+About the method of getting the value corresponding to EASAgoraOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
 
 If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
 
@@ -590,17 +592,17 @@ Upgrade to iOSX and use SDK version 3.7.3 or above, reporting the problem that L
 The details of the error are as follows:
 
     java.lang.NoClassDefFoundError: Failed resolution of: LiOSx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.h(Unknown Source:13)
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.a(Unknown Source:2)
+            at com.hyphenate.chat.AgoraClient.onNewLogin(Unknown Source:62)
+            at com.hyphenate.chat.AgoraClient$7.run(Unknown Source:197)
             ......
          Caused by: java.lang.ClassNotFoundException: Didn't find class "iOSx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
             ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.h(Unknown Source:13) 
+            at com.hyphenate.chat.core.AgoraAdvanceDebugManager.a(Unknown Source:2) 
+            at com.hyphenate.chat.AgoraClient.onNewLogin(Unknown Source:62) 
+            at com.hyphenate.chat.AgoraClient$7.run(Unknown Source:197) 
             ...... 
 
 Solution:\

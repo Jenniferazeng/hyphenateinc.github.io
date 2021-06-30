@@ -1,3 +1,20 @@
+---
+title: iOS Offline Push
+keywords: ios
+sidebar: ios_sidebar
+toc: true
+permalink: ios_offline_push.html
+folder: ios
+---
+# iOS SDK's Introduction and import
+
+------------------------------------------------------------------------
+
+## DEMO（ChatDemo-UI3.0 App） experience
+
+
+Download link：[download page](http://www.easemob.com/download/im)
+
 ## APNs Offline push
 
 ------------------------------------------------------------------------
@@ -10,9 +27,9 @@ Preparatory work-create and upload a push certificate](/start/300iosclientintegr
 2\. The push certificate used by the code configures APNs.
 
 ``` objc
-EMOptions *options = [EMOptions optionsWithAppkey:@"appkey"];
+AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"appkey"];
 options.apnsCertName = @"apnsCertName";
-[[EMClient sharedClient] initializeSDKWithOptions:options];
+[[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
 ```
 
 3\. Code registration offline push.
@@ -60,7 +77,7 @@ After you registered the push function, iOS will automatically call back the fol
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[EMClient sharedClient] bindDeviceToken:deviceToken];
+        [[AgoraChatClient sharedClient] bindDeviceToken:deviceToken];
     });
 }
 
@@ -89,7 +106,7 @@ It will be called after the user login successfully
  *
  *  @result Push attributes
  */
-- (EMPushOptions *)getPushOptionsFromServerWithError:(EMError **)pError;
+- (AgoraPushOptions *)getPushOptionsFromServerWithError:(AgoraError **)pError;
 
 /*!
  *  \~chinese
@@ -97,14 +114,14 @@ It will be called after the user login successfully
  *
  *  @param aCompletionBlock the Completed callback
  */
-- (void)getPushNotificationOptionsFromServerWithCompletion:(void (^)(EMPushOptions *aOptions, EMError *aError))aCompletionBlock;
+- (void)getPushNotificationOptionsFromServerWithCompletion:(void (^)(AgoraPushOptions *aOptions, AgoraError *aError))aCompletionBlock;
 ```
 
 示例代码：
 
 ``` java
-EMError *err;
-EMPushOptions *options = [EMClient.sharedClient.pushManager getPushOptionsFromServerWithError:&err];
+AgoraError *err;
+AgoraPushOptions *options = [AgoraChatClient.sharedClient.pushManager getPushOptionsFromServerWithError:&err];
 if (err) {
   // Get failed
 
@@ -131,7 +148,7 @@ It will be called after the user login successfully。
  *
  *  @result error information
  */
-- (EMError *)updatePushDisplayName:(NSString *)aDisplayName;
+- (AgoraError *)updatePushDisplayName:(NSString *)aDisplayName;
 
 /*!
  *  \~chinese
@@ -141,13 +158,13 @@ It will be called after the user login successfully。
  *  @param aCompletionBlock the Completed callback
  */
 - (void)updatePushDisplayName:(NSString *)aDisplayName
-                   completion:(void (^)(NSString *aDisplayName, EMError *aError))aCompletionBlock;
+                   completion:(void (^)(NSString *aDisplayName, AgoraError *aError))aCompletionBlock;
 ```
 
 code example
 
 ``` java
-EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayName:@"Push Nickname"];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushDisplayName:@"Push Nickname"];
 if (err) {
   // Get failed
 }else {
@@ -165,14 +182,14 @@ When you are not online, if someone sends you a message, you will receive a push
  *  Display style of push messages
  */
 typedef enum {
-    EMPushDisplayStyleSimpleBanner = 0, /*! 
+    AgoraPushDisplayStyleSimpleBanner = 0, /*! 
                                          *  Simply display "You got a new message"
                                          */
 
-    EMPushDisplayStyleMessageSummary,   /*! 
+    AgoraPushDisplayStyleMessageSummary,   /*! 
                                          *  display message content
                                          */
-} EMPushDisplayStyle;
+} AgoraPushDisplayStyle;
 
 ```
 
@@ -187,7 +204,7 @@ typedef enum {
  *
  *  @result Error information
  */
-- (EMError *)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle;
+- (AgoraError *)updatePushDisplayStyle:(AgoraPushDisplayStyle)pushDisplayStyle;
 
 
 /*!
@@ -197,15 +214,15 @@ typedef enum {
  *  @param pushDisplayStyle     Push display style
  *  @param aCompletionBlock     the Completed callback
  */
-- (void)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle
-                    completion:(void (^)(EMError *))aCompletionBlock;
+- (void)updatePushDisplayStyle:(AgoraPushDisplayStyle)pushDisplayStyle
+                    completion:(void (^)(AgoraError *))aCompletionBlock;
 ```
 
 code example
 
 ``` java
 // Set to "You got a new message"
-EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayStyle:EMPushDisplayStyleSimpleBanner];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushDisplayStyle:AgoraPushDisplayStyleSimpleBanner];
 if (err) {
     // Set up failed
 }else {
@@ -230,13 +247,13 @@ Enable offline push
  *  @result error information
  *
  */
-- (EMError *)enableOfflinePush;
+- (AgoraError *)enableOfflinePush;
 ```
 
 code example
 
 ``` java
-EMError *err = [EMClient.sharedClient.pushManager enableOfflinePush];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager enableOfflinePush];
 if (err) {
     // Set up failed
 }else {
@@ -258,7 +275,7 @@ Set the specified time not to receive offline push
  *
  *  @result              error information
  */
-- (EMError *)disableOfflinePushStart:(int)aStartHour end:(int)aEndHour;
+- (AgoraError *)disableOfflinePushStart:(int)aStartHour end:(int)aEndHour;
 
 ```
 
@@ -268,7 +285,7 @@ code example
 // If you don’t want to receive push notifications throughout the whole day，start:0, end:24;
 // If you want to not receive push notifications from 7 am to 5 pm，start:7, end:17;
 // If you want to not receive push notifications from 10pm to 8am，start:22, end:8;
-EMError *err = [EMClient.sharedClient.pushManager disableOfflinePushStart:0 end:24];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager disableOfflinePushStart:0 end:24];
 if (err) {
     // Set up failed
 }else {
@@ -292,7 +309,7 @@ When you don’t want to receive offline push from a specific group, you can set
  *
  *  @result             error information
  */
-- (EMError *)updatePushServiceForGroups:(NSArray *)aGroupIds
+- (AgoraError *)updatePushServiceForGroups:(NSArray *)aGroupIds
                             disablePush:(BOOL)disable;
 
 
@@ -306,14 +323,14 @@ When you don’t want to receive offline push from a specific group, you can set
  */
 - (void)updatePushServiceForGroups:(NSArray *)aGroupIds
                        disablePush:(BOOL)disable
-                        completion:(void (^)(EMError *))aCompletionBlock;
+                        completion:(void (^)(AgoraError *))aCompletionBlock;
 ```
 
 code example
 
 ``` java
 // do not receive group pushes from a group id of 82000139.
-EMError *err = [EMClient.sharedClient.pushManager updatePushServiceForGroups:@[@"82000139"] disablePush:YES];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushServiceForGroups:@[@"82000139"] disablePush:YES];
 if (err) {
    // Set up failed
 }else {
