@@ -154,7 +154,7 @@ demo 中的SDK文件夹为AgoraChat SDK，将SDK
 Xcode中，向 General → Embedded Binaries 中添加依赖库。
 
 **注意要将\'Do Not Embed\'改成\'Embed & Sign\'**
-![](../../../images/ios/embeded_framework.png)
+![](/images/ios/embeded_framework.png)
 
 ------------------------------------------------------------------------
 
@@ -172,9 +172,7 @@ Xcode中，向 General → Embedded Binaries 中添加依赖库。
 -   Communicate：demo 的语音视频通话功能页面（包含 1v1
     实时通话以及多人实时通话的功能）
 
-
 -   Chat：demo 的聊天功能页面
-
 
 -   Contact：demo 的好友功能页面
 
