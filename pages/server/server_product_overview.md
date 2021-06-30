@@ -1,15 +1,11 @@
 ---
-title: server side introduction
+title: Server Produce Overview
 keywords: server
 sidebar: server_sidebar
 toc: true
 permalink: server_product_overview.html
 folder: server
 ---
-
-# Server-side integration
-
-------------------------------------------------------------------------
 
 ## REST Platform Overview
 
@@ -22,9 +18,9 @@ The GET, POST, PUT, and DELETE methods provided by the HTTP protocol, so REST li
 More background on REST API can be found in [RESTful API
 Design Guide](http://www.ruanyifeng.com/blog/2014/05/restful_api.html).
 
-### Easemob REST Platform
+### Platform API
 
-The Easemob REST platform provides a multi-tenant user system where resources are described in the form of collections, which include DataBase, enterprises (orgs), application (apps), IM users (users), groups (chatgroups), messages (chatmessages), files (chatfiles), and so on. the inclusion relationship between them is:
+The Platform API platform provides a multi-tenant user system where resources are described in the form of collections, which include DataBase, enterprises (orgs), application (apps), IM users (users), groups (chatgroups), messages (chatmessages), files (chatfiles), and so on. the inclusion relationship between them is:
 
 - DB = {org1, org2, ...}
 - org = {app1, app2, ...}
@@ -41,7 +37,7 @@ In fact, the meaning of multi-tenancy has been extended in the cloud computing s
 
 In Easemob service system, user data between different orgs are isolated from each other, and different APPs under the same org The user data between the same org are isolated from each other.
 
-![](/im/server/ready/image027.png){.align-center}
+![](/images/rest_platform_service_integration.png)
 
 ### REST server
 
@@ -57,12 +53,23 @@ The objects that the verbs operate on are called "resources" in REST,which is UR
 
 Note that the Easemob REST API is JSON-based, so when constructing an HTTP request, you need to specify in the HTTP HEADER.
 
- Header_name Header_value Description
-
--------------- ------------------ --------------------------------
-
-  Accept 			application/json The type of data returned by the server to the client
-  Content-Type 			application/json The type of data that the client sends to the server
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Header_name</th>
+    <th>Header_value</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Accept</td>
+    <td>application/json</td>
+    <td>The type of data returned by the server to the client</td>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+    <td>The type of data that the client sends to the server</td>
+  </tr>
+</table>
 
 ### JAVA
 
@@ -76,7 +83,7 @@ For Python programs, we recommend using [Requests](http://docs.python-requests.o
 
 ------------------------------------------------------------------------
 
-## Basic architecture of Easemob server
+## Basic architecture of Chat Server
 
 When a user registers in the [Easemob developer management backend](https://console.easemob.com/), he/she needs to fill in an "Enterprise ID". This is because Easemob is a multi-tenant cloud service platform, and Easemob supports a two-level structure of "Enterprise" (or team) - "App". That is, in the Easemob platform, the data between each enterprise ID is strictly isolated from each other, and the data between each APP within each enterprise ID is also strictly isolated from each other.
 
@@ -91,41 +98,71 @@ Finally, since Easemob provides REST service, and as mentioned above, REST is es
 
 ### REST API example
 
-**Suppose an enterprise ID is easemob-demo, and there is an APP under this enterprise named
+**Suppose an enterprise ID is chat-demo, and there is an APP under this enterprise named
 chatdemoui, then the REST API of Easemob will look like the following:**
 
 Create a new user under this APP
 
-  ![](/im/server/ready/post.png){.align-left width="90"}   /easemob-demo/chatdemoui/users
--------------------------------------------------------- --------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/chat-demo/chatdemoui/users</th>
+  </tr>
+</table>
 
 Get all users under this APP
 
-  ![](/im/server/ready/get.png){.align-left width="90"}   /easemob-demo/chatdemoui/users
-------------------------------------------------------- --------------------------------
-
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>GET</th>
+    <th>/chat-demo/chatdemoui/users</th>
+  </tr>
+</table>
+  
 Modify the details of the user example under this APP
 
-  ![](/im/server/ready/put.png){.align-left width="90"}   easemob-demo/chatdemoui/users/example
-------------------------------------------------------- ---------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>PUT</th>
+    <th>/chat-demo/chatdemoui/users/example</th>
+  </tr>
+</table>
 
 Delete a user under this APP example
 
-  ![](/im/server/ready/delete.png){.align-left width="90"}   /easemob-demo/chatdemoui/users/example
----------------------------------------------------------- ----------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>DELETE</th>
+    <th>/chat-demo/chatdemoui/users/example</th>
+  </tr>
+</table>
 
 From the above URL rules, you can also see the progressive relationship between "Enterprise" - "App" - "User".
 
  Explanation of Terms
 
- Terms  							Explanation	
-
------------ ---------------------------------------------------------------------------------------------------------------------- -----------------------------------------------
-
-org_name 						The unique identifier of an enterprise, the enterprise ID that developers fill in when they register their accounts in [Easemob Developer Management Backend](https://console.easemob.com/)
-app_name 						The unique identifier of an "app" under the same "company", the "app name" that the developer fills in when creating the app in [Easemob Developer Management Backend](https://console.easemob.com/). app_name can only be a combination of letters, numbers, and horizontal lines. The length cannot exceed 32
-org_admin 						The "user name" that the developer fills in when registering in the [Easemob Developer Management Backend](https://console.easemob.com/). Enterprise administrator has the permission to operate all resources under the enterprise account.
- AppKey 								A unique identifier for the APP, the rule is \${org_name}#\${app_name}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Terms</th>
+    <th>Explanation</th>
+  </tr>
+  <tr>
+    <td>org_name</td>
+    <td>The unique identifier of an enterprise, the enterprise ID that developers fill in when they register their accounts in <a href="https://console.easemob.com/"> Easemob Developer Management Backend </a></td>
+  </tr>
+  <tr>
+    <td>app_name</td>
+    <td>The unique identifier of an "app" under the same "company", the "app name" that the developer fills in when creating the app in <a href="https://console.easemob.com/"> Easemob Developer Management Backend </a>. app_name can only be a combination of letters, numbers, and horizontal lines. The length cannot exceed 32</td>
+  </tr>
+  <tr>
+    <td>org_admin</td>
+    <td>The "user name" that the developer fills in when registering in the <a href="https://console.easemob.com/"> Easemob Developer Management Backend </a>. Enterprise administrator has the permission to operate all resources under the enterprise account</td>
+  </tr>
+  <tr>
+    <td>AppKey</td>
+    <td>A unique identifier for the APP, the rule is ${org_name}#${app_name}</td>
+  </tr>
+</table>
 
 ### Security
 
@@ -135,13 +172,4 @@ Easemob's background service API is secure based on OAuth 2.0 standard and RBAC 
 
 Before calling the background service of Easemob, you need to login to get the token, and the way to get the token is different depending on the role of the request initiator.
 
-For more information on OAuth 2.0, see [Understanding OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html).
-
-------------------------------------------------------------------------
-
-\<WRAP group> \<WRAP half column>
-Previous page: [Guide to using Ringmaster backend](/im/quickstart/essential/console)
-\</WRAP
-
-\<WRAP half column> Next page: [Version update](/im/server/ready/releasenote)
-\</WRAP> \</WRAP>
+For more information on OAuth 2.0, see [Understanding OAuth 2.0](https://oauth.net/2/).
