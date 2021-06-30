@@ -6,9 +6,6 @@ toc: true
 permalink: android_run_the_sample_project.html
 folder: android
 ---
-# Demo Introduction
-
-------------------------------------------------------------------------
 
 ## Code download
 
@@ -26,7 +23,7 @@ Download the Android SDK compressed package from [Chat SDK and Demo Download](ht
 
 ### Import to Android Studio
 
-Open Android Studio, click File→Open to open the root directory of ChatDemo. \
+Open Android Studio, click File→Open to open the root directory of ChatDemo. 
 
 ### Import to Eclipse
 
@@ -36,8 +33,8 @@ Click File→Import→click the subdirectory under Android→Next→select the r
 
 -   **DemoHelper**：ChatDemo global helper class, the main function is to initialize ChatSDK, register global listners, etc.;
 -   **ConversationListFragment**: Displays how to load and show conversation list, the item long press event, and item click event, etc.;
--   **ChatActivity**: It shows the extended item long press event, the preset item long press menu and the rewrite part of the long press event function, shows how to reset and add more extended functions, and shows the implementation of the avatar click event and inputting events
--   **ContactListFragment**：It shows the adding headers layout, adding item long press function and implementing item click events, etc.;
+-   **ChatActivity**: It shows you a list of messages, how to send and receive messages, how to add new message layouts, etc.;
+-   **ContactListFragment**：It shows how to get data and display it, how to add click events, etc.;
 
 
 ------------------------------------------------------------------------
