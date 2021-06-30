@@ -1,5 +1,5 @@
 ---
-title: iOS Product Overview
+title: Product Overview
 keywords: ios
 sidebar: ios_sidebar
 toc: true
