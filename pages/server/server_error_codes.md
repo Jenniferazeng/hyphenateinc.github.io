@@ -16,7 +16,7 @@ After the Platform API interface calling, HTTP will use status code and the stan
 -   HTTP status return code 5xx (Server Error) These status codes indicate that an internal error occurred while the server was attempting to process the request.
 
 #### Return Example
-![](/images/server_return_error_example.png)
+![](/images/server/server_return_error_example.png)
 
 It is recommended to do fault tolerance for the Chat Platform API results called by APP's own server side. For example, It should catch the exception returned by the interface calling, and the timeout errors should be retried. For system errors or errors after retries, they should be recorded in the system log and provide the alert to DevOps staff to do remedial measures, such as manual retransmission.
 

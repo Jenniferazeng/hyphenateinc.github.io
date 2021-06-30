@@ -7,8 +7,6 @@ permalink: server_rest_interface_flow_limiting_instructions.html
 folder: server
 ---
 
-# Platform API interface flow limiting instructions
-
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>Interface</th>
