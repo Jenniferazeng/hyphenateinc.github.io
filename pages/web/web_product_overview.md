@@ -41,7 +41,6 @@ Chat offers five core architecture design enhancements that efficiently handle a
 |  Group      |  Provides a complete group management function, supporting different roles in group: owner, administrator and member. Support group blacklist, user ban and other functions.  |
 |  Chatroom      |   4. Provides a complete chatroom management function and supports live interactive scenes.  |
 |  Multi-Device      |   Support one same account to log in to multiple devices at the same time, message roaming synchronization.  |
-|  Push notification      |   Support push platforms such as Apple APNS and Google FCM. |
 |  Messageing Roaming      |  The roaming service can realize that the terminal user's historical messages are saved and synchronized through the server to ensure that the messages are synchronized in real time  |
 |  Message Withdraw      |   Users can withdraw the message within the withdrawal time limit after the message is sent. |
 
