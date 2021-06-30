@@ -7,10 +7,6 @@ permalink: server_version_updates
 folder: server
 ---
 
-# Version Updates
-
-------------------------------------------------------------------------
-
 ### Update time 2019-03-14
 
 Add the extraction interface of real-time audio and video call recording files
@@ -26,5 +22,5 @@ Update the API format of the server-side documents and add server-side request a
 ### Updated on 2017-01-06
 
 [New version of group/chat room service REST
-API difference description v2](https://docs-im.easemob.com/im/server/api/groupandchatroomchanges)
+API difference description v2](/im/server/api/groupandchatroomchanges)
 
