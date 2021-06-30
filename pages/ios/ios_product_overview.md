@@ -16,7 +16,7 @@ Chat provides SDKs for native mobile apps for Android and iOS, Javascript for We
 
 ## Client Server Relationship
 ![Client Server Relationship](/images/index/PlatformArchitecture.jpeg)
-### Chat Platform Advantages
+## Chat Platform Advantages
 
 Chat offers five core architecture design enhancements that efficiently handle a variety of complex services:
 
