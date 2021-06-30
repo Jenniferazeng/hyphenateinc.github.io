@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -32,11 +33,11 @@ The SDK provides user attribute hosting services, allowing users to save common 
 
 The user attribute management module can be got from the SDK using the following methods as follows
 
-    [[EMClient sharedClient] userInfoManager];
+    [[AgoraChatClient sharedClient] userInfoManager];
 
 The user attribute information that can be managed by Easemob is as follows:
 
-    @interface EMUserInfo : NSObject<NSCopying>
+    @interface AgoraUserInfo : NSObject<NSCopying>
     @property (nonatomic,copy) NSString *userId; /*! *\~ User Easemob Id *\~english user's id */
     @property (nonatomic,copy) NSString *nickName; /*! *\~ User name. maximum of 64 bytes is recommended *\~english user's nickname */
     @property (nonatomic,copy) NSString *avatarUrl; /*! *\~ User avatar address. maximum of 256 bytes is recommended *\~english user's avatar file uri */
@@ -71,12 +72,12 @@ The interface for setting all attributes of the user is as follows
      *  @param aUserData       The user info data to set
      *  @param aCompletionBlock    The completion callback
      */
-    - (void)updateOwnUserInfo:(EMUserInfo*)aUserData
-                    completion:(void (^)(EMUserInfo*aUserInfo,EMError *aError))aCompletionBlock;
+    - (void)updateOwnUserInfo:(AgoraUserInfo*)aUserData
+                    completion:(void (^)(AgoraUserInfo*aUserInfo,AgoraError *aError))aCompletionBlock;
 
 The calling process is as follows:
 
-    EMUserInfo* userInfo = [[EMUserInfo alloc] init];
+    AgoraUserInfo* userInfo = [[AgoraUserInfo alloc] init];
     userInfo.nickName = @"nickname";
     userInfo.avatarUrl = @"http://www.a.com/Image1.png";
     userInfo.mail = @"1111@qq.com";
@@ -85,22 +86,22 @@ The calling process is as follows:
     userInfo.sign = @"my signature";
     userInfo.birth = @"birthday";
     userInfo.ext = @"ext";
-    [[[EMClient sharedClient] userInfoManager] updateOwnUserInfo:userInfo completion:^(EMUserInfo* aUserInfo,EMError *aError) {
+    [[[AgoraChatClient sharedClient] userInfoManager] updateOwnUserInfo:userInfo completion:^(AgoraUserInfo* aUserInfo,AgoraError *aError) {
             }];
 
 -   Set user-specified attributes
 
 The user attribute types that users can specify include:
 
-    typedef NS_ENUM(NSInteger, EMUserInfoType) {
-        EMUserInfoTypeNickName = 0,
-        EMUserInfoTypeAvatarURL,
-        EMUserInfoTypePhone,
-        EMUserInfoTypeMail,
-        EMUserInfoTypeGender,
-        EMUserInfoTypeSign,
-        EMUserInfoTypeBirth,
-        EMUserInfoTypeExt = 100,
+    typedef NS_ENUM(NSInteger, AgoraUserInfoType) {
+        AgoraUserInfoTypeNickName = 0,
+        AgoraUserInfoTypeAvatarURL,
+        AgoraUserInfoTypePhone,
+        AgoraUserInfoTypeMail,
+        AgoraUserInfoTypeGender,
+        AgoraUserInfoTypeSign,
+        AgoraUserInfoTypeBirth,
+        AgoraUserInfoTypeExt = 100,
     };
 
 The interface for setting the attributes of a specified user is as follows:
@@ -121,12 +122,12 @@ The interface for setting the attributes of a specified user is as follows:
      *  @param aCompletionBlock    The completion callback
      */
     - (void)updateOwnUserInfo:(NSString*)aValue
-                     withType:(EMUserInfoType)aType
-                   completion:(void (^)(EMUserInfo*aUserInfo,EMError *aError))aCompletionBlock;
+                     withType:(AgoraUserInfoType)aType
+                   completion:(void (^)(AgoraUserInfo*aUserInfo,AgoraError *aError))aCompletionBlock;
 
 The calling process is as follow (example of nickname):
 
-    [[[EMClient sharedClient] userInfoManager] updateOwnUserInfo:@"New nickname" withType:EMUserInfoTypeNickName completion:^(EMUserInfo* aUserInfo,EMError *aError) {
+    [[[AgoraChatClient sharedClient] userInfoManager] updateOwnUserInfo:@"New nickname" withType:AgoraUserInfoTypeNickName completion:^(AgoraUserInfo* aUserInfo,AgoraError *aError) {
             }];
 
 ## Get user attributes
@@ -151,11 +152,11 @@ The interface for getting all attributes of a user is as follows:
      *  @param aCompletionBlock    The completion callback
      */
     - (void)fetchUserInfoById:(NSArray<NSString*>*)aUserIds
-                    completion:(void (^)(NSDictionary*aUserDatas,EMError *aError))aCompletionBlock;
+                    completion:(void (^)(NSDictionary*aUserDatas,AgoraError *aError))aCompletionBlock;
 
 The calling process is as follows
 
-    [[[EMClient sharedClient] userInfoManager] fetchUserInfoById:[weakself.userIds copy] completion:^(NSDictionary *aUserDatas, EMError *aError) {
+    [[[AgoraChatClient sharedClient] userInfoManager] fetchUserInfoById:[weakself.userIds copy] completion:^(NSDictionary *aUserDatas, AgoraError *aError) {
         if(!aError) {
             
         }
@@ -182,11 +183,11 @@ The interface for getting the attributes of a specified user is as follows:
      */
     - (void)fetchUserInfoById:(NSArray<NSString*>*)aUserIds
                           type:(NSArray<NSNumber*>*)aType
-                    completion:(void (^)(NSDictionary*aUserDatas,EMError *aError))aCompletionBlock
+                    completion:(void (^)(NSDictionary*aUserDatas,AgoraError *aError))aCompletionBlock
 
 The calling process is as follows:
 
-    [[[EMClient sharedClient] userInfoManager] fetchUserInfoById:[weakself.userIds copy] type:@[[NSNumber numberWithInt:EMUserInfoTypeNickName],[NSNumber numberWithInt:EMUserInfoTypeAvatarURL]] completion:^(NSDictionary *aUserDatas, EMError *aError) {
+    [[[AgoraChatClient sharedClient] userInfoManager] fetchUserInfoById:[weakself.userIds copy] type:@[[NSNumber numberWithInt:AgoraUserInfoTypeNickName],[NSNumber numberWithInt:AgoraUserInfoTypeAvatarURL]] completion:^(NSDictionary *aUserDatas, AgoraError *aError) {
         if(!aError && aUserDatas.count > 0) {
             // Store user attributes here
         }
@@ -202,12 +203,12 @@ There is no card-type message in the SDK. The sending and receiving of card mess
 
 The business card message sending process is as follows:
 
-    EMCustomMessageBody* body = [[EMCustomMessageBody alloc] initWithEvent:@"userCard" ext:@{@"uid":aUid ,@"nickname":aNickName,@"avatar":aUrl}];
+    AgoraCustomMessageBody* body = [[AgoraCustomMessageBody alloc] initWithEvent:@"userCard" ext:@{@"uid":aUid ,@"nickname":aNickName,@"avatar":aUrl}];
     [self.chatController sendMessageWithBody:body ext:nil];
 
 If users need to display more information in the business card, you can add more fields in ext.
 
-For the display, please refer to the **EMUserCardMsgView** class in Demo
+For the display, please refer to the **AgoraUserCardMsgView** class in Demo
 
 
 ------------------------------------------------------------------------

@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -24,10 +25,10 @@ The Easemob SDK header files involved in friend management are as follows:
 
 ``` objc
 // Friend method call, such as adding agent, removing agent, adding, deleting friend, etc.
-IEMContactManager.h
+IAgoraContactManager.h
 
 // The callback method of the friend's protocol, such as the callback method for listening and receiving friend requests, etc.
-EMContactManagerDelegate.h
+AgoraContactManagerDelegate.h
 ```
 
 ## Query friends list
@@ -37,7 +38,7 @@ To query the list of friends, Easemob provides two methods.
 ### Get all friends from the server
 
 ``` objc
-[[EMClient sharedClient].contactManager getContactsFromServerWithCompletion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager getContactsFromServerWithCompletion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get all friends successfully -- %@",aList);
     } else {
@@ -50,7 +51,7 @@ To query the list of friends, Easemob provides two methods.
 
 ``` objc
 // After getting all friends from the server, you can get friends from the local
-NSArray *userlist = [[EMClient sharedClient].contactManager getContacts];
+NSArray *userlist = [[AgoraChatClient sharedClient].contactManager getContacts];
 ```
 
 ## Friend requests
@@ -69,10 +70,10 @@ Easemob iOS SDK provides a method to add friends.
  */
 - (void)addContact:(NSString *)aUsername
            message:(NSString *)aMessage
-        completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+        completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
         
 // calling        
-[[EMClient sharedClient].contactManager addContact:@"6001" message:@"I want to add you as a friend" completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager addContact:@"6001" message:@"I want to add you as a friend" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Add friend successfully -- %@",aUsername);
     } else {
@@ -86,13 +87,13 @@ Easemob iOS SDK provides a method to add friends.
 When you receive a friend request, if you do not process it, please save the data by yourself. It will not be sent every time under the new protocol.
 
 ``` objc
-protocal:EMContactManagerDelegate
+protocal:AgoraContactManagerDelegate
 
 proxy:
 //Registered friend callback
-[[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+[[AgoraChatClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
 //Remove friend callback
-[[EMClient sharedClient].contactManager removeDelegate:self];
+[[AgoraChatClient sharedClient].contactManager removeDelegate:self];
 ```
 
 监听回调
@@ -119,10 +120,10 @@ proxy:
 
  */
 - (void)approveFriendRequestFromUser:(NSString *)aUsername
-                          completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+                          completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
                           
 // calling:                          
-[[EMClient sharedClient].contactManager approveFriendRequestFromUser:@"6001" completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager approveFriendRequestFromUser:@"6001" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Agree to the friend request successfully");
     } else {
@@ -141,10 +142,10 @@ proxy:
  *  @param aCompletionBlock the completed request
  */
 - (void)declineFriendRequestFromUser:(NSString *)aUsername
-                          completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+                          completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
                           
 // calling:
-[[EMClient sharedClient].contactManager declineFriendRequestFromUser:@"6001" completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager declineFriendRequestFromUser:@"6001" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Refuse to friend request successfully");
     } else {
@@ -184,10 +185,10 @@ Listen to callbacks
  */
 - (void)deleteContact:(NSString *)aUsername
  isDeleteConversation:(BOOL)aIsDeleteConversation
-           completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+           completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
            
 // calling:
-[[EMClient sharedClient].contactManager deleteContact:@"6001" isDeleteConversation:YES completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager deleteContact:@"6001" isDeleteConversation:YES completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"deleted friends successfully");
     } else {
@@ -224,10 +225,10 @@ To query the blacklist list, Easemob provides two methods.
  *
  *  @param aCompletionBlock the Completed callback
  */
-- (void)getBlackListFromServerWithCompletion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+- (void)getBlackListFromServerWithCompletion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
 
 // Calling:
-[[EMClient sharedClient].contactManager getBlackListFromServerWithCompletion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager getBlackListFromServerWithCompletion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get the blacklist list successfully -- %@",aList);
     } else {
@@ -240,7 +241,7 @@ To query the blacklist list, Easemob provides two methods.
 
 ``` objc
 // After getting blacklist from the server, you can get blacklist from the local
-NSArray *blockList = [[EMClient sharedClient].contactManager getBlackList];
+NSArray *blockList = [[AgoraChatClient sharedClient].contactManager getBlackList];
 ```
 
 ### Add friends to blacklist
@@ -253,10 +254,10 @@ NSArray *blockList = [[EMClient sharedClient].contactManager getBlackList];
  *  @param aCompletionBlock The completed callback
  */
 - (void)addUserToBlackList:(NSString *)aUsername
-                completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+                completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
                 
 // Calling:                
-[[EMClient sharedClient].contactManager addUserToBlackList:@"6001" completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager addUserToBlackList:@"6001" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"add the user to the blacklist successfully");
     } else {
@@ -277,10 +278,10 @@ Interface calling
  *  @param aCompletionBlock The completed callback
  */
 - (void)removeUserFromBlackList:(NSString *)aUsername
-                     completion:(void (^)(NSString *aUsername, EMError *aError))aCompletionBlock;
+                     completion:(void (^)(NSString *aUsername, AgoraError *aError))aCompletionBlock;
                      
 // Calling:
-[[EMClient sharedClient].contactManager removeUserFromBlackList:@"6001" completion:^(NSString *aUsername, EMError *aError) {
+[[AgoraChatClient sharedClient].contactManager removeUserFromBlackList:@"6001" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"The user was  removed from the blacklist successfully");
     } else {

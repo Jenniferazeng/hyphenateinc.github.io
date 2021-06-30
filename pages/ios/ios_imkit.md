@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -73,8 +74,8 @@ Step 2: Call the following methods in the AppDelegate of the project EaseIMKitMa
 ``` java
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    EMOptions *options = [EMOptions optionsWithAppkey:@"Your APPKEY"];
-    [EaseIMKitManager initWithEMOptions:options];
+    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"Your APPKEY"];
+    [EaseIMKitManager initWithAgoraOptions:options];
     //Do the login operation again, you can accurately receive the system notification
     return YES;
 }
@@ -159,14 +160,14 @@ Import EaseIMKit headers
  #import <EaseIMKit/EaseIMKit.h>
 ```
 
-EaseIMKit provides a ready-made chat conversation ViewController, which can be embedded into your own chat controller by creating EaseChatViewController object instance(see EMChatViewController in EaseIM
+EaseIMKit provides a ready-made chat conversation ViewController, which can be embedded into your own chat controller by creating EaseChatViewController object instance(see AgoraChatViewController in EaseIM
 to implement the integration of EaseIMKit chat conversations.
-To create a chat conversation page instance, pass the user 'Easemob ID' or 'Group ID' , the conversation type (EMConversationType) and the chat view configuration data model must be passed in EaseChatViewModel instance.
+To create a chat conversation page instance, pass the user 'Easemob ID' or 'Group ID' , the conversation type (AgoraConversationType) and the chat view configuration data model must be passed in EaseChatViewModel instance.
 
 ``` java
 EaseChatViewModel *viewModel = [[EaseChatViewModel alloc]init];
 EaseChatViewController *chatController = [EaseChatViewController initWithConversationId:@"custom"
-                                              conversationType:EMConversationTypeChat
+                                              conversationType:AgoraConversationTypeChat
                                                   chatViewModel:viewModel];
 [self addChildViewController:chatController];
 [self.view addSubview:chatController.view];
@@ -180,7 +181,7 @@ After the chat controller embeds its own chat page, it also needs to pass in the
 - (void)loadData:(BOOL)isScrollBottom
 {
     __weak typeof(self) weakself = self;
-    void (^block)(NSArray *aMessages, EMError *aError) = ^(NSArray *aMessages, EMError *aError) {
+    void (^block)(NSArray *aMessages, AgoraError *aError) = ^(NSArray *aMessages, AgoraError *aError) {
         dispatch_async(dispatch_get_main_queue(), ^{
             //Pass the EaseChatViewController to message list messageList
             //isScrollBottom whether to scroll to the bottom of the page isInsertBottom whether the message data set is inserted at the bottom of the message list
@@ -188,7 +189,7 @@ After the chat controller embeds its own chat page, it also needs to pass in the
             [weakself.chatController refreshTableViewWithData:aMessages  isInsertBottom:NO  isScrollBottom:isScrollBottom];
         });
     };
-  [self.conversation loadMessagesStartFromId:nil count:50   searchDirection:EMMessageSearchDirectionUp completion:block];
+  [self.conversation loadMessagesStartFromId:nil count:50   searchDirection:AgoraMessageSearchDirectionUp completion:block];
 }
 ```
 
@@ -237,15 +238,15 @@ contactsVC.delegate = self;
 }];
 //Example of setting the function area of address book header (valid for EaseIM APP).
 - (NSArray<EaseUserDelegate> *)items {
-    EMContactModel *newFriends = [[EMContactModel alloc] init];
+    AgoraContactModel *newFriends = [[AgoraContactModel alloc] init];
     newFriends.huanXinId = @"newFriend";
     newFriends.nickname = @"New Friends";
     newFriends.avatar = [UIImage imageNamed:@"newFriend"];
-    EMContactModel *groups = [[EMContactModel alloc] init];
+    AgoraContactModel *groups = [[AgoraContactModel alloc] init];
     groups.huanXinId = @"groupList";
     groups.nickname = @"Group chat";
     groups.avatar = [UIImage imageNamed:@"groupchat"];
-    EMContactModel *chatooms = [[EMContactModel alloc] init];
+    AgoraContactModel *chatooms = [[AgoraContactModel alloc] init];
     chatooms.huanXinId = @"chatroomList";
     chatooms.nickname = @"Chat Room";
     chatooms.avatar = [UIImage imageNamed:@"chatroom"];
@@ -350,7 +351,7 @@ The conversation list can be configured with the following parameters.
 @property (nonatomic, strong) UIFont *timeLabelFont; // time font
 @property (nonatomic, strong) UIColor *timeLabelColor; // time font color
 @property (nonatomic) UIEdgeInsets timeLabelEdgeInsets; // time position
-@property (nonatomic) EMUnReadCountViewPosition badgeLabelPosition; // unread count display style
+@property (nonatomic) AgoraUnReadCountViewPosition badgeLabelPosition; // unread count display style
 @property (nonatomic, strong) UIFont *badgeLabelFont; // unread count font
 @property (nonatomic, strong) UIColor *badgeLabelTitleColor; // Unreadable number color
 @property (nonatomic, strong) UIColor *badgeLabelBgColor; // Unreadable background color  
@@ -422,7 +423,7 @@ pull down to load more messages callback (can get current first message id as re
  * @param firstMessageId 			first message id
  * @param messageList 				The list of current messages
  */
-- (void)loadMoreMessageData:(NSString *)firstMessageId currentMessageList:(NSArray<EMMessage *> *)messageList;
+- (void)loadMoreMessageData:(NSString *)firstMessageId currentMessageList:(NSArray<AgoraMessage *> *)messageList;
 ```
 
 #### custom cell
@@ -449,8 +450,8 @@ Example of creating a specific custom Cell.
 - (UITableViewCell *)cellForItem:(UITableView *)tableView messageModel:(EaseMessageModel *)messageModel
 {
     //When the message is a single chat audio/video call message, EaseIM customizes the call log cell
-    if (messageModel.type == EMMessageTypePictMixText) {
-        EMMessageCell *cell = [[EMMessageCell alloc]initWithDirection:messageModel.direction type:messageModel.type];
+    if (messageModel.type == AgoraMessageTypePictMixText) {
+        AgoraMessageCell *cell = [[AgoraMessageCell alloc]initWithDirection:messageModel.direction type:messageModel.type];
         cell.model = messageModel;
         cell.delegate = self;
         return cell;
@@ -476,25 +477,25 @@ Callback for selected message (EaseIMKit has no selected event callback for cust
  @param userData 	The user information carried by the currently clicked message
  @result 			whether to use the default event processing
 */
-- (BOOL)didSelectMessageItem:(EMMessage*)message userData:(id<EaseUserDelegate>)userData;
+- (BOOL)didSelectMessageItem:(AgoraMessage*)message userData:(id<EaseUserDelegate>)userData;
 ```
 
 EaseIMKit selected is the message bubble, custom cell click events need to be customized to achieve, example: EaseIM Single chat call record cell click event to initiate the call again
 
 ``` java
-- (void)messageCellDidSelected:(EMMessageCell *)aCell
+- (void)messageCellDidSelected:(AgoraMessageCell *)aCell
 {
     //Initiate a call by using the 'Notification' method, where the defined macros are only valid in the EaseIM APP
     NSString *callType = nil;
     NSDictionary *dic = aCell.model.message.ext;
-    if ([[dic objectForKey:EMCOMMUNICATE_TYPE] isEqualToString:EMCOMMUNICATE_TYPE_VOICE])
-        callType = EMCOMMUNICATE_TYPE_VOICE;
-    if ([[dic objectForKey:EMCOMMUNICATE_TYPE] isEqualToString:EMCOMMUNICATE_TYPE_VIDEO])
-        callType = EMCOMMUNICATE_TYPE_VIDEO;
-    if ([callType isEqualToString:EMCOMMUNICATE_TYPE_VOICE])
-        [[NSNotificationCenter defaultCenter] postNotificationName:CALL_MAKE1V1 object:@{CALL_CHATTER:aCell.model.message.conversationId, CALL_TYPE:@(EMCallTypeVoice)}];
-    if ([callType isEqualToString:EMCOMMUNICATE_TYPE_VIDEO])
-        [[NSNotificationCenter defaultCenter] postNotificationName:CALL_MAKE1V1 object:@{CALL_CHATTER:aCell.model.message.conversationId,   CALL_TYPE:@(EMCallTypeVideo)}];
+    if ([[dic objectForKey:AgoraCOMMUNICATE_TYPE] isEqualToString:AgoraCOMMUNICATE_TYPE_VOICE])
+        callType = AgoraCOMMUNICATE_TYPE_VOICE;
+    if ([[dic objectForKey:AgoraCOMMUNICATE_TYPE] isEqualToString:AgoraCOMMUNICATE_TYPE_VIDEO])
+        callType = AgoraCOMMUNICATE_TYPE_VIDEO;
+    if ([callType isEqualToString:AgoraCOMMUNICATE_TYPE_VOICE])
+        [[NSNotificationCenter defaultCenter] postNotificationName:CALL_MAKE1V1 object:@{CALL_CHATTER:aCell.model.message.conversationId, CALL_TYPE:@(AgoraCallTypeVoice)}];
+    if ([callType isEqualToString:AgoraCOMMUNICATE_TYPE_VIDEO])
+        [[NSNotificationCenter defaultCenter] postNotificationName:CALL_MAKE1V1 object:@{CALL_CHATTER:aCell.model.message.conversationId,   CALL_TYPE:@(AgoraCallTypeVideo)}];
 }
 ```
 
@@ -532,10 +533,10 @@ Sample callback to get user selected avatar.
 //Avatar clicked
 - (void)avatarDidSelected:(id<EaseUserDelegate>)userData
 {
-    //EMPersonalDataViewController 	user custom personal information view
+    //AgoraPersonalDataViewController 	user custom personal information view
     //The sample logic is to select the message avatar and go to the personal information page of the message sender
     if (userData && userData.caseId) {
-        EMPersonalDataViewController *controller = [[EMPersonalDataViewController alloc]initWithNickName:userData.caseId];
+        AgoraPersonalDataViewController *controller = [[AgoraPersonalDataViewController alloc]initWithNickName:userData.caseId];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -565,17 +566,17 @@ Sample callback to get user selected avatar.
  @param groupId 			The group ID of the current message
  */
 
-- (void)groupMessageReadReceiptDetail:(EMMessage*)message groupId:(NSString*)groupId;
+- (void)groupMessageReadReceiptDetail:(AgoraMessage*)message groupId:(NSString*)groupId;
 ```
 
 Sample example to get the details of a user clicking on a group notification acknowledgement.
 
 ``` java
 //group notification read receipt details
-- (void)groupMessageReadReceiptDetail:(EMMessage *)message groupId:(NSString *)groupId
+- (void)groupMessageReadReceiptDetail:(AgoraMessage *)message groupId:(NSString *)groupId
 {
-    //EMReadReceiptMsgViewController user custom group notification read receipt detail page (valid in EaseIM APP)
-    EMReadReceiptMsgViewController *readReceiptControl = [[EMReadReceiptMsgViewController alloc] initWithMessage:message groupId: groupId];
+    //AgoraReadReceiptMsgViewController user custom group notification read receipt detail page (valid in EaseIM APP)
+    AgoraReadReceiptMsgViewController *readReceiptControl = [[AgoraReadReceiptMsgViewController alloc] initWithMessage:message groupId: groupId];
     readReceiptControl.modalPresentationStyle = 0;
     [self presentViewController:readReceiptControl animated:YES completion:nil];
 }
@@ -596,13 +597,13 @@ Current conversation input extended area data model group (UI configuration can 
 
 - (NSMutableArray<EaseExtMenuModel*>*)inputBarExtMenuItemArray:
                 (NSMutableArray<EaseExtMenuModel*>*)defaultInputBarItems 
-                conversationType:(EMConversationType)conversationType;
+                conversationType:(AgoraConversationType)conversationType;
 ```
 
 Example of callback for the current conversation input extension area data model group (valid for EaseIM APP).
 
 ``` java
-- (NSMutableArray<EaseExtMenuModel *> *)inputBarExtMenuItemArray:(NSMutableArray<EaseExtMenuModel *> *)defaultInputBarItems conversationType:(EMConversationType)conversationType
+- (NSMutableArray<EaseExtMenuModel *> *)inputBarExtMenuItemArray:(NSMutableArray<EaseExtMenuModel *> *)defaultInputBarItems conversationType:(AgoraConversationType)conversationType
 {
 NSMutableArray<EaseExtMenuModel *> *menuArray = [[NSMutableArray<EaseExtMenuModel *> alloc]init];
 //Albums
@@ -611,7 +612,7 @@ NSMutableArray<EaseExtMenuModel *> *menuArray = [[NSMutableArray<EaseExtMenuMode
 [menuArray addObject:[defaultInputBarItems objectAtIndex:1]];
 //Audio and Video call
 __weak typeof(self) weakself = self;
-if (conversationType != EMConversationTypeChatRoom) {
+if (conversationType != AgoraConversationTypeChatRoom) {
     EaseExtMenuModel *rtcMenu = [[EaseExtMenuModel alloc]initWithData:[UIImage imageNamed:@"video_conf"] funcDesc:@"Audio and Video call" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         if (isExecuted) {
             [weakself chatSealRtcAction];
@@ -624,8 +625,8 @@ if (conversationType != EMConversationTypeChatRoom) {
 //Documents
 [menuArray addObject:[defaultInputBarItems objectAtIndex:3]];
 //Group Reply
-if (conversationType == EMConversationTypeGroupChat) {
-    if ([[EMClient.sharedClient.groupManager getGroupSpecificationFromServerWithId:_conversation.conversationId error:nil].owner isEqualToString:EMClient.sharedClient.currentUsername]) {
+if (conversationType == AgoraConversationTypeGroupChat) {
+    if ([[AgoraChatClient.sharedClient.groupManager getGroupSpecificationFromServerWithId:_conversation.conversationId error:nil].owner isEqualToString:AgoraChatClient.sharedClient.currentUsername]) {
         EaseExtMenuModel *groupReadReceiptExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage imageNamed:@"pin_readReceipt"] funcDesc:@"group receipt" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
             //Group receipt Send Message Page
             [weakself groupReadReceiptAction];
@@ -656,7 +657,7 @@ Example of input area keyboard callback (valid for EaseIM APP).
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     //User can customize to implement
-    if ([text isEqualToString:@"@"] && self.conversation.type == EMConversationTypeGroupChat)
+    if ([text isEqualToString:@"@"] && self.conversation.type == AgoraConversationTypeGroupChat)
     {
         [self _willInputAt:textView];
     }
@@ -697,19 +698,19 @@ Default long press of message cell callback
  @result 					return the default message long press extension function group
  */
 
-- (NSMutableArray<EaseExtMenuModel*>*)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems message:(EMMessage*)message;
+- (NSMutableArray<EaseExtMenuModel*>*)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems message:(AgoraMessage*)message;
 ```
 
 Example of default message cell long press callback (valid for EaseIM APP).
 
 ``` java
 //Add a forwarding message
-- (NSMutableArray<EaseExtMenuModel *> *)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel *> *)defaultLongPressItems message:(EMMessage *)message
+- (NSMutableArray<EaseExtMenuModel *> *)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel *> *)defaultLongPressItems message:(AgoraMessage *)message
 {
     NSMutableArray<EaseExtMenuModel *> *menuArray = [[NSMutableArray<EaseExtMenuModel *> alloc]initWithArray:defaultLongPressItems];
     //Forwarding
     __weak typeof(self) weakself = self;
-    if (message.body.type == EMMessageBodyTypeText || message.body.type == EMMessageBodyTypeImage || message.body.type == EMMessageBodyTypeLocation || message.body.type == EMMessageBodyTypeVideo) {
+    if (message.body.type == AgoraMessageBodyTypeText || message.body.type == AgoraMessageBodyTypeImage || message.body.type == AgoraMessageBodyTypeLocation || message.body.type == AgoraMessageBodyTypeVideo) {
         EaseExtMenuModel *forwardMenu = [[EaseExtMenuModel alloc]initWithData:[UIImage imageNamed:@"forward"] funcDesc:@"转发" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
             //User customizable forwarding CallBack
             if (isExecuted) {
@@ -788,7 +789,7 @@ conversation list cell selection callback example (valid for EaseIM APP).
     //System Notification  
     if ([cell.model.easeId isEqualToString:@"emsystemnotificationid"]) {
        //This example is only for EaseIM APP to show system notification
-        EMNotificationViewController *controller = [[EMNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
+        AgoraNotificationViewController *controller = [[AgoraNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:controller animated:YES];
         return;
     }
@@ -808,18 +809,18 @@ conversation list cell selection callback example (valid for EaseIM APP).
  @param type 				The conversation type of the current conversation list cell
  */
 - (id<EaseUserDelegate>)easeUserDelegateAtConversationId:(NSString *)conversationId
-                                        conversationType:(EMConversationType)type;
+                                        conversationType:(AgoraConversationType)type;
 ```
 
 conversation list user profile callback example (valid for EaseIM APP)
 
 ``` objc
-- (id<EaseUserDelegate>)easeUserDelegateAtConversationId:(NSString *)conversationId conversationType:(EMConversationType)type
+- (id<EaseUserDelegate>)easeUserDelegateAtConversationId:(NSString *)conversationId conversationType:(AgoraConversationType)type
 {
-    //EMConversationUserDataModel 			is a custom user profile data model that implements the EaseUserDelegate interface to return parameters
+    //AgoraConversationUserDataModel 			is a custom user profile data model that implements the EaseUserDelegate interface to return parameters
     //@property (nonatomic, copy, readonly) NSString *easeId; 		// Easemob id
     //@property (nonatomic, copy, readonly) UIImage *defaultAvatar; // default avatar display
-    EMConversationUserDataModel *userData = [[EMConversationUserDataModel alloc]initWithEaseId:conversationId conversationType:type];
+    AgoraConversationUserDataModel *userData = [[AgoraConversationUserDataModel alloc]initWithEaseId:conversationId conversationType:type];
     return userData;
 }
 ```
@@ -886,12 +887,12 @@ Example of upcoming refresh address book filling the data (valid for EaseIM APP)
 ``` java
 - (void)willBeginRefresh {
     //Get the contact list of the currently logged-in account from the server
-    [EMClient.sharedClient.contactManager getContactsFromServerWithCompletion:^(NSArray *aList, EMError *aError) {
+    [AgoraChatClient.sharedClient.contactManager getContactsFromServerWithCompletion:^(NSArray *aList, AgoraError *aError) {
         if (!aError) {
             self->_contancts = [aList mutableCopy];
             NSMutableArray<EaseUserDelegate> *contacts = [NSMutableArray<EaseUserDelegate> array];
             for (NSString *username in aList) {
-                EMContactModel *model = [[EMContactModel alloc] init];
+                AgoraContactModel *model = [[AgoraContactModel alloc] init];
                 model.huanXinId = username;
                 [contacts addObject:model];
             }
@@ -936,7 +937,7 @@ Example callback for selected address book cell entry.
 - (void)easeTableView:(UITableView *)tableView didSelectRowAtContactModel:(EaseContactModel *)contact {
     //Jump to friend page
     if ([contact.easeId isEqualToString:@"newFriend"]) {
-        EMInviteFriendViewController *controller = [[EMInviteFriendViewController alloc] init];
+        AgoraInviteFriendViewController *controller = [[AgoraInviteFriendViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
         return;
     }

@@ -10,58 +10,59 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
-The class of error codes in iOS is EMError.
+The class of error codes in iOS is AgoraError.
 
 For example, if the user returns an existing error during registration, it can be detected as follows: error.code
 
  Definition                                 Description
 ------------------------------------ -------------------------------
-	EMErrorGeneral                       Error
-	EMErrorNerworkUnavailable            Network Unavailable
-	EMErrorNotExist                      Not exist
-	EMErrorInvalidAppkey                 Invalid AppKey
-	EMErrorInvalidUsername               Username is invalid
-	EMErrorInvalidPassword               Password is invalid
-	EMErrorInvalidURL                    URL is invalid
-	EMErrorUserAlreadyLogin              User logged in
-	EMErrorUserNotLogin                  User is not logged in
-	EMErrorUserAuthenticationFailed      Failed to get token
-	EMErrorUserAlreadyExist              User already exists
-	EMErrorUserNotFound                  User does not exist
-	EMErrorUserIllegalArgument           Invalid argument
-	EMErrorUserLoginOnAnotherDevice      The current user name is logged in on another device
-	EMErrorUserRemoved                   The current user name is deleted on the server side
-	EMErrorUserRegisterFailed            User registration failed
-	EMErrorServerNotLogin                User has not login the server
-	EMErrorServerNotReachable            Server not connected
-	EMErrorServerTimeout                 Connection to server timed out
-	EMErrorServerBusy                    Server is busy
-	EMErrorServerUnknownError            Unknown server error
-	EMErrorFileNotFound                  File not found
-	EMErrorFileInvalid                   Invalid file
-	EMErrorFileUploadFailed              Failed to upload file
-	EMErrorFileDownloadFailed            Failed to download file
-	EMErrorMessageInvalid = 500          Invalid message
-	EMErrorMessageIncludeIllegalSpeech   Message content contains sensitive information
-	EMErrorGroupInvalidId = 600          Invalid group ID
-	EMErrorGroupAlreadyJoined            Joined the group
-	EMErrorGroupNotJoined                Not joined the group
-	EMErrorGroupPermissionDenied         No permission to execute this operation
-	EMErrorGroupMembersFull              The number of group members has reached the maximum
-	EMErrorChatroomInvalidId             Invalid chat room ID
-	EMErrorChatroomAlreadyJoined         Joined the chat room
-	EMErrorChatroomNotJoined             Not joined the chat room
-	EMErrorChatroomPermissionDenied      No permission to execute this operation
-	EMErrorChatroomMembersFull           The number of chat room members reaches the maximum
-	EMErrorCallInvalidId                 Invalid live call ID
-	EMErrorCallBusy                      Already in a real-time call
-	EMErrorCallRemoteOffline            The other party is not online
-	EMErrorCallConnectFailed             failed to establish connection for real-time call
-	EMErrorApnsBindDeviceTokenFailed     Failed to register device token
+	AgoraErrorGeneral                       Error
+	AgoraErrorNerworkUnavailable            Network Unavailable
+	AgoraErrorNotExist                      Not exist
+	AgoraErrorInvalidAppkey                 Invalid AppKey
+	AgoraErrorInvalidUsername               Username is invalid
+	AgoraErrorInvalidPassword               Password is invalid
+	AgoraErrorInvalidURL                    URL is invalid
+	AgoraErrorUserAlreadyLogin              User logged in
+	AgoraErrorUserNotLogin                  User is not logged in
+	AgoraErrorUserAuthenticationFailed      Failed to get token
+	AgoraErrorUserAlreadyExist              User already exists
+	AgoraErrorUserNotFound                  User does not exist
+	AgoraErrorUserIllegalArgument           Invalid argument
+	AgoraErrorUserLoginOnAnotherDevice      The current user name is logged in on another device
+	AgoraErrorUserRemoved                   The current user name is deleted on the server side
+	AgoraErrorUserRegisterFailed            User registration failed
+	AgoraErrorServerNotLogin                User has not login the server
+	AgoraErrorServerNotReachable            Server not connected
+	AgoraErrorServerTimeout                 Connection to server timed out
+	AgoraErrorServerBusy                    Server is busy
+	AgoraErrorServerUnknownError            Unknown server error
+	AgoraErrorFileNotFound                  File not found
+	AgoraErrorFileInvalid                   Invalid file
+	AgoraErrorFileUploadFailed              Failed to upload file
+	AgoraErrorFileDownloadFailed            Failed to download file
+	AgoraErrorMessageInvalid = 500          Invalid message
+	AgoraErrorMessageIncludeIllegalSpeech   Message content contains sensitive information
+	AgoraErrorGroupInvalidId = 600          Invalid group ID
+	AgoraErrorGroupAlreadyJoined            Joined the group
+	AgoraErrorGroupNotJoined                Not joined the group
+	AgoraErrorGroupPermissionDenied         No permission to execute this operation
+	AgoraErrorGroupMembersFull              The number of group members has reached the maximum
+	AgoraErrorChatroomInvalidId             Invalid chat room ID
+	AgoraErrorChatroomAlreadyJoined         Joined the chat room
+	AgoraErrorChatroomNotJoined             Not joined the chat room
+	AgoraErrorChatroomPermissionDenied      No permission to execute this operation
+	AgoraErrorChatroomMembersFull           The number of chat room members reaches the maximum
+	AgoraErrorCallInvalidId                 Invalid live call ID
+	AgoraErrorCallBusy                      Already in a real-time call
+	AgoraErrorCallRemoteOffline            The other party is not online
+	AgoraErrorCallConnectFailed             failed to establish connection for real-time call
+	AgoraErrorApnsBindDeviceTokenFailed     Failed to register device token
 
 ------------------------------------------------------------------------
 

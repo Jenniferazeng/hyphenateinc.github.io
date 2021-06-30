@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -178,7 +179,7 @@ Give the certificate a name, and remember the name, it will be useful later. Sel
     - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[EMClient sharedClient] bindDeviceToken:deviceToken];
+            [[AgoraChatClient sharedClient] bindDeviceToken:deviceToken];
         });
     }
 
@@ -189,11 +190,11 @@ Give the certificate a name, and remember the name, it will be useful later. Sel
 When the SDK is initialized, set the push certificate which you going to be used.
 
     // set Appkey
-    EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
+    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
     // Set the name of the push certificate
     options.apnsCertName = @"apnsTest";
     // Initialize SDK
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    [[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
 
 ## Common problem
 
@@ -202,7 +203,7 @@ When the SDK is initialized, set the push certificate which you going to be used
 When the persistent connection still exists, Local notification  `receive the message through the callback of the Easemob receiving message`, and then judge the current App status, if it is in the background, you can use the code to actively pop up a notification  to notify the user. The specific reference is as follows:
 
         - (void)messagesDidReceive:(NSArray *)aMessages {
-            for (EMMessage *msg in aMessages) {
+            for (AgoraMessage *msg in aMessages) {
                 UIApplicationState state = [[UIApplication sharedApplication] applicationState];
                 // App in the background
                 if (state == UIApplicationStateBackground) {
@@ -274,9 +275,9 @@ Preparatory work-create and upload a push certificate](/start/300iosclientintegr
 2\. The push certificate used by the code configures APNs.
 
 ``` objc
-EMOptions *options = [EMOptions optionsWithAppkey:@"appkey"];
+AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"appkey"];
 options.apnsCertName = @"apnsCertName";
-[[EMClient sharedClient] initializeSDKWithOptions:options];
+[[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
 ```
 
 3\. Code registration offline push.
@@ -324,7 +325,7 @@ After you registered the push function, iOS will automatically call back the fol
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[EMClient sharedClient] bindDeviceToken:deviceToken];
+        [[AgoraChatClient sharedClient] bindDeviceToken:deviceToken];
     });
 }
 
@@ -353,7 +354,7 @@ It will be called after the user login successfully
  *
  *  @result Push attributes
  */
-- (EMPushOptions *)getPushOptionsFromServerWithError:(EMError **)pError;
+- (AgoraPushOptions *)getPushOptionsFromServerWithError:(AgoraError **)pError;
 
 /*!
  *  \~chinese
@@ -361,14 +362,14 @@ It will be called after the user login successfully
  *
  *  @param aCompletionBlock the Completed callback
  */
-- (void)getPushNotificationOptionsFromServerWithCompletion:(void (^)(EMPushOptions *aOptions, EMError *aError))aCompletionBlock;
+- (void)getPushNotificationOptionsFromServerWithCompletion:(void (^)(AgoraPushOptions *aOptions, AgoraError *aError))aCompletionBlock;
 ```
 
 示例代码：
 
 ``` java
-EMError *err;
-EMPushOptions *options = [EMClient.sharedClient.pushManager getPushOptionsFromServerWithError:&err];
+AgoraError *err;
+AgoraPushOptions *options = [AgoraChatClient.sharedClient.pushManager getPushOptionsFromServerWithError:&err];
 if (err) {
   // Get failed
 
@@ -395,7 +396,7 @@ It will be called after the user login successfully。
  *
  *  @result error information
  */
-- (EMError *)updatePushDisplayName:(NSString *)aDisplayName;
+- (AgoraError *)updatePushDisplayName:(NSString *)aDisplayName;
 
 /*!
  *  \~chinese
@@ -405,13 +406,13 @@ It will be called after the user login successfully。
  *  @param aCompletionBlock the Completed callback
  */
 - (void)updatePushDisplayName:(NSString *)aDisplayName
-                   completion:(void (^)(NSString *aDisplayName, EMError *aError))aCompletionBlock;
+                   completion:(void (^)(NSString *aDisplayName, AgoraError *aError))aCompletionBlock;
 ```
 
 code example
 
 ``` java
-EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayName:@"Push Nickname"];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushDisplayName:@"Push Nickname"];
 if (err) {
   // Get failed
 }else {
@@ -429,14 +430,14 @@ When you are not online, if someone sends you a message, you will receive a push
  *  Display style of push messages
  */
 typedef enum {
-    EMPushDisplayStyleSimpleBanner = 0, /*! 
+    AgoraPushDisplayStyleSimpleBanner = 0, /*! 
                                          *  Simply display "You got a new message"
                                          */
 
-    EMPushDisplayStyleMessageSummary,   /*! 
+    AgoraPushDisplayStyleMessageSummary,   /*! 
                                          *  display message content
                                          */
-} EMPushDisplayStyle;
+} AgoraPushDisplayStyle;
 
 ```
 
@@ -451,7 +452,7 @@ typedef enum {
  *
  *  @result Error information
  */
-- (EMError *)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle;
+- (AgoraError *)updatePushDisplayStyle:(AgoraPushDisplayStyle)pushDisplayStyle;
 
 
 /*!
@@ -461,15 +462,15 @@ typedef enum {
  *  @param pushDisplayStyle     Push display style
  *  @param aCompletionBlock     the Completed callback
  */
-- (void)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle
-                    completion:(void (^)(EMError *))aCompletionBlock;
+- (void)updatePushDisplayStyle:(AgoraPushDisplayStyle)pushDisplayStyle
+                    completion:(void (^)(AgoraError *))aCompletionBlock;
 ```
 
 code example
 
 ``` java
 // Set to "You got a new message"
-EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayStyle:EMPushDisplayStyleSimpleBanner];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushDisplayStyle:AgoraPushDisplayStyleSimpleBanner];
 if (err) {
     // Set up failed
 }else {
@@ -494,13 +495,13 @@ Enable offline push
  *  @result error information
  *
  */
-- (EMError *)enableOfflinePush;
+- (AgoraError *)enableOfflinePush;
 ```
 
 code example
 
 ``` java
-EMError *err = [EMClient.sharedClient.pushManager enableOfflinePush];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager enableOfflinePush];
 if (err) {
     // Set up failed
 }else {
@@ -522,7 +523,7 @@ Set the specified time not to receive offline push
  *
  *  @result              error information
  */
-- (EMError *)disableOfflinePushStart:(int)aStartHour end:(int)aEndHour;
+- (AgoraError *)disableOfflinePushStart:(int)aStartHour end:(int)aEndHour;
 
 ```
 
@@ -532,7 +533,7 @@ code example
 // If you don’t want to receive push notifications throughout the whole day，start:0, end:24;
 // If you want to not receive push notifications from 7 am to 5 pm，start:7, end:17;
 // If you want to not receive push notifications from 10pm to 8am，start:22, end:8;
-EMError *err = [EMClient.sharedClient.pushManager disableOfflinePushStart:0 end:24];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager disableOfflinePushStart:0 end:24];
 if (err) {
     // Set up failed
 }else {
@@ -556,7 +557,7 @@ When you don’t want to receive offline push from a specific group, you can set
  *
  *  @result             error information
  */
-- (EMError *)updatePushServiceForGroups:(NSArray *)aGroupIds
+- (AgoraError *)updatePushServiceForGroups:(NSArray *)aGroupIds
                             disablePush:(BOOL)disable;
 
 
@@ -570,14 +571,14 @@ When you don’t want to receive offline push from a specific group, you can set
  */
 - (void)updatePushServiceForGroups:(NSArray *)aGroupIds
                        disablePush:(BOOL)disable
-                        completion:(void (^)(EMError *))aCompletionBlock;
+                        completion:(void (^)(AgoraError *))aCompletionBlock;
 ```
 
 code example
 
 ``` java
 // do not receive group pushes from a group id of 82000139.
-EMError *err = [EMClient.sharedClient.pushManager updatePushServiceForGroups:@[@"82000139"] disablePush:YES];
+AgoraError *err = [AgoraChatClient.sharedClient.pushManager updatePushServiceForGroups:@[@"82000139"] disablePush:YES];
 if (err) {
    // Set up failed
 }else {
@@ -751,11 +752,11 @@ Easemob provides the following extension fields:
 
 （[iOS Sending messages](/im/ios/basics/message#构造扩展消息)）
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -803,11 +804,11 @@ After set up, the APNs alert information you receive will be the information you
 
 ([iOS sending message](/im/ios/basics/message#构造消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -858,11 +859,11 @@ The custom display and custom extension will be sent to the other party at the s
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
     NSString *willSendText = [EaseConvertToCommonEmoticonsHelper convertToCommonEmoticons:text];
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension",@"em_push_content":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -954,11 +955,11 @@ Notification](https://developer.apple.com/documentation/usernotifications/settin
 
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_sound":@"custom.caf"}}; // the extension field for setting custom APNs alert sound, value is the name of the audio file in string type
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -1013,11 +1014,11 @@ After set up, the APNs push of this message will support UNNotificationServiceEx
 
 ([iOS sending message](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_mutable_content":@YES}}; // @YES is enable，@NO or not set, it will be the Remote Notification.
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil]; 
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil]; 
 
 ------------------------------------------------------------------------
 
@@ -1127,11 +1128,11 @@ configure in  `Localizable.strings (English)`
 
 #### iOS send
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_apns_ext":@{@"em_push_title_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_title_loc_args":@[@"Shelly", @"Rick"], @"em_push_body_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_body_loc_args":@[@"Shelly", @"Rick"]}};
-    message.chatType = EMChatTypeChat; // Set the message type
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    message.chatType = AgoraChatTypeChat; // Set the message type
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ### parse
 
@@ -1183,12 +1184,12 @@ No APNs will be sent. After adding with sending a message, the message will not 
 
 ([iOS sending messages](/im/ios/basics/message#构造扩展消息))
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_ignore_notification":@YES};
-    message.chatType = EMChatTypeChat; // Set the message type
+    message.chatType = AgoraChatTypeChat; // Set the message type
     // Send message example
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 
@@ -1225,12 +1226,12 @@ After that, the attribute will become invalid.
 
 ([iOS sending messages)
 
-    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"test"];
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
     message.ext = @{@"em_force_notification":@YES};
-    message.chatType = EMChatTypeChat; // Set the message type
+    message.chatType = AgoraChatTypeChat; // Set the message type
     // Send message example
-    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+    [AgoraChatClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
 
 ------------------------------------------------------------------------
 

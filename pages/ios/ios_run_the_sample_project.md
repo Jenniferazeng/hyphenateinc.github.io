@@ -291,7 +291,6 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
     #ifdef __OBJC__
     #import <AgoraChat/AgoraChat.h>
     // UI 头文件
-    #import "EMHeaders.h"
     #endif
 
 如果自己工程中的 pch
@@ -329,7 +328,7 @@ pch 文件，例如：`iOS/PrefixHeader.pch`。
 
     // 传入在应用（appkey）下注册的IM用户user1，密码123，用于登录环信服务器
 
-    [[AgoraChatClient sharedClient] loginWithUsername:@"user1" password:@"123" completion:^(NSString *aUsername, EMError *aError) {
+    [[AgoraChatClient sharedClient] loginWithUsername:@"user1" password:@"123" completion:^(NSString *aUsername, AgoraError *aError) {
         if (!aError) {
             NSLog(@"登录成功");
         } else {

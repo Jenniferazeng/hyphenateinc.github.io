@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -26,32 +27,32 @@ The Easemob SDK header files mainly involved in group management are as follows:
 
 ``` objc
 // Group, it includes attributes such as group id
-EMGroup.h
+AgoraGroup.h
 
 // Group attribute options，used to set the attributes when creating a group
-EMGroupOptions.h
+AgoraGroupOptions.h
 
 // Group shared files
-EMGroupSharedFile.h
+AgoraGroupSharedFile.h
 
 // Group method call，such as adding proxy, removing proxy, creating groups, getting group lists, etc.
-IEMGroupManager.h
+IAgoraGroupManager.h
 
 // Protocol callback methods of the group, such as the callback method for monitoring users to add groups, etc.
-EMGroupManagerDelegate.h
+AgoraGroupManagerDelegate.h
 ```
 
 Register group module callback：
 
 ``` objc
-Protocol: EMGroupManagerDelegate
+Protocol: AgoraGroupManagerDelegate
 
 proxy:
 //Register group callback
-[[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
+[[AgoraChatClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
 
 //Remove group callback
-[[EMClient sharedClient].groupManager removeDelegate:self];
+[[AgoraChatClient sharedClient].groupManager removeDelegate:self];
 ```
 
 ------------------------------------------------------------------------
@@ -62,19 +63,19 @@ There are four types of groups.
 /*!
  @enum
  @brief Group type
- @constant EMGroupStylePrivateOnlyOwnerInvite private group, after creation, only Owner is allowed to invite users to join the group
- @constant EMGroupStylePrivateMemberCanInvite Private group, after creation, only Owner and group members are allowed to invite users to join the group
- @constant EMGroupStylePublicJoinNeedApproval public group. After creation, only Owner is allowed to invite users to join. Users who are not members of the group need to send an application to join the group. After the owner approves his application, he can join the group
- @constant EMGroupStylePublicOpenJoin public group, after the creation is completed, non-group members are allowed to join the group without the approval of the administrator
+ @constant AgoraGroupStylePrivateOnlyOwnerInvite private group, after creation, only Owner is allowed to invite users to join the group
+ @constant AgoraGroupStylePrivateMemberCanInvite Private group, after creation, only Owner and group members are allowed to invite users to join the group
+ @constant AgoraGroupStylePublicJoinNeedApproval public group. After creation, only Owner is allowed to invite users to join. Users who are not members of the group need to send an application to join the group. After the owner approves his application, he can join the group
+ @constant AgoraGroupStylePublicOpenJoin public group, after the creation is completed, non-group members are allowed to join the group without the approval of the administrator
  @discussion
     eGroupStyle+Private：Private group, only allow group members to invite people to join the group
     eGroupStyle+Public： Public groups, allowing non-group members to join the group
  */
-typedef NS_ENUM(NSInteger, EMGroupStyle){
-    EMGroupStylePrivateOnlyOwnerInvite  = 0,
-    EMGroupStylePrivateMemberCanInvite,
-    EMGroupStylePublicJoinNeedApproval,
-    EMGroupStylePublicOpenJoin,
+typedef NS_ENUM(NSInteger, AgoraGroupStyle){
+    AgoraGroupStylePrivateOnlyOwnerInvite  = 0,
+    AgoraGroupStylePrivateMemberCanInvite,
+    AgoraGroupStylePublicJoinNeedApproval,
+    AgoraGroupStylePublicOpenJoin,
 };
 ```
 
@@ -92,10 +93,10 @@ The currently supported configuration attributes by group creation are:
 Asynchronous method：
 
 ``` objc
-    EMGroupOptions *setting = [[EMGroupOptions alloc] init]; // Group attribute options
+    AgoraGroupOptions *setting = [[AgoraGroupOptions alloc] init]; // Group attribute options
     setting.maxUsersCount = 500; // the maximum number of members of the group(Including group owners and administrators, the default value is 200, the maximum is 3000)
     setting.IsInviteNeedConfirm = NO; //When inviting group members, is an invitation required. If NO, the invited person will automatically join the group.
-    setting.style = EMGroupStylePublicOpenJoin;// to create different types of groups, you need to input different types here
+    setting.style = AgoraGroupStylePublicOpenJoin;// to create different types of groups, you need to input different types here
     setting.ext = @"Group extension information"; // extension information
     
 /*!
@@ -116,11 +117,11 @@ Asynchronous method：
                    description:(NSString *)aDescription
                       invitees:(NSArray *)aInvitees
                        message:(NSString *)aMessage
-                       setting:(EMGroupOptions *)aSetting
-                    completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                       setting:(AgoraGroupOptions *)aSetting
+                    completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                
 // call:                    
-[[EMClient sharedClient].groupManager createGroupWithSubject:@"Group name"description:@"Group description" invitees:@[@"6001",@"6002"] message:@"Invites you to join the group" setting:setting completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager createGroupWithSubject:@"Group name"description:@"Group description" invitees:@[@"6001",@"6002"] message:@"Invites you to join the group" setting:setting completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if(!aError){
         NSLog(@"Group created successfully -- %@",aGroup);
     } else {
@@ -144,12 +145,12 @@ Asynchronous method：
  */
 - (void)getGroupSpecificationFromServerWithId:(NSString *)aGroupId
                                    fetchMembers:(BOOL)fetchMembers
-                                   completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                                   completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                                    
 //call:                       
-[[EMClient sharedClient].groupManager getGroupSpecificationFromServerWithId:self.group.groupId fetchMembers:YES completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupSpecificationFromServerWithId:self.group.groupId fetchMembers:YES completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
-        // EMGroup contains many group attributes, such as group id, group members, whether to block group messages (isBlocked attribute), etc., more detrails in the EMGroup.h header file in the SDK.
+        // AgoraGroup contains many group attributes, such as group id, group members, whether to block group messages (isBlocked attribute), etc., more detrails in the AgoraGroup.h header file in the SDK.
         NSLog(@"Get group details successfully");
     } else {
         NSLog(@"Reasons for failure to get group details --- %@", aError.errorDescription);
@@ -161,13 +162,13 @@ Asynchronous method：
 
 There are 4 types of group groups. Currently, the SDK does not support active selection of whether to join the group. We will explain the operations required to join the group for each type.
 
--   EMGroupStylePrivateOnlyOwnerInvite:
+-   AgoraGroupStylePrivateOnlyOwnerInvite:
     This type of group only allows the owner (Owner) to add people into the group, and other people cannot actively join.
--   EMGroupStylePrivateMemberCanInvite:
+-   AgoraGroupStylePrivateMemberCanInvite:
     (Recommended) This type of group allows all group members to add people to the group, and other people cannot actively join.
--   EMGroupStylePublicJoinNeedApproval:
+-   AgoraGroupStylePublicJoinNeedApproval:
     (Recommended) This type of group only allows the owner (Owner) to add people into the group. If other people want to join the group, they need to send an application first, and join the group with the approval of owner. Others cannot actively join.
--   EMGroupStylePublicOpenJoin:
+-   AgoraGroupStylePublicOpenJoin:
     (Not recommended) This type of group allows anyone to actively join the group.
 
 #### Add people to the group
@@ -176,13 +177,13 @@ The added person will receive a callback:
 
 ``` objc
 /*!
- *  After the SDK automatically approved user A's invitation to user B to join the group, user B receives the callback and needs to set isAutoAcceptGroupInvitation of EMGroupOptions to YES
+ *  After the SDK automatically approved user A's invitation to user B to join the group, user B receives the callback and needs to set isAutoAcceptGroupInvitation of AgoraGroupOptions to YES
  *
  *  @param aGroup    Group instance
  *  @param aInviter  Inviter
  *  @param aMessage  Invitation message
  */
-- (void)didJoinGroup:(EMGroup *)aGroup
+- (void)didJoinGroup:(AgoraGroup *)aGroup
              inviter:(NSString *)aInviter
              message:(NSString *)aMessage;     
 ```
@@ -201,10 +202,10 @@ The interface for adding people is as follows:
 - (void)addMembers:(NSArray *)aUsers
            toGroup:(NSString *)aGroupId
            message:(NSString *)aMessage
-        completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+        completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
         
 // call:        
-[[EMClient sharedClient].groupManager addMembers:@[@"user1"] toGroup:@"groupId" message:@"Invites you to join the group" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager addMembers:@[@"user1"] toGroup:@"groupId" message:@"Invites you to join the group" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Invite to join the group successfully --- %@", aGroup);
     } else {
@@ -217,7 +218,7 @@ The interface for adding people is as follows:
 
 ``` objc
 /*!
- *  Apply to join a public group which requires the approval, the group type should be EMGroupStylePublicJoinNeedApproval
+ *  Apply to join a public group which requires the approval, the group type should be AgoraGroupStylePublicJoinNeedApproval
  *
  *  @param aGroupId         public group ID
  *  @param aMessage         Message of request
@@ -225,10 +226,10 @@ The interface for adding people is as follows:
  */
 - (void)requestToJoinPublicGroup:(NSString *)aGroupId
                          message:(NSString *)aMessage
-                      completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                      completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                       
 // call:                     
-[[EMClient sharedClient].groupManager requestToJoinPublicGroup:@"groupId" message:@"Apply to join the group" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager requestToJoinPublicGroup:@"groupId" message:@"Apply to join the group" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully applied to join the public group --- %@", aGroup);
     } else {
@@ -245,13 +246,13 @@ Only the Owner has the rights to process group joining request.
 
 ``` objc
 /*!
- *  The owner of the group receives the user’s application for joining the group. The type of the group is EMGroupStylePublicJoinNeedApproval
+ *  The owner of the group receives the user’s application for joining the group. The type of the group is AgoraGroupStylePublicJoinNeedApproval
  *
  *  @param aGroup      Group instance
  *  @param aApplicant  Applicant
  *  @param aReason     Applicant's additional information
  */
-- (void)joinGroupRequestDidReceive:(EMGroup *)aGroup
+- (void)joinGroupRequestDidReceive:(AgoraGroup *)aGroup
                               user:(NSString *)aUsername
                             reason:(NSString *)aReason;
 ```
@@ -268,10 +269,10 @@ Only the Owner has the rights to process group joining request.
  */
 - (void)approveJoinGroupRequest:(NSString *)aGroupId
                          sender:(NSString *)aUsername
-                     completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                     completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 //call:
-[[EMClient sharedClient].groupManager approveJoinGroupRequest:@"groupId" sender:@"userId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager approveJoinGroupRequest:@"groupId" sender:@"userId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Approval of group membership application is successful --- %@", aGroup);
     } else {
@@ -294,10 +295,10 @@ Only the Owner has the rights to process group joining request.
 - (void)declineJoinGroupRequest:(NSString *)aGroupId
                          sender:(NSString *)aUsername
                          reason:(NSString *)aReason
-                     completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                     completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                      
 // call:
-[[EMClient sharedClient].groupManager declineJoinGroupRequest:@"groupId" sender:@"userId" reason:@"Reason for rejection" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager declineJoinGroupRequest:@"groupId" sender:@"userId" reason:@"Reason for rejection" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully refused to join the group --- %@", aGroup);
     } else {
@@ -306,20 +307,20 @@ Only the Owner has the rights to process group joining request.
 }];                     
 ```
 
-#### Join the group of type EMGroupStylePublicOpenJoin
+#### Join the group of type AgoraGroupStylePublicOpenJoin
 
 ``` objc
 /*!
- *  Join a public group, the group type should be EMGroupStylePublicOpenJoin
+ *  Join a public group, the group type should be AgoraGroupStylePublicOpenJoin
  *
  *  @param aGroupId         public group ID
  *  @param aCompletionBlock Completed callback
  */
 - (void)joinPublicGroup:(NSString *)aGroupId
-             completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+             completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
              
 // call:
-[[EMClient sharedClient].groupManager joinPublicGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager joinPublicGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully joined the public group --- %@", aGroup);
     } else {
@@ -344,10 +345,10 @@ Withdrawing from the group is classified as active withdrawal and passive withdr
  *  @param aCompletionBlock Completed callback
  */
 - (void)leaveGroup:(NSString *)aGroupId
-        completion:(void (^)(EMError *aError))aCompletionBlock;
+        completion:(void (^)(AgoraError *aError))aCompletionBlock;
         
 // call:
-[[EMClient sharedClient].groupManager leaveGroup:@"groupId" completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager leaveGroup:@"groupId" completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully left the group");
     } else {
@@ -367,8 +368,8 @@ The kicked person will be notified through the following callback.
  *  @param aGroup     Group instance
  *  @param aReason    Reason for Withdrawing
  */
-- (void)didLeaveGroup:(EMGroup *)aGroup
-               reason:(EMGroupLeaveReason)aReason;
+- (void)didLeaveGroup:(AgoraGroup *)aGroup
+               reason:(AgoraGroupLeaveReason)aReason;
 ```
 
 ### Disband the group
@@ -383,10 +384,10 @@ Disbanding the group requires Owner's permission
  *  @param aCompletionBlock Completed callback
  */
 - (void)destroyGroup:(NSString *)aGroupId
-    finishCompletion:(void (^)(EMError *aError))aCompletionBlock;
+    finishCompletion:(void (^)(AgoraError *aError))aCompletionBlock;
     
 // call:    
-[[EMClient sharedClient].groupManager destroyGroup:@"groupId" finishCompletion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager destroyGroup:@"groupId" finishCompletion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Disbanded the group successfully");
     } else {
@@ -419,10 +420,10 @@ Only the Owner has permission to modify it.
  */
 - (void)updateGroupSubject:(NSString *)aSubject
                   forGroup:(NSString *)aGroupId
-                completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                 
 // call:                
-[[EMClient sharedClient].groupManager updateGroupSubject:@"modify the group's subject" forGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager updateGroupSubject:@"modify the group's subject" forGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"modifed the group's subject successfully --- %@", aGroup.subject);
     } else {
@@ -445,10 +446,10 @@ Only the Owner has permission to modify it.
  */
 - (void)updateDescription:(NSString *)aDescription
                  forGroup:(NSString *)aGroupId
-               completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+               completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
                
 // call:               
-[[EMClient sharedClient].groupManager updateDescription:@"modify group description" forGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager updateDescription:@"modify group description" forGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"modify group description successfully --- %@", aGroup.description);
     } else {
@@ -473,10 +474,10 @@ The group members are sorted according to the time when the group members enter 
 - (void)getGroupMemberListFromServerWithId:(NSString *)aGroupId
                                     cursor:(NSString *)aCursor
                                   pageSize:(NSInteger)aPageSize
-                                completion:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                                completion:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
 
 // call:                                 
-[[EMClient sharedClient].groupManager getGroupMemberListFromServerWithId:@"groupId" cursor:@"cursor" pageSize:10 completion:^(EMCursorResult *aResult, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupMemberListFromServerWithId:@"groupId" cursor:@"cursor" pageSize:10 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
         // aResult.list: The returned list of members, the internal value of which is the member's Easemob id.
         // aResult.cursor: The returned cursor, if you want to get the list of the next page, you need to pass this cursor as an argument to get the list of group members.
@@ -493,7 +494,7 @@ It is recommended to get the group details first, and then get the group owner a
 
 ``` objc
 // Method to get group details
-[[EMClient sharedClient].groupManager getGroupSpecificationFromServerWithId:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupSpecificationFromServerWithId:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         // get the group owner
         NSString *owner = aGroup.owner;
@@ -522,10 +523,10 @@ Requires owner or admin permissions.
 - (void)getGroupBlacklistFromServerWithId:(NSString *)aGroupId
                                pageNumber:(NSInteger)aPageNum
                                  pageSize:(NSInteger)aPageSize
-                               completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                               completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
                                
 // call:                                 
-[[EMClient sharedClient].groupManager getGroupBlacklistFromServerWithId:@"groupId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupBlacklistFromServerWithId:@"groupId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get group blacklist successfully --- %@", aList);
     } else {
@@ -550,10 +551,10 @@ Requires owner or admin permissions.
 - (void)getGroupMuteListFromServerWithId:(NSString *)aGroupId
                               pageNumber:(NSInteger)aPageNum
                                 pageSize:(NSInteger)aPageSize
-                              completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                              completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
    
 // call:                             
-[[EMClient sharedClient].groupManager getGroupMuteListFromServerWithId:@"groupId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupMuteListFromServerWithId:@"groupId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get a list of mutened members in the group successfully --- %@", aList);
     } else {
@@ -572,10 +573,10 @@ Requires owner or admin permissions.
  *  @param aCompletionBlock Completed callback
  */
 - (void)getGroupAnnouncementWithId:(NSString *)aGroupId
-                        completion:(void (^)(NSString *aAnnouncement, EMError *aError))aCompletionBlock;
+                        completion:(void (^)(NSString *aAnnouncement, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager getGroupAnnouncementWithId:@"groupId" completion:^(NSString *aAnnouncement, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupAnnouncementWithId:@"groupId" completion:^(NSString *aAnnouncement, AgoraError *aError) {
     if(!aError){
         NSLog(@"Get group announcement successfully --- %@", aAnnouncement);
     } else {
@@ -596,9 +597,9 @@ Requires owner or admin permissions.
  */
 - (void)updateGroupAnnouncementWithId:(NSString *)aGroupId
                          announcement:(NSString *)aAnnouncement
-                           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                           completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 // call:
-[[EMClient sharedClient].groupManager updateGroupAnnouncementWithId:@"groupId" announcement:@"announcement" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager updateGroupAnnouncementWithId:@"groupId" announcement:@"announcement" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if(!aError){
         NSLog(@"Modify group announcement successfully");
     } else {
@@ -615,7 +616,7 @@ When the group owner or administrator modifies the group announcement, other gro
      *  @param aGroup           group
      *  @param aAnnouncement    Group Announcement
      */
-    - (void)groupAnnouncementDidUpdate:(EMGroup *)aGroup
+    - (void)groupAnnouncementDidUpdate:(AgoraGroup *)aGroup
                           announcement:(NSString *)aAnnouncement;
 
 ### Get a list of group shared files
@@ -632,12 +633,12 @@ When the group owner or administrator modifies the group announcement, other gro
 - (void)getGroupFileListWithId:(NSString *)aGroupId
                     pageNumber:(NSInteger)aPageNum
                       pageSize:(NSInteger)aPageSize
-                    completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                    completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager getGroupFileListWithId:@"groupId" pageNumber:1 pageSize:10 completion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getGroupFileListWithId:@"groupId" pageNumber:1 pageSize:10 completion:^(NSArray *aList, AgoraError *aError) {
     if(!aError){
-        // The aList array contains the EMGroupSharedFile objects
+        // The aList array contains the AgoraGroupSharedFile objects
         NSLog(@"Get the list of group shared files successfully --- %@", aList);
     } else {
         NSLog(@"Reasons for failure to get the list of group shared files --- %@", aError.errorDescription);
@@ -660,7 +661,7 @@ When the group owner or administrator modifies the group announcement, other gro
 - (void)uploadGroupSharedFileWithId:(NSString *)aGroupId
                            filePath:(NSString*)aFilePath
                            progress:(void (^)(int progress))aProgressBlock
-                         completion:(void (^)(EMGroupSharedFile *aSharedFile, EMError *aError))aCompletionBlock;
+                         completion:(void (^)(AgoraGroupSharedFile *aSharedFile, AgoraError *aError))aCompletionBlock;
 
 /*!
  *  Download group shared files
@@ -675,14 +676,14 @@ When the group owner or administrator modifies the group announcement, other gro
                              filePath:(NSString *)aFilePath
                          sharedFileId:(NSString *)aSharedFileId
                              progress:(void (^)(int progress))aProgressBlock
-                           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                           completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager uploadGroupSharedFileWithId:@"groupId" filePath:@"filePath" progress:^(int progress) {
+[[AgoraChatClient sharedClient].groupManager uploadGroupSharedFileWithId:@"groupId" filePath:@"filePath" progress:^(int progress) {
     NSLog(@"Upload file progress --- %d", progress);
-} completion:^(EMGroupSharedFile *aSharedFile, EMError *aError) {
+} completion:^(AgoraGroupSharedFile *aSharedFile, AgoraError *aError) {
     if(!aError){
-        // EMGroupSharedFile contains the file name, file publisher, file creation time, file size
+        // AgoraGroupSharedFile contains the file name, file publisher, file creation time, file size
         NSLog(@"Upload group shared files successfully");
     } else {
         NSLog(@"Reasons for failure to upload group shared files --- %@", aError.errorDescription);
@@ -690,9 +691,9 @@ When the group owner or administrator modifies the group announcement, other gro
 }];
 
 // call:
-[[EMClient sharedClient].groupManager downloadGroupSharedFileWithId:@"groupId" filePath:@"filePath" sharedFileId:@"sharedFileId" progress:^(int progress) {
+[[AgoraChatClient sharedClient].groupManager downloadGroupSharedFileWithId:@"groupId" filePath:@"filePath" sharedFileId:@"sharedFileId" progress:^(int progress) {
     NSLog(@"Download file progress --- %d", progress);
-} completion:^(EMGroup *aGroup, EMError *aError) {
+} completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if(!aError){
         NSLog(@"Download group share file successfully");
     } else {
@@ -710,8 +711,8 @@ When someone in the group uploads a group shared file, other group members will 
  *  @param aGroup       Group
  *  @param aSharedFile  shared file
  */
-- (void)groupFileListDidUpdate:(EMGroup *)aGroup
-               addedSharedFile:(EMGroupSharedFile *)aSharedFile;
+- (void)groupFileListDidUpdate:(AgoraGroup *)aGroup
+               addedSharedFile:(AgoraGroupSharedFile *)aSharedFile;
 ```
 
 ### Delete group shared files
@@ -726,10 +727,10 @@ When someone in the group uploads a group shared file, other group members will 
  */
 - (void)removeGroupSharedFileWithId:(NSString *)aGroupId
                        sharedFileId:(NSString *)aSharedFileId
-                         completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                         completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager removeGroupSharedFileWithId:@"groupId" sharedFileId:@"sharedFileId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager removeGroupSharedFileWithId:@"groupId" sharedFileId:@"sharedFileId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if(!aError){
         NSLog(@"Delete group shared files successfully");
     } else {
@@ -747,7 +748,7 @@ When someone in the group deletes a group shared file, other group members will 
  *  @param aGroup       Group
  *  @param aFileId      Shared File ID
  */
-- (void)groupFileListDidUpdate:(EMGroup *)aGroup
+- (void)groupFileListDidUpdate:(AgoraGroup *)aGroup
              removedSharedFile:(NSString *)aFileId;
 ```
 
@@ -763,10 +764,10 @@ When someone in the group deletes a group shared file, other group members will 
  */
 - (void)updateGroupExtWithId:(NSString *)aGroupId
                          ext:(NSString *)aExt
-                  completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                  completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager updateGroupExtWithId:@"groupId" ext:@"ext" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager updateGroupExtWithId:@"groupId" ext:@"ext" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if(!aError){
         NSLog(@"Modify group extension information successfully");
     } else {
@@ -795,9 +796,9 @@ Only the Owner permission can call the interface.
  *
  *  @result     return Group instance
  */
-- (EMGroup *)updateGroupOwner:(NSString *)aGroupId
+- (AgoraGroup *)updateGroupOwner:(NSString *)aGroupId
                      newOwner:(NSString *)aNewOwner
-                        error:(EMError **)pError;
+                        error:(AgoraError **)pError;
 
 /*! 
  *  hanging the group owner requires Owner permission
@@ -808,7 +809,7 @@ Only the Owner permission can call the interface.
  */
 - (void)updateGroupOwner:(NSString *)aGroupId
                 newOwner:(NSString *)aNewOwner
-              completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+              completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 ```
 
@@ -822,12 +823,12 @@ Only the Owner permission can call the interface.
  *  @param aNewOwner    New group owner
  *  @param aOldOwner    Old group owner
  */
-- (void)groupOwnerDidUpdate:(EMGroup *)aGroup
+- (void)groupOwnerDidUpdate:(AgoraGroup *)aGroup
                    newOwner:(NSString *)aNewOwner
                    oldOwner:(NSString *)aOldOwner;
                    
 // call:
-[[EMClient sharedClient].groupManager updateGroupOwner:@"groupId" newOwner:@"newOwner" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager updateGroupOwner:@"groupId" newOwner:@"newOwner" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Group owner updated successfully");
     } else {
@@ -855,9 +856,9 @@ Only Owner can call.
  *
  *  @result    return Group instance
  */
-- (EMGroup *)addAdmin:(NSString *)aAdmin
+- (AgoraGroup *)addAdmin:(NSString *)aAdmin
               toGroup:(NSString *)aGroupId
-                error:(EMError **)pError;
+                error:(AgoraError **)pError;
 
 /*!
  *  Add group administrator, requires Owner permission
@@ -868,10 +869,10 @@ Only Owner can call.
  */
 - (void)addAdmin:(NSString *)aAdmin
          toGroup:(NSString *)aGroupId
-      completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+      completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
       
 // call:
-[[EMClient sharedClient].groupManager addAdmin:@"adminName" toGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager addAdmin:@"adminName" toGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Add group administrator successfully");
     } else {
@@ -889,7 +890,7 @@ Only Owner can call.
  *  @param aGroup    Group
  *  @param aAdmin    Members added to the admin list
  */
-- (void)groupAdminListDidUpdate:(EMGroup *)aGroup
+- (void)groupAdminListDidUpdate:(AgoraGroup *)aGroup
                      addedAdmin:(NSString *)aAdmin;
 ```
 
@@ -909,10 +910,10 @@ Only Owner can call.
  */
 - (void)removeAdmin:(NSString *)aAdmin
           fromGroup:(NSString *)aGroupId
-         completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+         completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
          
 // call:
-[[EMClient sharedClient].groupManager removeAdmin:@"adminName" fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager removeAdmin:@"adminName" fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Remove group administrator successfully");
     } else {
@@ -930,7 +931,7 @@ Only Owner can call.
  *  @param aGroup           Group
  *  @param aMutedMembers    Members who have been removed from the mute list
  */
-- (void)groupMuteListDidUpdate:(EMGroup *)aGroup
+- (void)groupMuteListDidUpdate:(AgoraGroup *)aGroup
            removedMutedMembers:(NSArray *)aMutedMembers;
 ```
 
@@ -948,10 +949,10 @@ Only Owner or Administrator can call.
  */
 - (void)removeMembers:(NSArray *)aUsers
             fromGroup:(NSString *)aGroupId
-           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+           completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
            
 // call:
-[[EMClient sharedClient].groupManager removeMembers:@[@"user1"] fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager removeMembers:@[@"user1"] fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"remove group members from the group successfully");
     } else {
@@ -978,10 +979,10 @@ Those with high permission can mute those with low permission, and vice versa ar
 - (void)muteMembers:(NSArray *)aMuteMembers
    muteMilliseconds:(NSInteger)aMuteMilliseconds
           fromGroup:(NSString *)aGroupId
-         completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+         completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
          
 // call:
-[[EMClient sharedClient].groupManager muteMembers:@[@"user1"] muteMilliseconds:10000 fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager muteMembers:@[@"user1"] muteMilliseconds:10000 fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"muted a group member successfully");
     } else {
@@ -1000,7 +1001,7 @@ Those with high permission can mute those with low permission, and vice versa ar
  *  @param aMutedMembers    muted members
  *  @param aMuteExpire      Ban expiration time, currently unavailable
  */
-- (void)groupMuteListDidUpdate:(EMGroup *)aGroup
+- (void)groupMuteListDidUpdate:(AgoraGroup *)aGroup
              addedMutedMembers:(NSArray *)aMutedMembers
                     muteExpire:(NSInteger)aMuteExpire;
 ```
@@ -1021,10 +1022,10 @@ Those with high permission can mute those with low permission, and vice versa ar
  */
 - (void)unmuteMembers:(NSArray *)aMembers
             fromGroup:(NSString *)aGroupId
-           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+           completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
            
 // call:
-[[EMClient sharedClient].groupManager unmuteMembers:@[@"user1"] fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager unmuteMembers:@[@"user1"] fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Unmute successfully");
     } else {
@@ -1043,7 +1044,7 @@ Those with high permission can mute those with low permission, and vice versa ar
  *  @param aGroup           group
  *  @param aMutedMembers    members removed from the mute list
  */
-- (void)groupMuteListDidUpdate:(EMGroup *)aGroup
+- (void)groupMuteListDidUpdate:(AgoraGroup *)aGroup
            removedMutedMembers:(NSArray *)aMutedMembers;
 ```
 
@@ -1069,10 +1070,10 @@ Group owners and group administrators will not be muted by default
  *
  */
 - (void)muteAllMembersFromGroup:(NSString *)aGroupId
-                     completion:(void(^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                     completion:(void(^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
          
 // call:
-[[EMClient sharedClient].groupManager muteAllMembersFromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager muteAllMembersFromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"All members muted successfully");
     } else {
@@ -1097,7 +1098,7 @@ Group owners and group administrators will not be muted by default
 *  @param aGroup           Group
 *  @param aMuted           All member muted
 */
-- (void)groupAllMemberMuteChanged:(EMGroup *)aGroup
+- (void)groupAllMemberMuteChanged:(AgoraGroup *)aGroup
                  isAllMemberMuted:(BOOL)aMuted;
 ```
 
@@ -1121,10 +1122,10 @@ Group owners and group administrators will not be muted by default
  *
  */
 - (void)unmuteAllMembersFromGroup:(NSString *)aGroupId
-                       completion:(void(^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+                       completion:(void(^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
            
 // call:
-[[EMClient sharedClient].groupManager unmuteAllMembersFromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager unmuteAllMembersFromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Set full unmuted successfully")
     } else {
@@ -1150,7 +1151,7 @@ Group owners and group administrators will not be muted by default
 *  @param aGroup           Group
 *  @param aMuted           All member muted
 */
-- (void)groupAllMemberMuteChanged:(EMGroup *)aGroup
+- (void)groupAllMemberMuteChanged:(AgoraGroup *)aGroup
                  isAllMemberMuted:(BOOL)aMuted;
 ```
 
@@ -1170,10 +1171,10 @@ owner can add group members and people who are not group members to the group bl
  */
 - (void)blockMembers:(NSArray *)aMembers
            fromGroup:(NSString *)aGroupId
-          completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock; 
+          completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock; 
 
 // call:
-[[EMClient sharedClient].groupManager blockMembers:@[@"users1"] fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager blockMembers:@[@"users1"] fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Add people to group blacklist successfully");
     } else {
@@ -1198,10 +1199,10 @@ Remove from the group blacklist, the user is no longer in the group and needs to
  */
 - (void)unblockMembers:(NSArray *)aMembers
              fromGroup:(NSString *)aGroupId
-            completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+            completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
 
 // call:
-[[EMClient sharedClient].groupManager unblockMembers:@[@"users1"] fromGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager unblockMembers:@[@"users1"] fromGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully remove people from the group blacklist");
     } else {
@@ -1224,10 +1225,10 @@ Does not allow calls with Owner permissions.
  *  @param aCompletionBlock Completed callback
  */
 - (void)blockGroup:(NSString *)aGroupId
-        completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+        completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
         
 // call:
-[[EMClient sharedClient].groupManager blockGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager blockGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully block group messages");
     } else {
@@ -1242,10 +1243,10 @@ Does not allow calls with Owner permissions.
  *  @param aCompletionBlock Completed callback
  */
 - (void)unblockGroup:(NSString *)aGroupId
-          completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+          completion:(void (^)(AgoraGroup *aGroup, AgoraError *aError))aCompletionBlock;
           
 // call:
-[[EMClient sharedClient].groupManager unblockGroup:@"groupId" completion:^(EMGroup *aGroup, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager unblockGroup:@"groupId" completion:^(AgoraGroup *aGroup, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Block group messages successfully");
     } else {
@@ -1266,7 +1267,7 @@ View all groups where the currently logged in account is located, including crea
 1.Get a list of groups related to me from the server
 
 ``` objc
-[[EMClient sharedClient].groupManager getJoinedGroupsFromServerWithPage:1 pageSize:50 completion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getJoinedGroupsFromServerWithPage:1 pageSize:50 completion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get group list successfully --- %@", aList);
     } else {
@@ -1281,7 +1282,7 @@ Get the list of groups from local after getting the list of groups related to th
 
 ``` objc
 // Get all groups from memory. At the first time, load from database
-NSArray *groupList = [[EMClient sharedClient].groupManager getJoinedGroups];
+NSArray *groupList = [[AgoraChatClient sharedClient].groupManager getJoinedGroups];
 ```
 
 ## Get public groups
@@ -1298,10 +1299,10 @@ Get the public groups in the specified range.
  */
 - (void)getPublicGroupsFromServerWithCursor:(NSString *)aCursor
                                    pageSize:(NSInteger)aPageSize
-                                 completion:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                                 completion:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
                                  
 // call:                                 
-[[EMClient sharedClient].groupManager getPublicGroupsFromServerWithCursor:nil pageSize:50 completion:^(EMCursorResult *aResult, EMError *aError) {
+[[AgoraChatClient sharedClient].groupManager getPublicGroupsFromServerWithCursor:nil pageSize:50 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get public group successfully --- %@", aResult);
     } else {

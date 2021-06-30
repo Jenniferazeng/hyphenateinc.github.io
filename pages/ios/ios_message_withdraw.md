@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -36,7 +37,7 @@ messageid 的消息从数据库删除。
 #### Android示例
 
 ``` java
-EMMessage cmdMsg = EMMessage.createSendMessage(EMMessage.Type.CMD);
+AgoraMessage cmdMsg = AgoraMessage.createSendMessage(AgoraMessage.Type.CMD);
 // 如果是群聊，设置chattype，默认是单聊
 if (chatType == CHATTYPE_GROUP){
     cmdMsg.setChatType(ChatType.GroupChat);
@@ -50,7 +51,7 @@ cmdMsg.setReceipt(toChatUsername);
 // 通过扩展字段添加要撤回消息的id
 cmdMsg.setAttribute("msgId",msgid);
 
-EMChatManager.getInstance().sendMessage(cmdMsg,new EMCallBack() {
+AgoraChatManager.getInstance().sendMessage(cmdMsg,new AgoraCallBack() {
     @Override
     public void onSuccess() {}
                 
@@ -69,18 +70,18 @@ EMChatManager.getInstance().sendMessage(cmdMsg,new EMCallBack() {
 - (void)revokeMessageWithMessageId:(NSString *)aMessageId
                     conversationId:(NSString *)conversationId
 {
-    EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:@"REVOKE_FLAG"];
+    AgoraCmdMessageBody *body = [[AgoraCmdMessageBody alloc] initWithAction:@"REVOKE_FLAG"];
     NSDictionary *ext = @{@"msgId":aMessageId};
-    NSString *currentUsername = [EMClient sharedClient].currentUsername;
-    EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId
+    NSString *currentUsername = [AgoraChatClient sharedClient].currentUsername;
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:conversationId
                                                           from:currentUsername
                                                             to:conversationId
                                                           body:body
                                                            ext:ext];
     //发送cmd消息
-    [[EMClient sharedClient].chatManager sendMessage:message
+    [[AgoraChatClient sharedClient].chatManager sendMessage:message
                                             progress:nil
-                                          completion:^(EMMessage *message, EMError *error) {
+                                          completion:^(AgoraMessage *message, AgoraError *error) {
                                               if (!error) {
                                                   NSLog(@"发送成功");
                                               }
@@ -94,20 +95,20 @@ EMChatManager.getInstance().sendMessage(cmdMsg,new EMCallBack() {
 #### Android示例
 
 ``` java
-EMChatManager.getInstance().registerEventListener(new EMEventListener() {
+AgoraChatManager.getInstance().registerEventListener(new AgoraEventListener() {
         
     @Override
-    public void onEvent(EMNotifierEvent event) {
+    public void onEvent(AgoraNotifierEvent event) {
         switch (event.getEvent()) {
         case EventNewCMDMessage: // CMD消息
         {
-            EMMessage message = (EMMessage) event.getData();
+            AgoraMessage message = (AgoraMessage) event.getData();
             CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
             String action = cmdMsgBody.action;//获取自定义action
             if(action.equals("REVOKE_FLAG")){
                 try {
                     String msgId = message.getStringAttribute("msgId");
-                    EMConversation conversation = EMChatManager.getInstance().getConversation(message.getFrom());
+                    AgoraConversation conversation = AgoraChatManager.getInstance().getConversation(message.getFrom());
                     --删除消息来表示撤回--
                     conversation.removeMessage(msgId);
                     // 如果需要，可以插入一条“XXX撤回一条消息”
@@ -123,7 +124,7 @@ EMChatManager.getInstance().registerEventListener(new EMEventListener() {
             break;
         }           
     }
-}, new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewCMDMessage});
+}, new AgoraNotifierEvent.Event[] { AgoraNotifierEvent.Event.EventNewCMDMessage});
 ```
 
 #### iOS示例
@@ -132,13 +133,13 @@ EMChatManager.getInstance().registerEventListener(new EMEventListener() {
 // 接收透传消息
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
     NSMutableArray *revokeMessageIds = nil;
-    for (EMMessage *cmdMessage in aCmdMessages)
+    for (AgoraMessage *cmdMessage in aCmdMessages)
     {
-        EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;
+        AgoraCmdMessageBody *body = (AgoraCmdMessageBody *)cmdMessage.body;
         if ([body.action isEqualToString:@"REVOKE_FLAG"]) {
             NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
             BOOL isSuccess = [self removeRevokeMessageWithChatter:cmdMessage.from
-                                                 conversationType:(EMConversationType)cmdMessage.chatType
+                                                 conversationType:(AgoraConversationType)cmdMessage.chatType
                                                         messageId:revokeMessageId];
             if (isSuccess) {
                 // update ui，如果需要，可以插入一条“XXX撤回一条消息”
@@ -149,11 +150,11 @@ EMChatManager.getInstance().registerEventListener(new EMEventListener() {
 
 // 删除消息
 - (BOOL)removeRevokeMessageWithChatter:(NSString *)aChatter
-                      conversationType:(EMConversationType)type
+                      conversationType:(AgoraConversationType)type
                              messageId:(NSString *)messageId{
     
-    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aChatter type:type createIfNotExist:YES];
-    EMError *error = nil;
+    AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:aChatter type:type createIfNotExist:YES];
+    AgoraError *error = nil;
     [conversation deleteMessageWithId:messageId error:&error];
     return !error;
 }

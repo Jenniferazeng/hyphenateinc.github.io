@@ -10,7 +10,8 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
@@ -24,13 +25,13 @@ The chat room management mainly involves the following header files of the Easem
 
 ``` objc
 // Chat room, with chat room id and other attributes
-EMChatroom.h
+AgoraChatroom.h
 
 // Chat room method calls, such as add proxy, remove proxy, get chat room, etc.
-IEMChatroomManager.h
+IAgoraChatroomManager.h
 
 // the chatroom protocol callback methods, such as listen to callbacks of the user joining a group, etc.
-EMChatroomManagerDelegate.h
+AgoraChatroomManagerDelegate.h
 ````
 
 The Easemob chat room model supports a maximum membership of 5000. Unlike groups, after a member in a chat room goes offline for 2 minutes, the server will remove that member from the chat room and will not send push to that member. This member will not be able to automatically enter the chat room after going online.
@@ -67,10 +68,10 @@ operations, please refer to [Chatroom Management](/im/server/basics/chatroom).
 
 - (void)getChatroomsFromServerWithPage:(NSInteger)aPageNum
                               pageSize:(NSInteger)aPageSize
-                            completion:(void (^)(EMPageResult *aResult, EMError *aError))aCompletionBlock;
+                            completion:(void (^)(AgoraPageResult *aResult, AgoraError *aError))aCompletionBlock;
 
 // Calling :
-[[EMClient sharedClient].roomManager getChatroomsFromServerWithPage:0 pageSize:50 completion:^(EMPageResult *aResult, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager getChatroomsFromServerWithPage:0 pageSize:50 completion:^(AgoraPageResult *aResult, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Successfully get the specified number of chat rooms from the server");
     } else {
@@ -89,10 +90,10 @@ operations, please refer to [Chatroom Management](/im/server/basics/chatroom).
  * @param aCompletionBlock 		The completed callback
  */
 - (void)joinChatroom:(NSString *)aChatroomId
-          completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock; 
+          completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock; 
 
 // Called:
-[[EMClient sharedClient].roomManager joinChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager joinChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
        NSLog(@"Join chatroom successful");
     } else {
@@ -111,10 +112,10 @@ operations, please refer to [Chatroom Management](/im/server/basics/chatroom).
  * @param aCompletionBlock 		The completed callback
  */
 - (void)leaveChatroom:(NSString *)aChatroomId
-           completion:(void (^)(EMError *aError))aCompletionBlock;   
+           completion:(void (^)(AgoraError *aError))aCompletionBlock;   
 
 // Call:
-[[EMClient sharedClient].roomManager leaveChatroom:@"chatroomId" completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager leaveChatroom:@"chatroomId" completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Exit the chat room successfully");
     } else {
@@ -136,7 +137,7 @@ When you leave the chat room, the SDK will delete all local messages in this cha
 @property (nonatomic, assign) BOOL isDeleteMessagesWhenExitChatRoom;
 
 // Calling :
-EMOptions *retOpt = [EMOptions optionsWithAppkey:@"appkey"];
+AgoraOptions *retOpt = [AgoraOptions optionsWithAppkey:@"appkey"];
 retOpt.isDeleteMessagesWhenExitChatRoom = NO;
 ```
 
@@ -151,10 +152,10 @@ retOpt.isDeleteMessagesWhenExitChatRoom = NO;
  *
  */
 - (void)getChatroomSpecificationFromServerWithId:(NSString *)aChatroomId
-                                      completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                                      completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Calling:                                 
-[[EMClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get chat room details successfully");
     } else {
@@ -177,12 +178,12 @@ retOpt.isDeleteMessagesWhenExitChatRoom = NO;
 - (void)getChatroomMemberListFromServerWithId:(NSString *)aChatroomId
                                        cursor:(NSString *)aCursor
                                      pageSize:(NSInteger)aPageSize
-                                   completion:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                                   completion:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
                                
 // Calling :                                 
-[[EMClient sharedClient].roomManager getChatroomMemberListFromServerWithId:@"chatroomId" cursor:@"cursor" pageSize:50 completion:^(EMCursorResult *aResult, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager getChatroomMemberListFromServerWithId:@"chatroomId" cursor:@"cursor" pageSize:50 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
-        // The EMCursorResult class has the cursor property
+        // The AgoraCursorResult class has the cursor property
         NSLog(@"Success in getting the list of chat room members");
     } else {
         NSLog(@"Reason for failure to get the list of chat room members --- %@", aError.errorDescription);
@@ -206,10 +207,10 @@ Requires Owner or Admin permission
 - (void)getChatroomBlacklistFromServerWithId:(NSString *)aChatroomId
                                   pageNumber:(NSInteger)aPageNum
                                     pageSize:(NSInteger)aPageSize
-                                  completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                                  completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMEClient sharedClient].roomManager getChatroomBlacklistFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^( NSArray *aList, EMError *aError) {
+[[AgoraEClient sharedClient].roomManager getChatroomBlacklistFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^( NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Getting the chat room blacklist list was successful");
     } else {
@@ -232,10 +233,10 @@ Requires Owner or Admin permission
 - (void)getChatroomMuteListFromServerWithId:(NSString *)aChatroomId
                                  pageNumber:(NSInteger)aPageNum
                                    pageSize:(NSInteger)aPageSize
-                                 completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                                 completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
                                
 // Calling :                                 
-[[EMClient sharedClient].roomManager getChatroomMuteListFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager getChatroomMuteListFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Get chat room muted list successfully");
     } else {
@@ -258,10 +259,10 @@ Requires Owner permission
  */
 - (void)updateSubject:(NSString *)aSubject
           forChatroom:(NSString *)aChatroomId
-           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+           completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager updateSubject:@"newSubject" forChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager updateSubject:@"newSubject" forChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Changed chatroom subject successfully");
     } else {
@@ -284,10 +285,10 @@ Requires Owner permission
  */
 - (void)updateDescription:(NSString *)aDescription
               forChatroom:(NSString *)aChatroomId
-               completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+               completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Calling :                                 
-[[EMClient sharedClient].roomManager updateDescription:@"newDescription" forChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager updateDescription:@"newDescription" forChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Changing chat room description was successful");
     } else {
@@ -306,10 +307,10 @@ Requires Owner permission
  * @param aCompletionBlock The completed callback
  */
 - (void)getChatroomAnnouncementWithId:(NSString *)aChatroomId
-                           completion:(void (^)(NSString *aAnnouncement, EMError *aError))aCompletionBlock;
+                           completion:(void (^)(NSString *aAnnouncement, AgoraError *aError))aCompletionBlock;
 
 // Called:
-[[EMClient sharedClient].roomManager getChatroomAnnouncementWithId:@"chatroomId" completion:^(NSString *aAnnouncement, EMError * aError) {
+[[AgoraChatClient sharedClient].roomManager getChatroomAnnouncementWithId:@"chatroomId" completion:^(NSString *aAnnouncement, AgoraError * aError) {
     if (!aError) {
         NSLog(@"Getting chatroom announcement was successful");
     } else {
@@ -332,10 +333,10 @@ It is also possible to get a message push for a chat room announcement through t
  */
 - (void)updateChatroomAnnouncementWithId:(NSString *)aChatroomId
                             announcement:(NSString *)aAnnouncement
-                              completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                              completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
 
 // Calling :
-[[EMClient sharedClient].roomManager updateChatroomAnnouncementWithId:@"chatroomId" announcement:@"newAnnouncement" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager updateChatroomAnnouncementWithId:@"chatroomId" announcement:@"newAnnouncement" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Modify chat room announcement successfully");
     } else {
@@ -353,7 +354,7 @@ When the chat room owner/Admin modifies the chat room announcement, other member
  *  @param aChatroom        Chat Room
  *  @param aAnnouncement    Announcement
  */
-- (void)chatroomAnnouncementDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomAnnouncementDidUpdate:(AgoraChatroom *)aChatroom
                          announcement:(NSString *)aAnnouncement;
 ```
 
@@ -370,7 +371,7 @@ Owners and administrators can enable and disable full mutes.
  * @param aCompletionBlock 	The completed callback
  */
 - (void)muteAllMembersFromChatroom:(NSString *)aChatroomId
-                        completion:(void(^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                        completion:(void(^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                         
                         
 /*!
@@ -381,7 +382,7 @@ Owners and administrators can enable and disable full mutes.
  * @param aCompletionBlock The completed callback
  */
 - (void)unmuteAllMembersFromChatroom:(NSString *)aChatroomId
-                          completion:(void(^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                          completion:(void(^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
 ```
 
 ### Whitelist management
@@ -400,7 +401,7 @@ In addition you can move users out of the whitelist, check if you are in the whi
  */
 - (void)addWhiteListMembers:(NSArray *)aMembers
                fromChatroom:(NSString *)aChatroomId
-                 completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                 completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                  
 /*!
  *  \~chinese
@@ -412,7 +413,7 @@ In addition you can move users out of the whitelist, check if you are in the whi
  */
 - (void)removeWhiteListMembers:(NSArray *)aMembers
                   fromChatroom:(NSString *)aChatroomId
-                    completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                    completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                     
                     
 /*!
@@ -423,7 +424,7 @@ In addition you can move users out of the whitelist, check if you are in the whi
  * @param pError 			error message
  */
 - (BOOL)isMemberInWhiteListFromServerWithChatroomId:(NSString *)aChatroomId
-                                              error:(EMError **)pError;
+                                              error:(AgoraError **)pError;
                                               
                                               
 /*!
@@ -434,7 +435,7 @@ In addition you can move users out of the whitelist, check if you are in the whi
  * @param aCompletionBlock 	The completed callback
  */
 - (void)getChatroomWhiteListFromServerWithId:(NSString *)aChatroomId
-                                  completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                                  completion:(void (^)(NSArray *aList, AgoraError *aError))aCompletionBlock;
 ```
 
 ### Move members out of the chat room
@@ -451,10 +452,10 @@ Requires Owner or Admin permission
  */
 - (void)removeMembers:(NSArray *)aMembers
          fromChatroom:(NSString *)aChatroomId
-           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+           completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Calling :                                
-[[EMClient sharedClient].roomManager removeMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager removeMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Removal of member from chat room successful");
     } else {
@@ -477,10 +478,10 @@ Requires Owner or Admin permission
  */
 - (void)blockMembers:(NSArray *)aMembers
         fromChatroom:(NSString *)aChatroomId
-          completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+          completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager blockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager blockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Adding people to chatroom blacklist was successful");
     } else {
@@ -503,10 +504,10 @@ Requires Owner or Admin permission
  */
 - (void)unblockMembers:(NSArray *)aMembers
           fromChatroom:(NSString *)aChatroomId
-            completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+            completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Calling :                                 
-[[EMClient sharedClient].roomManager unblockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager unblockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Success in remove users from chat room blacklist");
     } else {
@@ -529,10 +530,10 @@ Requires Owner permission
  */
 - (void)updateChatroomOwner:(NSString *)aChatroomId
                    newOwner:(NSString *)aNewOwner
-                 completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                 completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager updateChatroomOwner:@"chatroomId" newOwner:@"newOwner" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager updateChatroomOwner:@"chatroomId" newOwner:@"newOwner" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Changing chatroom creator was successful");
     } else {
@@ -555,10 +556,10 @@ Requires Owner permission
  */
 - (void)addAdmin:(NSString *)aAdmin
       toChatroom:(NSString *)aChatroomId
-      completion:(void (^)(EMChatroom *aChatroomp, EMError *aError))aCompletionBlock;
+      completion:(void (^)(AgoraChatroom *aChatroomp, AgoraError *aError))aCompletionBlock;
                                
 // Called with:                                 
-[[EMClient sharedClient].roomManager addAdmin:@"adminId" toChatroom:@"chatroomId" completion:^(EMChatroom *aChatroomp, EMError * aError) {
+[[AgoraChatClient sharedClient].roomManager addAdmin:@"adminId" toChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroomp, AgoraError * aError) {
     if (!aError) {
         NSLog(@"Add chatroom admin successfully");
     } else {
@@ -581,10 +582,10 @@ Requires Owner permission
  */
 - (void)removeAdmin:(NSString *)aAdmin
        fromChatroom:(NSString *)aChatroomId
-         completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+         completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager removeAdmin:@"adminId" fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager removeAdmin:@"adminId" fromChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Remove of chatroom administrator successfully");
     } else {
@@ -609,10 +610,10 @@ Those with high permission can mute those with low permission, and vice versa no
 - (void)muteMembers:(NSArray *)aMuteMembers
    muteMilliseconds:(NSInteger)aMuteMilliseconds
        fromChatroom:(NSString *)aChatroomId
-         completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+         completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager muteMembers:@[@"userName"] muteMilliseconds:10000 fromChatroom:@"chatroomId" completion:^( EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager muteMembers:@[@"userName"] muteMilliseconds:10000 fromChatroom:@"chatroomId" completion:^( AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"muted a group member successfully");
     } else {
@@ -635,10 +636,10 @@ High permission can mute low permission, and vice versa not allowed
  */
 - (void)unmuteMembers:(NSArray *)aMembers
          fromChatroom:(NSString *)aChatroomId
-           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+           completion:(void (^)(AgoraChatroom *aChatroom, AgoraError *aError))aCompletionBlock;
                                
 // Called:                                 
-[[EMClient sharedClient].roomManager unmuteMembers:@[@"userName"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+[[AgoraChatClient sharedClient].roomManager unmuteMembers:@[@"userName"] fromChatroom:@"chatroomId" completion:^(AgoraChatroom *aChatroom, AgoraError *aError) {
     if (!aError) {
         NSLog(@"unmute successful");
     } else {
@@ -652,13 +653,13 @@ High permission can mute low permission, and vice versa not allowed
 Registering for a chat room callback
 
 ``` objc
-protocal:EMChatroomManagerDelegate
+protocal:AgoraChatroomManagerDelegate
 
 Proxy:
 //Register for chat room callbacks
-[[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
+[[AgoraChatClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
 //Remove chat room callbacks
-[[EMClient sharedClient].roomManager removeDelegate:self];
+[[AgoraChatClient sharedClient].roomManager removeDelegate:self];
 ```
 
 Callback method:
@@ -670,7 +671,7 @@ Callback method:
  * @param aChatroom 	chat room joined
  * @param aUsername 	Joiner
  */
-- (void)userDidJoinChatroom:(EMChatroom *)aChatroom
+- (void)userDidJoinChatroom:(AgoraChatroom *)aChatroom
                        user:(NSString *)aUsername;
 
 /*!
@@ -679,7 +680,7 @@ Callback method:
  * @param aChatroom 	The chatroom that left
  * @param aUsername 	The person who left
  */
-- (void)userDidLeaveChatroom:(EMChatroom *)aChatroom
+- (void)userDidLeaveChatroom:(AgoraChatroom *)aChatroom
                         user:(NSString *)aUsername;
 
 /*!
@@ -688,8 +689,8 @@ Callback method:
  * @param aChatroom 	the chatroom which user was kicked out of 
  * @param aReason 		the reason for being kicked out of the chatroom
  */
-- (void)didDismissFromChatroom:(EMChatroom *)aChatroom
-                        reason:(EMChatroomBeKickedReason)aReason;
+- (void)didDismissFromChatroom:(AgoraChatroom *)aChatroom
+                        reason:(AgoraChatroomBeKickedReason)aReason;
 
 /*!
  * A member has been added to the mute list
@@ -698,7 +699,7 @@ Callback method:
  * @param aMutedMembers 	muted members
  * @param aMuteExpire 		mute expiration time, temporarily unavailable
  */
-- (void)chatroomMuteListDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomMuteListDidUpdate:(AgoraChatroom *)aChatroom
                 addedMutedMembers:(NSArray *)aMutes
                        muteExpire:(NSInteger)aMuteExpire;
 
@@ -708,7 +709,7 @@ Callback method:
  * @param aChatroom 		chatroom
  * @param aMutedMembers 	Member removed from the mute list
  */
-- (void)chatroomMuteListDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomMuteListDidUpdate:(AgoraChatroom *)aChatroom
               removedMutedMembers:(NSArray *)aMutes;
 
 /*!
@@ -717,7 +718,7 @@ Callback method:
  * @param aChatroom 	chatroom
  * @param aAdmin 		Member added to the administrators list
  */
-- (void)chatroomAdminListDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomAdminListDidUpdate:(AgoraChatroom *)aChatroom
                         addedAdmin:(NSString *)aAdmin;
 
 /*!
@@ -726,7 +727,7 @@ Callback method:
  * @param aChatroom chatroom
  * @param aAdmin The member that was moved out of the admin list
  */
-- (void)chatroomAdminListDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomAdminListDidUpdate:(AgoraChatroom *)aChatroom
                       removedAdmin:(NSString *)aAdmin;
 
 /*!
@@ -736,7 +737,7 @@ Callback method:
  * @param aNewOwner 	New group owner
  * @param aOldOwner 	old group owner
  */
-- (void)chatroomOwnerDidUpdate:(EMChatroom *)aChatroom
+- (void)chatroomOwnerDidUpdate:(AgoraChatroom *)aChatroom
                       newOwner:(NSString *)aNewOwner
                       oldOwner:(NSString *)aOldOwner;
 ```
