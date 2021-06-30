@@ -7,10 +7,6 @@ permalink: android_product_overview.html
 folder: android
 ---
 
-## DEMO experience
-
-Download link：[download page](http://www.easemob.com/download/im)
-
 ## Android SDK introduction
 
 Chat SDK provides a complete development framework for users to develop chat-related applications. It includes the following parts:
@@ -37,7 +33,7 @@ The SDK adopts a modular design, and the function of each module is relatively i
 
 ### Manually copy the jar package and the import of so
 
-Go to [Agora official website](http://www.easemob.com/download/im) to download chat SDK.
+Go to Agora official website to download chat SDK.
 
 There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
 
