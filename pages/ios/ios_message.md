@@ -3,7 +3,7 @@ title: ios Group
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_message.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
@@ -1184,8 +1184,3 @@ Note: The message withdrawal is a value-added function, please contact Easemob B
 
 ------------------------------------------------------------------------
 
-\<WRAP group> \<WRAP half column> Previous Page：[iOS SDK
-Update log](/im/ios/sdk/releasenote) \</WRAP>
-
-\<WRAP half column> Next Page：[Friends management](/im/ios/basics/buddy) \</WRAP>
-\</WRAP>

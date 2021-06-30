@@ -3,7 +3,7 @@ title: ios Group
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_imkit.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
@@ -992,12 +992,6 @@ Contacts cell side-swipe callback example.
 
 ------------------------------------------------------------------------
 
-\<WRAP group> \<WRAP half column> Previous: [APNs
-Content parsing](/im/ios/apns/content) \</WRAP
-
-\<WRAP half column>
-Next：[Private cloud SDK integration configuration](/im/ios/other/privatecloud) \</WRAP
-\</WRAP
 
 
 

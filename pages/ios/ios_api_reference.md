@@ -3,7 +3,7 @@ title: ios Group
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_group.html
+permalink: ios_api_reference.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
