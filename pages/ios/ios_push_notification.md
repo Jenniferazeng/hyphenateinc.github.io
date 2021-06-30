@@ -1,12 +1,12 @@
 ---
-title: ios Push Notification
+title: ios Group
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_push_notification.html
+permalink: ios_group.html
 folder: ios
 ---
-# Android SDK's Introduction and import
+# iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
@@ -14,307 +14,1224 @@ folder: ios
 
 Download link：[download page](http://www.easemob.com/download/im)
 
-## Android SDK introduction
+##  APNs Push configuration
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+## SDK running status
 
-![](/im/android/sdk/development-framework.png){.align-center}
+-   When the App is visible in the foreground, the SDK is active in the foreground. The SDK is used  persistent connection to receive messages at this time.
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
-
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
-
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
+```{=html}
+<!-- -->
 ```
+-   When the App enters the background and within 2 minutes, the SDK is active in the background. The SDK is used  persistent connection to receive messages at this time. The user implements local notification depending on their requirements, otherwise there will be no local notification pop-up).
 
-Then add the following code to the `build.gradle` of your module
-
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
-    
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+```{=html}
+<!-- -->
 ```
+-   When the App enters the background for more than 2 minutes, it is suspended by the system. At this time, the SDK is in an inactive state, or the App process is actively killed. If there is a new message at this time, it  is reminded through Apple‘s APNs service. When the App is launched again, the SDK will go to the server to fetch the messages during the inactive period.
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+Note：**`Since local notifications are hard to distinguish from APNs, it is recommended that you should kill the App process when debugging to ensure that all notifications come from APNs pushes.`
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
+## Message push process
 
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
+### When the SDK is in the foreground or background active state:
 
-``Major changes``
+![](/im/ios/apns/image006.png){.align-center}
 
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
+### When the SDK is inactive or the App process is killed:
 
-1、Add the mavenCentral() warehouse to the project's build.gradle
+![](/im/ios/apns/image007.png){.align-center}
 
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
+`APNs only work as the notifications here. When the user launched the App, the message will be received by clients through the SDK persistent connection. `
+
+## Configuration push
+
+### Apply for remote push certificate
+
+First, log in to Apple's Developer Center. Create App
+![](/im/ios/apns/apns_setting_1.jpg){width="800"}
+![](/im/ios/apns/apns_setting_2.jpg){width="800"}
+![](/im/ios/apns/apns_setting_3.jpg){width="800"}
+
+Name the App. Wildcards cannot be used for the bundle id here, otherwise the push will not be received.
+
+![](/im/ios/apns/apns_setting_4.jpg)
+
+enable push function
+
+![](/im/ios/apns/apns_setting_5.jpg)
+
+![](/im/ios/apns/apns_setting_6.jpg)
+
+Create push certificate
+
+![](/im/ios/apns/apns_setting_7.jpg)
+
+If you are in a test development environment, select Apple Push Notification service SSL (Sandbox) under Services. If it is in a production environment, you need to select Apple Push Notification service SSL(Sandbox & Production) under Services.
+
+![](/im/ios/apns/apns_setting_8.jpg)
+
+Select the App which the certificate belongs to
+
+![](/im/ios/apns/apns_setting_9.jpg)
+
+Upload CSR file
+
+![](/im/ios/apns/apns_setting_10.jpg)
+
+Next, let’s create a CSR file. First, select \"Keychain Access\"
+
+![](/im/300iosclientintegration/apns_create9.jpg){width="800"}
+
+Keychain Access \-- Certificate Assistant \-- Request a certificate from a certificate authority
+
+![](/im/300iosclientintegration/apns_create10.jpg){width="800"}
+
+There is no requirement for e-mail, just make sure is in a normal e-mail format, and there is no restriction on name. Please pay attention to change the parameter of "request is" to **"store to disk"**. After that, you will get a CSR file afterwards.
+
+![](/im/300iosclientintegration/apns_create11.jpg){width="800"}
+
+Return to the "Upload CRS File" page and upload the CSR file just generated.
+
+![](/im/300iosclientintegration/apns_create12.jpg){width="800"}
+
+Click on Continue and there will be a download page.
+
+![](/im/ios/apns/apns_setting_11.jpg)
+
+![](/im/ios/apns/apns_setting_12.jpg)
+
+Click download, and an aps_development.cer will be downloaded. (aps.cer for production environment)
+
+![](/im/300iosclientintegration/apns_create15.jpg){width="800"}
+
+Double-click the cer file just downloaded and it will be added to "Keychain Access". Check the certificate, you will see a bundle id certificate, this is what's newly added.
+
+![](/im/300iosclientintegration/apns_create16.jpg){width="800"}
+
+`Right-click to export, and be careful not to expand when you right-click, please just right-click on the certificate`
+
+![](/im/300iosclientintegration/apns_create17.jpg){width="800"}
+
+Save
+
+![](/im/300iosclientintegration/apns_create18.jpg){width="800"}
+
+Please remember the password here, and it will be used later.
+`Note: When exporting a p12 certificate, the password length of the certificate should not be set to exceed 20 characters. It is recommended to use a combination of pure English or numbers. Special characters are not recommended.`
+
+![](/im/300iosclientintegration/apns_create19.jpg){width="800"}
+
+Allow keychain to access this item
+
+![](/im/300iosclientintegration/apns_create20.jpg){width="800"}
+
+Save, and you will get a file with a suffix of p12
+
+![](/im/300iosclientintegration/apns_create21.jpg){width="800"}
+
+### Upload the push certificate to Easemob
+
+Log in to the Easemob management background, find the Appkey of certificate which you want to upload, and click to enter and see more details.
+
+![](/im/ios/apns/3_.png)
+
+![](/im/ios/apns/Application details.png)
+
+Select **"Certificate"**
+
+![](/im/ios/apns/Certificate management.png)
+
+Choose **"Apple"**
+
+![](/im/ios/apns/Upload certificate.png)
+
+Give the certificate a name, and remember the name, it will be useful later. Select Upload Certificate. Upload the P12 file generated in the previous step, and set the password set during export. Select the certificate type, here is [Development Environment] (if you used production before, you should select production here). Fill in the package name, which should be **bundle id**. Click Upload to complete the uploading certificate operation.
+
+`Note: The length of the certificate name and password should not exceed 20 characters. It is recommended to use a combination of pure English or numbers. Special characters are not recommended.`
+
+![](/im/ios/apns/ios certificate.png)
+
+### How does the client apply for DeviceToken
+
+1、 notification for remote Registration 
+
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //Register push, for iOS8 and above
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+    } else {
+        //Register push, for iOS8 and below
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
+    }
+        
+    - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+        [application registerForRemoteNotifications];
+    }
+
+2、 Pass the obtained deviceToken to SDK
+
+`If it is iOS13 and above, please update SDK to v3.6.4 or above`
+
+    // Pass the obtained deviceToken to SDK
+    - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[EMClient sharedClient] bindDeviceToken:deviceToken];
+        });
+    }
+
+**Note: It must be a real OS, the simulator does not support APNs. APNs registration failure is usually caused by the use of a general certificate or simulator debugging mode. Please check the certificate and debug with a real OS. Here is the error reported by the iOS system. If you are not sure with it, please search for relevant information on the Internet. **
+
+### How to configure the push certificate on the client
+
+When the SDK is initialized, set the push certificate which you going to be used.
+
+    // set Appkey
+    EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
+    // Set the name of the push certificate
+    options.apnsCertName = @"apnsTest";
+    // Initialize SDK
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+
+## Common problem
+
+### How to implement local notification
+
+When the persistent connection still exists, Local notification  `receive the message through the callback of the Easemob receiving message`, and then judge the current App status, if it is in the background, you can use the code to actively pop up a notification  to notify the user. The specific reference is as follows:
+
+        - (void)messagesDidReceive:(NSArray *)aMessages {
+            for (EMMessage *msg in aMessages) {
+                UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+                // App in the background
+                if (state == UIApplicationStateBackground) {
+                        //Send local push
+                     if (NSClassFromString(@"UNUserNotificationCenter")) { // ios 10
+                    // Set the trigger time
+                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:0.01 repeats:NO];
+                    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                    content.sound = [UNNotificationSound defaultSound];
+                    // notification can be popped up as needed, such as displaying the details of the message, or displaying "You have a new message"
+                    content.body = @"content of notification";
+                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:msg.messageId content:content trigger:trigger];
+                    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+                }else {
+                    UILocalNotification *notification = [[UILocalNotification alloc] init];
+                    notification.fireDate = [NSDate date]; //The time the notification was triggered
+                    notification.alertBody = @"content of notification";
+                    notification.alertAction = @"Open";
+                    notification.timeZone = [NSTimeZone defaultTimeZone];
+                    notification.soundName = UILocalNotificationDefaultSoundName;
+                    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+                }
+            }
         }
     }
 
+### Parse of push content 
 
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
+In the Easemob, APNs are only generated when the persistent connection does not exist (the App process does not exist or is suspended). At this time, iOS will not be allowed direct access to the APNs content, but when the user clicks on the push notification bar, it can be found in launchOptions from
 
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
+    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
+The specific structure is as follows：
 
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
+    {
+        "aps":{
+            "alert":{
+                "body":"you got a new message" // content of message
+            },   
+            "badge":1,  // number of corner marks
+            "sound":"default"   // alert sound   
+         },
+        "f":"6001", // sender
+        "t":"6006", // recevier     
+        "m":"373360335316321408"， // message id
+        "g":"1421300621769"  // group id (There is no such field, if it is a single chat)
+     }
 
-1、 version with audio and video communication
+For more usage, please refer to（[APNs parse](/im/ios/apns/content)）
 
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
+### How to renew the certificate
 
-注：hyphenate-sdk supports versions before 3.8.0
+After the certificate expires, if you want to renew the push certificate, you need to delete the old one in the Easemob management background, and then upload it again. `The name of the upload should be the same as the name of the old certificate`.
 
-2、version without audio and video communication
+### Can multiple sets of push certificates be delivered under one Appkey
 
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
+Multiple certificates can be transferred under one appkey, which can implement app chat. When initializing SDK in different apps, specify different push certificates, and each certificate corresponds to the bundle id of the current app. In this way, users are logging in to different apps. It will be bound to different push certificates to implement the chat and push of the app.
 
-注：hyphenate-sdk-lite supports versions before 3.8.0
 
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
-
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
-```
+## APNs Offline push
 
 ------------------------------------------------------------------------
+
+## Prerequisites
+
+1\. The push certificate is uploaded in the background. See details in [Integrate iOS SDK
+Preparatory work-create and upload a push certificate](/start/300iosclientintegration/10prepareforsdkimport#制作并上传推送证书)。
+
+2\. The push certificate used by the code configures APNs.
+
+``` objc
+EMOptions *options = [EMOptions optionsWithAppkey:@"appkey"];
+options.apnsCertName = @"apnsCertName";
+[[EMClient sharedClient] initializeSDKWithOptions:options];
+```
+
+3\. Code registration offline push.
+
+``` objc
+UIApplication *application = [UIApplication sharedApplication];
+
+//iOS10 register APNs
+if (NSClassFromString(@"UNUserNotificationCenter")) {
+    [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError *error) {
+        if (granted) {
+#if !TARGET_IPHONE_SIMULATOR
+            [application registerForRemoteNotifications];
+#endif
+        }
+    }];
+    return;
+}
+
+if([application respondsToSelector:@selector(registerUserNotificationSettings:)])
+{
+    UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+    [application registerUserNotificationSettings:settings];
+}
+
+#if !TARGET_IPHONE_SIMULATOR
+if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+    [application registerForRemoteNotifications];
+}else{
+    UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+    UIRemoteNotificationTypeSound |
+    UIRemoteNotificationTypeAlert;
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+}
+#endif
+```
+
+After you registered the push function, iOS will automatically call back the following methods to get the deviceToken. you need to pass the deviceToken to SDK。
+
+`If it is iOS13 and above, please update SDK to v3.6.4 and above.`
+
+``` objc
+// Pass the obtained deviceToken to SDK
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[EMClient sharedClient] bindDeviceToken:deviceToken];
+    });
+}
+
+// Failed to register deviceToken
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"error -- %@",error);
+}
+```
+
+**Note: It must be a real OS, the simulator does not support APNs. APNs registration failure is usually caused by the use of a general certificate or simulator debugging mode. Please check the certificate and debug with a real OS. Here is the error reported by the iOS system. If you are not sure with it, please search for relevant information on the Internet. **
+
+## Get APNs configuration
+
+The APNs attribute needs to be obtained from the server <u>obtaining side</u>.
+
+It will be called after the user login successfully
+
+``` java
+/*!
+ *  \~chinese
+ *  Get push attributes from the server
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @param pError  error infomation--------
+ *
+ *  @result Push attributes
+ */
+- (EMPushOptions *)getPushOptionsFromServerWithError:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  Get push attributes from the server
+ *
+ *  @param aCompletionBlock the Completed callback
+ */
+- (void)getPushNotificationOptionsFromServerWithCompletion:(void (^)(EMPushOptions *aOptions, EMError *aError))aCompletionBlock;
+```
+
+示例代码：
+
+``` java
+EMError *err;
+EMPushOptions *options = [EMClient.sharedClient.pushManager getPushOptionsFromServerWithError:&err];
+if (err) {
+  // Get failed
+
+}else {
+  // Get successfully
+}
+
+```
+
+## Set APNs display name
+
+When you send a message to the other party and the other party is not online, the sender displays the name you set in the push;
+
+It will be called after the user login successfully。
+
+``` java
+/*!
+ *  \~chinese
+ *  Set the name displayed in the push message
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @param aNickname  Set the name you want
+ *
+ *  @result error information
+ */
+- (EMError *)updatePushDisplayName:(NSString *)aDisplayName;
+
+/*!
+ *  \~chinese
+ *  Set the display name of the push
+ *
+ *  @param aDisplayName     push display name
+ *  @param aCompletionBlock the Completed callback
+ */
+- (void)updatePushDisplayName:(NSString *)aDisplayName
+                   completion:(void (^)(NSString *aDisplayName, EMError *aError))aCompletionBlock;
+```
+
+code example
+
+``` java
+EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayName:@"Push Nickname"];
+if (err) {
+  // Get failed
+}else {
+  // Get successfully
+}
+```
+
+## Set APNs display style
+
+When you are not online, if someone sends you a message, you will receive a push. You can set the display details (xxx: Message content), or only show new messages (you have a new message);
+
+``` java
+/*!
+ *  \~chinese 
+ *  Display style of push messages
+ */
+typedef enum {
+    EMPushDisplayStyleSimpleBanner = 0, /*! 
+                                         *  Simply display "You got a new message"
+                                         */
+
+    EMPushDisplayStyleMessageSummary,   /*! 
+                                         *  display message content
+                                         */
+} EMPushDisplayStyle;
+
+```
+
+``` java
+/*!
+ *  \~chinese
+ *  Set the display style of push messages
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @param pushDisplayStyle  Push style to be set
+ *
+ *  @result Error information
+ */
+- (EMError *)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle;
+
+
+/*!
+ *  \~chinese
+ *  Set the display style of the push
+ *
+ *  @param pushDisplayStyle     Push display style
+ *  @param aCompletionBlock     the Completed callback
+ */
+- (void)updatePushDisplayStyle:(EMPushDisplayStyle)pushDisplayStyle
+                    completion:(void (^)(EMError *))aCompletionBlock;
+```
+
+code example
+
+``` java
+// Set to "You got a new message"
+EMError *err = [EMClient.sharedClient.pushManager updatePushDisplayStyle:EMPushDisplayStyleSimpleBanner];
+if (err) {
+    // Set up failed
+}else {
+    // Set up successfully
+}
+```
+
+## Set Do Not Disturb Time
+
+When you don’t want to receive offline pushes during certain periods of time，You can set the do not disturb time period. After set up, within the time period you specify, Easemob will not send you offline pushes.
+This setting has the highest priority. When it is set, the push of group and single chat cannot be received within the specified time period.
+
+Enable offline push
+
+``` java
+/*!
+ *  \~chinese
+ *  Enable offline push
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @result error information
+ *
+ */
+- (EMError *)enableOfflinePush;
+```
+
+code example
+
+``` java
+EMError *err = [EMClient.sharedClient.pushManager enableOfflinePush];
+if (err) {
+    // Set up failed
+}else {
+    // Set up successfully
+}
+```
+
+Set the specified time not to receive offline push
+
+``` java
+/*!
+ *  \~chinese
+ *  disable offline push
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @param aStartHour    Starting time
+ *  @param aEndHour      End Time
+ *
+ *  @result              error information
+ */
+- (EMError *)disableOfflinePushStart:(int)aStartHour end:(int)aEndHour;
+
+```
+
+code example
+
+``` java
+// If you don’t want to receive push notifications throughout the whole day，start:0, end:24;
+// If you want to not receive push notifications from 7 am to 5 pm，start:7, end:17;
+// If you want to not receive push notifications from 10pm to 8am，start:22, end:8;
+EMError *err = [EMClient.sharedClient.pushManager disableOfflinePushStart:0 end:24];
+if (err) {
+    // Set up failed
+}else {
+    // Set up successfully
+}
+```
+
+## Set group do not disturb
+
+When you don’t want to receive offline push from a specific group, you can set the group to do not disturb
+
+``` java
+/*!
+ *  \~chinese
+ *  Set whether the group receives push
+ *
+ *  Synchronous method, will block the current thread
+ *
+ *  @param aGroupIds    Group ID
+ *  @param disable      receives push or not
+ *
+ *  @result             error information
+ */
+- (EMError *)updatePushServiceForGroups:(NSArray *)aGroupIds
+                            disablePush:(BOOL)disable;
+
+
+/*!
+ *  \~chinese
+ *  Set whether the group receives push
+ *
+ *  @param aGroupIds            Group ID
+ *  @param disable              receives push or not
+ *  @param aCompletionBlock     the Completed callback
+ */
+- (void)updatePushServiceForGroups:(NSArray *)aGroupIds
+                       disablePush:(BOOL)disable
+                        completion:(void (^)(EMError *))aCompletionBlock;
+```
+
+code example
+
+``` java
+// do not receive group pushes from a group id of 82000139.
+EMError *err = [EMClient.sharedClient.pushManager updatePushServiceForGroups:@[@"82000139"] disablePush:YES];
+if (err) {
+   // Set up failed
+}else {
+   // Set up successfully
+}
+```
+
+## Parse APNs content
+
+## Single chat
+
+### Do not display the details
+
+    {
+        "aps":{
+            "alert":{
+                "body":"you got a new message"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006",                  
+        "m":"373360335316321408"             
+    }
+
+-   alert: messages display
+-   badge: corner mark, represent the number of offline messages
+-   sound: sound of alert when receving APNs
+-   f: Easemob ID of the message sender
+-   t: Easemob ID of the message recevier
+-   m: message ID
+
+------------------------------------------------------------------------
+
+### Display the details
+
+    {
+        "aps":{
+            "alert":{
+                "body":"ApnsNickName:xxxx"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006",                  
+        "m":"373360335316321408"             
+    }
+
+-   alert: messages display
+-   ApnsName: User name set by the sender(the user's nickname seen in the backstage of Easemob)
+-   xxxx: Content of message（it will show what the sender sent）
+-   badge:corner mark, represent the number of offline messages
+-   sound: sound of alert when receving APNs
+-   f: Easemob ID of the message sender
+-   t: Easemob ID of the message recevier
+-   m:  message ID
+
+------------------------------------------------------------------------
+
+## Group Chat
+
+### do not display the details
+
+    {
+        "aps":{
+            "alert":{
+                "body":"you got a new message"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006", 
+        "g":"1421300621769",                 
+        "m":"373360335316321408"             
+    }
+
+-   alert: messages display
+-   badge: corner mark, represent the number of offline messages
+-   sound: sound of alert when receiving APNs
+-   f: Easemob ID of the message sender
+-   t: Easemob ID of the message receiver
+-   g: group ID
+-   m: message ID
+
+------------------------------------------------------------------------
+
+### Display the details
+
+    {
+        "aps":{
+            "alert":{
+                "body":"ApnsName:xxxx"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006",     
+        "g":"1421300621769",
+        "m":"373360335316321408"             
+    }
+
+-   alert: messages display
+-   Apns Name: User name set by the sender(the user's nickname seen in the backstage of Easemob)
+-   xxxx: Content of message（it will show what the sender sent）
+-   badge: corner mark, represent the number of offline messages
+-   sound: sound of alert when receiving APNs
+-   f: Easemob ID of the message sender
+-   t: Easemob ID of the message receivier
+-   g: group ID
+-   m: message ID
+
+------------------------------------------------------------------------
+
+## Add extension fields to APNs
+
+APNs extension fields(em_apns_ext): After adding it, the APNs you received will contain the fields you filled in, which can help you distinguish APNs.
+
+Easemob provides the following extension fields:
+
+  extension fields 			descriptions
+------------------------- --------------------------------------
+  em_push_content          Custom push display
+  em_push_category         Add category field to APNs Payload
+  em_push_sound             Custom push alert sound
+  em_push_mutable_content   Enable APNs alert extension
+
+#### Parse content
+
+    {
+        "apns": {
+            "alert": {
+                "body": "hello from rest"
+            }, 
+            "badge": 1, 
+            "sound": "default"
+        }, 
+        "e": "Custom push extension", 
+        "f": "6001", 
+        "t": "6006", 
+        "m": "373360335316321408"
+    }
+
+-   e: Custom push extension sent by you
+
+#### REST Send
+
+（[REST Sending messages](/im/server/basics/messages#发送扩展消息)）
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "ext": {
+            "em_apns_ext": {
+                "extern": "Custom push extension"
+            }
+        }, 
+        "from": "6001"
+    }
+
+#### iOS Send
+
+（[iOS Sending messages](/im/ios/basics/message#构造扩展消息)）
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+### Custom display
+
+After set up, the APNs alert information you receive will be the information you set
+
+#### parse
+
+    {
+        "aps":{
+            "alert":{
+                "body":"Custom push display"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006",                  
+        "m":"373360335316321408"             
+    }
+
+#### REST Send
+
+([REST sending messages](/im/server/basics/messages#发送文本消息))
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "from": "6001", 
+        "ext": {
+            "em_apns_ext": {
+                "em_push_content": "Custom push display"
+            }
+        }
+    }
+
+#### iOS Send
+
+([iOS sending message](/im/ios/basics/message#构造消息))
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"extern":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+### Custom display and custom extension
+
+The custom display and custom extension will be sent to the other party at the same time.
+
+#### parse
+
+    {
+        "aps":{
+            "alert":{
+                "body":"Custom push display"
+            },   
+            "badge":1,               
+            "sound":"default"        
+        },
+        "f":"6001",                  
+        "t":"6006",                  
+        "m":"373360335316321408",
+        "e": "custom push extension", 
+    }
+
+#### REST send
+
+（[REST sending](/im/server/basics/messages#发送扩展消息)）
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "from": "6001", 
+        "ext": {
+            "em_apns_ext": {
+                "em_push_content": "Custom push display",
+                "extern": "custom push extension"
+            }
+        }
+    }
+
+#### iOS Send
+
+([iOS sending message](/im/ios/basics/message#构造扩展消息))
+
+    NSString *willSendText = [EaseConvertToCommonEmoticonsHelper convertToCommonEmoticons:text];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"extern":@"custom push extension",@"em_push_content":@"custom push display"}}; // The ext here is the same as the ext passed when the message is initialized. The purpose of list it separately here is to express it more clearly.
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+### Add category field
+
+Add the category field to APNs Payload.
+
+[description for apple](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html#//apple_ref/doc/uid/TP40008194-CH10-SW1)
+
+#### REST Send
+
+（[REST sending messages](/im/server/basics/messages#发送扩展消息)）
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "from": "6001", 
+        "ext": {
+            "em_apns_ext": {
+                  "em_push_category" : "NEW_MESSAGE_CATEGORY"
+            }
+        }
+    }
+
+------------------------------------------------------------------------
+
+### Custom push alert sound
+
+After set up, the APNs alert sound you receive will be what you set.
+
+**Note：**
+
+      * If this field is not set, the default sound will be played; if there is this field, the sound will be played if the specified sound is found, otherwise the default sound will be played. If this field is an null, iOS 7 will play the default sound, and iOS 8 and above will keep silent
+    
+    * The following example custom alert sound file name is custom.caf.
+    
+    * Integration method: Import the caf format audio file of the custom alert sound into the iOS project. sending message will follow the following example to increase the message extension. When the receiver at offline receives the offline push of APNs, the custom alert sound can be played.
+
+support format Linear PCM MA4 (IMA/ADPCM) µLaw aLaw
+
+Storage path AppData/Library/Sounds,The duration must not exceed 30 seconds。
+For the details，please refer to Apple's official documents[Generating a Remote
+Notification](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification?language=objc)
+
+#### parse
+
+    {
+        "aps":{
+            "alert":{
+                "body":"you got a new message"
+            },  
+            "badge":1,  
+            "sound":"custom.caf"  
+        },
+        "f":"6001",  
+        "t":"6006",  
+        "m":"373360335316321408"  
+    }
+
+#### REST Send
+
+（[REST sending message](/im/server/basics/messages#发送扩展消息)）
+
+**Note：**\"em_push_sound\" is the extension field for setting custom APNs alert sound, value is the name of the audio file in string type.
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "from": "6001", 
+        "ext": {
+            "em_apns_ext": {
+                "em_push_sound": "custom.caf"
+            }
+        }
+
+#### iOS Send
+
+([iOS sending message](/im/ios/basics/message#构造扩展消息))
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"em_push_sound":@"custom.caf"}}; // the extension field for setting custom APNs alert sound, value is the name of the audio file in string type
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+### Enable APNs alert extension
+
+（UNNotificationServiceExtension）
+
+After set up, the APNs push of this message will support UNNotificationServiceExtension on the server side, and UNNotificationServiceExtension needs to be integrated in the project in the app. After these operation, APNs notification extension can be used. See the iOS integration method.
+[Apple  offical document](https://developer.apple.com/documentation/usernotifications/unnotificationserviceextension?language=objc)
+
+#### parse
+
+    {
+        "aps":{
+            "alert":{
+                "body":"you got a new message"
+            },  
+            "badge":1,  
+            "sound":"default",
+            "mutable-content":1  
+        },
+        "f":"6001",  
+        "t":"6006",  
+        "m":"373360335316321408"  
+    }
+
+#### REST Send
+
+（[REST sending message）
+
+**注：**\"em_push_mutable_content\"'s value is bool type，true
+ is enable；false or not set, it will be the Remote Notification.
+
+    {
+        "target_type": "users", 
+        "target": [
+            "6006"
+        ], 
+        "msg": {
+            "type": "txt", 
+            "msg": "hello from rest"
+        }, 
+        "from": "6001", 
+        "ext": {
+            "em_apns_ext": {
+                "em_push_mutable_content": true
+            }
+        }
+    }
+
+#### iOS Send
+
+([iOS sending message](/im/ios/basics/message#构造扩展消息))
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"em_push_mutable_content":@YES}}; // @YES is enable，@NO or not set, it will be the Remote Notification.
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil]; 
+
+------------------------------------------------------------------------
+
+## APNs push international configuration
+
+The offline messages push of can support the following APNs' international configurations'
+key：`title-loc-key`，`title-loc-args`，`loc-key`，`loc-args`
+
+The official explanation about these keys:
+
+-   title-loc-key（String）：The key for a localized title string.
+    Specify this key instead of the title key to retrieve the title from
+    your app's Localizable.strings files. The value must contain the
+    name of a key in your strings file.
+
+```{=html}
+<!-- -->
+```
+-   title-loc-args（Array of strings）：An array of strings containing
+    replacement values for variables in your title string. Each %@
+    character in the string specified by the title-loc-key is replaced
+    by a value from this array. The first item in the array replaces the
+    first instance of the %@ character in the string, the second item
+    replaces the second instance, and so on.
+
+```{=html}
+<!-- -->
+```
+-   loc-key（String）：The key for a localized message string. Use this
+    key, instead of the body key, to retrieve the message text from your
+    app\'s Localizable.strings file. The value must contain the name of
+    a key in your strings file.
+
+```{=html}
+<!-- -->
+```
+-   loc-args（Array of strings）：An array of strings containing
+    replacement values for variables in your message text. Each %@
+    character in the string specified by loc-key is replaced by a value
+    from this array. The first item in the array replaces the first
+    instance of the %@ character in the string, the second item replaces
+    the second instance, and so on.
+
+[Apples offical development documents](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification)
+
+**Note：**
+
+-   `title-loc-key` is `title-loc-args`  a pair，without `title-loc-key`
+    ， `title-loc-args` will not work，If there is no variable parameter, you can just set
+    `title-loc-key`;
+
+```{=html}
+<!-- -->
+```
+-   `loc-key` is `loc-args` a pair，without `loc-key` ， `loc-args`
+    will not work，If there is no variable parameter, you can just set `loc-key`；
+
+```{=html}
+<!-- -->
+```
+-   You can also set only one of the above two pairs.
+
+### iOS Client configuration
+
+-   Configure the internationalization file `Localizable.strings` ，as configured in the demo
+    `Localizable.strings (Chinese (Simplified))`、`Localizable.strings (English)`；
+
+```{=html}
+<!-- -->
+```
+-   Configure `title-loc-key` and `loc-key` in `Localizable.strings`
+    And assign values, you need to use variable parameter string in the `title-loc-args` and `loc-args`
+    Use `%@`  to replace it ; as follows:
+
+configure in `Localizable.strings (Chinese (Simplified))` :
+
+    "GAME_PLAY_REQUEST_FORMAT" = "%@ game invitaion %@";
+    "GAME_PLAY_REQUEST" = "game invitaion";
+
+configure in  `Localizable.strings (English)` 
+
+    "GAME_PLAY_REQUEST_FORMAT" = "%@ GAME_PLAY_REQUEST_FORMAT %@";
+    "GAME_PLAY_REQUEST" = "GAME_PLAY_REQUEST_CUSTOM";
+
+### Set the message extension when sending a message
+
+#### REST Send
+
+    {
+        "target_type" : "users",
+        "target" : ["6006"],
+        "msg" : {
+            "type" : "txt",
+            "msg" : "hello from rest"
+            },
+        "ext": {
+            "em_apns_ext": {
+                "em_push_content": "Custom push display", # You can set up a custom push display at the same time, and an app without configured loc-key will display "Custom Push Display"
+                "em_push_title_loc_key" : "GAME_PLAY_REQUEST_FORMAT", # corresponds to title_loc_key
+                "em_push_title_loc_args" : ["Shelly", "Rick"], # corresponds to title_loc_args
+                "em_push_body_loc_key" : "GAME_PLAY_REQUEST_FORMAT", # corresponds to loc_key
+                "em_push_body_loc_args" : ["Shelly", "Rick"] # corresponds to loc_args
+            }
+        },
+        "from" : "6001"
+    }
+
+#### iOS send
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_apns_ext":@{@"em_push_title_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_title_loc_args":@[@"Shelly", @"Rick"], @"em_push_body_loc_key":@"GAME_PLAY_REQUEST_FORMAT", @"em_push_body_loc_args":@[@"Shelly", @"Rick"]}};
+    message.chatType = EMChatTypeChat; // Set the message type
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+### parse
+
+    { 
+        "aps":{ 
+            "alert":{ 
+                "body":"Custom push display",
+                "title-loc-key":"GAME_PLAY_REQUEST_FORMAT",
+                "title-loc-args":["Shelly","Rick"],
+            "loc-key":"GAME_PLAY_REQUEST_FORMAT", 
+                "loc-args":["Shelly","Rick"] 
+            },  
+            "badge":1,  
+            "sound":"default"   
+        }, 
+        "f":"6001", 
+        "t":"6006", 
+        "m":"373360335316321408"    
+    } 
+
+## Send silent message
+
+（em_ignore_notification）
+
+No APNs will be sent. After adding with sending a message, the message will not be pushed by APNs.
+
+### REST send
+
+（[REST sending messages](/im/server/basics/messages#发送扩展消息)）
+
+    {
+        "target_type":"users",
+        "target":[
+            "6006"
+        ],
+        "msg":{
+            "type":"txt",
+            "msg":"hello from rest"
+        },
+        "from":"6001",
+        "ext":{
+            "em_ignore_notification":true
+        }
+    }
+
+------------------------------------------------------------------------
+
+### iOS Send
+
+([iOS sending messages](/im/ios/basics/message#构造扩展消息))
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_ignore_notification":@YES};
+    message.chatType = EMChatTypeChat; // Set the message type
+    // Send message example
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+## Set up forced push APNs
+
+（em_force_notification）
+
+After set up, it will be forced to push the message, even if the client has set the do not disturb time, it will be pushed. Priority is lower than
+em_ignore_notification. if em_ignore_notification is set at the same time
+After that, the attribute will become invalid.
+
+### REST Send
+
+（[REST sending message）
+
+    {
+        "target_type":"users",
+        "target":[
+            "6006"
+        ],
+        "msg":{
+            "type":"txt",
+            "msg":"hello from rest"
+        },
+        "from":"6001",
+        "ext":{
+            "em_force_notification":true
+        }
+    }
+
+------------------------------------------------------------------------
+
+### iOS send
+
+([iOS sending messages)
+
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"test"];
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:@"6006" from:@"6001" to:@"6006" body:body ext:nil];
+    message.ext = @{@"em_force_notification":@YES};
+    message.chatType = EMChatTypeChat; // Set the message type
+    // Send message example
+    [EMClient.sharedClient.chatManager sendMessage:message progress:nil completion:nil];
+
+------------------------------------------------------------------------
+
+

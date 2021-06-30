@@ -6,7 +6,7 @@ toc: true
 permalink: ios_chatroom.html
 folder: ios
 ---
-# Android SDK's Introduction and import
+# iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
@@ -14,307 +14,733 @@ folder: ios
 
 Download link：[download page](http://www.easemob.com/download/im)
 
-## Android SDK introduction
+# Chat Room Management
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+------------------------------------------------------------------------
 
-![](/im/android/sdk/development-framework.png){.align-center}
+` The client SDK does not support creating chat rooms, you can call the REST interface to create `
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
+The chat room management mainly involves the following header files of the Easemob SDK:
 
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
+``` objc
+// Chat room, with chat room id and other attributes
+EMChatroom.h
 
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
+// Chat room method calls, such as add proxy, remove proxy, get chat room, etc.
+IEMChatroomManager.h
 
-![Modular Design](/im/android/sdk/image005.png){.align-center}
+// the chatroom protocol callback methods, such as listen to callbacks of the user joining a group, etc.
+EMChatroomManagerDelegate.h
+````
 
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
+The Easemob chat room model supports a maximum membership of 5000. Unlike groups, after a member in a chat room goes offline for 2 minutes, the server will remove that member from the chat room and will not send push to that member. This member will not be able to automatically enter the chat room after going online.
 
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
+- The maximum number of members supported is 5000.
+- The chat room has three identities: owner, administrator and -.
+- support for muting, blacklisting, kicking and other operations.
+- not support client-side invitations.
+- No support for REST invitations.
+- The chat room API is usually synchronous and needs to be executed in a separate thread; if you need to use the asynchronous API, please use the API with the async prefix.
 
-## Video tutorial
+The main features of the Easemob chat room client include
 
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
+- support for querying all APP chat rooms.
+- support for querying chat room details.
+- Join chat rooms.
+- quit chat rooms.
 
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
+### Server-side API
 
-## Android SDK import
+Server-side chat room related REST
+operations, please refer to [Chatroom Management](/im/server/basics/chatroom).
 
-### <u>Preparation before integration</u>
+### get the list of chat rooms by page
 
-[Register and create application](/im/quickstart/guide/experience)
+``` objc
+/*!
+ *  Get the specified number of chat rooms from the server
+ *
+ *  @param aPageNum              Get the page number
+ *  @param aPageSize             How many pages to get
+ *  @param aCompletionBlock      Completed callbacks
+ */
 
-### <u>Manually</u> copy the jar package and the import of so
+- (void)getChatroomsFromServerWithPage:(NSInteger)aPageNum
+                              pageSize:(NSInteger)aPageSize
+                            completion:(void (^)(EMPageResult *aResult, EMError *aError))aCompletionBlock;
 
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
+// Calling :
+[[EMClient sharedClient].roomManager getChatroomsFromServerWithPage:0 pageSize:50 completion:^(EMPageResult *aResult, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Successfully get the specified number of chat rooms from the server");
+    } else {
+       NSLog(@"The reason for the failure to obtain the specified number of chat rooms from the server --- %@", aError.errorDescription);
     }
+}];
 ```
 
-Then add the following code to the `build.gradle` of your module
+### Join the chat room
 
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
-    
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+``` objc
+/*!
+ * Join the chat room
+ *
+ * @param aChatroomId 			The ID of the chat room
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)joinChatroom:(NSString *)aChatroomId
+          completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock; 
+
+// Called:
+[[EMClient sharedClient].roomManager joinChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+       NSLog(@"Join chatroom successful");
+    } else {
+        NSLog(@"Reason for failure to join chatroom --- %@", aError.errorDescription);
     }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
+}];                          
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+### Leaving the chat room
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
+``` objc
+/*!
+ *  Quit the chat room
+ *
+ * @param aChatroomId 			Chatroom ID
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)leaveChatroom:(NSString *)aChatroomId
+           completion:(void (^)(EMError *aError))aCompletionBlock;   
 
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
+// Call:
+[[EMClient sharedClient].roomManager leaveChatroom:@"chatroomId" completion:^(EMError *aError) {
+    if (!aError) {
+        NSLog(@"Exit the chat room successfully");
+    } else {
+        NSLog(@"Reasons for failure to exit the chat room --- %@", aError.errorDescription);
     }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
+}];
 ```
 
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
+When you leave the chat room, the SDK will delete all local messages in this chat room by default, if you don't want to delete them, you can set the following property to NO
 
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
+``` objc
+/*!
+ *  \~chinese
+ *  Whether to delete all messages when leaving the chat room, default is YES
+ *
+ *  \~english 
+ *  Whether to delete all the chat room messages when leaving the chat room, default is YES
+ */
+@property (nonatomic, assign) BOOL isDeleteMessagesWhenExitChatRoom;
 
-### Summary of common problems
+// Calling :
+EMOptions *retOpt = [EMOptions optionsWithAppkey:@"appkey"];
+retOpt.isDeleteMessagesWhenExitChatRoom = NO;
+```
 
-1\. The user use HttpClient to report an error after integrating the SDK
+### Get chat room details
 
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
+``` objc
+/*!
+ *  Get chat room details
+ *
+ *  @param aChatroomId           Chat ID
+ * @param aCompletionBlock 		The completed callback
+ *
+ */
+- (void)getChatroomSpecificationFromServerWithId:(NSString *)aChatroomId
+                                      completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Calling:                                 
+[[EMClient sharedClient].roomManager getChatroomSpecificationFromServerWithId:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Get chat room details successfully");
+    } else {
+        NSLog(@"Reasons for failure to get chat room details --- %@", aError.errorDescription);
+    }
+}];
+```
 
-For versions before 3.6.8, please configure as follows:
+### Paging to get a list of chat room members
 
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
+``` objc
+/*!
+ *  Get the list of chat room members
+ *
+ *  @param aChatroomId      	Chat Room ID
+ * @param aCursor 				cursor
+ * @param aPageSize 			How many to get
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)getChatroomMemberListFromServerWithId:(NSString *)aChatroomId
+                                       cursor:(NSString *)aCursor
+                                     pageSize:(NSInteger)aPageSize
+                                   completion:(void (^)(EMCursorResult *aResult, EMError *aError))aCompletionBlock;
+                               
+// Calling :                                 
+[[EMClient sharedClient].roomManager getChatroomMemberListFromServerWithId:@"chatroomId" cursor:@"cursor" pageSize:50 completion:^(EMCursorResult *aResult, EMError *aError) {
+    if (!aError) {
+        // The EMCursorResult class has the cursor property
+        NSLog(@"Success in getting the list of chat room members");
+    } else {
+        NSLog(@"Reason for failure to get the list of chat room members --- %@", aError.errorDescription);
+    }
+}];
+```
 
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
+###  get the chat room blacklists by page
 
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
+Requires Owner or Admin permission
 
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
+``` objc
+/*!
+ * Get a chat room blacklists, requires owner/admin permission
+ *
+ * @param aChatroomId 				Chatroom ID
+ * @param aPageNum 					Get the number of pages
+ * @param aPageSize 				how many to get 
+ * @param aCompletionBlock 			The completed callback
+ */
+- (void)getChatroomBlacklistFromServerWithId:(NSString *)aChatroomId
+                                  pageNumber:(NSInteger)aPageNum
+                                    pageSize:(NSInteger)aPageSize
+                                  completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMEClient sharedClient].roomManager getChatroomBlacklistFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^( NSArray *aList, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Getting the chat room blacklist list was successful");
+    } else {
+        NSLog(@"Reason for failure to get chat room blacklist list --- %@", aError.errorDescription);
+    }
+}];
+```
 
-2\. In Android 9.0, compulsory use of https
+### get the list of muted member in chat room by page
 
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
+``` objc
+/*!
+ * Get the list of muted member in chat room
+ *
+ * @param aChatroomId 			Chatroom ID
+ * @param aPageNum 				Gets the number of pages
+ * @param aPageSize 			Get how many entries
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)getChatroomMuteListFromServerWithId:(NSString *)aChatroomId
+                                 pageNumber:(NSInteger)aPageNum
+                                   pageSize:(NSInteger)aPageSize
+                                 completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+                               
+// Calling :                                 
+[[EMClient sharedClient].roomManager getChatroomMuteListFromServerWithId:@"chatroomId" pageNumber:1 pageSize:50 completion:^(NSArray *aList, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Get chat room muted list successfully");
+    } else {
+        NSLog(@"Reason for failure in getting the chat room muted list --- %@", aError.errorDescription);
+    }
+}];
+```
 
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
+### Update chat room name
 
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
+Requires Owner permission
 
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
+``` objc
+/*!
+ * Change chat room name, requires owner permission
+ *
+ * @param aSubject 			new subject
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	completed callback
+ */
+- (void)updateSubject:(NSString *)aSubject
+          forChatroom:(NSString *)aChatroomId
+           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager updateSubject:@"newSubject" forChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Changed chatroom subject successfully");
+    } else {
+        NSLog(@"Reason for failure to change chatroom subject --- %@", aError.errorDescription);
+    }
+}];
+```
 
-The details of the error are as follows:
+### Update chat room description
 
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
+Requires Owner permission
 
-Solution:\
-Add the following dependencies to the project:
+``` objc
+/*!
+ * Change chat room description, requires owner permission
+ *
+ * @param aDescription 			Description 
+ * @param aChatroomId 			Chatroom ID
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)updateDescription:(NSString *)aDescription
+              forChatroom:(NSString *)aChatroomId
+               completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Calling :                                 
+[[EMClient sharedClient].roomManager updateDescription:@"newDescription" forChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Changing chat room description was successful");
+    } else {
+        NSLog(@"Reason for failure to change chat room description--- %@", aError.errorDescription);
+    }
+}];
+```
 
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+### Get chat room announcement
 
-## App packaging confusion
+``` objc
+/*!
+ * Get the chat room announcement
+ *
+ * @param aChatroomId Chatroom ID
+ * @param aCompletionBlock The completed callback
+ */
+- (void)getChatroomAnnouncementWithId:(NSString *)aChatroomId
+                           completion:(void (^)(NSString *aAnnouncement, EMError *aError))aCompletionBlock;
 
-Add the following keep in the ProGuard.
+// Called:
+[[EMClient sharedClient].roomManager getChatroomAnnouncementWithId:@"chatroomId" completion:^(NSString *aAnnouncement, EMError * aError) {
+    if (!aError) {
+        NSLog(@"Getting chatroom announcement was successful");
+    } else {
+        NSLog(@"Reason for failure to get chat room announcement --- %@", aError.errorDescription);
+    }
+}];
+```
 
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+It is also possible to get a message push for a chat room announcement through the chat room listener interface. See [chatroom-related callbacks](http://docs-im.easemob.com/im/ios/basics/chatroom#聊天室相关的回调)
+
+### Update chat room announcements
+
+``` objc
+/*!
+ *  Modify chat room announcement, need Owner / Admin permission
+ *
+ * @param aChatroomId 				Chatroom ID
+ * @param aAnnouncement 			group announcement
+ * @param aCompletionBlock 			The completed callback
+ */
+- (void)updateChatroomAnnouncementWithId:(NSString *)aChatroomId
+                            announcement:(NSString *)aAnnouncement
+                              completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+
+// Calling :
+[[EMClient sharedClient].roomManager updateChatroomAnnouncementWithId:@"chatroomId" announcement:@"newAnnouncement" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Modify chat room announcement successfully");
+    } else {
+        NSLog(@"Reasons for failure to modify chat room announcements --- %@", aError.errorDescription);
+    }
+}];
+```
+
+When the chat room owner/Admin modifies the chat room announcement, other members will receive a notification that the chat room announcement has been updated
+
+``` objc
+/*!
+ *  Chat room announcement has been updated
+ *
+ *  @param aChatroom        Chat Room
+ *  @param aAnnouncement    Announcement
+ */
+- (void)chatroomAnnouncementDidUpdate:(EMChatroom *)aChatroom
+                         announcement:(NSString *)aAnnouncement;
+```
+
+### Enable and disable full mute
+
+Owners and administrators can enable and disable full mutes.
+
+``` objc
+/*!
+ * \~chinese
+ * Set full mute, need Owner / Admin permission
+ *
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	The completed callback
+ */
+- (void)muteAllMembersFromChatroom:(NSString *)aChatroomId
+                        completion:(void(^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                        
+                        
+/*!
+ * \~chinese
+ * Unblock all members, requires Owner / Admin permission
+ *
+ * @param aChatroomId Chatroom ID
+ * @param aCompletionBlock The completed callback
+ */
+- (void)unmuteAllMembersFromChatroom:(NSString *)aChatroomId
+                          completion:(void(^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+```
+
+### Whitelist management
+
+Users can be added to a whitelist. The user whitelist takes effect when the administrator has enabled a full mute and  whitelisted users can send messages.
+In addition you can move users out of the whitelist, check if you are in the whitelist and get the whitelist list.
+
+``` objc
+/*!
+ *  \~chinese
+ *  Adding a whitelist requires Owner / Admin permission
+ *
+ * @param aMembers 			The added members list <NSString>
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	Callback for completed
+ */
+- (void)addWhiteListMembers:(NSArray *)aMembers
+               fromChatroom:(NSString *)aChatroomId
+                 completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                 
+/*!
+ *  \~chinese
+ *  Remove whitelist, requires Owner / Admin permission
+ *
+ * @param aMembers 			The list of removed members <NSString>
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	Callback for completed
+ */
+- (void)removeWhiteListMembers:(NSArray *)aMembers
+                  fromChatroom:(NSString *)aChatroomId
+                    completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                    
+                    
+/*!
+ *  \~chinese
+ *  Check if you are in the chat room whitelist
+ *
+ * @param aChatroomId 		Chatroom ID
+ * @param pError 			error message
+ */
+- (BOOL)isMemberInWhiteListFromServerWithChatroomId:(NSString *)aChatroomId
+                                              error:(EMError **)pError;
+                                              
+                                              
+/*!
+ *  \~chinese
+ *  Get a list of chat room whitelists
+ *
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	The completed callback
+ */
+- (void)getChatroomWhiteListFromServerWithId:(NSString *)aChatroomId
+                                  completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+```
+
+### Move members out of the chat room
+
+Requires Owner or Admin permission
+
+``` objc
+/*!
+ *  Move members out of the chat room, requires owner/admin permission
+ *
+ * @param aMembers 			list of users to be removed
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	The completed callback
+ */
+- (void)removeMembers:(NSArray *)aMembers
+         fromChatroom:(NSString *)aChatroomId
+           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Calling :                                
+[[EMClient sharedClient].roomManager removeMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Removal of member from chat room successful");
+    } else {
+        NSLog(@"Reasons for failure to move members out of the chat room --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Add user to chat room blacklist
+
+Requires Owner or Admin permission
+
+``` objc
+/*!
+ * Adding people to the chat room blacklist
+ *
+ * @param aMembers 			Users to be blacklisted
+ * @param aChatroomId		 Chatroom ID
+ * @param aCompletionBlock 	The completed callback
+ */
+- (void)blockMembers:(NSArray *)aMembers
+        fromChatroom:(NSString *)aChatroomId
+          completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager blockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Adding people to chatroom blacklist was successful");
+    } else {
+        NSLog(@"Reason why adding people to the chatroom blacklist failed --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Remove a user from chat room blacklist
+
+Requires Owner or Admin permission
+
+``` objc
+/*!
+ * Remove a user from chat room blacklist
+ *
+ * @param aMembers 				List of user to remove from the blacklist
+ * @param aChatroomId 			Chatroom ID
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)unblockMembers:(NSArray *)aMembers
+          fromChatroom:(NSString *)aChatroomId
+            completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Calling :                                 
+[[EMClient sharedClient].roomManager unblockMembers:@[@"username"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Success in remove users from chat room blacklist");
+    } else {
+        NSLog(@"Reason for failure to remove users from chat room blacklist --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Change chat room creator
+
+Requires Owner permission
+
+``` objc
+/*!
+ * Change chat room creator, requires Owner permission
+ *
+ * @param aChatroomId 		Chatroom ID
+ * @param aNewOwner 		newOwner
+ * @param aCompletionBlock 	The completed callback
+ */
+- (void)updateChatroomOwner:(NSString *)aChatroomId
+                   newOwner:(NSString *)aNewOwner
+                 completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager updateChatroomOwner:@"chatroomId" newOwner:@"newOwner" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Changing chatroom creator was successful");
+    } else {
+        NSLog(@"Reason for failure to change chatroom creator --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Add chat room administrator
+
+Requires Owner permission
+
+``` objc
+/*!
+ * Add chat room administrator, requires Owner permission
+ *
+ * @param aAdmin 				the group administrator to add
+ * @param aChatroomId 			Chatroom ID
+ * @param aCompletionBlock 		The completed callback
+ */
+- (void)addAdmin:(NSString *)aAdmin
+      toChatroom:(NSString *)aChatroomId
+      completion:(void (^)(EMChatroom *aChatroomp, EMError *aError))aCompletionBlock;
+                               
+// Called with:                                 
+[[EMClient sharedClient].roomManager addAdmin:@"adminId" toChatroom:@"chatroomId" completion:^(EMChatroom *aChatroomp, EMError * aError) {
+    if (!aError) {
+        NSLog(@"Add chatroom admin successfully");
+    } else {
+        NSLog(@"Reason for failure to add chatroom admin --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Remove chat room administrator
+
+Requires Owner permission
+
+``` objc
+/*!
+ * Remove chat room administrator, requires Owner permission
+ *
+ * @param aAdmin 			the group administrator to remove
+ * @param aChatroomId 		Chatroom ID
+ * @param aCompletionBlock 	Callback for completed
+ */
+- (void)removeAdmin:(NSString *)aAdmin
+       fromChatroom:(NSString *)aChatroomId
+         completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager removeAdmin:@"adminId" fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"Remove of chatroom administrator successfully");
+    } else {
+        NSLog(@"Reason for failure to remove chatroom administrator --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Muting chat room members
+
+Those with high permission can mute those with low permission, and vice versa not allowed
+
+``` objc
+/*!
+ * Muting a group member requires Owner / Admin permission
+ *
+ * @param aMuteMembers List of members to be muted <NSString>
+ * @param aMuteMilliseconds length of mute (in milliseconds, if "-1" means permanent mute)
+ * @param aChatroomId Chatroom ID
+ * @param aCompletionBlock The completed callback
+ */
+- (void)muteMembers:(NSArray *)aMuteMembers
+   muteMilliseconds:(NSInteger)aMuteMilliseconds
+       fromChatroom:(NSString *)aChatroomId
+         completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager muteMembers:@[@"userName"] muteMilliseconds:10000 fromChatroom:@"chatroomId" completion:^( EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"muted a group member successfully");
+    } else {
+        NSLog(@"Reason for muting a group member failed --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Unmuting
+
+High permission can mute low permission, and vice versa not allowed
+
+``` objc
+/*!
+ * To unmute, you need Owner / Admin permission.
+ *
+ * @param aMuteMembers list of unmuted <NSString>
+ * @param aChatroomId Chatroom ID
+ * @param aCompletionBlock The completed callback
+ */
+- (void)unmuteMembers:(NSArray *)aMembers
+         fromChatroom:(NSString *)aChatroomId
+           completion:(void (^)(EMChatroom *aChatroom, EMError *aError))aCompletionBlock;
+                               
+// Called:                                 
+[[EMClient sharedClient].roomManager unmuteMembers:@[@"userName"] fromChatroom:@"chatroomId" completion:^(EMChatroom *aChatroom, EMError *aError) {
+    if (!aError) {
+        NSLog(@"unmute successful");
+    } else {
+        NSLog(@"Reason for unmuting failure --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Callbacks related to chat rooms
+
+Registering for a chat room callback
+
+``` objc
+protocal:EMChatroomManagerDelegate
+
+Proxy:
+//Register for chat room callbacks
+[[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
+//Remove chat room callbacks
+[[EMClient sharedClient].roomManager removeDelegate:self];
+```
+
+Callback method:
+
+``` objc
+/*!
+ * A user has joined the chat room
+ *
+ * @param aChatroom 	chat room joined
+ * @param aUsername 	Joiner
+ */
+- (void)userDidJoinChatroom:(EMChatroom *)aChatroom
+                       user:(NSString *)aUsername;
+
+/*!
+ * A user has left the chatroom
+ *!
+ * @param aChatroom 	The chatroom that left
+ * @param aUsername 	The person who left
+ */
+- (void)userDidLeaveChatroom:(EMChatroom *)aChatroom
+                        user:(NSString *)aUsername;
+
+/*!
+ * Kicked out of the chatroom
+ *!
+ * @param aChatroom 	the chatroom which user was kicked out of 
+ * @param aReason 		the reason for being kicked out of the chatroom
+ */
+- (void)didDismissFromChatroom:(EMChatroom *)aChatroom
+                        reason:(EMChatroomBeKickedReason)aReason;
+
+/*!
+ * A member has been added to the mute list
+ *
+ * @param aChatroom 		chatroom
+ * @param aMutedMembers 	muted members
+ * @param aMuteExpire 		mute expiration time, temporarily unavailable
+ */
+- (void)chatroomMuteListDidUpdate:(EMChatroom *)aChatroom
+                addedMutedMembers:(NSArray *)aMutes
+                       muteExpire:(NSInteger)aMuteExpire;
+
+/*!
+ * A member was moved out of the muted list
+ *
+ * @param aChatroom 		chatroom
+ * @param aMutedMembers 	Member removed from the mute list
+ */
+- (void)chatroomMuteListDidUpdate:(EMChatroom *)aChatroom
+              removedMutedMembers:(NSArray *)aMutes;
+
+/*!
+ * A member has been added to the list of administrators
+ *
+ * @param aChatroom 	chatroom
+ * @param aAdmin 		Member added to the administrators list
+ */
+- (void)chatroomAdminListDidUpdate:(EMChatroom *)aChatroom
+                        addedAdmin:(NSString *)aAdmin;
+
+/*!
+ * A member was moved out of the admin list
+ *
+ * @param aChatroom chatroom
+ * @param aAdmin The member that was moved out of the admin list
+ */
+- (void)chatroomAdminListDidUpdate:(EMChatroom *)aChatroom
+                      removedAdmin:(NSString *)aAdmin;
+
+/*!
+ * Chatroom creator has updates
+ *
+ * @param aChatroom 	chatroom
+ * @param aNewOwner 	New group owner
+ * @param aOldOwner 	old group owner
+ */
+- (void)chatroomOwnerDidUpdate:(EMChatroom *)aChatroom
+                      newOwner:(NSString *)aNewOwner
+                      oldOwner:(NSString *)aOldOwner;
 ```
 
 ------------------------------------------------------------------------
+
+
