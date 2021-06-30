@@ -48,6 +48,10 @@ entries:
 
     folderitems:
 
+    - title: Connect To Chat Server
+      url: /android_connect_to_chat_server.html
+      output: web, pdf
+    
     - title: Message
       url: /android_message.html
       output: web, pdf
