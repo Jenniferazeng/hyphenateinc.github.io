@@ -39,6 +39,10 @@ entries:
       url: /android_run_the_sample_project.html
       output: web, pdf
 
+    - title: Send First Message
+      url: /android_send_first_message.html
+      output: web, pdf  
+
   - title: Basic Features
     output: web, pdf
 
