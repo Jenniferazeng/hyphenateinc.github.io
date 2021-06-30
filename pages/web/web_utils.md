@@ -1,5 +1,5 @@
 ---
-title: utils
+title: Utils
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -7,35 +7,15 @@ permalink: web_utils.html
 folder: web
 ---
 
-# Tool Description 
+# helper apis 
 
 ------------------------------------------------------------------------
 
-## File upload and download judgment
-
-``` javascript
-//whether or not files can be uploaded
-WebIM.utils.isCanUploadFile;
-//whether or not files can be downloaded
-WebIM.utils.isCanDownLoadFile ;
-//whether to set header 
-WebIM.utils. isCanSetRequestHeader;
-//whether to set mimetype
-WebIM.utils.hasOverrideMimeType;
-```
 
 ## Emoji parse tool
 
 ``` javascript
 WebIM.utils.parseEmoji(message);
-```
-
-## Format string tool
-
-Currently only the string `%s` can be parsed
-
-``` javascript
-WebIM.utils.sprintf(string[, args...])
 ```
 
 ## Upload and download file tools
@@ -70,21 +50,5 @@ var options = {
 };
 
 WebIM.utils.download(options);
-```
-
-## Send Ajax request
-
-``` javascript
-var options = {
-  dataType: 'text',//default
-  success: function () { //handle request success },
-  error: function () { //handle request error },
-  type: 'post',//default 'post'
-  url: 'http://s1.easecdn.com/weiquan2/a2/chatfiles/0c0f5f3a-e66b-11e3-8863-f1c202c2b3ae',
-  headers: '',//default {}
-  data: '';//default null
-};
-
-WebIM.utils.ajax(options);
 ```
 

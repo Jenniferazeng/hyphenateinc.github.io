@@ -52,7 +52,7 @@ folder: server
   </tr>
   <tr>
     <td>Download chat history </td>
-    <td><a href="/server/server_chat_log.html"> Download history message file interface (new) </a></td>
+    <td><a href="/server_message_history.html"> Download history message file interface (new) </a></td>
     <td>Single APP call limited to 1 time/minute</td>
     <td>Single APP call limited to 1 time/minute</td>
     <td></td>

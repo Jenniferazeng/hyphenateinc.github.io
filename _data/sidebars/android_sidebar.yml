@@ -4,7 +4,7 @@
 entries:
 - title: Sidebar
   product: Android
-  version: 1.0
+  version:
   folders:
 
   - title:
@@ -48,6 +48,10 @@ entries:
 
     folderitems:
 
+    - title: Connect To Chat Server
+      url: /android_connect_to_chat_server.html
+      output: web, pdf
+    
     - title: Message
       url: /android_message.html
       output: web, pdf
@@ -89,8 +93,8 @@ entries:
       output: web, pdf
 
     - title: Group message read receipt
-        url: /android_group_message_read.html
-        output: web, pdf
+      url: /android_group_message_read.html
+      output: web, pdf
 
   - title: Reference Docs
     output: web, pdf

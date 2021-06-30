@@ -1,13 +1,11 @@
 ---
-title: web Run the Sample Project
+title: Run the Sample Project
 keywords: web
 sidebar: web_sidebar
 toc: true
 permalink: web_run_the_sample_project.html
 folder: web
 ---
-
-# Web IM Integration Introduction
 
 ## Set up a local test environment
 
@@ -66,7 +64,7 @@ Web SDK has been released to[NPM](https://www.npmjs.com/package/agora-chat-sdk).
 
     npm install agora-chat-sdk --save
 
-2\. Import first, then visit Web IM. 
+2\. Import first, then use SDK APIs. 
 
 ``` javascript
 import websdk from "agora-chat-sdk"
@@ -98,21 +96,7 @@ delivery: false,                           // Whether to send a read receipt
 useOwnUploadFun: false         // Whether to use your own upload method (such as uploading image files to your own server, and only uploading the url when building a message) 
 ```
 
-`Note：`
 
-`To meet the business requirements of different customers, Agora has deployed data centers in multiple locations. The REST API request domain name and WebSocket access domain name of different data centers are different. Please configure it according to data center which suits you.`
-
-`` REST API request domain name and WebSocket access domain name of different data centers of Agora:``
-
-| Data center | REST API request address | WebSocket access domain name |
-| -------- | -------| ----- |
-| Domestic Zone 1 | a1.easecdn.com | im-api-v2.easecdn.com | 
-| Domestic Zone 2 | a31.easecdn.com | im-api-v2-31.easecdn.com | 
-| Domestic VIP Zone | Please contact the business manager | Please contact the business manager |
-| Customer service | Please contact the business manager | Please contact the business manager | 
-| Singapore Zone 1 | a1-sgp.easecdn.com | im-api-sgp-v2.easecdn.com | 
-
-``The data center where the application is located can be viewed in Agora 
-User Management Background>Application Information: ``
+``The data center where the application is located can be viewed in Agora console > Application Information: ``
 
 ![console](/images/web/console.jpg)

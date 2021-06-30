@@ -6,14 +6,7 @@ toc: true
 permalink: ios_error_code.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
 
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 The class of error codes in iOS is AgoraError.
 

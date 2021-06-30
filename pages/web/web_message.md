@@ -1,5 +1,5 @@
 ---
-title: web Message
+title: Message
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -193,38 +193,6 @@ var sendPrivateText = function () {
 When type=\'emoji\', data means **path of emoji image**;
 
 When type=\'txt\', data means **text message**.
-
-------------------------------------------------------------------------
-
-### Send URL image message
-
-APP client side needs to be downloaded by the developer, and the Web client side needs to be set `useOwnUploadFun: true` in WebIMConfig.js.
-
-The example of single chat to send image message through URL:
-
-``` javascript
-//  Send image messages via URL in single chat
- var sendPrivateUrlImg = function () {
-    var id = conn.getUniqueId();                   // Generate local message id
-    var msg = new WebIM.message('img', id);        // Create image message
-    var option = {
-        body: {
-          type: 'file',
-          url: url,
-          size: {
-            width: msg.width,
-            height: msg.height,
-           },
-          length: msg.length,
-          filename: msg.file.filename,
-          filetype: msg.filetype
-        },
-        to: 'username',  // The recipient of the message
-    };
-    msg.set(option);
-    conn.send(msg.body);
- }
-```
 
 ------------------------------------------------------------------------
 
@@ -517,7 +485,38 @@ var sendPrivateVideo = function () {
     }
 };
 ```
+------------------------------------------------------------------------
 
+### Send image message with url 
+
+APP client side needs to be downloaded by the developer, and the Web client side needs to be set `useOwnUploadFun: true` in WebIMConfig.js.
+
+The example of single chat to send image message through URL:
+
+``` javascript
+//  Send image messages via URL in single chat
+ var sendPrivateUrlImg = function () {
+    var id = conn.getUniqueId();                   // Generate local message id
+    var msg = new WebIM.message('img', id);        // Create image message
+    var option = {
+        body: {
+          type: 'file',
+          url: url,
+          size: {
+            width: msg.width,
+            height: msg.height,
+           },
+          length: msg.length,
+          filename: msg.file.filename,
+          filetype: msg.filetype
+        },
+        to: 'username',  // The recipient of the message
+    };
+    msg.set(option);
+    conn.send(msg.body);
+ }
+```
+------------------------------------
 ### Send custom message
 
 The example of a custom message sent by a single chat is as follows:
@@ -625,7 +624,7 @@ conn.listen({
 ```
 
 **Note:** When the Emoji attribute is added to WebIM, if the sent message contains specific strings in WebIM.Emoji, connection will automatically combine these strings and other text into an array in order, each array The structure of the element is
-**{type:\'emoji(or txt)\',  <data:type>}**
+**{type:\'emoji(or txt)\',  data: msg(or src)}**
 
 When type=\'emoji\', data means **path of emoji image**;
 

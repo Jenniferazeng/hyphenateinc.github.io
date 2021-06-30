@@ -1,5 +1,5 @@
 ---
-title: web Group
+title: Group
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -7,9 +7,7 @@ permalink: web_group.html
 folder: web
 ---
 
-# Group
-
-Agora Web IM SDK supports the integration of group's functions. After integration, the following operations can be execute: 
+Agora Web Chat SDK supports the integration of group's functions. After integration, the following operations can be execute: 
 
 -   Group management 
 
@@ -24,9 +22,6 @@ Agora Web IM SDK supports the integration of group's functions. After integratio
 -   Blacklist management
 
 Though these operations, you can use any combinations to achieve IM requirements in a variety of scenarios.
-
-
-**Note**: `1, the number of group owners and administrators cannot exceed 100, which means no more than 99 administrators. 2. The maximum number of group members (including the group owner) is set to 200 by default, and the maximum value is 3000. ` 
 
 ------------------------------------------------------------------------
 
@@ -46,7 +41,7 @@ Group management includes the following operations:
 
 -   Remove member
 
--   Disband group
+-   Destroy group
 
 -   Leave group 
 
@@ -170,16 +165,16 @@ conn.removeSingleGroupMember(option).then((res) => {
 
 ------------------------------------------------------------------------
 
-### Disband group
+### Destroy group
 
 -   Only the administrator of the group has the rights to kick members out of the group; 
 
--   All group members withdraw from the group after the group is disbanded.
+-   All group members withdraw from the group after the group is destroyed.
 
 Call `dissolveGroup` to dissolve the group, an example is as follows: 
 
 ``` javascript
-// Disband a group
+// Destroy a group
 let option = {
     groupId: 'groupId'
 };
@@ -207,6 +202,40 @@ conn.quitGroup(option).then((res) => {
     console.log(res)
 })
 
+```
+
+------------------------------------------------------------------------
+
+
+## Group member management
+
+Group member management includes the following operations:
+
+-   Query group members
+
+-   Make a member as admin
+
+-   Revoke the administrator
+
+-   Get all administrators in the group
+
+Examples of all the operations will be explained individually below.
+
+### Query group members
+
+Call the `listGroupMember` function to page to get all members of the current group, an example is as follows:
+
+``` javascript
+let pageNum = 1,
+    pageSize = 1000;
+let options = {
+    pageNum: pageNum,                                               // Page number
+    pageSize: pageSize,                                             // Expected number of records per page
+    groupId: 'groupId'                                       
+};
+conn.listGroupMember(options).then((res) => {
+    console.log(res)
+})
 ```
 
 ------------------------------------------------------------------------
@@ -331,40 +360,7 @@ conn.fetchGroupSharedFileList(options).then((res) => {
 
 ------------------------------------------------------------------------
 
-## Group member management
-
-Group member management includes the following operations:
-
--   Query group members
-
--   Make a member as manager
-
--   Revoke the administrator
-
--   Get all administrators in the group
-
-Examples of all the operations will be explained individually below.
-
-### Query group members
-
-Call the `listGroupMember` function to page to get all members of the current group, an example is as follows:
-
-``` javascript
-let pageNum = 1,
-    pageSize = 1000;
-let options = {
-    pageNum: pageNum,                                               // Page number
-    pageSize: pageSize,                                             // Expected number of records per page
-    groupId: 'groupId'                                       
-};
-conn.listGroupMember(options).then((res) => {
-    console.log(res)
-})
-```
-
-------------------------------------------------------------------------
-
-### Make a member as manager
+### Make a member as admin
 
 Call `setAdmin` to set members as administrators, an example is as follows:
 
@@ -790,7 +786,7 @@ conn.listen({
       // Join group
       break;
     case 'deleteGroupChat':
-      // Disband the group
+      // Destroy the group
       break;
     default:
       break;

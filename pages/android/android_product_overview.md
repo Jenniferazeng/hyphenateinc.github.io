@@ -6,9 +6,6 @@ toc: true
 permalink: android_product_overview.html
 folder: android
 ---
-# Android SDK's Introduction and import
-
-------------------------------------------------------------------------
 
 ## DEMO experience
 
@@ -18,15 +15,12 @@ Download link：[download page](http://www.easemob.com/download/im)
 
 Agora SDK provides a complete development framework for users to develop chat-related applications. It includes the following parts:
 
-![](/im/android/sdk/development-framework.png){.align-center}
 
 -   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
 -   SDK is a complete chat function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
 
 
 The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
 
 -   ChatClient: The entrance of SDK mainly implements the functions such as login, logout, and connection management. It is also the entrance to other modules.
 -   ChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
@@ -83,8 +77,6 @@ SDK version number reference [Release Note](https://hyphenateinc.github.io/andro
 
 The unzipped package downloaded from the official website is as follows:
 
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
 Here we mainly introduce the contents of the following four folders:
 
 -   Doc folder: SDK related API documentation
@@ -103,8 +95,6 @@ Here we mainly introduce the contents of the following four folders:
 #### Import SDK
 
 In the self-developed application, to integrate Agora chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
 
 #### Configuration information
 

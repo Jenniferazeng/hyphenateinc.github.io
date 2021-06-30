@@ -1203,26 +1203,26 @@ Chat provides the following types of extension fields.
   </tr>
   <tr>
     <td>em_push_content</td>
-    <td><a href="/ios/ios_push_content.html#custom-display"> custom push display </a></td>
+    <td><a href="/ios_push_content.html#custom-display"> custom push display </a></td>
   </tr>
   <tr>
     <td>em_push_category</td>
-    <td><a href="/ios/ios_push_content.html#add-category-field"> add category field to APNs Payload </a></td>
+    <td><a href="/ios_push_content.html#add-category-field"> add category field to APNs Payload </a></td>
   </tr>
   <tr>
     <td>em_push_sound</td>
-    <td><a href="/ios/ios_push_content.html#custom-push-alert-sound"> customize push sound </a></td>
+    <td><a href="/ios_push_content.html#custom-push-alert-sound"> customize push sound </a></td>
   </tr>
   <tr>
     <td>em_push_mutable_content</td>
-    <td><a href="/ios/ios_push_content.html#enable-APNs-alert-extension"> enable APNs notification extension </a></td>
+    <td><a href="/ios_push_content.html#enable-APNs-alert-extension"> enable APNs notification extension </a></td>
   </tr>
   <tr>
     <td>em_ignore_notification</td>
-    <td><a href="/ios/ios_push_content.html#send-silent-message"> send silent message </a></td>
+    <td><a href="/ios_push_content.html#send-silent-message"> send silent message </a></td>
   </tr>
   <tr>
     <td>em_force_notification</td>
-    <td><a href="/ios/ios_push_content.html#set-up-forced-push-APNs"> set force push APNs </a></td>
+    <td><a href="/ios_push_content.html#set-up-forced-push-APNs"> set force push APNs </a></td>
   </tr>
 </table>

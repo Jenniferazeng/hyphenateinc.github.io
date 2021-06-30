@@ -1,5 +1,5 @@
 ---
-title: web error code
+title: error code
 keywords: web
 sidebar: web_sidebar
 toc: false
