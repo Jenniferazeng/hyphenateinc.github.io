@@ -47,8 +47,8 @@ Note：**`Since local notifications are hard to distinguish from APNs, it is rec
 ### Apply for remote push certificate
 
 First, log in to Apple's Developer Center. Create App
-![](/im/ios/apns/apns_setting_1.jpg){width="800"}
-![](/im/ios/apns/apns_setting_2.jpg){width="800"}
+![](../../../images/ios/apns_setting_1.jpg)
+![](../../../images/ios/apns_setting_2.jpg)
 ![](/im/ios/apns/apns_setting_3.jpg){width="800"}
 
 Name the App. Wildcards cannot be used for the bundle id here, otherwise the push will not be received.
