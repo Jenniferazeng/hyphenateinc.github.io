@@ -37,7 +37,7 @@ In fact, the meaning of multi-tenancy has been extended in the cloud computing s
 
 In Chat service system, user data between different orgs are isolated from each other, and different APPs under the same org The user data between the same org are isolated from each other.
 
-![](/images/rest_platform_service_integration.png)
+![](/images/server/rest_platform_service_integration.png)
 
 ### Platform API server
 
