@@ -89,8 +89,8 @@ entries:
       output: web, pdf
 
     - title: Group message read receipt
-        url: /android_group_message_read.html
-        output: web, pdf
+      url: /android_group_message_read.html
+      output: web, pdf
 
   - title: Reference Docs
     output: web, pdf
