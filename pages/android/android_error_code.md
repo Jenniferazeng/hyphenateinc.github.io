@@ -6,9 +6,6 @@ toc: true
 permalink: android_error_code.html
 folder: android
 ---
-# Common error codes of Android API 
-
-------------------------------------------------------------------------
 
 In the Android SDK, the exception mechanism uses the error code to determine the specific error, and you can check the reason of the error according to the specific error code.
 
@@ -18,7 +15,7 @@ For example, if the user returns an existing error during registration, it can b
 
 `Error.USER_ALREADY_EXISTS`
 
-For details, see [V3.X Java Doc](http://sdkdocs.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html).
+For details, see [Java Doc](https://hyphenateinc.github.io/android_reference/classio_1_1agora_1_1_error.html).
 
 
 
