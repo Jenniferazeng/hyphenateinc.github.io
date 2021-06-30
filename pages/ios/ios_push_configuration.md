@@ -32,13 +32,13 @@ Note：**`Since local notifications are hard to distinguish from APNs, it is rec
 
 ### When the SDK is in the foreground or background active state:
 
-![](/im/ios/apns/image006.png){.align-center}
+![](/images/ios/image006.png){.align-center}
 
 {{ :im:ios:apns:image006.png?nolink |}}
 
 ### When the SDK is inactive or the App process is killed:
 
-![](/im/ios/apns/image007.png){.align-center}
+![](/images/ios/image007.png){.align-center}
 
 `APNs only work as the notifications here. When the user launched the App, the message will be received by clients through the SDK persistent connection. `
 
@@ -47,108 +47,108 @@ Note：**`Since local notifications are hard to distinguish from APNs, it is rec
 ### Apply for remote push certificate
 
 First, log in to Apple's Developer Center. Create App
-![](../../../images/ios/apns_setting_1.jpg)
-![](../../../images/ios/apns_setting_2.jpg)
-![](/im/ios/apns/apns_setting_3.jpg){width="800"}
+![](/images/ios/apns_setting_1.jpg)
+![](/images/ios/apns_setting_2.jpg)
+![](/images/ios/apns_setting_3.jpg)
 
 Name the App. Wildcards cannot be used for the bundle id here, otherwise the push will not be received.
 
-![](/im/ios/apns/apns_setting_4.jpg)
+![](/images/ios/apns_setting_4.jpg)
 
 enable push function
 
-![](/im/ios/apns/apns_setting_5.jpg)
+![](/images/ios/apns_setting_5.jpg)
 
-![](/im/ios/apns/apns_setting_6.jpg)
+![](/images/ios/apns_setting_6.jpg)
 
 Create push certificate
 
-![](/im/ios/apns/apns_setting_7.jpg)
+![](/images/ios/apns_setting_7.jpg)
 
 If you are in a test development environment, select Apple Push Notification service SSL (Sandbox) under Services. If it is in a production environment, you need to select Apple Push Notification service SSL(Sandbox & Production) under Services.
 
-![](/im/ios/apns/apns_setting_8.jpg)
+![](/images/ios/apns_setting_8.jpg)
 
 Select the App which the certificate belongs to
 
-![](/im/ios/apns/apns_setting_9.jpg)
+![](/images/ios/apns_setting_9.jpg)
 
 Upload CSR file
 
-![](/im/ios/apns/apns_setting_10.jpg)
+![](/images/ios/apns_setting_10.jpg)
 
 Next, let’s create a CSR file. First, select \"Keychain Access\"
 
-![](/im/300iosclientintegration/apns_create9.jpg){width="800"}
+![](/images/ios/apns_create9.jpg)
 
 Keychain Access \-- Certificate Assistant \-- Request a certificate from a certificate authority
 
-![](/im/300iosclientintegration/apns_create10.jpg){width="800"}
+![](/images/ios/apns_create10.jpg){width="800"}
 
 There is no requirement for e-mail, just make sure is in a normal e-mail format, and there is no restriction on name. Please pay attention to change the parameter of "request is" to **"store to disk"**. After that, you will get a CSR file afterwards.
 
-![](/im/300iosclientintegration/apns_create11.jpg){width="800"}
+![](/images/ios/apns_create11.jpg){width="800"}
 
 Return to the "Upload CRS File" page and upload the CSR file just generated.
 
-![](/im/300iosclientintegration/apns_create12.jpg){width="800"}
+![](/images/ios/apns_create12.jpg){width="800"}
 
 Click on Continue and there will be a download page.
 
-![](/im/ios/apns/apns_setting_11.jpg)
+![](/images/ios/apns_setting_11.jpg)
 
-![](/im/ios/apns/apns_setting_12.jpg)
+![](/images/ios/apns_setting_12.jpg)
 
 Click download, and an aps_development.cer will be downloaded. (aps.cer for production environment)
 
-![](/im/300iosclientintegration/apns_create15.jpg){width="800"}
+![](/images/ios/apns_create15.jpg){width="800"}
 
 Double-click the cer file just downloaded and it will be added to "Keychain Access". Check the certificate, you will see a bundle id certificate, this is what's newly added.
 
-![](/im/300iosclientintegration/apns_create16.jpg){width="800"}
+![](/images/ios/apns_create16.jpg){width="800"}
 
 `Right-click to export, and be careful not to expand when you right-click, please just right-click on the certificate`
 
-![](/im/300iosclientintegration/apns_create17.jpg){width="800"}
+![](/images/ios/apns_create17.jpg){width="800"}
 
 Save
 
-![](/im/300iosclientintegration/apns_create18.jpg){width="800"}
+![](/images/ios/apns_create18.jpg){width="800"}
 
 Please remember the password here, and it will be used later.
 `Note: When exporting a p12 certificate, the password length of the certificate should not be set to exceed 20 characters. It is recommended to use a combination of pure English or numbers. Special characters are not recommended.`
 
-![](/im/300iosclientintegration/apns_create19.jpg){width="800"}
+![](/images/ios/apns_create19.jpg){width="800"}
 
 Allow keychain to access this item
 
-![](/im/300iosclientintegration/apns_create20.jpg){width="800"}
+![](/images/ios/apns_create20.jpg){width="800"}
 
 Save, and you will get a file with a suffix of p12
 
-![](/im/300iosclientintegration/apns_create21.jpg){width="800"}
+![](/images/ios/apns_create21.jpg){width="800"}
 
 ### Upload the push certificate to Easemob
 
 Log in to the Easemob management background, find the Appkey of certificate which you want to upload, and click to enter and see more details.
 
-![](/im/ios/apns/3_.png)
+![](/images/ios/uploadCer1.png)
 
-![](/im/ios/apns/Application details.png)
+![](/images/ios/uploadCer2.png)
 
 Select **"Certificate"**
 
-![](/im/ios/apns/Certificate management.png)
+![](/images/ios/uploadCer3.png)
 
 Choose **"Apple"**
 
-![](/im/ios/apns/Upload certificate.png)
+![](/images/ios/uploadCer4.png)
 
 Give the certificate a name, and remember the name, it will be useful later. Select Upload Certificate. Upload the P12 file generated in the previous step, and set the password set during export. Select the certificate type, here is [Development Environment] (if you used production before, you should select production here). Fill in the package name, which should be **bundle id**. Click Upload to complete the uploading certificate operation.
 
 `Note: The length of the certificate name and password should not exceed 20 characters. It is recommended to use a combination of pure English or numbers. Special characters are not recommended.`
 
-![](/im/ios/apns/ios certificate.png)
+![](/images/ios/uploadCer5.png)
 
 ### How does the client apply for DeviceToken
 
@@ -249,7 +249,7 @@ The specific structure is as follows：
         "g":"1421300621769"  // group id (There is no such field, if it is a single chat)
      }
 
-For more usage, please refer to（[APNs parse](/im/ios/apns/content)）
+For more usage, please refer to（[APNs parse](/images/ios/content)）
 
 ### How to renew the certificate
 
@@ -264,5 +264,5 @@ Multiple certificates can be transferred under one appkey, which can implement a
 \<WRAP group> \<WRAP half column>
 Previous page：[multiple devices](/im/ios/basics/multidevices) \</WRAP>
 
-\<WRAP half column> Next Page：[APNs offline push](/im/ios/apns/offline)
+\<WRAP half column> Next Page：[APNs offline push](/images/ios/offline)
 \</WRAP> \</WRAP>
