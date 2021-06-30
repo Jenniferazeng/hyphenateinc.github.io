@@ -27,7 +27,7 @@ Through these operations, you can use any combinations to achieve IM requirement
 
 ## Create chat room 
 
-Creating chat room requires [Super administrator rights](http://docs-im.easemob.com/im/server/basics/chatroom#%E7%AE%A1%E7%90%86%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98)，
+Creating chat room requires Super administrator rights, 
 Call the \"createChatRoom\" function to create a chat room, the example is as follows: 
 
 ``` javascript
@@ -198,7 +198,7 @@ conn.getChatRoomAdmin(options).then((res) => {
 
 ## Send message
 
-See[Send message](/im/web/basics/message#send message)。
+See[Send message](/web_message.html#send-text-messages-single-chat-extended)。
 
 ------------------------------------------------------------------------
 

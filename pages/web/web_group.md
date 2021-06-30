@@ -812,7 +812,7 @@ All operations will be explained one by one below.
 
 ### Send a message
 
-See [send message](/im/web/basics/message#send message).
+See [send message](/web_message.html#send-text-messages-single-chat-extended).
 
 ### Receiving and processing messages
 

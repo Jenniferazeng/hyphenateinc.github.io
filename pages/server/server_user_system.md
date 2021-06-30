@@ -1,23 +1,19 @@
 ---
-title: User System Integration
+title: User System
 keywords: server
 sidebar: server_sidebar
 toc: true
-permalink: server_user_system_integration.html
+permalink: server_user_system.html
 folder: server
 ---
 
-# User System Integration
-
-------------------------------------------------------------------------
-
 ## Overview
 
-Introduce the data structure and usage rules of Appkey and Easemob ID.
+Introduce the data structure and usage rules of Appkey and Chat user ID.
 
 ### Appkey data structure
 
-When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the string can only consist of lowercase alphanumeric, the AppKey is the unique identifier of the Easemob application. The first half **org_name** is the unique tenant identifier under the multi-tenant system, and the second half **app_name** is the unique identifier of the app under the tenant (the app id filled in when creating an app in the Easemob backend is the app_name). In the following REST API, **/{org_name}/{app_name}** requests are made for a unique appkey. At present, the appkey registered by Easemob cannot be deleted by users themselves at the moment, If you are interested in APP deletion, you need to contact Easemob to complete the operation.
+When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the string can only consist of lowercase alphanumeric, the AppKey is the unique identifier of the Chat application. The first half **org_name** is the unique tenant identifier under the multi-tenant system, and the second half **app_name** is the unique identifier of the app under the tenant (the app id filled in when creating an app in the Chat backend is the app_name). In the following Platform API, **/{org_name}/{app_name}** requests are made for a unique appkey. At present, the appkey registered by Chat cannot be deleted by users themselves at the moment, If you are interested in APP deletion, you need to contact Chat to complete the operation.
 
 <table border="1px" cellspacing="0px" bordercolor="#000000">
   <tr>
@@ -28,7 +24,7 @@ When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the
     <th>Description</th>
   </tr>
   <tr>
-    <td>Unique identifier for Easemob app</td>
+    <td>Unique identifier for Chat app</td>
     <td>org_name</td>
     <td>\#</td>
     <td>app_name</td>
@@ -36,9 +32,9 @@ When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the
   </tr>
 </table>
 
-### Easemob ID data structure
+### Chat user ID data structure
 
-As a chat channel, you only need to provide Easemob ID (also known as IM username) and password is all that is needed.
+As a chat channel, you only need to provide Chat user ID (also known as Chat username) and password is all that is needed.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -48,7 +44,7 @@ As a chat channel, you only need to provide Easemob ID (also known as IM usernam
     <th>Description</th>
   </tr>
   <tr>
-    <td>Easemob ID</td>
+    <td>Chat user ID</td>
     <td>username</td>
     <td>String</td>
     <td>Unique user name within the scope of AppKey, user ID is 64 bytes or less in length.</td>
@@ -57,15 +53,15 @@ As a chat channel, you only need to provide Easemob ID (also known as IM usernam
     <td>User Password</td>
     <td>password</td>
     <td>String</td>
-    <td>The password used by the user to log in to Easemob.</td>
+    <td>The password used by the user to log in to Chat.</td>
   </tr>
 </table>
 
-### Rules for using Easemob ID
+### Rules for using Chat user ID
 
-When the APP is integrated with Easemob, you need to integrate the APP system, create a Easemob account for each existing user (Easemob And when APP has new user registration, it needs to register in Easemob synchronously.
+When the APP is integrated with Chat, you need to integrate the APP system, create a Chat account for each existing user (Chat And when APP has new user registration, it needs to register in Chat synchronously.
 
-**When registering for an Easemob account, you need to pay attention to the rules of Easemob ID：**
+**When registering for an Chat account, you need to pay attention to the rules of Chat user ID：**
 
 -   Use a combination of English letters and/or numbers
 -   Chinese is not available
@@ -73,40 +69,40 @@ When the APP is integrated with Easemob, you need to integrate the APP system, c
 -   UUID cannot be used
 -   The length of the user ID is 64 bytes or less
 -   No spaces or special characters such as tic-tac-toe (#) in between
--   Allowed user name rules "\[a-z0-9\_-. \]\*" (a\~z lowercase letters/numbers/underscores/crosses/English periods), all others are not allowed
+-   Allowed user name rules "[a-z0-9_-.]*" (a\~z lowercase letters/numbers/underscores/crosses/English periods), all others are not allowed
     **If it is an uppercase letter it will be automatically converted to lowercase**
--   Not case-sensitive. The system ignores case and considers AA, Aa, aa, aA to be the same. If the system already has a user with Easemob ID AA, and then try to register a new user with aa as Easemob ID, the system returns a duplicate user name, and so on, so it is recommended that users use lowercase letters, otherwise they may encounter some exceptions. However, please note: the form of Easemob ID in the data is still the form of the user's initial registration, and the upper case used in the registration is saved in upper case, and the lower case is saved in lower case. That is: if you register with AA, the ID saved by Easemob is AA; if you register with Aa, the ID saved by Easemob is Aa, and so on.
+-   Not case-sensitive. The system ignores case and considers AA, Aa, aa, aA to be the same. If the system already has a user with Chat user ID AA, and then try to register a new user with aa as Chat user ID, the system returns a duplicate user name, and so on, so it is recommended that users use lowercase letters, otherwise they may encounter some exceptions. However, please note: the form of Chat user ID in the data is still the form of the user's initial registration, and the upper case used in the registration is saved in upper case, and the lower case is saved in lower case. That is: if you register with AA, the ID saved by Chat is AA; if you register with Aa, the ID saved by Chat is Aa, and so on.
 
-Also: This document may use the terms "Easemob ID" and "Easemob username", but please note that both mean the same thing here.
+Also: This document may use the terms "Chat user ID" and "Chat username", but please note that both mean the same thing here.
 
-Because a user's Easemob ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example\@easemob.com, when this user logs into the APP When this user logs into the APP, he can log into Easemob's server after successful login. so at this time, he only needs to be able to log in from example\@easemob.com to derive this user's Easemob ID.
+Because a user's Chat user ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example\@easemob.com, when this user logs into the APP When this user logs into the APP, he can log into Chat's server after successful login. so at this time, he only needs to be able to log in from example\@easemob.com to derive this user's Chat user ID.
 
 **Note：**All of the following APIs require org administrator or APP administrator permission to access.
 
-It is strongly recommended to protect the org administrator, APP administrator username and password as well as APP client_id and client_secret, and try to do the management of adding, deleting, changing and checking for Easemob users only in APP's server backend, including new user registration. For your information security, please make sure not to write org administrator or APP administrator username and password in the mobile client, because the mobile APP can be easily decompiled, which will lead others to get your administrator account and password and lead to data leakage.
+It is strongly recommended to protect the org administrator, APP administrator username and password as well as APP client_id and client_secret, and try to do the management of adding, deleting, changing and checking for Chat users only in APP's server backend, including new user registration. For your information security, please make sure not to write org administrator or APP administrator username and password in the mobile client, because the mobile APP can be easily decompiled, which will lead others to get your administrator account and password and lead to data leakage.
 
 ------------------------------------------------------------------------
 
-# REST API
+# Platform API
 
-Introduces the REST API that needs to be used in the integration process of the IM user system. The documentation details that can be tested online using the [Easemob REST API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
+Introduces the Platform API that needs to be used in the integration process of the Chat user system. The documentation details that can be tested online using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation for online testing.
 
 ## Request Domain
 
-Easemob's REST API requests for domain names from different data centers：
+Chat's Platform API requests for domain names from different data centers：
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>Data Center</th>
-    <th>REST API Request Address</th>
+    <th>Platform API Request Address</th>
   </tr>
   <tr>
     <td>Domestic Area 1</td>
-    <td>a1.easemob.com</td>
+    <td>a1.easecdn.com</td>
   </tr>
   <tr>
     <td>Domestic Area 2</td>
-    <td>a31.easemob.com</td>
+    <td>a31.easecdn.com</td>
   </tr>
   <tr>
     <td>Domestic VIP area</td>
@@ -118,29 +114,27 @@ Easemob's REST API requests for domain names from different data centers：
   </tr>
   <tr>
     <td>Singapore Area 1</td>
-    <td>a1-sgp.easemob.com</td>
+    <td>a1-sgp.easecdn.com</td>
   </tr>
 </table>
 
-The data center where the request is located can be viewed in the Easemob user administration backend > Request Information：
-
-![](/images/console-01.png)
+The data center where the request is located can be viewed in the [Developer Console](https://console.easemob.com/app/applicationOverview/detail) > Request Information：
 
 `Note：`
 
-`1.To meet the business needs of different customers, Easemob has deployed data centers in multiple locations. The REST API request domain name varies from data center to data center. Please select the request domain name according to your data center.`
+`1.To meet the business needs of different customers, Chat has deployed data centers in multiple locations. The Platform API request domain name varies from data center to data center. Please select the request domain name according to your data center.`
 
-`2.Domestic VIP area, customer service area customers please contact the business manager to ask for the REST API request address.`
+`2.Domestic VIP area, customer service area customers please contact the business manager to ask for the Platform API request address.`
 
 `3.Support http,https.`
 
 ## Get administrator permission
 
-The REST API provided by Easemob requires permission to access it, which is reflected by sending an HTTP request with a token The following describes how to get the token. Note: When describing the API, the Parameter such as {APP's client_id} and other Parameter need to be replaced with specific values.
+The Platform API provided by Chat requires permission to access it, which is reflected by sending an HTTP request with a token The following describes how to get the token. Note: When describing the API, the Parameter such as {APP's client_id} and other Parameter need to be replaced with specific values.
 
 `Important Reminder: The server will return the token expiration date when getting the token, please refer to the expires_in field returned by the interface for the specific value. Due to network latency, the system does not guarantee that the token is absolutely valid within the expiration date indicated by this value, if you find that the token is used abnormally, please get a new token, for example, "http response code" returns 401. In addition, please do not send requests frequently to the server to get token, the same account will be blocked if you send this request more often than a certain number of times. Please take care of it!!`
 
-The client_id and client_secret can be seen in the Easemob administration backend on the [APP details page](http://www.google.com).
+The client_id and client_secret can be seen in the Developer console on the [APP details page](https://console.easemob.com/app/applicationOverview/detail).
 
 #### HTTP Request
 
@@ -177,11 +171,11 @@ The client_id and client_secret can be seen in the Easemob administration backen
   </tr>
   <tr>
     <td>client_id</td>
-    <td>App's client_id, which can be found in <a href="https://console.easemob.com/app-detail/detail"> app details page </a></td>
+    <td>App's client_id, which can be found in <a href="https://console.easemob.com/app/applicationOverview/detail"> app details page </a></td>
   </tr>
   <tr>
     <td>client_secret</td>
-    <td>App's client_secret, which can be found on <a href="https://console.easemob.com/app-detail/detail"> app details page </a></td>
+    <td>App's client_secret, which can be found on <a href="https://console.easemob.com/app/applicationOverview/detail"> app details page </a></td>
   </tr>
 </table>
 
@@ -213,7 +207,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
    "grant_type": "client_credentials",  
    "client_id": "YXA6i-Ak8Ol4Eei2l11ZjV-EAg", 
    "client_secret": "YXA6VunqiNxoB7IwXHInk1cGiXOOJfc"  
- }' 'http://a1.easemob.com/easemob-demo/testapp/token'
+ }' 'http://a1.easecdn.com/chat-demo/testapp/token'
 ```
 
 #### Examples of possible returned results
@@ -237,15 +231,28 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## User Management
 
-Easemob provides several interfaces to manage the registration, acquisition, modification and deletion of IM users.
+Chat provides several interfaces to manage the registration, acquisition, modification and deletion of Chat users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -256,66 +263,66 @@ Easemob provides several interfaces to manage the registration, acquisition, mod
   <tr>
     <td>Register a single user</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Register an IM user in open registration and authorized registration modes</td>
+    <td>Register an Chat user in open registration and authorized registration modes</td>
   </tr>
   <tr>
-    <td>Bulk registration of users</td>
+    <td>Registration of users'</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Register multiple IM users, only authorized registration is supported</td>
+    <td>Register multiple Chat users, only authorized registration is supported</td>
   </tr>
   <tr>
     <td>Get a single user</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Get a single IM user</td>
+    <td>Get a single Chat user</td>
   </tr>
   <tr>
-    <td>Bulk user acquisition</td>
+    <td>Users' acquisition</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Get multiple IM users under the application</td>
+    <td>Get multiple Chat users under the application</td>
   </tr>
   <tr>
     <td>Delete a single user</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Bulk delete multiple IM users</td>
+    <td>Delete a single Chat user</td>
   </tr>
   <tr>
-    <td>Bulk delete users</td>
+    <td>Delete users'</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Bulk delete multiple</td>
+    <td>Delete multiple</td>
   </tr>
   <tr>
     <td>Modify user password</td>
     <td>/{org_name}/{app_name}/users/{username}/password</td>
-    <td>Modify the password of the IM user</td>
+    <td>Modify the password of the Chat user</td>
   </tr>
   <tr>
     <td>Set the name to show in push messages</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set the name displayed for IM users' push messages</td>
+    <td>Set the name displayed for Chat users' push messages</td>
   </tr>
   <tr>
     <td>Set how to display push messages</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set whether IM user push messages are displayed as notifications only or details</td>
+    <td>Set whether Chat user push messages are displayed as notifications only or details</td>
   </tr>
   <tr>
     <td>Set no disturbance</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Set whether IM users enable Do Not Disturb mode and the time to turn it on/off</td>
+    <td>Set whether Chat users enable Do Not Disturb mode and the time to turn it on/off</td>
   </tr>
 </table> 
 
 Create a new user in the org and APP specified by the URL Create a new user in two modes: **Open Registration** and **Authorized Registration**.
 
--   "Open registration" mode: when registering for an Easemob account, you do not need to bring your administrator identification information.
--   "Authorized Registration" mode: When registering for an Easemob account, you must bring your administrator identification information. It is recommended to use "Authorized Registration" to prevent people who have already geted the registration URLs and people with knowledge of the registration process from registering a large number of spam users to the server.
+-   "Open registration" mode: when registering for an Chat account, you do not need to bring your administrator identification information.
+-   "Authorized Registration" mode: When registering for an Chat account, you must bring your administrator identification information. It is recommended to use "Authorized Registration" to prevent people who have already geted the registration URLs and people with knowledge of the registration process from registering a large number of spam users to the server.
 
 `Note：` \'\' \* The \${token} mentioned in the following API is a variable that needs to be replaced with the token geted through the APP's client_id and client_secret.
-` ` \* When registering Easemob ids, it is recommended not to use ordered ids to prevent others from knowing the order of registered ids and sending a lot of spam messages maliciously. \'\'
+` ` \* When registering Chat ids, it is recommended not to use ordered ids to prevent others from knowing the order of registered ids and sending a lot of spam messages maliciously. \'\'
 
 \'\' \*
 
-In the server side to their own user registration account at the same time, will go to call the rest interface of the Easemob letter to the user in the registration of a Easemob letter id and their own user binding, and return to the client, the client get their own server user account password login, and then take the Easemob letter id password in the login Easemob letter server\'\'
+In the server side to their own user registration account at the same time, will go to call the rest interface of the Chat letter to the user in the registration of a Chat letter id and their own user binding, and return to the client, the client get their own server user account password login, and then take the Chat letter id password in the login Chat letter server\'\'
 
 ### Register a single user (open)
 
@@ -352,7 +359,7 @@ An interface that allows users to register an account by themselves with an acco
   </tr>
   <tr>
     <td>username</td>
-    <td>Easemob ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -360,7 +367,7 @@ An interface that allows users to register an account by themselves with an acco
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -383,11 +390,11 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -398,19 +405,19 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X POST -i "https://a1.easemob.com/easemob-demo/testapp/users" -d '{"username":"user1","password":"123","nickname":"testuser"}'
+curl -X POST -i "https://a1.easecdn.com/chat-demo/testapp/users" -d '{"username":"user1","password":"123","nickname":"testuser"}'
 ```
 
 #### Examples of possible returned results
 
-**returns 200, indicating that the IM user was created successfully**
+**returns 200, indicating that the Chat user was created successfully**
 
 ``` json
 {
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "0ffe2d80-ed76-11e8-8d66-279e3e1c214b",
@@ -424,7 +431,7 @@ curl -X POST -i "https://a1.easemob.com/easemob-demo/testapp/users" -d '{"userna
   ],
   "timestamp": 1542795196515,
   "duration": 0,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -441,9 +448,22 @@ curl -X POST -i "https://a1.easemob.com/easemob-demo/testapp/users" -d '{"userna
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -473,7 +493,7 @@ The server side needs to verify a valid token permission to operate and authoriz
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -486,7 +506,7 @@ The server side needs to verify a valid token permission to operate and authoriz
   </tr>
   <tr>
     <td>username</td>
-    <td>Easemob ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -494,7 +514,7 @@ The server side needs to verify a valid token permission to operate and authoriz
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -517,11 +537,11 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -538,12 +558,12 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
      "password": "123",  
      "nickname": "testuser"  
    }  
- ]' 'http://a1.easemob.com/easemob-demo/testapp/users'
+ ]' 'http://a1.easecdn.com/chat-demo/testapp/users'
 ```
 
 #### Examples of possible returned results
 
-**returns 200, indicating that the IM user was created successfully**
+**returns 200, indicating that the Chat user was created successfully**
 
 ``` json
 {
@@ -551,7 +571,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
     "application": "a2e433a0-ab1a-11e2-a134-85fca932f094",
     "params": {},
     "path": "/users",
-    "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+    "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
     "entities": [{
         "uuid": "7f90f7ca-bb24-11e2-b2d0-6d8e359945e4",
         "type": "user",
@@ -563,7 +583,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
     }],
     "timestamp": 1368377620793,
     "duration": 125,
-    "organization": "easemob-demo",
+    "organization": "chat-demo",
     "applicationName": "testapp"
 }
 ```
@@ -580,7 +600,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**Return value 401, means unauthorized \ [no token, token error, token expired \]**
+**Return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -592,15 +612,28 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Bulk registration of users
+### Registration of users'
 
-Batch registration is the authorized registration method, and the server needs to verify the valid token authority to operate. Each time the interface is called, there is a maximum limit on the number of registered users, see [interface limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
+A list of registrations is the authorized registration method, and the server needs to verify the valid token authority to operate. Each time the interface is called, there is a maximum limit on the number of registered users, see [interface limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
@@ -624,7 +657,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -637,7 +670,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>username</td>
-    <td>Easemob ID ;It is the unique login account of IM user name, the length cannot exceed 64 characters length</td>
+    <td>Chat user ID ;It is the unique login account of Chat user name, the length cannot exceed 64 characters length</td>
   </tr>
   <tr>
     <td>password</td>
@@ -645,7 +678,7 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM user name registered to your user, the length cannot exceed 100 characters</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat user name registered to your user, the length cannot exceed 100 characters</td>
   </tr>
 </table>
 
@@ -666,11 +699,11 @@ Batch registration is the authorized registration method, and the server needs t
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -681,7 +714,7 @@ Batch registration is the authorized registration method, and the server needs t
 #### Request Example 1
 
 ``` php
-curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE" -i  "https://a1.easemob.com/easemob-demo/testapp/users" -d '[{"username":"user1", "password":"123","nickname":"testuser1"}, {"username":"user2", "password":"456","nickname":"testuser2"}]'
+curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE" -i  "https://a1.easecdn.com/chat-demo/testapp/users" -d '[{"username":"user1", "password":"123","nickname":"testuser1"}, {"username":"user2", "password":"456","nickname":"testuser2"}]'
 ```
 
 #### Examples of possible returned results
@@ -693,7 +726,7 @@ curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKd
   "action": "post",
   "application": "22bcffa0-8f86-11e6-9df8-516f6df68c6d",
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "278b5e60-e27b-11e8-8f9b-d5d83ebec806",
@@ -725,7 +758,7 @@ curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKd
 #### Request Example 2
 
 ``` php
-curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE" -i  "https://a1.easemob.com/easemob-demo/testapp/users" -d '[{"username":"user1", "password":"123","nickname":"testuser1"}, {"username":"user2", "password":"456","nickname":"testuser2"}, {"username":"user3", "password":"789","nickname":"testuser3"}]'
+curl -X POST -H "Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE" -i  "https://a1.easecdn.com/chat-demo/testapp/users" -d '[{"username":"user1", "password":"123","nickname":"testuser1"}, {"username":"user2", "password":"456","nickname":"testuser2"}, {"username":"user3", "password":"789","nickname":"testuser3"}]'
 ```
 
 When there is a registered user3 in the request body, then the request will be successful and user1 and user2 will also be registered, and the data array in the response will return the user with the problem.
@@ -739,7 +772,7 @@ When there is a registered user3 in the request body, then the request will be s
   "action": "post",
   "application": "22bcffa0-8f86-11e6-9df8-516f6df68c6d",
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "278b5e60-e27b-11e8-8f9b-d5d83ebec806",
@@ -775,13 +808,13 @@ When there is a registered user3 in the request body, then the request will be s
 
 If the returned result is <font color='red'> 429, 503 </font> or other \<wrapem>5xx\</wrap>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get a single user
 
-Interface to get the details of a single IM user.
+Interface to get the details of a single Chat user.
 
 #### HTTP Request
 
@@ -792,7 +825,7 @@ Interface to get the details of a single IM user.
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username you need to get when requesting.
+You need to fill in {username} corresponding to the Chat username you need to get when requesting.
 
 #### Request Headers
 
@@ -807,7 +840,7 @@ You need to fill in {username} corresponding to the IM username you need to get 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -830,7 +863,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -838,7 +871,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>notification_display_style</td>
@@ -873,7 +906,7 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1'
 ```
 
 #### Examples of possible returned results
@@ -884,7 +917,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 {
   "action": "get",
   "path": "/users",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1",
   "entities": [
     {
       "uuid": "0ffe2d80-ed76-11e8-8d66-279e3e1c214b",
@@ -914,7 +947,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, unauthorized\[no token, token error, token expired\]**
+**return value 401, unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -926,13 +959,26 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Bulk user acquisition
+### Users' acquisition
 
 This interface returns by default sorted by creation time, if you need to specify the number of fetches, you need to add the parameter limit=N, N is the number value. About paging: If the number in the DB is greater than N, it returns JSON will carry a field "cursor", we call it "cursor", the cursor can be understood as a pointer to the result set, the value is variable. When fetching data down the page with the cursor, you can get the value of the next page. If there is a next page, the return value still has this field, until there is no field, it means that the last page has been reached. cursor's meaning is data (true) paging.
 
@@ -945,7 +991,7 @@ This interface returns by default sorted by creation time, if you need to specif
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username you need to get when requesting.
+You need to fill in {username} corresponding to the Chat username you need to get when requesting.
 
 #### Request Headers
 
@@ -960,7 +1006,7 @@ You need to fill in {username} corresponding to the IM username you need to get 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -983,7 +1029,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -991,7 +1037,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>notification_display_style</td>
@@ -1026,13 +1072,13 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easemob.com/easemob-demo/testapp/users?limit=2'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easecdn.com/chat-demo/testapp/users?limit=2'
 ```
 
 Use the returned cursor to get the next page
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easemob.com/easemob-demo/testapp/users?limit=2&cursor=LTgzNDAxMjM3OToxTEFnNE9sNEVlaVQ0UEdhdmJNR2tB'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easecdn.com/chat-demo/testapp/users?limit=2&cursor=LTgzNDAxMjM3OToxTEFnNE9sNEVlaVQ0UEdhdmJNR2tB'
 ```
 
 #### Examples of possible returned results
@@ -1048,7 +1094,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
     ]
   },
   "path": "/users",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "ab90eff0-e978-11e8-9174-8f161649a182",
@@ -1076,7 +1122,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1088,16 +1134,29 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 > Pagination
 
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easemob.com/easemob-demo/testapp/users?limit=2&cursor=LTgzNDAxMjM3OToxTEFnNE9sNEVlaVQ0UEdhdmJNR2tB'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easecdn.com/chat-demo/testapp/users?limit=2&cursor=LTgzNDAxMjM3OToxTEFnNE9sNEVlaVQ0UEdhdmJNR2tB'
 ```
 
 #### Examples of possible returned results
@@ -1116,7 +1175,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
     ]
   },
   "path": "/users",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "fef7f250-e983-11e8-ba39-0fed7dcc3cdd",
@@ -1134,7 +1193,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1146,9 +1205,22 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1165,7 +1237,7 @@ When deleting a user, if the user is the owner of a group or chat room, the syst
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the IM username that needs to be deleted when requesting.
+You need to fill in {username} corresponding to the Chat username that needs to be deleted when requesting.
 
 #### Request Headers
 
@@ -1180,14 +1252,14 @@ You need to fill in {username} corresponding to the IM username that needs to be
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easemob.com/easemob-demo/testapp/users/user1'
+curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7CoyjusbEeixOi3iod4eDAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnJlhJIwBPGgCqtjiyVnR209iyr8kNbhJhhanNQDdP9CMmpK2G-NIUOQ' 'http://a1.easecdn.com/chat-demo/testapp/users/user1'
 ```
 
 #### Examples of possible returned results
@@ -1199,7 +1271,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
   "action": "delete",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "ab90eff0-e978-11e8-9174-8f161649a182",
@@ -1213,7 +1285,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
   ],
   "timestamp": 1542559539776,
   "duration": 39,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -1230,7 +1302,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1242,15 +1314,28 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Bulk delete users
+### Delete users'
 
-Delete the specified number of Easemob accounts under an APP. You can delete N users at a time, and the value can be modified. It is recommended that this value is between 100-500 and not too large. It should be noted that here is just a batch to delete the N users, which ones are not specified, you can see which users are deleted in the return value.
+Delete the specified number of Chat accounts under an APP. You can delete N users at a time, and the value can be modified. It is recommended that this value is between 100-500 and not too large. It should be noted that here is just a batch to delete the N users, which ones are not specified, you can see which users are deleted in the return value.
 
 #### HTTP Request
 
@@ -1274,14 +1359,14 @@ Delete the specified number of Easemob accounts under an APP. You can delete N u
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users?limit=2'
+curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users?limit=2'
 ```
 
 #### Examples of possible returned results
@@ -1298,7 +1383,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
     ]
   },
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "b2aade90-e978-11e8-a974-f3368f82e4f1",
@@ -1321,13 +1406,13 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
   ],
   "timestamp": 1542867197779,
   "duration": 504,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp",
   "cursor": "LTgzNDAxMjM3OTpfdmZ5VU9tREVlaTZPUV90ZmN3ODNR"
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1339,15 +1424,28 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Modify user password
 
-You can change the login password of IM users through the server-side interface, without providing the original password.
+You can change the login password of Chat users through the server-side interface, without providing the original password.
 
 #### HTTP Request
 
@@ -1358,7 +1456,7 @@ You can change the login password of IM users through the server-side interface,
   </tr>
 </table>
 
-You need to fill in the request with {username}, the IM username that needs to change the password.
+You need to fill in the request with {username}, the Chat username that needs to change the password.
 
 #### Request Headers
 
@@ -1373,7 +1471,7 @@ You need to fill in the request with {username}, the IM username that needs to c
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -1395,7 +1493,7 @@ You need to fill in the request with {username}, the IM username that needs to c
 ``` php
 curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -d '{  
    "newpassword": "123"  
- }' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/password'
+ }' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/password'
 ```
 
 #### Examples of possible returned results
@@ -1422,9 +1520,22 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1441,7 +1552,7 @@ Set the user's push nickname to be used when pushing offline.
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the request, and you need to modify the IM username of the push nickname.
+You need to fill in {username} corresponding to the request, and you need to modify the Chat username of the push nickname.
 
 #### Request Headers
 
@@ -1456,7 +1567,7 @@ You need to fill in {username} corresponding to the request, and you need to mod
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -1492,11 +1603,11 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>nickname</td>
-    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Easemob does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the IM username registered to your user</td>
+    <td>Nickname (optional), the nickname that will be used in iOS Apns push (only the nickname displayed in the push notification bar), not the nickname of the user's personal information, Chat does not save the user's nickname, avatar and other personal information, you need to save it on your own server and bind it to the Chat username registered to your user</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -1509,7 +1620,7 @@ View the information contained in the entities field in the return value
 ``` php
 curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -d '{ 
    "nickname": "testuser"  
- }' 'http://a1.easemob.com/easemob-demo/testapp/users/user1'
+ }' 'http://a1.easecdn.com/chat-demo/testapp/users/user1'
 ```
 
 #### Examples of possible returned results
@@ -1521,7 +1632,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
   "action": "put",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities": [
     {
       "uuid": "4759aa70-eba5-11e8-925f-6fa0510823ba",
@@ -1535,7 +1646,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
   ],
   "timestamp": 1542596083685,
   "duration": 6,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -1552,7 +1663,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1564,9 +1675,22 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1583,7 +1707,7 @@ Set the way of pushing messages to the client, which is effective in time after 
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the request, the IM username that needs to be pushed.
+You need to fill in {username} corresponding to the request, the Chat username that needs to be pushed.
 
 #### Request Headers
 
@@ -1598,7 +1722,7 @@ You need to fill in {username} corresponding to the request, the IM username tha
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -1634,7 +1758,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -1646,7 +1770,7 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  https://a1.easemob.com/easemob-demo/testapp/users/a -d '{"notification_display_style": "1"}'
+curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  https://a1.easecdn.com/chat-demo/testapp/users/a -d '{"notification_display_style": "1"}'
 ```
 
 #### Examples of possible returned results
@@ -1658,7 +1782,7 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
   "action" : "put",
   "application" : "17d59e50-0aee-11e8-8092-0dc80c0f5e99",
   "path" : "/users",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities" : [ {
     "uuid" : "3b8c9890-7b9a-11e8-9d88-f50bf55cafad",
     "type" : "user",
@@ -1680,14 +1804,27 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Set no disturbance
 
-Set IM users to be free from interruptions, during which they will not receive offline message pushes.
+Set Chat users to be free from interruptions, during which they will not receive offline message pushes.
 
 #### HTTP Request
 
@@ -1698,7 +1835,7 @@ Set IM users to be free from interruptions, during which they will not receive o
   </tr>
 </table>
 
-You need to fill in {username} when requesting, and you need to set the IM user name for no disturbance
+You need to fill in {username} when requesting, and you need to set the Chat user name for no disturbance
 
 #### Request Headers
 
@@ -1713,7 +1850,7 @@ You need to fill in {username} when requesting, and you need to set the IM user 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -1757,7 +1894,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -1783,13 +1920,13 @@ View the information contained in the entities field in the return value
 **Setting no-disturb time**
 
 ``` php
-curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  "https://a1.easemob.com/easemob-demo/testapp/users/a " -d '{"notification_no_disturbing": true,"notification_no_disturbing_start": "1","notification_no_disturbing_end": "3"}'
+curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  "https://a1.easecdn.com/chat-demo/testapp/users/a " -d '{"notification_no_disturbing": true,"notification_no_disturbing_start": "1","notification_no_disturbing_end": "3"}'
 ```
 
 **Cancel No Disturb**
 
 ``` php
-curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  "https://a1.easemob.com/easemob-demo/testapp/users/a " -d '{"notification_no_disturbing": false}'
+curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  "https://a1.easecdn.com/chat-demo/testapp/users/a " -d '{"notification_no_disturbing": false}'
 ```
 
 #### Examples of possible returned results
@@ -1801,7 +1938,7 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
   "action" : "put",
   "application" : "17d59e50-0aee-11e8-8092-0dc80c0f5e99",
   "path" : "/users",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/users",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/users",
   "entities" : [ {
     "uuid" : "3b8c9890-7b9a-11e8-9d88-f50bf55cafad",
     "type" : "user",
@@ -1823,15 +1960,28 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## Friends and Blacklist
+## Contacts and Blacklist
 
-Easemob provides several interfaces for adding and removing friends and blacklists of IM users.
+Chat provides several interfaces for adding and removing contacts and blacklists of Chat users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -1840,19 +1990,19 @@ Easemob provides several interfaces for adding and removing friends and blacklis
     <th>Description</th>
   </tr>
   <tr>
-    <td>Add Friends</td>
-    <td>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{friend_username}</td>
-    <th>Add as friend</th>
+    <td>Add Contacts</td>
+    <td>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{contact_username}</td>
+    <th>Add as contact</th>
   </tr>
   <tr>
-    <td>Remove Friends</td>
-    <td>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{friend_username}   Remove users from the friends list</td>
-    <th>Remove users from the friends list</th>
+    <td>Remove Contacts</td>
+    <td>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{contact_username}   Remove users from the contacts list</td>
+    <th>Remove users from the contacts list</th>
   </tr>
   <tr>
-    <td>Get a list of friends</td>
+    <td>Get a list of contacts</td>
     <td>/{org_name}/{app_name}/users/{owner_username}/contacts/users</td>
-    <th>Get a list of friends and information</th>
+    <th>Get a list of contacts and information</th>
   </tr>
   <tr>
     <th>Get Blacklist</th>
@@ -1871,22 +2021,22 @@ Easemob provides several interfaces for adding and removing friends and blacklis
   </tr>
 </table>
 
-### Add Friends
+### Add Contacts
 
-To add a friend, the friend must be an IM user who is under the same APPkey as you.
+To add a contact, the contact must be an Chat user who is under the same APPkey as you.
 
-The maximum number of friends per user under the community version appkey is 1000, and the maximum number of friends varies from version to version appkey, please refer to: [Function Introduction](https://www.easemob.com/pricing/im)
+The maximum number of contacts per user under the community version appkey is 1000, and the maximum number of contacts varies from version to version appkey, please refer to: [Function Introduction](https://www.easemob.com/pricing/im)
 
 #### HTTP Request
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>POST</th>
-    <th>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{friend_username}</th>
+    <th>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{contact_username}</th>
   </tr>
 </table>
 
-You need to fill in the request with {owner_username}, the username of the friend you want to add, and {friend_username}, the friend's username.
+You need to fill in the request with {owner_username}, the username of the contact you want to add, and {contact_username}, the contact's username.
 
 #### Request Headers
 
@@ -1901,26 +2051,26 @@ You need to fill in the request with {owner_username}, the username of the frien
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/contacts/users/user2'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/contacts/users/user2'
 ```
 
 #### Examples of possible returned results
 
-**return value 200, means add friend successfully**
+**return value 200, means add contact successfully**
 
 ``` json
 {
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
   "entities": [
     {
       "uuid": "b2aade90-e978-11e8-a974-f3368f82e4f1",
@@ -1934,12 +2084,12 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
   ],
   "timestamp": 1542598913819,
   "duration": 63,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
 
-**returns 404, indicating that the IM user or the friend being added does not exist**
+**returns 404, indicating that the Chat user or the contact being added does not exist**
 
 ``` json
 {
@@ -1951,7 +2101,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**return value 401, unauthorized\[no token, token error, token expired\]**
+**return value 401, unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1963,26 +2113,39 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Remove Friends
+### Remove Contacts
 
-Removes an IM user from the IM user's buddy list.
+Removes an Chat user from the Chat user's buddy list.
 
 #### HTTP Request
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>DELETE</th>
-    <th>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{friend_username}</th>
+    <th>/{org_name}/{app_name}/users/{owner_username}/contacts/users/{contact_username}</th>
   </tr>
 </table>
 
-You need to fill in the request with {owner_username}, the username of the friend to be deleted, and {friend_username}, the username of the friend to be deleted.
+You need to fill in the request with {owner_username}, the username of the contact to be deleted, and {contact_username}, the username of the contact to be deleted.
 
 #### Request Headers
 
@@ -1997,26 +2160,26 @@ You need to fill in the request with {owner_username}, the username of the frien
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/contacts/users/user2'
+curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/contacts/users/user2'
 ```
 
 #### Examples of possible returned results
 
-**Return value 200, means the friend deletion is successful**
+**Return value 200, means the contact deletion is successful**
 
 ``` json
 {
   "action": "delete",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/contacts",
   "entities": [
     {
       "uuid": "b2aade90-e978-11e8-a974-f3368f82e4f1",
@@ -2030,12 +2193,12 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
   ],
   "timestamp": 1542599266616,
   "duration": 350,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
 
-**returns a value of 404, indicating that this IM user or deleted friend does not exist**
+**returns a value of 404, indicating that this Chat user or deleted contact does not exist**
 
 ``` json
 {
@@ -2047,7 +2210,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2059,15 +2222,28 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Get a list of friends
+### Get a list of contacts
 
-Get the list of IM user's friends.
+Get the list of Chat user's contacts.
 
 #### HTTP Request
 
@@ -2078,7 +2254,7 @@ Get the list of IM user's friends.
   </tr>
 </table>
 
-You need to fill in {owner_username} in the request to get the user name of the friends list
+You need to fill in {owner_username} in the request to get the user name of the contacts list
 
 #### Request Headers
 
@@ -2093,7 +2269,7 @@ You need to fill in {owner_username} in the request to get the user name of the 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2106,24 +2282,24 @@ You need to fill in {owner_username} in the request to get the user name of the 
   </tr>
   <tr>
     <td>username</td>
-    <td>"user1", "user2"，get the list of friends</td>
+    <td>"user1", "user2"，get the list of contacts</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/contacts/users'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/contacts/users'
 ```
 
 #### Examples of possible returned results
 
-**Returns 200, indicating the success of viewing friends**
+**Returns 200, indicating the success of viewing contacts**
 
 ``` json
 {
   "action": "get",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1/contacts/users",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1/contacts/users",
   "entities": [],
   "data": [
     "user3",
@@ -2135,7 +2311,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2147,7 +2323,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2159,15 +2335,28 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get Blacklist
 
-Get the blacklist of IM users.
+Get the blacklist of Chat users.
 
 #### HTTP Request
 
@@ -2193,7 +2382,7 @@ You need to fill in the corresponding {owner_username} when requesting to get th
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2206,14 +2395,14 @@ You need to fill in the corresponding {owner_username} when requesting to get th
   </tr>
   <tr>
     <td>username</td>
-    <td>"user1", "user2"，get the blacklist of friends</td>
+    <td>"user1", "user2"，get the blacklist of contacts</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/blocks/users'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/blocks/users'
 ```
 
 #### Examples of possible returned results
@@ -2223,7 +2412,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 ``` json
 {
   "action": "get",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1/blocks/users",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1/blocks/users",
   "entities": [],
   "data": [
     "user2"
@@ -2234,7 +2423,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2246,7 +2435,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2258,15 +2447,28 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Add blacklist
 
-Add one or more users to the blacklist list of IM users, and the users in the blacklist cannot send messages to this IM user. The maximum number of blacklisted users is 500 per user.
+Add one or more users to the blacklist list of Chat users, and the users in the blacklist cannot send messages to this Chat user. The maximum number of blacklisted users is 500 per user.
 
 #### HTTP Request
 
@@ -2292,7 +2494,7 @@ You need to fill in the request with {owner_username}, the username to be added 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2331,7 +2533,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
    "usernames": [  
      "user2"  
    ]  
- }' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/blocks/users'
+ }' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/blocks/users'
 ```
 
 #### Examples of possible returned results
@@ -2342,19 +2544,19 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 {
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp",
   "entities": [],
   "data": [
     "user2"
   ],
   "timestamp": 1542600372046,
   "duration": 11,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2378,7 +2580,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2390,15 +2592,28 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Remove Blacklist
 
-Remove users from IM user's blacklist. After removing a user from the blacklist, the user is restored to the friend, or unfriend, relationship. You can send and receive messages normally.
+Remove users from Chat user's blacklist. After removing a user from the blacklist, the user is restored to the contact, or uncontact, relationship. You can send and receive messages normally.
 
 #### HTTP Request
 
@@ -2424,7 +2639,7 @@ You need to fill in the request with {owner_username}, the username you want to 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2437,14 +2652,14 @@ You need to fill in the request with {owner_username}, the username you want to 
   </tr>
   <tr>
     <td>entities</td>
-    <td>Details of the IM users removed from the blacklist</td>
+    <td>Details of the Chat users removed from the blacklist</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/blocks/users/user2'
+curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/blocks/users/user2'
 ```
 
 #### Examples of possible returned results
@@ -2456,7 +2671,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
   "action": "delete",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/users/4759aa70-eba5-11e8-925f-6fa0510823ba/blocks",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/blocks",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/users/4759aa70-eba5-11e8-925f-6fa0510823ba/blocks",
   "entities": [
     {
       "uuid": "b2aade90-e978-11e8-a974-f3368f82e4f1",
@@ -2470,12 +2685,12 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
   ],
   "timestamp": 1542600712985,
   "duration": 20,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
 
-**returns a value of 404, indicating that this IM user or the subtracted user does not exist**
+**returns a value of 404, indicating that this Chat user or the subtracted user does not exist**
 
 ``` json
 {
@@ -2487,7 +2702,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2499,15 +2714,28 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Online and Offline
 
-Easemob provides several interfaces to view the online/offline status of users, the online/offline status and number of messages from users.
+Chat provides several interfaces to view the online/offline status of users, the online/offline status and number of messages from users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -2521,14 +2749,14 @@ Easemob provides several interfaces to view the online/offline status of users, 
     <td>View the online status of a user</td>
   </tr>
   <tr>
-    <th>Get user online status in bulk</th>
+    <th>Users' online status</th>
     <th>/{org_name}/{app_name}/users/batch/status</th>
-    <th>Bulk view of users' online status</th>
+    <th>View of users' online status</th>
   </tr>
   <tr>
     <th>Get the number of offline messages</th>
     <th>/{org_name}/{app_name}/users/{owner_username}/offline_msg_count</th>
-    <th>Get the number of offline messages for an IM user</th>
+    <th>Get the number of offline messages for an Chat user</th>
   </tr>
   <tr>
     <th>Get the status of offline messages</th>
@@ -2565,7 +2793,7 @@ You need to fill in {username} corresponding to the request, to get the online s
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2587,7 +2815,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/status'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/status'
 ```
 
 #### Examples of possible returned results
@@ -2597,7 +2825,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 ``` json
 {
   "action": "get",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1/status",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1/status",
   "entities": [],
   "data": {
     "user1": "offline"
@@ -2608,7 +2836,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2620,7 +2848,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2632,15 +2860,28 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Get user online status in bulk
+### Get users' online status
 
-Batch view the online status of users, up to 100 users at the same time.
+View the online status of users, up to 100 users at the same time.
 
 #### HTTP Request
 
@@ -2664,7 +2905,7 @@ Batch view the online status of users, up to 100 users at the same time.
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2699,7 +2940,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X POST http://a1.easemob.com/easemob-demo/chatdemoui/users/batch/status -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'Content-Type: application/json' -d '{"usernames":["user1","user2"]}'
+curl -X POST http://a1.easecdn.com/chat-demo/chatdemoui/users/batch/status -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'Content-Type: application/json' -d '{"usernames":["user1","user2"]}'
 ```
 
 #### Examples of possible returned results
@@ -2724,7 +2965,7 @@ If an incorrect user name is requested, i.e., a user state that does not exist i
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2736,13 +2977,26 @@ If an incorrect user name is requested, i.e., a user state that does not exist i
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry; or or the number of requested users is greater than 100, please resend the correct number of requests. See [interface flow limiting instructions](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause a little and retry; or or the number of requested users is greater than 100, please resend the correct number of requests. See [interface flow limiting instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 ------------------------------------------------------------------------
 
 ### Get the number of user offline messages
 
-Gets the number of offline messages for IM users.
+Gets the number of offline messages for Chat users.
 
 #### HTTP Request
 
@@ -2768,7 +3022,7 @@ You need to fill in {owner_username} corresponding to the request, the username 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2790,7 +3044,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/offline_msg_count'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/offline_msg_count'
 ```
 
 #### Examples of possible returned results
@@ -2800,7 +3054,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 ``` json
 {
   "action": "get",
-  "uri": "http://tomcatcluster_users/easemob-demo/testapp/users/user1/offline_msg_count",
+  "uri": "http://tomcatcluster_users/chat-demo/testapp/users/user1/offline_msg_count",
   "entities": [],
   "data": {
     "user1": 0
@@ -2811,7 +3065,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2823,7 +3077,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2835,15 +3089,28 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Get the status of an offline message
 
-Get the offline message status of IM users, view the status of offline messages of users offline messages
+Get the offline message status of Chat users, view the status of offline messages of users offline messages
 
 #### HTTP Request
 
@@ -2869,7 +3136,7 @@ Need to fill in {username} corresponding to the request, the username to get the
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -2884,14 +3151,14 @@ View the information contained in the data field in the return value
   </tr>
   <tr>
     <td>msg_id</td>
-    <td>"corresponding ID number \" means the corresponding message id,  "delivered\" means the status of the message has been delivered,  "undelivered\" means the message has not been delivered</td>
+    <td>"corresponding ID number " means the corresponding message id,  "delivered" means the status of the message has been delivered,  "undelivered" means the message has not been delivered</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/offline_msg_status/123'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/offline_msg_status/123'
 ```
 
 #### Examples of possible returned results
@@ -2901,7 +3168,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 ``` json
 {
   "action": "get",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1/offline_msg_status/123",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1/offline_msg_status/123",
   "entities": [],
   "data": {
     "123": "delivered"
@@ -2912,7 +3179,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -2924,7 +3191,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -2936,15 +3203,28 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Account Disabling and Unblocking
 
-Easemob provides an interface for disabling and unblocking IM users. Disabling a user will immediately take them offline and prevent them from logging into Easemob until they are unblocked. This is commonly used for immediate handling of abnormal users.
+Chat provides an interface for disabling and unblocking Chat users. Disabling a user will immediately take them offline and prevent them from logging into Chat until they are unblocked. This is commonly used for immediate handling of abnormal users.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -2966,7 +3246,7 @@ Easemob provides an interface for disabling and unblocking IM users. Disabling a
 
 ### User account disable
 
-Disable an IM user's account. After disabling, the user cannot log in, and the account will resume normal use after the next unban.
+Disable an Chat user's account. After disabling, the user cannot log in, and the account will resume normal use after the next unban.
 
 #### HTTP Request
 
@@ -2992,7 +3272,7 @@ You need to fill in {username} corresponding to the username to be disabled in t
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -3015,7 +3295,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>username</td>
-    <td>Username, also known as Easemob ID</td>
+    <td>Username, also known as Chat user ID</td>
   </tr>
   <tr>
     <td>activated</td>
@@ -3026,7 +3306,7 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/deactivate'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/deactivate'
 ```
 
 #### Examples of possible returned results
@@ -3052,7 +3332,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns a value of 400, indicating that this IM user does not exist**
+**returns a value of 400, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3064,7 +3344,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -3076,15 +3356,28 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### User account unblock
 
-Unblock the IM user account from the disable to unblock operation, which requires the user to log in again.
+Unblock the Chat user account from the disable to unblock operation, which requires the user to log in again.
 
 #### HTTP Request
 
@@ -3110,7 +3403,7 @@ You need to fill in {username} corresponding to the username to be unblocked in 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -3123,14 +3416,14 @@ You need to fill in {username} corresponding to the username to be unblocked in 
   </tr>
   <tr>
     <td>action</td>
-    <td>operation, "activate user\" means unblock/activate IM user</td>
+    <td>operation, "activate user\" means unblock/activate Chat user</td>
   </tr>
 </table>
 
 #### Request Example
 
 ``` php
-curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/activate'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/activate'
 ```
 
 #### Examples of possible returned results
@@ -3145,7 +3438,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3157,7 +3450,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-**Return value 401, means unauthorized \ [no token, token error, token expired \]**
+**Return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -3169,15 +3462,28 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Forced downline
 
-Force the IM user status to offline and the user will need to log in again to use it properly.
+Force the Chat user status to offline and the user will need to log in again to use it properly.
 
 #### HTTP Request
 
@@ -3203,7 +3509,7 @@ You need to fill in {username} corresponding to the request, the username to be 
   </tr>
   <tr>
     <td>Authorization</td>
-    <td>Bearer \${token}</td>
+    <td>Bearer ${token}</td>
   </tr>
 </table>
 
@@ -3225,7 +3531,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/users/user1/disconnect'
+curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/users/user1/disconnect'
 ```
 
 #### Examples of possible returned results
@@ -3235,7 +3541,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 ``` json
 {
   "action": "get",
-  "uri": "http://a1.easemob.com/easemob-demo/testapp/users/user1/disconnect",
+  "uri": "http://a1.easecdn.com/chat-demo/testapp/users/user1/disconnect",
   "entities": [],
   "data": {
     "result": true
@@ -3246,7 +3552,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**returns a value of 404, indicating that this IM user does not exist**
+**returns a value of 404, indicating that this Chat user does not exist**
 
 ``` json
 {
@@ -3258,7 +3564,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -3270,6 +3576,19 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Online testing using Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using Platform API](http://api-docs.easemob.com/)

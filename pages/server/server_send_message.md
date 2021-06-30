@@ -7,16 +7,12 @@ permalink: server_send_message.html
 folder: server
 ---
 
-# Send a message
-
-------------------------------------------------------------------------
-
 Chat Related information
-The API can send text messages, send image messages, send voice messages, send video messages, send pass-through messages and send extended messages.
+The API can send text messages, send image messages, send audio messages, send video messages, send signal messages and send extended messages.
 
-To send a file type message, you need to upload the file to the Easemob server first, refer to the documentation: [file upload and download](/server/server_upload_and_download_files.html)
+To send a file type message, you need to upload the file to the Chat server first, refer to the documentation: [file upload and download](/server/server_upload_and_download_files.html)
 
-REST interface to send messages, will not determine whether the Easemob id exists under appkey.
+Platform API interface to send messages, will not determine whether the Chat id exists under appkey.
 
 ## Process description
 
@@ -30,7 +26,7 @@ REST interface to send messages, will not determine whether the Easemob id exist
     <td>directly edit message content  to send</td>
   </tr>
   <tr>
-    <td>Send image/voice/video message</td>
+    <td>Send image/audio/video message</td>
     <td>You need to upload these three types of files first, get the corresponding parameters from the return value of the interface, edit them in the message body according to the API requirements and then send</td>
   </tr>
 </table>
@@ -88,7 +84,7 @@ Sends a message to one or more users, or one or more groups. With the optional "
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>from</td>
@@ -116,7 +112,7 @@ Sends a message to one or more users, or one or more groups. With the optional "
 #### Example request
 
 ``` php
-curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMtP5n9zvOQEei7KclxPqJTkgAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnXcBpfQBPGgDC09w5IdrfqG_H8_F53VLVTG0_82GXyEF8ZdMCt9-UpQ ' -d '{"target_type": "users", "target": ["user2", "user3"], "msg": {"type": "txt", "msg": "testmessage"}, "from": "user1"}' 'http://a1 .easemob.com/easemob-demo/testapp/messages'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMtP5n9zvOQEei7KclxPqJTkgAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnXcBpfQBPGgDC09w5IdrfqG_H8_F53VLVTG0_82GXyEF8ZdMCt9-UpQ ' -d '{"target_type": "users", "target": ["user2", "user3"], "msg": {"type": "txt", "msg": "testmessage"}, "from": "user1"}' 'http://a1.easecdn.com/chat-demo/testapp/messages'
 ```
 
 **Examples of possible returned results**
@@ -128,14 +124,14 @@ The return value of 200 indicates that the message was sent successfully.
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/messages",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/messages",
   "data": {
     "user2": "success",
     "user3": "success"
   },
   "timestamp": 1543922150902,
   "duration": 1,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -152,7 +148,7 @@ Return value 400, means massage structure error
 }
 ```
 
-Return value 401, means unauthorized \ [no token, token error, token expired \]
+**Return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -166,7 +162,7 @@ Return value 401, means unauthorized \ [no token, token error, token expired \]
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details 
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -223,7 +219,7 @@ Sends a message to one or more users, or one or more groups. With the optional "
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>url</td>
@@ -267,7 +263,7 @@ Sends a message to one or more users, or one or more groups. With the optional "
 #### Request example
 
 ``` php
-curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages'   -H 'Authorization: Bearer YWMtsFVigGSuEeSTc7k5183Z5QAAAUqzeFx_9IjRch-ZxNbIlBIvx_4GWvzheSU'  -d '{"target_type":"users","target":["user2"],"from":"user1","msg":{"type":"img","filename":"testimg.jpg","secret":"VfEpSmSvEeS7yU8dwa9rAQc-DIL2HhmpujTNfSTsrDt6eNb_","url":"https://a1.easemob.com/easemob-demo/testapp/chatfiles/55f12940-64af-11e4-8a5b-ff2336f03252","size":{"width":480,"height":720}}}'
+curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages'   -H 'Authorization: Bearer YWMtsFVigGSuEeSTc7k5183Z5QAAAUqzeFx_9IjRch-ZxNbIlBIvx_4GWvzheSU'  -d '{"target_type":"users","target":["user2"],"from":"user1","msg":{"type":"img","filename":"testimg.jpg","secret":"VfEpSmSvEeS7yU8dwa9rAQc-DIL2HhmpujTNfSTsrDt6eNb_","url":"https://a1.easecdn.com/chat-demo/testapp/chatfiles/55f12940-64af-11e4-8a5b-ff2336f03252","size":{"width":480,"height":720}}}'
 ```
 
 #### **Examples of possible returned results**
@@ -278,14 +274,14 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages'   -H 'Aut
 {
   "action" : "post",
   "application" : "4d7e4ba0-dc4a-11e3-90d5-e1ffbaacdaf5",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/messages",
   "entities" : [ ],
   "data" : {
      "user2" : "success"
   },
   "timestamp" : 1415166497129,
   "duration" : 12,
-  "organization" : "easemob-demo",
+  "organization" : "chat-demo",
   "applicationName" : "testapp"
 }
 ```
@@ -302,7 +298,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages'   -H 'Aut
 }
 ```
 
-**Return value 401, means unauthorized \ [no token, token error, token expired \]**
+**Return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -316,13 +312,13 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages'   -H 'Aut
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Easemob REST API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## Sending a voice message
+## Sending a audio message
 
-To send a voice file, you need to upload the voice file first, and then send this message. (The UUID in the URL and the secret can be get from the response after uploading)
+To send a audio file, you need to upload the audio file first, and then send this message. (The UUID in the URL and the secret can be get from the response after uploading)
 
 **Note**: In the calling procedure, if the request body exceeds 5kb, it will result in a 413 error and request needs to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
@@ -373,7 +369,7 @@ To send a voice file, you need to upload the voice file first, and then send thi
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>url</td>
@@ -381,7 +377,7 @@ To send a voice file, you need to upload the voice file first, and then send thi
   </tr>
   <tr>
     <td>filename</td>
-    <td>The name of the voice</td>
+    <td>The name of the audio</td>
   </tr>
   <tr>
     <td>secret</td>
@@ -389,7 +385,7 @@ To send a voice file, you need to upload the voice file first, and then send thi
   </tr>
   <tr>
     <td>length</td>
-    <td>voice time (in seconds)</td>
+    <td>audio time (in seconds)</td>
   </tr>
   <tr>
     <td>from</td>
@@ -419,7 +415,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" "https://a1.easemob.com/easemob-demo/testapp/messages" -d '{"target_type" : "users","target" : ["user2", "user3"],"msg" : {"type": "audio","url": "https://a1.easemob.com/easemob-demo/testapp/chatfiles/1dfc7f50-55c6-11e4-8a07-7d75b8fb3d42","filename": "testaudio.amr","length": 10,"secret": "Hfx_WlXGEeSdDW-SuX2EaZcXDC7ZEig3OgKZye9IzKOwoCjM"},"from" : "user1" }'
+curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" "https://a1.easecdn.com/chat-demo/testapp/messages" -d '{"target_type" : "users","target" : ["user2", "user3"],"msg" : {"type": "audio","url": "https://a1.easecdn.com/chat-demo/testapp/chatfiles/1dfc7f50-55c6-11e4-8a07-7d75b8fb3d42","filename": "testaudio.amr","length": 10,"secret": "Hfx_WlXGEeSdDW-SuX2EaZcXDC7ZEig3OgKZye9IzKOwoCjM"},"from" : "user1" }'
 ```
 
 #### Examples of possible returned results
@@ -431,14 +427,14 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/messages",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/messages",
   "data": {
     "user2": "success",
     "user3": "success"
   },
   "timestamp": 1543922150902,
   "duration": 1,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -455,7 +451,7 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
 }
 ```
 
-##### Return value 401, means unauthorized \ [no token, token error, token expired \]
+##### Return value 401, means unauthorized [no token, token error, token expired]
 
 ``` json
 {
@@ -469,7 +465,7 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) 
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -526,7 +522,7 @@ To send a video message, you need to upload a video file and a video thumbnail f
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>filename</td>
@@ -574,7 +570,7 @@ To send a video message, you need to upload a video file and a video thumbnail f
 #### Request example
 
 ``` php
-curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ'  -d '{"target_type":"users","target":["user2","user3"],"from":"user1","msg":{"type":"video","filename" : "testvideo.mp4","thumb" : "https://a1.easemob.com/easemob-demo/testapp/chatfiles/67279b20-7f69-11e4-8eee-21d3334b3a97","length" : 0,"secret":"VfEpSmSvEeS7yU8dwa9rAQc-DIL2HhmpujTNfSTsrDt6eNb_","file_length" : 58103,"thumb_secret" : "ZyebKn9pEeSSfY03ROk7ND24zUf74s7HpPN1oMV-1JxN2O2I","url" : "https://a1.easemob.com/easemob-demo/testapp/chatfiles/671dfe30-7f69-11e4-ba67-8fef0d502f46"}}'
+curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ'  -d '{"target_type":"users","target":["user2","user3"],"from":"user1","msg":{"type":"video","filename" : "testvideo.mp4","thumb" : "https://a1.easecdn.com/chat-demo/testapp/chatfiles/67279b20-7f69-11e4-8eee-21d3334b3a97","length" : 0,"secret":"VfEpSmSvEeS7yU8dwa9rAQc-DIL2HhmpujTNfSTsrDt6eNb_","file_length" : 58103,"thumb_secret" : "ZyebKn9pEeSSfY03ROk7ND24zUf74s7HpPN1oMV-1JxN2O2I","url" : "https://a1.easecdn.com/chat-demo/testapp/chatfiles/671dfe30-7f69-11e4-ba67-8fef0d502f46"}}'
 ```
 
 #### Examples of possible returned results
@@ -585,7 +581,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Autho
 {
   "action" : "post",
   "application" : "4d7e4ba0-dc4a-11e3-90d5-e1ffbaacdaf5",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/messages",
   "entities" : [ ],
   "data" : {
     "user2" : "success",
@@ -593,7 +589,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Autho
   },
   "timestamp" : 1415166234863,
   "duration" : 5,
-  "organization" : "easemob-demo",
+  "organization" : "chat-demo",
   "applicationName" : "testapp"
 }
 ```
@@ -610,7 +606,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Autho
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -624,7 +620,7 @@ curl -X POST -i 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Autho
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Easemob REST API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -681,7 +677,7 @@ Location message: get the latitude and longitude of the address, fill in the cor
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>from</td>
@@ -711,7 +707,7 @@ View the information contained in the data field in the return value
 #### Request example
 
 ``` php
-curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMtP5n9zvOQEei7KclxPqJTkgAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnXcBpfQBPGgDC09w5IdrfqG_H8_F53VLVTG0_82GXyEF8ZdMCt9-UpQ' -d '{"target_type": "users","target": ["user2"],"msg": {"type": "loc","lat": "39.966","lng":"116.322",."addr":"中国北京市海淀区中关村"},"from": "user1"}' 'http://a1.easemob.com/easemob-demo/testapp/messages'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Bearer YWMtP5n9zvOQEei7KclxPqJTkgAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnXcBpfQBPGgDC09w5IdrfqG_H8_F53VLVTG0_82GXyEF8ZdMCt9-UpQ' -d '{"target_type": "users","target": ["user2"],"msg": {"type": "loc","lat": "39.966","lng":"116.322",."addr":"中国北京市海淀区中关村"},"from": "user1"}' 'http://a1.easecdn.com/chat-demo/testapp/messages'
 ```
 
 #### Examples of possible returned results
@@ -723,13 +719,13 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
   "action": "post",
   "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
   "path": "/messages",
-  "uri": "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri": "https://a1.easecdn.com/chat-demo/testapp/messages",
   "data": {
     "user2": "success"
   },
   "timestamp": 1543922150902,
   "duration": 1,
-  "organization": "easemob-demo",
+  "organization": "chat-demo",
   "applicationName": "testapp"
 }
 ```
@@ -760,13 +756,13 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## Sending pass-through messages
+## Sending signal messages
 
-Pass-through messages: no client-side alerts (ring, vibrate, notification bar, etc.) and no APNS push (Apple push), but can be listened to on the client side, the specific function can be customized according to your own.
+Signal messages: no client-side alerts (ring, vibrate, notification bar, etc.) and no APNS push (Apple push), but can be listened to on the client side, the specific function can be customized according to your own.
 
 **Note**: In the calling procedure, if the request body exceeds 5kb will result in a 413 error and needs to be split into several smaller requests to retry. See [interface flow limit description](/server_rest_interface_flow_limiting_instructions.html)。
 
@@ -817,7 +813,7 @@ Pass-through messages: no client-side alerts (ring, vibrate, notification bar, e
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: picture message, loc: location message, audio: voice message, video: video message, file: file message, cmd: pass-through message</td>
+    <td>Message type; txt: text message, img: picture message, loc: location message, audio: audio message, video: video message, file: file message, cmd: signal message</td>
   </tr>
   <tr>
     <td>from</td>
@@ -847,7 +843,7 @@ View the information contained in the data field in the return value
 #### Request example
 
 ``` php
-curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" -i "https://a1.easemob.com/easemob-demo/testapp/messages" -d '{"target_type":"users","target":["user2","user3"],"msg":{"type":"cmd","action":"action1"},"from":"user1"}'
+curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" -i "https://a1.easecdn.com/chat-demo/testapp/messages" -d '{"target_type":"users","target":["user2","user3"],"msg":{"type":"cmd","action":"action1"},"from":"user1"}'
 ```
 
 #### Examples of possible returned results
@@ -858,7 +854,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 {
   "action" : "post",
   "application" : "4d7e4ba0-dc4a-11e3-90d5-e1ffbaacdaf5",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/messages",
   "entities" : [ ],
   "data" : {
     "user2" : "success",
@@ -866,7 +862,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
   },
   "timestamp" : 1415167842297,
   "duration" : 4,
-  "organization" : "easemob-demo",
+  "organization" : "chat-demo",
   "applicationName" : "testapp"
 }
 ```
@@ -883,7 +879,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -897,7 +893,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -954,11 +950,11 @@ Custom message: If the normal message type does not meet the user's message need
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message, custom: custom message</td>
+    <td>Message type; txt: text message, img: image message, loc: location message, audio: audio message, video: video message, file: file message, custom: custom message</td>
   </tr>
   <tr>
     <td>customEvent</td>
-    <td>user custom event type, must be string, value must satisfy the regular expression \[a-zA-Z0-9-\_/\. \]{1,32}, shortest 1 character longest 32 characters</td>
+    <td>user custom event type, must be string, value must satisfy the regular expression  [a-zA-Z0-9-\_/\. ]{1,32}, shortest 1 character longest 32 characters</td>
   </tr>
   <tr>
     <td>customExts</td>
@@ -1000,7 +996,7 @@ View the information contained in the data field in the return value
 #### Request example
 
 ``` php
-curl -L -X POST 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${token}' -d '{ "target_type":"users", "target":["user2"], "msg":{"type":"custom", "customEvent":"gift_1", "customExts":{"name":"flower","size":"16","price":"100"}}, "from":"user1","ext":{"attr1":"test"}}'
+curl -L -X POST 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${token}' -d '{ "target_type":"users", "target":["user2"], "msg":{"type":"custom", "customEvent":"gift_1", "customExts":{"name":"flower","size":"16","price":"100"}}, "from":"user1","ext":{"attr1":"test"}}'
 ```
 
 #### Examples of possible returned results
@@ -1010,9 +1006,9 @@ curl -L -X POST 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Accep
 ``` json
 {
     "path": "/messages",
-    "uri": "https://a1.easemob.com/easemob-demo/testapp/messages",
+    "uri": "https://a1.easecdn.com/chat-demo/testapp/messages",
     "timestamp": 1597292981767,
-    "organization": "easemob-demo",
+    "organization": "chat-demo",
     "application": "e82bcc5f-3366-4d96-a7c1-92de917ea2b0",
     "action": "post",
     "data": {
@@ -1035,12 +1031,12 @@ curl -L -X POST 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Accep
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
     "error": "unauthorized",
-    "exception": "EasemobSecurityException",
+    "exception": "ChatSecurityException",
     "timestamp": 1597292804746,
     "duration": 1,
     "error_description": "Unable to authenticate (OAuth)"
@@ -1049,7 +1045,7 @@ curl -L -X POST 'https://a1.easemob.com/easemob-demo/testapp/messages' -H 'Accep
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1106,7 +1102,7 @@ Extended messages: If the normal message type does not meet the user's messaging
   </tr>
   <tr>
     <td>type</td>
-    <td>Message type, not limited to text messages. Any message type can be extended; txt: text message, img: image message, loc: location message, audio: voice message, video: video message, file: file message</td>
+    <td>Message type, not limited to text messages. Any message type can be extended; txt: text message, img: image message, loc: location message, audio: audio message, video: video message, file: file message</td>
   </tr>
   <tr>
     <td>from</td>
@@ -1144,7 +1140,7 @@ View the information contained in the data field in the return value
 #### Request Example
 
 ``` php
-curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" -i "https://a1.easemob.com/easemob-demo/testapp/messages" -d '{"target_type":"users","target":["user2","user3"],"msg":{"type":"txt","msg":"testmessage"},"from":"user1","ext":{"attr1":"test"}}'
+curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-GwPsKwj_TruuxZfFSC2eIQ" -i "https://a1.easecdn.com/chat-demo/testapp/messages" -d '{"target_type":"users","target":["user2","user3"],"msg":{"type":"txt","msg":"testmessage"},"from":"user1","ext":{"attr1":"test"}}'
 ```
 
 #### Examples of possible returned results
@@ -1155,7 +1151,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 {
   "action" : "post",
   "application" : "4d7e4ba0-dc4a-11e3-90d5-e1ffbaacdaf5",
-  "uri" : "https://a1.easemob.com/easemob-demo/testapp/messages",
+  "uri" : "https://a1.easecdn.com/chat-demo/testapp/messages",
   "entities" : [ ],
   "data" : {
     "user2" : "success",
@@ -1163,7 +1159,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
   },
   "timestamp" : 1415167842297,
   "duration" : 4,
-  "organization" : "easemob-demo",
+  "organization" : "chat-demo",
   "applicationName" : "testapp"
 }
 ```
@@ -1180,7 +1176,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 }
 ```
 
-**return value 401, means unauthorized\[no token, token error, token expired\]**
+**return value 401, means unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -1194,11 +1190,11 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Easemob REST API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ### iOS extension messages
 
-Easemob provides the following types of extension fields.
+Chat provides the following types of extension fields.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -1207,26 +1203,26 @@ Easemob provides the following types of extension fields.
   </tr>
   <tr>
     <td>em_push_content</td>
-    <td><a href="/im/ios/apns/content#custom display"> custom push display </a></td>
+    <td><a href="/ios/ios_push_content.html#custom-display"> custom push display </a></td>
   </tr>
   <tr>
     <td>em_push_category</td>
-    <td><a href="/im/ios/apns/content#add category field"> add category field to APNs Payload </a></td>
+    <td><a href="/ios/ios_push_content.html#add-category-field"> add category field to APNs Payload </a></td>
   </tr>
   <tr>
     <td>em_push_sound</td>
-    <td><a href="/im/ios/apns/content#customize push sound"> customize push sound </a></td>
+    <td><a href="/ios/ios_push_content.html#custom-push-alert-sound"> customize push sound </a></td>
   </tr>
   <tr>
     <td>em_push_mutable_content</td>
-    <td><a href="/im/ios/apns/content#enable APNs notification extension"> enable APNs notification extension </a></td>
+    <td><a href="/ios/ios_push_content.html#enable-APNs-alert-extension"> enable APNs notification extension </a></td>
   </tr>
   <tr>
     <td>em_ignore_notification</td>
-    <td><a href="/im/ios/apns/content#send_silent_message"> send silent message </a></td>
+    <td><a href="/ios/ios_push_content.html#send-silent-message"> send silent message </a></td>
   </tr>
   <tr>
     <td>em_force_notification</td>
-    <td><a href="/im/ios/apns/content#set force push APNs"> set force push APNs </a></td>
+    <td><a href="/ios/ios_push_content.html#set-up-forced-push-APNs"> set force push APNs </a></td>
   </tr>
 </table>

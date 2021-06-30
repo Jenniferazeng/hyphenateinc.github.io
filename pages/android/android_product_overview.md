@@ -77,7 +77,7 @@ dependencies {
 }
 ```
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+SDK version number reference [Release Note](https://hyphenateinc.github.io/android_release_note.html)
 
 ### SDK directory explanation
 
@@ -87,7 +87,7 @@ The unzipped package downloaded from the official website is as follows:
 
 Here we mainly introduce the contents of the following four folders:
 
--   doc folder: SDK related API documentation
+-   Doc folder: SDK related API documentation
 -   Examples folder: ChatDemo
 -   Libs folder: Contains the JAR and files of so needed for the chat function
 
@@ -157,8 +157,6 @@ Permission configuration (more permissions may be needed in actual development, 
         android:label="@string/app_name"
         android:name="Your Application">
   
-        <!-- Set AppKey of Agora application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
         <!-- Declare the core functions of the service SDK required by the SDK-->
         <service android:name="io.agora.chat.ChatService" android:exported="true"/>
         <service android:name="io.agora.chat.JobService"
@@ -180,8 +178,6 @@ Permission configuration (more permissions may be needed in actual development, 
     </application>
 </manifest>
 ```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
 
 If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
 
@@ -213,11 +209,6 @@ Add the following keep in the ProGuard.
 ``` java
 -keep class io.agora.** {*;}
 -dontwarn  io.agora.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
 ```
 
 ------------------------------------------------------------------------

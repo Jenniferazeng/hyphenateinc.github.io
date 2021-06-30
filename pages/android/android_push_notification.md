@@ -6,9 +6,6 @@ toc: true
 permalink: android_push_notification.html
 folder: android
 ---
-# Third-party push integration
-
--------------------------------------------------- ----------------------
 
 ## Description
 
@@ -17,21 +14,20 @@ FCM push.
 
 At present, the main implementations of Xiaomi, Meizu, OPPO, and VIVO push are integrated in Agora chat SDK which try to provide developers with the simplest form of integrated three-party push. The implementation of push with Huawei and Google FCM are still in the Demo layer and needs to be integrated by the developer. For details, please refer to Agora’s Google FCM and Huawei’s push integration document.
 
-**Note:** `SDK V3.5.4 and above only support pushes of various third-party platforms. But SDK V3.5.4 will throw exception when Huawei registers for push. This bug has been fixed in V3.5.5 and later versions. It is recommended that users who are not integrated or users who are already in V3.5.4 upgrade the SDK to later versions. `
 
 ### Use conditions of each push:
 
 - Google FCM: Google Play Service and a network that can connect to Google servers are required
 
-- Xiaomi push: available on Xiaomi system
+- Xiaomi push: available on Xiaomi device
 
-- Huawei push: available on Huawei system
+- Huawei push: available on Huawei device
 
-- Meizu push: available on Meizu system
+- Meizu push: available on Meizu device
 
-- OPPO push: available on OPPO system
+- OPPO push: available on OPPO device
 
-- VIVO push: available on VIVO system
+- VIVO push: available on VIVO device
 
 - The SDK will check the push support status of the device following this order to  
 
@@ -39,13 +35,13 @@ At present, the main implementations of Xiaomi, Meizu, OPPO, and VIVO push are i
 
 `Recommendation: If your App has overseas usage scenarios, it is recommended to enable FCM push. Due to different push conditions, it is recommended to enable both Xiaomi and Huawei push. `
   
-  ### Message push process:
+### Message push process:
   
-  ![Message Push Flowchart](/im/android/push/image010.png){.align-center}
+![Message Push Flowchart](/im/android/push/image010.png){.align-center}
   
-  1. Determine what kind of push the device supports, (the app is configured with third-party push and meets the conditions to use the push)
-  2. get the push token according to the integrated third-party push SDK
-  3. Upload the name of the certificate (the chat server will determine which push channel to use) and push the token to the chat server
+1. Determine what kind of push the device supports, (the app is configured with third-party push and meets the conditions to use the push)
+2. get the push token according to the integrated third-party push SDK
+3. Upload the name of the certificate (the chat server will determine which push channel to use) and push the token to the chat server
 4. When sending a message to a device, the chat server will first determine whether the target device is online. If the target device is not online, please determine which push channel the target device uses (according to the name of the certificate uploaded by the target device). Use this push channel to push messages to the target device through a third-party push server
   
 #### The capabilities that the chat server should have:
@@ -106,7 +102,7 @@ Developers can call the following code to listen push related events (only suppo
 
 
 ```
-    # 环信 push
+    # chat push
     -dontwarn io.agora.push.***
     -keep class io.agora.push.*** {*;}
 ```
@@ -115,7 +111,6 @@ Developers can call the following code to listen push related events (only suppo
 
 ## Google FCM push integration
 
-`SDK 3.4.2 version starts to use FCM to push preferentially by default. On some Huawei devices with Google Play Service, developers can turn off the use of FCM push by setting ChatOptions#setUseFCM(false) to achieve the purpose of using Huawei push. `
 
 ### Description
 
@@ -155,7 +150,7 @@ ID,  fill in the Server Key copied above for certificate key.
 
 Used to check whether the device supports Google FCM push, `This step does not exist in the official FCM integration document. Due to the special domestic use environment, we have added this configuration for auxiliary detection.`
 
-Addconfiguration of `compile'com.google.android.gms:play-services-base:11.4.0`\' to the corresponding build.gradle file of the project. The configuration in the SDK demo is in easeui/build.gradle ,as follows:
+Addconfiguration of `compile'com.google.android.gms:play-services-base:11.4.0`\' to the corresponding build.gradle file of the project. As follows:
 ```
     dependencies {
         // add this line
@@ -168,9 +163,6 @@ Addconfiguration of `compile'com.google.android.gms:play-services-base:11.4.0`\'
 
     ```
     buildscript {
-        repositories {
-            jcenter()
-        }
         dependencies {
             // add this line
             classpath'com.google.gms:google-services:3.1.1'
@@ -253,28 +245,17 @@ AndroidManifest.xml:
         </intent-filter>
     </service>
 
-7.From the ChatOptions#setUseFCM(true) interface setting to allow the use of FCM push. The SDK will check the FCM push conditions and use FCM push if the FCM push conditions are met. For interface usage, please refer to DemoHelper in Demo.
+7. From the `ChatOptions#setUseFCM(true)` interface setting to allow the use of FCM push. The SDK will check the FCM push conditions and use FCM push if the FCM push conditions are met. For interface usage, please refer to DemoHelper in Demo.
 
 8. Enable FCM push
 
-- `SDK3.5.4 and later versions:`
 
-```{=html}
-<!-- -->
 ```
 
     PushConfig.Builder builder = new PushConfig.Builder(context);
     builder.enableFCM(String senderId);
     options.setPushConfig(builder.build());
-
-- SDK3.5.3 and below:
-
-```{=html}
-<!-- -->
 ```
-
-    ChatOptions options = new ChatOptions();
-    options.setFCMNumber(senderId);
 
 ### Push service test
 
@@ -293,50 +274,13 @@ Service, and upload the corresponding certificate fingerprint. For details, plea
 
 ### Upload push certificate
 
-After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application--->Push certificate--->Huawei--->Add a new certificate , And then enter the `APPID`， `SecretKey`and and the package name of the program in the application information you created in [Huawei Developer Background](http://developer.huawei.com/consumer/cn/devunion/openPlatform/html/memberCenter.html#/appManager) ;
+After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application--->Push certificate--->Huawei--->Add a new certificate , And then enter the `APPID`， `SecretKey`and and the package name of the program in the application information you created in [Huawei Developer Console](http://developer.huawei.com/consumer/cn/devunion/openPlatform/html/memberCenter.html#/appManager) ;
 
-### Enable Huawei push (SDK3.5.4 and above)
+### Enable Huawei push
 
     PushConfig.Builder builder = new PushConfig.Builder(context);
     builder.enableHWPush();
     options.setPushConfig(builder.build());
-
-### important updates SDK3.4.x Huawei pushes 
-
-In order to facilitate users to upgrade Huawei Push related SDKs, chat SDK will transfer the integration of Huawei Push from `SDK` to the `application layer`in versions 3.4.x above. The SDK provides an interface for uploading Huawei push tokens for users to call, which is convenient for users to upgrade the system by themselves when Huawei pushes upgrades. In future versions, developers need to integrate Huawei push related functions by themselves, and then call the following method to send the token to the chat server:
-
-``` java
-// Upload the token method, the token is received through the broadcast receiver
-ChatClient.getInstance().sendHMSPushTokenToServer("Huawei appId", "registered Huawei token");
-```
-
-`PS:` It should be noted that this method must be called after the login is successful, so the request for Huawei token needs to be placed after the login is successful. Thus, we request Huawei to push the token and generally put it in the MainActivity class. The chat Demo of Agora has also been integrated Huawei's latest SDK is pushed. Developers can also refer to the demo for integration. The token is get in the broadcast receiver. The demo contains the `HMSPushReceiver` class. You can look at the demo code.
-
-This is Huawei’s official integration document. Developers can integrate Huawei Push according to Huawei’s official document. Huawei Push Notification Service Integration Official Document.
-
-In the demo, Huawei's HMSAgent is made into the reference of a module   (`There is no encapsulation or modification of Huawei HMSproxy here`). Developers can use it directly, or download the latest official Huawei `HMSproxy` for integration. If you use the module in the demo, you need to modify the following places:
-
-    <application>
-        <!-- Appid parameter needs to be registered to access HMSSDK. "10492024" in the value is replaced with the appid of the actual application, which is derived from the rights and interests details of the application on the developer alliance website. Format android:value="appid=xxxxxx"-->
-        <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="appid=10492024" />
-        <!-- Providers need to be registered to access HMSSDK . authorities must not be the same as other applications, so here io.agora.chatdemo should be replaced with the package name of your application -->
-        <provider
-            android:name="com.huawei.hms.update.provider.UpdateProvider"
-            android:authorities="io.agora.chatdemo.hms.update.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" />
-        <!-- Providers need to be registered to access HMSSDK.authorities must not be the same as other applications, so here io.agora.chatdemo should be replaced with the package name of your application -->
-        <provider
-            android:name="com.huawei.updatesdk.fileprovider.UpdateSdkFileProvider"
-            android:authorities="io.agora.chatdemo.updateSdk.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true"/>
-            ...
-    </application>
-
-Demo puts several methods of calling Huawei Push in the `HMSPushHelper` class when integrating Huawei Push. Developers can refer to the use of these configurations. After configuring these, you can use Huawei Push to receive offline push notifications on `Huawei devices that meet the conditions`; the requirements here mean: Huawei devices must install Huawei mobile services above 2.6.+ , And open the `self-launch permission` of the current app;
 
 ### Huawei push corner mark
 
@@ -427,9 +371,6 @@ For server-side certificate configuration, please use the developer console.
 
 Meizu Push includes these two push types: Flyme push and integrated push. The difference between the two is: Flyme push is Meizu's own push; except for Meizu's Flyme push, integrated push can also be configured to integrate third-party push such as Xiaomi and Huawei. Chat SDK uses Flyme push [reference document](http://open-wiki.flyme.cn/index.php?title=Flyme%E6%8E%A8%E9%80%81%E6%8E%A5%E5%85%A5%E6%96%87%E6%A1%A3)
 
-**Note: **Chat SDK supports **Meizu** from version **3.5.4**
-Push, if you are using a previous version of the SDK, please upgrade first.
-
 ### Create Meizu App
 
 The first is to go to the Meizu developer background to create an application and turn on push
@@ -437,7 +378,7 @@ Service, and upload the corresponding certificate fingerprint. For details, plea
 
 ### Upload push certificate
 
-After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application --->Push certificate--->Meizu--->New certificate , And then enter the `APP ID` and `APP SECRET` of the application you created in [flyme push platform](http://push.meizu.com/#/config/app?appId=8843&_k=dnrz9k) and the `of the program Package name`;
+After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application --->Push certificate--->Meizu--->New certificate , And then enter the `APP ID` and `APP SECRET` of the application you created in [flyme push platform](http://push.meizu.com/#/config/app?appId=8843&_k=dnrz9k) and the `of the program Package name`;
 
 ### Access process
 
@@ -514,8 +455,6 @@ Note: If the developer integrates Meizu Flyme push and implements MzPushMessageR
 
 ## OPPO Push Integration
 
-**Note: **Chat SDK supports **OPPO** push from version **3.5.4**. If you are using a previous version of the SDK, please upgrade first. `OPPO push is adapted to android Q in 2.1.0. To receive OPPO push on android Q, you need to upgrade the chat SDK to 3.7.1 and later versions, and use OPPO to push the 2.1.0 package. `
-
 ### Create OPPO App
 
 The first is to go to the OPPO developer background to create an application and turn on push
@@ -523,14 +462,14 @@ Service, and upload the corresponding certificate fingerprint. For details, plea
 
 ### Upload push certificate
 
-After the registration is complete, you need to upload the push certificate in [Console.easemob.com](http://console.easemob.com), select your application--->Push certificate--->OPPO--->New certificate , And then enter your [OPPO
+After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application--->Push certificate--->OPPO--->New certificate , And then enter your [OPPO
 Developer console](https://open.oppomobile.com/service/oms?service_id=1000004&app_type=app&app_id=30004346) the `appkey` and `mastersecret` of the application created and the `package name` of the program;
 
 ### Access process
 
 If Google FCM push is also configured, please also replace the package_name field in google-services.json. The OPPO device does not open the permission to allow notifications by default after installing the application. Before testing, please go to the settings to open the notification permission of the application. [OPPO Push Official Document](https://open.oppomobile.com/wiki/doc#id=10196)
 
-1. Configure the OPPO push jar package: Go to the OPPO push official website to download the push SDK package, put the jar package in the libs directory and sync. You can also directly use jar package pushed by OPPO which is integrated in Agora Android IM Demo
+1. Configure the OPPO push jar package: Go to the OPPO push official website to download the push SDK package, put the jar package in the libs directory and sync. You can also directly use jar package pushed by OPPO which is integrated in Agora Android chat Demo
 
 2. Add under the manifest tag of AndroidManifest.xml:
 
@@ -576,7 +515,6 @@ Pay attention to replace the APP KEY and APP SECRET above with the content appli
 
 ## VIVO Push Integration
 
-**Note:** Chat SDK supports **VIVO** push from version **3.5.4**. If you are using a previous version of the SDK, please upgrade first. `Vivo pushes operating messages by default, and you need to contact us to configure it as a system message (re-uploading the certificate also needs to be re-configured)`
 
 ### Create VIVO application
 
@@ -585,7 +523,7 @@ Service, and upload the corresponding certificate fingerprint. For details, plea
 
 ### Upload push certificate
 
-After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application--->Push Certificate--->VIVO--->Add Certificate , And then enter the `APP ID`, `APP KEY` and `APP SECRET` of the application you created in [VIVO Developer Backstage](https://vpush.vivo.com.cn/#/appdetail) and the `of the program Package name`;
+After the registration is complete, you need to upload the push certificate in [Developer Console](http://console.easemob.com), select your application--->Push Certificate--->VIVO--->Add Certificate , And then enter the `APP ID`, `APP KEY` and `APP SECRET` of the application you created in [VIVO Developer Console](https://vpush.vivo.com.cn/#/appdetail) and the `of the program Package name`;
 
 ### Access process
 
@@ -645,7 +583,7 @@ Users can add specific fields to the message extension to implement message push
 
 ### Send silent message (not push)
 
-([Android Send Message](/im/android/basics/message))
+([Android Send Message](https://hyphenateinc.github.io/android_message.html))
 
     ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);
     TextMessageBody txtBody = new TextMessageBody("test");
@@ -659,7 +597,7 @@ Users can add specific fields to the message extension to implement message push
 
 ### forced to push
 
-([Android Send Message](/im/android/basics/message))
+([Android Send Message](https://hyphenateinc.github.io/android_message.html))
 
     ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);
     TextMessageBody txtBody = new TextMessageBody("test");
@@ -673,7 +611,7 @@ Users can add specific fields to the message extension to implement message push
 
 ### Custom push notification
 
-([Android Send Message](/im/android/basics/message))
+([Android Send Message](https://hyphenateinc.github.io/android_message.html))
 
     // Here is just a TXT message as an example, the setting methods of IMAGE FILE and other types of messages are the same
     ChatMessage message = ChatMessage.createSendMessage(ChatMessage.Type.TXT);

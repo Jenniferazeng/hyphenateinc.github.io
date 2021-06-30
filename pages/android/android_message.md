@@ -6,9 +6,6 @@ toc: true
 permalink: android_message.html
 folder: android
 ---
-# Message
-
--------------------------------------------------- ----------------------
 
 ## Send a message
 
@@ -53,16 +50,14 @@ ChatClient.getInstance().chatManager().sendMessage(message);
 
 After sending successfully, get the voice message attachment:
 
+```
     VoiceMessageBody voiceBody = (VoiceMessageBody) msg.getBody();
     //Get the address of the voice file on the server
     String voiceRemoteUrl = voiceBody.getRemoteUrl();
     //Resource path of local voice file
     Uri voiceLocalUri = voiceBody.getLocalUri();
-    ```
+```
     
-    After sending successfully, get the voice message attachment:
-
-`When adapting to AndroidQ and above mobile phones, please call voiceBody.getLocalUri() to get local resources. The corresponding voiceBody.getLocalUrl() method has been abandoned! `
 
 ### Send video message
 
@@ -87,7 +82,6 @@ After sending successfully, get the thumbnail of video message and attachment
     //Local video thumbnail resource path
     Uri localThumbUri = videoBody.getLocalThumbUri();
 
-`When adapting to AndroidQ and above mobile phones, please call videoBody.getLocalUri() to get local resources. The corresponding videoBody.getLocalUrl() method has been abandoned! `
 
 ### Send picture message
 
@@ -112,7 +106,6 @@ After sending successfully, get the thumbnail of image message and attachment
     //Local image thumbnail resource path
     Uri thumbnailLocalUri = imgBody.thumbnailLocalUri();
 
-`When adapting to AndroidQ and above mobile phones, please call imgBody.getLocalUri() to get local resources. The corresponding imgBody.getLocalUrl() method has been abandoned! `
 
 ### Send geolocation message
 
@@ -144,7 +137,6 @@ After sending successfully, get the file message attachment
     //Resource path of local file
     Uri fileLocalUri = fileMessageBody.getLocalUri();
 
-`When adapting AndroidQ and above mobile phones, please call fileMessageBody.getLocalUri() to get local resources. The corresponding fileMessageBody.getLocalUrl() method has been abandoned! `
 
 ### Send pass-through message
 
@@ -180,77 +172,6 @@ customMessage.setTo(to);
 customMessage.setChatType(chatType);
 ChatClient.getInstance().chatManager().sendMessage(customMessage);
 ```
-
-### Set whether the group message requires a read receipt (value-added service)
-
-When the message is a group message, the message sender (currently the administrator and the group owner) can set whether the message needs a read receipt. If necessary, set the ChatMessage method setIsNeedGroupAck() to YES, and then send it.
-
-     public ChatMessage createDingMessage(String to, String content) {
-             ChatMessage message = ChatMessage.createTxtSendMessage(content, to);
-             message.setIsNeedGroupAck(true);
-             return message;
-         }
-
-### Send group message read receipt
-
-``` objc
-public void sendAckMessage(ChatMessage message) {
-        if (!validateMessage(message)) {
-            return;
-        }
-
-        if (message.isAcked()) {
-            return;
-        }
-
-        // May a user login from multiple devices, so do not need to send the ack msg.
-        if (ChatClient.getInstance().getCurrentUser().equalsIgnoreCase(message.getFrom())) {
-            return;
-        }
-
-        try {
-            if (message.isNeedGroupAck() && !message.isUnread()) {
-                String to = message.conversationId(); // do not user getFrom() here
-                String msgId = message.getMsgId();
-                ChatClient.getInstance().chatManager().ackGroupMessageRead(to, msgId, ((TextMessageBody)message.getBody()).getMessage());
-                message.setUnread(false);
-                EMLog.i(TAG, "Send the group ack cmd-type message.");
-            }
-        } catch (Exception e) {
-            EMLog.d(TAG, e.getMessage());
-        }
-    }
-```
-
-After sending the group read receipt, the groupAckCount attribute of the corresponding ChatMessage of the message sender will change accordingly;
-
-### Group message read callback
-
-The group message read callback is in the message listening class MessageListener.
-
-         /**
-          * \~chinese
-          * Received the read receipt of the group message body, the recipient of the message has read the message.
-          */
-              void onGroupMessageRead(List<GroupReadAck> groupReadAcks) {
-             }
-
-### Get the details of the group message read receipt
-
-If you want to display the list of read receipts for group messages, you can get the details of read receipts through the following interface.
-
-    /**
-          * \~chinese
-          * get the group message receipt details from the server
-          * @param msgId message id
-          * @param pageSize getted page size
-          * @param startAckId The id of the read receipt. If it is null, start getting from the latest receipt.
-          * @return returns the message list and the Cursor used to continue to get the group message receipt
-          */
-         public void asyncFetchGroupReadAcks(final String msgId, final int pageSize,
-                 final String startAckId, final ValueCallBack<CursorResult<GroupReadAck>> callBack) {
-    
-         }
 
 ### Send extended message
 
@@ -320,7 +241,7 @@ Remember to remove the listener when you don’t need it. For example, in onDest
 ### Download thumbnail
 
 If automatic download is set,  ChatClient.getInstance().getOptions().getAutodownloadThumbnail() is true, the SDK will download the thumbnail after receiving the message;\
-If the automatic download is not set, you need to call ChatClient.getInstance().chatManager().downloadThumbnail(message) to download. \
+If the automatic download is not set, you need to call `ChatClient.getInstance().chatManager().downloadThumbnail(message)` to download. \
 After the download is completed, call thumbnailLocalUri() of the corresponding message body to get the thumbnail path. \
 E.g:
 
@@ -330,7 +251,7 @@ E.g:
 
 ### Download attachments
 
-The method of downloading attachments is: ChatClient.getInstance().chatManager().downloadAttachment(message);\
+The method of downloading attachments is: `ChatClient.getInstance().chatManager().downloadAttachment(message)`;\
 After the download is completed, call getLocalUri() of the corresponding message body to get the attachment path. \
 E.g:
 
@@ -340,8 +261,8 @@ E.g:
 
 ## listen message status
 
-Set the sending and receiving status of the message through message.
-**Note: **You need to set up this callback listener before sendMessage
+Set the sending and receiving status of the message through message.\
+**Note:** You need to set up this callback listener before sendMessage
 
 ``` java
 message.setMessageStatusCallback(new CallBack(){});
@@ -466,6 +387,7 @@ ChatClient.getInstance().chatManager().addConversationListener(new ConversationL
 ```
 
 Received conversation read receipt (channel ack) After the callback, the SDK will internally set the conversation-related messages to be read by the other party. After receiving this callback, the developer needs to execute operations such as page refresh. \
+
 (2) Set up the listening of the message read receipt
 
 ``` java
@@ -484,7 +406,7 @@ ChatClient.getInstance().chatManager().addMessageListener(new MessageListener() 
 Received read
 After the ack callback, the SDK will set the message as read by the other party internally, and the developer needs to execute operations such as message refresh after receiving this callback.
 
-**Note: Use the `isAcked()` method to determine whether the other party has read the message. Return true to indicate that the other party has read, and the developer can display and refresh the UI interface according to this field.  **
+**Note: Use the `isAcked()` method to determine whether the other party has read the message. Return true to indicate that the other party has read, and the developer can display and refresh the UI interface according to this field.**
 
 ## Get history message records by page
 
@@ -549,14 +471,6 @@ conversation.removeMessage(deleteMsg.msgId);
 List<ChatMessage> messages = conversation.searchMsgFromDB(keywords, timeStamp, maxCount, from, Conversation.SearchDirection.UP);
 ```
 
-## Import messages into the database
-
-If you need to upgrade from the 2.x SDK or other third-party SDK to the current 3.x SDK, you can use the following interface to construct an ChatMessage object and import history messages into the local database.
-
-``` java
-ChatClient.getInstance().chatManager().importMessages(msgs);
-```
-
 ## Insert message
 
 ``` java
@@ -567,12 +481,5 @@ conversation.insertMessage(message);
 //Insert message directly
 ChatClient.getInstance().chatManager().saveMessage(message);
 ```
-
-## Demo and SDK download
-
-[[Download Demo and SDK]](http://www.easemob.com/download/im)
-
-For detailed documentation, please refer to [Java Doc](/im/android/sdk/apidoc)
-
 
 ------------------------------------------------------------------------

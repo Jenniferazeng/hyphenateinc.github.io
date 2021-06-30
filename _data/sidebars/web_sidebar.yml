@@ -47,6 +47,10 @@ entries:
     output: web, pdf
 
     folderitems:
+    - title: Connect to chat server
+      url: /web_init_login.html
+      output: web, pdf
+      
     - title: Message
       url: /web_message.html
       output: web, pdf

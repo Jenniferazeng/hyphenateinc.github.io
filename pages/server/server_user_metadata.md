@@ -1,15 +1,15 @@
 ---
-title: Setting user attributes
+title: User Metadata
 keywords: server
 sidebar: server_sidebar
 toc: true
-permalink: server_setting_user_attributes.html
+permalink: server_user_metadata.html
 folder: server
 ---
 
-### Setting user attributes
+### Setting user metadata
 
-Set the user attributes for the specified user. Only the user himself or the app administrator has permission to do the settings.
+Set the user metadata for the specified user. Only the user himself or the app administrator has permission to do the settings.
 
 #### HTTP Request
 
@@ -45,7 +45,7 @@ By default the total length of all properties for all users under one app must n
 
 The keys used in the request example are avater, ext, nickname. However, of course, this is not fixed just an example, it is entirely up to you to decide what the key values are.
 
-The following fields are used for user attributes on the SDK side
+The following fields are used for user metadata on the SDK side
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -102,12 +102,12 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorization: Bearer WMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw12' -d 'avatar=http://www.easemob.com/avatar.png&ext=ext&nickname=nickname' 'http://a1.easemob.com/easemob-demo/testapp/metadata/user/user1'
+curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorization: Bearer WMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw12' -d 'avatar=http://www.easemob.com/avatar.png&ext=ext&nickname=nickname' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned
 
-**Returns a value of 200, indicating success in setting user attributes**
+**Returns a value of 200, indicating success in setting user metadata**
 
 ``` json
 {
@@ -121,8 +121,8 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
 }
 ```
 
-**Return a value of 401, only the user himself or the app administrator has the right to modify his attributes.**
-**A 401 is also returned when an ordinary user tries to modify the attributes of a non-existent user, because the ordinary user has no right to know whether a username exists or not.**
+**Return a value of 401, only the user himself or the app administrator has the right to modify his metadata.**
+**A 401 is also returned when an ordinary user tries to modify the metadata of a non-existent user, because the ordinary user has no right to know whether a username exists or not.**
 
 ``` json
 {
@@ -133,7 +133,7 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
 ```
 
 **Returns value 403, the user attribute value you are trying to set exceeds the length limit.**
-**The limit may be a limit on the total length of attributes under a single user, or it may be a limit on the total length of all user attributes under an app.**
+**The limit may be a limit on the total length of metadata under a single user, or it may be a limit on the total length of all user metadata under an app.**
 
 ``` json
 {
@@ -154,7 +154,7 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
 ```
 
 **Returns 409, the user you are trying to modify has already been modified by "someone else".**
-**Since we use optimistic locks on user attributes to handle concurrent modifications. When multiple threads are making changes to the same user's attributes at the same time，**
+**Since we use optimistic locks on user metadata to handle concurrent modifications. When multiple threads are making changes to the same user's metadata at the same time，**
 **only one of the threads will succeed and return 200, the others will fail and return 409.**
 
 ``` json
@@ -178,14 +178,14 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,it may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Easemob REST API].](http://api-docs.easemob.com/)
+[[Online testing using the Platform API].](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Get user attributes
+### Get user metadata
 
 Gets all user attribute key-value pairs for the specified user.
-Returns null data if the specified user does not exist, or if the specified user's attributes do not exist {}.
+Returns null data if the specified user does not exist, or if the specified user's metadata do not exist {}.
 
 #### HTTP Request
 
@@ -196,7 +196,7 @@ Returns null data if the specified user does not exist, or if the specified user
   </tr>
 </table>
 
-You need to fill in {username} corresponding to the request, and you need to get the IM username of the user property.
+You need to fill in {username} corresponding to the request, and you need to get the Chat username of the user property.
 
 #### Request         Headers
 
@@ -222,12 +222,12 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/metadata/user/user1'
+curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned
 
-**Returns a value of 200, indicating success in obtaining user attributes**
+**Returns a value of 200, indicating success in obtaining user metadata**
 
 ``` json
 {
@@ -266,13 +266,13 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Bulk Get User Attributes
 
-Query user attributes based on the specified list of usernames and list of attributes.
+Query user metadata based on the specified list of usernames and list of metadata.
 Returns empty data if the specified user/attribute does not exist {}. Specify up to 100 users at a time.
 
 #### HTTP Request
@@ -336,12 +336,12 @@ curl -X POST -H 'Content-Type:  application/json' -H 'Authorization: Bearer YWMt
     "user2",
     "user3"
   ]
-}' 'http://a1.easemob.com/easemob-demo/testapp/metadata/user/get'
+}' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/get'
 ```
 
 #### Examples of possible results returned
 
-**Returns a value of 200, which means that getting the user's attributes was successful**
+**Returns a value of 200, which means that getting the user's metadata was successful**
 
 ``` json
 {
@@ -390,11 +390,11 @@ curl -X POST -H 'Content-Type:  application/json' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-### Get the total size of user attributes
+### Get the total size of user metadata
 
 Gets the total user attribute size, in Bytes, for all users under this app.
 
@@ -431,12 +431,12 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/metadata/user/capacity'
+curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/capacity'
 ```
 
 #### Examples of possible results returned
 
-**Returns a value of 200, indicating success in obtaining the total size of the user's attributes**
+**Returns a value of 200, indicating success in obtaining the total size of the user's metadata**
 
 ``` json
 {
@@ -469,14 +469,14 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ### Delete User Attributes
 
-Deletes all user attributes for the specified user.
-If the specified user does not exist, or if its user attributes do not exist (perhaps they have already been deleted), the deletion is also considered successful.
+Deletes all user metadata for the specified user.
+If the specified user does not exist, or if its user metadata do not exist (perhaps they have already been deleted), the deletion is also considered successful.
 
 #### HTTP Request
 
@@ -511,7 +511,7 @@ See the information contained in the data field in the return value, true means 
 #### Example request
 
 ``` php
-curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easemob.com/easemob-demo/testapp/metadata/user/user1'
+curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned
@@ -526,7 +526,7 @@ curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWM
 }
 ```
 
-**Returns value 401, only the user himself or the app administrator has the right to delete his user attributes.**
+**Returns value 401, only the user himself or the app administrator has the right to delete his user metadata.**
 
 ``` json
 {
@@ -549,5 +549,5 @@ curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWM
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[Online testing using the Easemob REST API](http://api-docs.easemob.com/)
+[Online testing using the Platform API](http://api-docs.easemob.com/)
 

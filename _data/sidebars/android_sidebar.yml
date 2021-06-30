@@ -39,6 +39,10 @@ entries:
       url: /android_run_the_sample_project.html
       output: web, pdf
 
+    - title: Send First Message
+      url: /android_send_first_message.html
+      output: web, pdf  
+
   - title: Basic Features
     output: web, pdf
 
@@ -83,6 +87,10 @@ entries:
     - title: Message Withdraw
       url: /android_message_withdraw.html
       output: web, pdf
+
+    - title: Group message read receipt
+        url: /android_group_message_read.html
+        output: web, pdf
 
   - title: Reference Docs
     output: web, pdf
