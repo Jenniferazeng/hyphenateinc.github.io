@@ -6,315 +6,573 @@ toc: true
 permalink: android_message.html
 folder: android
 ---
-# Android SDK's Introduction and import
+# Message
 
-------------------------------------------------------------------------
+-------------------------------------------------- ----------------------
 
-## DEMO（EaseIM App） experience
+## Send a message
 
-Download link：[download page](http://www.easemob.com/download/im)
+Send text, voice, picture, location and other messages (common for single chat/group chat).
 
-## Android SDK introduction
-
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
-
-![](/im/android/sdk/development-framework.png){.align-center}
-
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
-
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
-
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
-```
-
-Then add the following code to the `build.gradle` of your module
+### Send text message
 
 ``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
+//reate a text message. content is the text content of the message, and toChatUsername is the id of the other party user or group chat.
+ChatMessage message = ChatMessage.createTxtSendMessage(content, toChatUsername);
+//If it is a group chat, set the chat type. Default is single chat
+if (chatType == CHATTYPE_GROUP)
+    message.setChatType(ChatType.GroupChat);
+//Send a message
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+### Send emoji message
+
+Sending emoticons is essentially sending text messages. After receiving the text message, the receiver first queries whether the text message is an emoticon message, and if it is, the text message is displayed as a corresponding emoticon picture. You can refer to [emoji list](https://unicode.org/emoji/charts/full-emoji-list.html) to map emoji pictures and corresponding text strings. You can also maintain the mapping between emoticons and text strings by yourself.
+
+``` java
+//Create an emoticon message. The emoticon message is essentially a text message. emojiCode is the text string corresponding to the emoji picture, and toChatUsername is the id of the other party user or group chat, all in the following text
+ChatMessage message = ChatMessage.createTxtSendMessage(emojiCode, toChatUsername);
+//If it is a group chat, set the chattype, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+     message.setChatType(ChatType.GroupChat);
+//Send a message
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+### Send voice message
+
+``` java
+//voiceUri is the local resource identifier of the voice file, length is the recording time (seconds)
+ChatMessage message = ChatMessage.createVoiceSendMessage(voiceUri, length, toChatUsername);
+//If it is a group chat, set the chattype, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+     message.setChatType(ChatType.GroupChat);
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+After sending successfully, get the voice message attachment:
+
+    VoiceMessageBody voiceBody = (VoiceMessageBody) msg.getBody();
+    //Get the address of the voice file on the server
+    String voiceRemoteUrl = voiceBody.getRemoteUrl();
+    //Resource path of local voice file
+    Uri voiceLocalUri = voiceBody.getLocalUri();
+    ```
     
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
-```
+    After sending successfully, get the voice message attachment:
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
+`When adapting to AndroidQ and above mobile phones, please call voiceBody.getLocalUri() to get local resources. The corresponding voiceBody.getLocalUrl() method has been abandoned! `
 
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
-
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
- 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
-```
-
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
-
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
-
-### Summary of common problems
-
-1\. The user use HttpClient to report an error after integrating the SDK
-
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
-
-For versions before 3.6.8, please configure as follows:
-
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
-
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
-
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
+### Send video message
 
 ``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+//videoLocalUri is the video local resource identifier, thumbLocalUri is the video preview image path, videoLength is the video time length
+ChatMessage message = ChatMessage.createVideoSendMessage(videoLocalUri, thumbLocalUri, videoLength, toChatUsername);
+//If it is a group chat, set the chat type, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+   message.setChatType(ChatType.GroupChat);
+ChatClient.getInstance().chatManager().sendMessage(message);
 ```
+
+After sending successfully, get the thumbnail of video message and attachment
+
+    VideoMessageBody videoBody = (VideoMessageBody) message.getBody();
+    //Get the path of the video file on the server
+    String videoRemoteUrl = videoBody.getRemoteUrl();
+    //Get the path of the thumbnail on the server
+    String thumbnailUrl = videoBody.getThumbnailUrl();
+    //The resource path of the local video file
+    Uri videoLocalUri = videoBody.getLocalUri();
+    //Local video thumbnail resource path
+    Uri localThumbUri = videoBody.getLocalThumbUri();
+
+`When adapting to AndroidQ and above mobile phones, please call videoBody.getLocalUri() to get local resources. The corresponding videoBody.getLocalUrl() method has been abandoned! `
+
+### Send picture message
+
+``` java
+//imageUri is the image local resource identifier, false means the original image will not be sent (by default the image over 100k will be compressed and sent to the other party), you need to send the original image to true
+ChatMessage.createImageSendMessage(imageUri, false, toChatUsername);
+//If it is a group chat, set the chattype, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+    message.setChatType(ChatType.GroupChat);
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+After sending successfully, get the thumbnail of image message and attachment
+
+    ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
+    //Get the path of the image file on the server
+    String imgRemoteUrl = imgBody.getRemoteUrl();
+    //Get the path of the image thumbnail on the server
+    String thumbnailUrl = imgBody.getThumbnailUrl();
+    //The resource path of the local image file
+    Uri imgLocalUri = imgBody.getLocalUri();
+    //Local image thumbnail resource path
+    Uri thumbnailLocalUri = imgBody.thumbnailLocalUri();
+
+`When adapting to AndroidQ and above mobile phones, please call imgBody.getLocalUri() to get local resources. The corresponding imgBody.getLocalUrl() method has been abandoned! `
+
+### Send geolocation message
+
+``` java
+//latitude is latitude, longitude is longitude, locationAddress is the detailed location content
+ChatMessage message = ChatMessage.createLocationSendMessage(latitude, longitude, locationAddress, toChatUsername);
+//If it is a group chat, set the chat type, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+    message.setChatType(ChatType.GroupChat);
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+### Send file message
+
+``` java
+//fileLocalUri is a local resource identifier
+ChatMessage message = ChatMessage.createFileSendMessage(fileLocalUri, toChatUsername);
+// If it is a group chat, set the chattype, the default is single chat
+if (chatType == CHATTYPE_GROUP)
+    message.setChatType(ChatType.GroupChat);
+ChatClient.getInstance().chatManager().sendMessage(message);
+```
+
+After sending successfully, get the file message attachment
+
+    NormalFileMessageBody fileMessageBody = (NormalFileMessageBody) message.getBody();
+    //Get the path of the file on the server
+    String fileRemoteUrl = fileMessageBody.getRemoteUrl();
+    //Resource path of local file
+    Uri fileLocalUri = fileMessageBody.getLocalUri();
+
+`When adapting AndroidQ and above mobile phones, please call fileMessageBody.getLocalUri() to get local resources. The corresponding fileMessageBody.getLocalUrl() method has been abandoned! `
+
+### Send pass-through message
+
+What can the pass-through message do: update the avatar, nickname, etc. The pass-through message can be understood as a command. By sending this command to the other party, telling the other party the action to be done, the received message can be customized to process a message. (pass-through messages will not be stored in the local database, so they will not be displayed on the UI). In addition, the actions beginning with "em\_" and "easemob::" are internal reserved fields. Be careful not to use them
+
+``` java
+ChatMessage cmdMsg = ChatMessage.createSendMessage(ChatMessage.Type.CMD);
+
+//Support single chat and group chat, the default single chat, if it is a group chat, add the following line
+cmdMsg.setChatType(ChatType.GroupChat)
+String action="action1";//action can be customized
+CmdMessageBody cmdBody = new CmdMessageBody(action);
+String toUsername = "test1";//Send to someone
+cmdMsg.setTo(toUsername);
+cmdMsg.addBody(cmdBody);
+ChatClient.getInstance().chatManager().sendMessage(cmdMsg);
+```
+
+### Send custom type messages
+
+Except for the above types of messages, users can define their own message types to facilitate the user's business processing. The custom message type supports users to set a message type name by themselves, so that users can add a variety of custom messages. The content part of the custom message is in key and value format, and the user needs to add and parse the content by himself.
+
+``` java
+ChatMessage customMessage = ChatMessage.createSendMessage(ChatMessage.Type.CUSTOM);
+// event is a custom message event that needs to be delivered, such as a gift message, you can set event = "gift"
+CustomMessageBody customBody = new CustomMessageBody(event);
+// The params type is Map<String, String>
+customBody.setParams(params);
+customMessage.addBody(customBody);
+// to refers to the other party's chat id (or group id, chat room id)
+customMessage.setTo(to);
+// If it is a group chat, set the chat type, the default is single chat
+customMessage.setChatType(chatType);
+ChatClient.getInstance().chatManager().sendMessage(customMessage);
+```
+
+### Set whether the group message requires a read receipt (value-added service)
+
+When the message is a group message, the message sender (currently the administrator and the group owner) can set whether the message needs a read receipt. If necessary, set the ChatMessage method setIsNeedGroupAck() to YES, and then send it.
+
+     public ChatMessage createDingMessage(String to, String content) {
+             ChatMessage message = ChatMessage.createTxtSendMessage(content, to);
+             message.setIsNeedGroupAck(true);
+             return message;
+         }
+
+### Send group message read receipt
+
+``` objc
+public void sendAckMessage(ChatMessage message) {
+        if (!validateMessage(message)) {
+            return;
+        }
+
+        if (message.isAcked()) {
+            return;
+        }
+
+        // May a user login from multiple devices, so do not need to send the ack msg.
+        if (ChatClient.getInstance().getCurrentUser().equalsIgnoreCase(message.getFrom())) {
+            return;
+        }
+
+        try {
+            if (message.isNeedGroupAck() && !message.isUnread()) {
+                String to = message.conversationId(); // do not user getFrom() here
+                String msgId = message.getMsgId();
+                ChatClient.getInstance().chatManager().ackGroupMessageRead(to, msgId, ((TextMessageBody)message.getBody()).getMessage());
+                message.setUnread(false);
+                EMLog.i(TAG, "Send the group ack cmd-type message.");
+            }
+        } catch (Exception e) {
+            EMLog.d(TAG, e.getMessage());
+        }
+    }
+```
+
+After sending the group read receipt, the groupAckCount attribute of the corresponding ChatMessage of the message sender will change accordingly;
+
+### Group message read callback
+
+The group message read callback is in the message listening class MessageListener.
+
+         /**
+          * \~chinese
+          * Received the read receipt of the group message body, the recipient of the message has read the message.
+          */
+              void onGroupMessageRead(List<GroupReadAck> groupReadAcks) {
+             }
+
+### Get the details of the group message read receipt
+
+If you want to display the list of read receipts for group messages, you can get the details of read receipts through the following interface.
+
+    /**
+          * \~chinese
+          * get the group message receipt details from the server
+          * @param msgId message id
+          * @param pageSize getted page size
+          * @param startAckId The id of the read receipt. If it is null, start getting from the latest receipt.
+          * @return returns the message list and the Cursor used to continue to get the group message receipt
+          */
+         public void asyncFetchGroupReadAcks(final String msgId, final int pageSize,
+                 final String startAckId, final ValueCallBack<CursorResult<GroupReadAck>> callBack) {
+    
+         }
+
+### Send extended message
+
+When the message types provided by the SDK do not meet the requirements, developers can use the text, voice, picture, location and other message types provided by SDK  to generate the message type you need.
+
+Here is an extended text message. If this custom message needs to use voice or pictures, it can be extended from voice, picture messages, or location messages.
+
+``` java
+ChatMessage message = ChatMessage.createTxtSendMessage(content, toChatUsername);
+ 
+// Add your own specific attributes
+message.setAttribute("attribute1", "value");
+message.setAttribute("attribute2", true);
+...
+ChatClient.getInstance().chatManager().sendMessage(message);
+
+//Get extended attributes when receiving messages
+//Get a custom attribute, the second parameter is the default value returned when there is no such defined attribute
+message.getStringAttribute("attribute1",null);
+message.getBooleanAttribute("attribute2", false);
+...
+```
+
+## Receive messages
+
+Receive messages by registering for message listeners.
+
+``` java
+ChatClient.getInstance().chatManager().addMessageListener(msgListener);
+MessageListener msgListener = new MessageListener() {
+    
+    @Override
+    public void onMessageReceived(List<ChatMessage> messages) {
+        //Received the news
+    }
+    
+    @Override
+    public void onCmdMessageReceived(List<ChatMessage> messages) {
+        //Receive a pass-through message
+    }
+    
+    @Override
+    public void onMessageRead(List<ChatMessage> messages) {
+        //Receive a read receipt
+    }
+    
+    @Override
+    public void onMessageDelivered(List<ChatMessage> message) {
+        //Receipt of send receipt
+    }
+       @Override
+    public void onMessageRecalled(List<ChatMessage> messages) {
+        //The message was withdrawn
+    }
+    
+    @Override
+    public void onMessageChanged(ChatMessage message, Object change) {
+        //Message status changes
+    }
+};
+
+Remember to remove the listener when you don’t need it. For example, in onDestroy() of the activity, ChatClient.getInstance().chatManager().removeMessageListener(msgListener);
+```
+
+## Download thumbnails and attachments
+
+### Download thumbnail
+
+If automatic download is set,  ChatClient.getInstance().getOptions().getAutodownloadThumbnail() is true, the SDK will download the thumbnail after receiving the message;\
+If the automatic download is not set, you need to call ChatClient.getInstance().chatManager().downloadThumbnail(message) to download. \
+After the download is completed, call thumbnailLocalUri() of the corresponding message body to get the thumbnail path. \
+E.g:
+
+    ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
+    //resource path of local image thumbnail 
+    Uri thumbnailLocalUri = imgBody.thumbnailLocalUri();
+
+### Download attachments
+
+The method of downloading attachments is: ChatClient.getInstance().chatManager().downloadAttachment(message);\
+After the download is completed, call getLocalUri() of the corresponding message body to get the attachment path. \
+E.g:
+
+    ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
+    //The resource path of the local image file
+    Uri imgLocalUri = imgBody.getLocalUri();
+
+## listen message status
+
+Set the sending and receiving status of the message through message.
+**Note: **You need to set up this callback listener before sendMessage
+
+``` java
+message.setMessageStatusCallback(new CallBack(){});
+```
+
+## Get chat history
+
+``` java
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+//Get all messages of this conversation
+List<ChatMessage> messages = conversation.getAllMessages();
+//When the SDK is initialized, the loaded chat records are 20. When it reaches the top, you need to go to the DB to get more
+//Get the pagesize messages before startMsgId, the messages SDK got by this method will be automatically stored in this conversation, and there is no need to add the got messages to the conversation in the APP again
+List<ChatMessage> messages = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
+```
+
+## Get the number of unread messages in the conversation
+
+``` java
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+conversation.getUnreadMsgCount();
+```
+
+## Get the number of all unread messages
+
+``` java
+ChatClient.getInstance().chatManager().getUnreadMessageCount();
+```
+
+## Clear the number of unread messages
+
+``` java
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+//clear unread message in the specified conversation 
+conversation.markAllMessagesAsRead();
+//Set a message as read
+conversation.markMessageAsRead(messageId);
+//Clear all unread messages
+ChatClient.getInstance().chatManager().markAllConversationsAsRead();
+```
+
+## Get the total number of conversation messages
+
+``` java
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+//Get the number of all local messages of this conversation
+conversation.getAllMsgCount();
+//If you just get the number of current messages in memory, call
+conversation.getAllMessages().size();
+```
+
+## Message read receipt
+
+The message read receipt function is currently only available for single chat (ChatType.Chat). The recommended solution is the combination of conversation read receipt(conversation
+ack) and single message read acknowledgement (read ack), which can reduce the amount of read ack messages sent. \
+**`Note: The group message read receipt function is a value-added service. For specific usage, please skip to the group message read receipt. `**
+
+### Send a read receipt 
+
+It is recommended that you first send a  conversation read receipt (conversation ack) when you enter the conversation.
+
+``` java
+try {
+    ChatClient.getInstance().chatManager().ackConversationRead(conversationId);
+} catch (ChatException e) {
+    e.printStackTrace();
+}
+```
+
+On the conversation page, when a message is received, a message read receipt(read ack) can be sent according to the message type, as shown below
+
+``` java
+ChatClient.getInstance().chatManager().addMessageListener(new MessageListener() {
+    ......
+    
+    @Override
+    public void onMessageReceived(List<ChatMessage> messages) {
+        ......
+        sendReadAck(message);
+        ......
+    }
+    
+    ......
+});
+
+/**
+* Send a read receipt
+* @param message
+*/
+public void sendReadAck(ChatMessage message) {
+    // is a received message, read ack message has not been sent and it is a single chat
+    if(message.direct() == ChatMessage.Direct.RECEIVE
+            && !message.isAcked()
+            && message.getChatType() == ChatMessage.ChatType.Chat) {
+        ChatMessage.Type type = message.getType();
+        //Videos, voices and files need to be clicked and then send, this can be adjusted according to needs
+        if(type == ChatMessage.Type.VIDEO || type == ChatMessage.Type.VOICE || type == ChatMessage.Type.FILE) {
+            return;
+        }
+        try {
+            ChatClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+        } catch (ChatException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### listen the read receipt callback
+
+(1) Set up the listening of the conversation read receipt
+
+``` java
+ChatClient.getInstance().chatManager().addConversationListener(new ConversationListener() {
+    ......
+
+    @Override
+    public void onConversationRead(String from, String to) {
+        //Add logic such as refresh page notification
+    }
+});
+```
+
+Received conversation read receipt (channel ack) After the callback, the SDK will internally set the conversation-related messages to be read by the other party. After receiving this callback, the developer needs to execute operations such as page refresh. \
+(2) Set up the listening of the message read receipt
+
+``` java
+ChatClient.getInstance().chatManager().addMessageListener(new MessageListener() {
+    ......
+
+    @Override
+    public void onMessageRead(List<ChatMessage> messages) {
+        //Add logic such as refresh message
+    }
+
+    ......
+});
+```
+
+Received read
+After the ack callback, the SDK will set the message as read by the other party internally, and the developer needs to execute operations such as message refresh after receiving this callback.
+
+**Note: Use the `isAcked()` method to determine whether the other party has read the message. Return true to indicate that the other party has read, and the developer can display and refresh the UI interface according to this field.  **
+
+## Get history message records by page
+
+``` java
+try {
+    ChatClient.getInstance().chatManager().fetchHistoryMessages(
+            toChatUsername, EaseCommonUtils.getConversationType(chatType), pagesize, "");
+    final List<ChatMessage> msgs = conversation.getAllMessages();
+    int msgCount = msgs != null ? msgs.size() : 0;
+    if (msgCount < conversation.getAllMsgCount() && msgCount < pagesize) {
+        String msgId = null;
+        if (msgs != null && msgs.size() > 0) {
+            msgId = msgs.get(0).getMsgId();
+        }
+        conversation.loadMoreMsgFromDB(msgId, pagesize - msgCount);
+    }
+    messageList.refreshSelectLast();
+} catch (ChatException e) {
+    e.printStackTrace();
+}
+```
+
+## Get all local conversations
+
+``` java
+Map<String, Conversation> conversations = ChatClient.getInstance().chatManager().getAllConversations();
+```
+
+occasionally, if the size of conversations returned is 0, it is very likely that `ChatClient.getInstance().chatManager().loadAllConversations()` is not called or the calling sequence is wrong. For specific usage, please refer to [Login](30androidsdkbasics#Login) chapter.
+
+## Get conversation from server
+
+`Need to contact business for activation`
+
+It is recommended that this api should be called when the application is installed for the first time or when there is no local conversation. At other times, you can use the local conversation api. By default, up to 100 pieces of data can be returned. \
+To use this function, you need to contact your Agora business to activate it. (You can scan the QR code to contact your business manager on the home page of the Agora Communication Cloud Management Background)
+
+    ChatClient.getInstance().chatManager().asyncFetchConversationsFromServer(new ValueCallBack<Map<String, Conversation>>() {
+        @Override
+        public void onSuccess(Map<String, Conversation> value) {
+            // the processing logic of the getting conversation is successful
+        }
+        @Override
+        public void onError(int error, String errorMsg) {
+            // processing logic of failure toget conversation  
+        }
+    });
+
+## Delete conversation and delete chat history
+
+``` java
+//Delete a conversation with a user. If you need to keep the chat history, please deliver false
+ChatClient.getInstance().chatManager().deleteConversation(username, true);
+//Delete a chat history of the current conversation
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+conversation.removeMessage(deleteMsg.msgId);
+```
+
+## Search conversation messages based on keywords
+
+``` java
+List<ChatMessage> messages = conversation.searchMsgFromDB(keywords, timeStamp, maxCount, from, Conversation.SearchDirection.UP);
+```
+
+## Import messages into the database
+
+If you need to upgrade from the 2.x SDK or other third-party SDK to the current 3.x SDK, you can use the following interface to construct an ChatMessage object and import history messages into the local database.
+
+``` java
+ChatClient.getInstance().chatManager().importMessages(msgs);
+```
+
+## Insert message
+
+``` java
+//Insert messages based on conversation
+Conversation conversation = ChatClient.getInstance().chatManager().getConversation(username);
+conversation.insertMessage(message);
+
+//Insert message directly
+ChatClient.getInstance().chatManager().saveMessage(message);
+```
+
+## Demo and SDK download
+
+[[Download Demo and SDK]](http://www.easemob.com/download/im)
+
+For detailed documentation, please refer to [Java Doc](/im/android/sdk/apidoc)
+
 
 ------------------------------------------------------------------------

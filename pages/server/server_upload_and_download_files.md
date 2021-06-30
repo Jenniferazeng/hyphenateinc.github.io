@@ -24,51 +24,89 @@ Easemob uses REST to upload and download files such as voice and images. Also, t
 
 The REST API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Easemob REST API](http://api-docs.easemob.com/) embedded in the documentation.
 
-  Name Request Description
-
-------------------- ---------------------------------------------- -------------------
-
-  Upload voice/image files 		/{org_name}/{app_name}/chatfiles 							Upload voice/image files
-  Download voice/image files 	{org_name}/{app_name}/chatfiles/{filestream} 	 Download voice/image files
-  Download thumbnails 			/{org_name}/{app_name}/chatfiles/{file_uuid} 		 Download thumbnails
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Name</th>
+    <th>Request</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Upload voice/image files</td>
+    <td>/{org_name}/{app_name}/chatfiles</td>
+    <td>Upload voice/image files</td>
+  </tr>
+  <tr>
+    <td>Download voice/image files</td>
+    <td>/{org_name}/{app_name}/chatfiles/{filestream}</td>
+    <td>Download voice/image files</td>
+  </tr>
+  <tr>
+    <td>Download thumbnails</td>
+    <td>/{org_name}/{app_name}/chatfiles/{file_uuid}</td>
+    <td>Download thumbnails</td>
+  </tr>
+</table>
 
 ## Upload voice/image files
 
-**Note: **The uploading file size cannot exceed 10M, it will fail to upload if exceeded. Required HTTP Header: \* Authorization -- the token getted \* restrict-access -- whether to restrict access.
+**Note:**The uploading file size cannot exceed 10M, it will fail to upload if exceeded. Required HTTP Header: *Authorization -- the token getted* restrict-access -- whether to restrict access.
 Whether to restrict access. 
 
 **Note:** This API does not take into account the value of this attribute, but just has the attribute. Finally, it is necessary to use the HTTP multipart/form-data form.
 
 #### HTTP Request
 
-  ![](/im/server/basics/post.png){width="90"}   **/{org_name}/{app_name}/chatfiles**
---------------------------------------------- --------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>POST</th>
+    <th>/{org_name}/{app_name}/chatfiles</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 			Description
-
------------------ ------------------
-
-  restrict-access 		true
-  Authorization 		Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Response Body
 
 View the information contained in the entities field in the return value
 
-  Parameter 		Description
-
--------------- ------------------------------------------------
-
-  uuid 					The unique ID of the file, specifying which file is needed to send the message
-  type 					File type
-  share-secret 	Returned after a successful upload, it will be required when sending a message
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>uuid</td>
+    <td>The unique ID of the file, specifying which file is needed to send the message</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>File type</td>
+  </tr>
+  <tr>
+    <td>share-secret</td>
+    <td>Returned after a successful upload, it will be required when sending a message</td>
+  </tr>
+</table>
 
 #### Request example
 
 ``` php
-curl -X POST https://a1.easemob.com/easemob-demo/testapp/chatfiles -H 'Authorization: Bearer YWMtS1pRuFa-EemixAMhJgmGUAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFp57yd7QBPGgDNLstNggrzgHV3JAbqbznTptqLhpG0fTOCaBFJZgduZA' -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'  -H 'restrict-access: true' -F file=@/Users/test/9.2/Easemob/image/IMG_2953.JPG
+curl -X POST 'https://a1.easemob.com/easemob-demo/testapp/chatfiles' -H 'Authorization: Bearer YWMtS1pRuFa-EemixAMhJgmGUAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFp57yd7QBPGgDNLstNggrzgHV3JAbqbznTptqLhpG0fTOCaBFJZgduZA' -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'  -H 'restrict-access: true' -F file=@/Users/test/9.2/Easemob/image/IMG_2953.JPG
 ```
 
 **Note:** In the above request example, `-F file=@/Users/test/9.2/Easemob/image/IMG_2953.JPG` is the local file path of Easemob, please replace it with your own file path when using it, otherwise the request will fail.
@@ -109,8 +147,7 @@ Example of possible returned results
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/im/450errorcode/45restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
@@ -124,18 +161,33 @@ The uuid and share-secret will be returned after the file is uploaded successful
 
 #### HTTP Request
 
-  ![](/im/server/basics/get.png){width="90"}   **/{org_name}/{app_name}/chatfiles/{uuid}**
--------------------------------------------- ---------------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>GET</th>
+    <th>/{org_name}/{app_name}/chatfiles/{uuid}</th>
+  </tr>
+</table>
 
 #### Request Headers
 
-  Parameter 			Description
-
---------------- ------------------
-
-  Content-Type 		application/json
-  Authorization 		Bearer \${token}
-  share-secret 			share-secret
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+  <tr>
+    <td>share-secret</td>
+    <td>share-secret</td>
+  </tr>
+</table>
 
 #### Request Example
 
@@ -165,8 +217,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/im/450errorcode/45restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
@@ -179,19 +230,31 @@ The only difference between this and downloading a large image is that the heade
 
 #### HTTP Request
 
-  ![](/im/server/basics/get.png){width="90"}   **/{org_name}/{app_name}/chatfiles/{file_uuid}**
--------------------------------------------- --------------------------------------------------
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>GET</th>
+    <th>/{org_name}/{app_name}/chatfiles/{file_uuid}</th>
+  </tr>
+</table>
 
 You need to fill in {file_uuid} when requesting, you need to get the uuid returned from the file.
 
 #### Request Headers
 
-  Parameter 			Description
-
---------------- ------------------
-
-  Content-Type 		application/json
-  Authorization 		Bearer \${token}
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Content-Type</td>
+    <td>application/json</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>Bearer ${token}</td>
+  </tr>
+</table>
 
 #### Request Example
 
@@ -221,15 +284,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 }
 ```
 
-If the return result is \<wrap em>429, 503\</wrap> or other \<wrap
-em>5xx\</wrap>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/im/450errorcode/45restastrict) for details
+If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Test online using Easemob REST API](http://api-docs.easemob.com/)
 
-------------------------------------------------------------------------
-
-\<WRAP group> \<WRAP half column>
-Previous page: [chat log](/im/server/basics/chatrecord) \</WRAP
-
-\<WRAP half column
-Next page: [Conference management](/im/server/basics/conferencemanage) \</WRAP> \</WRAP>

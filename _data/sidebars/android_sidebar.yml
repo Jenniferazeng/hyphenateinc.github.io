@@ -27,10 +27,6 @@ entries:
       url: /android_product_overview.html
       output: web
 
-    - title: Pricing
-      url: /android_pricing.html
-      output: web, pdf
-
     - title: Release Note
       url: /android_release_note.html
       output: web, pdf
@@ -47,13 +43,6 @@ entries:
     output: web, pdf
 
     folderitems:
-    - title: User
-      url: /android_user.html
-      output: web, pdf
-
-    - title: Relationship
-      url: /android_relationship.html
-      output: web, pdf
 
     - title: Message
       url: /android_message.html
@@ -67,32 +56,24 @@ entries:
       url: /android_chatroom.html
       output: web, pdf
 
-    - title: IMKit
-      url: /android_imkit.html
-      output: web, pdf  
-
-    - title: CallKit
-      url: /android_callkit.html
+    - title: Relationship
+      url: /android_relationship.html
       output: web, pdf
-
-    - title: Multi-Device
-      url: /android_multi_device.html
-      output: web, pdf
-
-    - title: Push notification
-      url: /android_push_notification.html
+    
+    - title: User Metadata
+      url: /android_user.html
       output: web, pdf
 
   - title: Advanced Features
     output: web, pdf
 
     folderitems:
-    - title: Webhook
-      url: /android_webhook.html
-      output: web, pdf
-      
-    - title: Multi-device Sync
+    - title: Multi-Device
       url: /android_multi_device.html
+      output: web, pdf
+
+    - title: Push notification
+      url: /android_push_notification.html
       output: web, pdf
       
     - title: Message Roaming
@@ -101,18 +82,6 @@ entries:
 
     - title: Message Withdraw
       url: /android_message_withdraw.html
-      output: web, pdf
-
-    - title: Sensitive Words
-      url: /android_sensitive_words.html
-      output: web, pdf
-
-  - title: Best Practices
-    output: web, pdf
-
-    folderitems:
-    - title: UIkit
-      url: /android_uikit.html
       output: web, pdf
 
   - title: Reference Docs

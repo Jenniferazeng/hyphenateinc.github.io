@@ -65,7 +65,7 @@ conn.getGroup().then((res) => {
 
 ------------------------------------------------------------------------
 
-### Paging access to the public group
+### Fetch public groups
 
 Call the `listGroups` function to page to obtain a list of all public groups in the APP, an example is as follows: 
 
