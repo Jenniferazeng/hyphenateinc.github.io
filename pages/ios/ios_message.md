@@ -6,6 +6,14 @@ toc: true
 permalink: ios_message.html
 folder: ios
 ---
+# iOS SDK's Introduction and import
+
+------------------------------------------------------------------------
+
+## DEMO（ChatDemo-UI3.0 App） experience
+
+
+Download link：[download page](http://www.easemob.com/download/im)
 
 # Message
 
@@ -1105,75 +1113,7 @@ After sending the group read receipt, the groupAckCount attribute of AgoraMessag
                                         pageSize:(int)aPageSize
                                       completion:(void (^)(AgoraCursorResult *aResult, AgoraError *error, int totalCount))aCompletionBlock;
 
-### Message roaming
 
-The SDK provides an interface for obtaining historical information from the server
-
-``` objc
-/**
- *  get the history of the specified Conversation from the server
- *
- *  Asynchronous method
- *
- *  @param  aConversationId     Conversation id of the roaming message to get
- *  @param  aConversationType   Conversation type roaming message to get
- *  @param  aStartMessageId     refers to the ID of the start message
- *  @param  aPageSize           Get the number of messages (up to 50 messages at a time)
- *  @param  aCompletionBlock    Get the callback for the end of the message
- */
-- (void)asyncFetchHistoryMessagesFromServer:(NSString *)aConversationId
-                           conversationType:(AgoraConversationType)aConversationType
-                             startMessageId:(NSString *)aStartMessageId
-                                   pageSize:(int)aPageSize
-                                 complation:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
-                                 
-// Call:
-[[AgoraChatClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"6001" conversationType:AgoraConversationTypeChat startMessageId:messageId pageSize:10 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
-    if (!aError) {
-        NSLog(@"Get the message from the server successfully");
-    } else {
-        NSLog(@"The reason for the failure to get the message from the server --- %@", aError.errorDescription);
-    }
-}];
-```
-
-### Message withdrawn
-
-``` objc
-/*!
-*  Withdraw message
-*
-*  Asynchronous method
-*
-*  @param aMessageId           Message Id
-*  @param aCompletionBlock     Completed callback
-*/
-- (void)recallMessageWithMessageId:(NSString *)aMessageId
-                        completion:(void (^)(AgoraError *aError))aCompletionBlock;
-           
-// Call:
-[[AgoraChatClient sharedClient].chatManager recallMessageWithMessageId:messageId completion:^(AgoraError *aError) {
-    if (!aError) {
-        NSLog(@"Withdraw the message successfully");
-    } else {
-        NSLog(@"Reasons for failure to withdraw the message--- %@", aError.errorDescription);
-    }
-}];
-```
-
-Message withdrawal receipt
-
-``` objc
-/*!
- *  withdrawn Received message 
-
- *
- *  @param aMessages  Withdraw messages list<AgoraMessage>
- */
-- (void)messagesDidRecall:(NSArray *)aMessages;
-```
-
-Note: The message withdrawal is a value-added function, please contact Easemob Business Opening.
 
 ------------------------------------------------------------------------
 
