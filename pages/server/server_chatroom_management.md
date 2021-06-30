@@ -76,7 +76,7 @@ Chat room roles have a range of permissions: creator \> chat room administrator 
 ## Platform API online testing instructions
 
 The Platform API used in the IM chat room integration process
-The documentation details the Platform APIs that need to be used for IM chat room integration, which can be found by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation.
+The documentation details the Platform APIs that need to be used for IM chat room integration, which can be found by using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation.
 
 ## Managing Chat Rooms
 
@@ -229,7 +229,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -344,7 +344,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -504,7 +504,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -642,7 +642,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -783,7 +783,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -872,7 +872,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1009,7 +1009,7 @@ curl -X GET 'http://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/use
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1128,7 +1128,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1254,7 +1254,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1357,7 +1357,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1471,7 +1471,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat Platform API](http://api-docs.easemob.com/)
+[Testing online with Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1549,7 +1549,7 @@ curl -X GET 'http://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/adm
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1644,7 +1644,7 @@ curl -X POST 'http://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/ad
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API](http://api-docs.easemob.com/)]
+[[Online testing using the Platform API](http://api-docs.easemob.com/)]
 
 ------------------------------------------------------------------------
 
@@ -1709,7 +1709,7 @@ curl -X DELETE 'http://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1840,7 +1840,7 @@ curl -X POST 'HTTP://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/mu
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1907,7 +1907,7 @@ curl -X DELETE 'HTTP://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1993,7 +1993,7 @@ curl -X GET 'HTTP://a1.easecdn.com/chat-demo/testapp/chatrooms/1265710621211/mut
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2106,7 +2106,7 @@ curl -X GET 'http://a1.easecdn.com/chat-demo/testapp/chatrooms/super_admin?pagen
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2221,7 +2221,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -2298,4 +2298,4 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 
 If the return result is<wrap em>429、503</wrap>or other<wrap em>5xx</wrap>,It may mean that the interface has been restricted, please pause slightly and retry.For more information, see [Interface current limit description](/server_rest_interface_flow_limiting_instructions.html)
 
-[[Online testing using the Chat Platform API]](http://api-docs.easemob.com/)
+[[Online testing using the Platform API]](http://api-docs.easemob.com/)

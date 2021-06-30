@@ -16,21 +16,21 @@ folder: server
     <th>Enterprise Edition Supplementary Notes</th>
   </tr>
   <tr>
-    <td>IM user-related</td>
+    <td>Chat user-related</td>
     <td> Single or bulk registration, get and deletion of users; reset user passwords; modify user information; view user online status</td>
     <td>Single APP call limit 10 times/second</td>
     <td>Single APP call limit 30 times/second</td>
     <td>User ID length Maximum 64 characters; bulk registration maximum 60 IDs each time</td>
   </tr>
   <tr>
-    <td>IM friend relationship</td>
-    <td>Single or batch IM friend addition; unfriend relationship; view friend information</td>
+    <td>Chat friend relationship</td>
+    <td>Single or batch Chat friend addition; unfriend relationship; view friend information</td>
     <td>Single APP call limited to 10 times/sec</td>
     <td>Single APP call limited to 30 times/sec</td>
     <td>User ID length Up to 64 characters</td>
   </tr>
   <tr>
-    <td>IM blacklist</td>
+    <td>Chat blacklist</td>
     <td>Single or batch add/remove blacklist; get specified user from blacklist</td>
     <td>Single app call limited to 10 times/sec</td>
     <td>Single app call limited to 30 times/sec</td>
@@ -72,25 +72,18 @@ folder: server
     <td>Message + extended field length is limited to 4k bytes</td>
   </tr>
   <tr>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
+    <td>Group related information</td>
+    <td>Paging to get group list; create, modify, delete groups; get group details and members</td>
+    <td>single/batch add or remove group members; group owner transfer; single/batch add or remove blacklist Single APP call limit 10 times/sec</td>
+    <td>Single APP call limit 30 times/sec</td>
+    <td>Single user can join up to 500 groups</td>
   </tr>
   <tr>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
-  </tr>
-  <tr>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
-    <td>The</td>
-    <td>owner</td>
+    <td>Chat room related information</td>
+    <td>Create, modify, delete chat rooms; get chat room details and online user list<td>
+    <td>single/batch join or quit chat rooms Single APP call limited to 10 times/sec</td>
+    <td>Single APP call limited to 30 times/sec</td>
+    <td>Single user can join up to 500 chat rooms</td>
   </tr>
 </table>
 

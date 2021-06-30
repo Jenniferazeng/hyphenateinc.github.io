@@ -76,10 +76,6 @@ entries:
     output: web, pdf
 
     folderitems:
-    - title: API Reference
-      url: /server_api_reference.html
-      output: web, pdf
-     
     - title: Error Code
       url: /server_error_codes.html
       output: web, pdf
