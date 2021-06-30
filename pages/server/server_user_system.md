@@ -317,12 +317,11 @@ Create a new user in the org and APP specified by the URL Create a new user in t
 -   "Open registration" mode: when registering for an Chat account, you do not need to bring your administrator identification information.
 -   "Authorized Registration" mode: When registering for an Chat account, you must bring your administrator identification information. It is recommended to use "Authorized Registration" to prevent people who have already geted the registration URLs and people with knowledge of the registration process from registering a large number of spam users to the server.
 
-`Note：` \'\' \* The \${token} mentioned in the following API is a variable that needs to be replaced with the token geted through the APP's client_id and client_secret.
-` ` \* When registering Chat ids, it is recommended not to use ordered ids to prevent others from knowing the order of registered ids and sending a lot of spam messages maliciously. \'\'
+`Note：* The \${token} mentioned in the following API is a variable that needs to be replaced with the token geted through the APP's client_id and client_secret.`
 
-\'\' \*
+`* When registering Chat ids, it is recommended not to use ordered ids to prevent others from knowing the order of registered ids and sending a lot of spam messages maliciously.`
 
-In the server side to their own user registration account at the same time, will go to call the rest interface of the Chat letter to the user in the registration of a Chat letter id and their own user binding, and return to the client, the client get their own server user account password login, and then take the Chat letter id password in the login Chat letter server\'\'
+`* In the server side to their own user registration account at the same time, will go to call the rest interface of the Chat letter to the user in the registration of a Chat letter id and their own user binding, and return to the client, the client get their own server user account password login, and then take the Chat letter id password in the login Chat letter server.`
 
 ### Register a single user (open)
 
