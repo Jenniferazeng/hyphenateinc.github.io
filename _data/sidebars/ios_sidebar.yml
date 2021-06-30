@@ -87,10 +87,7 @@ entries:
     output: web, pdf
 
     folderitems:
-    - title: Webhook
-      url: /ios_webhook.html
-      output: web, pdf
-      
+    
     - title: Multi-device Sync
       url: /ios_multi_device.html
       output: web, pdf
@@ -103,17 +100,6 @@ entries:
       url: /ios_message_withdraw.html
       output: web, pdf
 
-    - title: Sensitive Words
-      url: /ios_sensitive_words.html
-      output: web, pdf
-
-  - title: Best Practices
-    output: web, pdf
-
-    folderitems:
-    - title: UIkit
-      url: /ios_uikit.html
-      output: web, pdf
 
   - title: Reference Docs
     output: web, pdf
