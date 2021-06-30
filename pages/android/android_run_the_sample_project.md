@@ -22,13 +22,15 @@ With this sample app, you can:
 - Logout
 
 ## Prerequisites
+
 * Make sure you have made the preparations mentioned in the [Agora Chat Sdk Introduction](https://hyphenateinc.github.io/android_product_overview.html).
 * Prepare the development environment:
     * JDK
     * Android Studio 3.2 or later
+
 ## Run the sample project
 
-Follow these steps to run the sample project:\
+Follow these steps to run the sample project:
 ### 1. Clone the repository to your local machine.
 ```java
     git clone https://github.com/HyphenateInc/Hyphenate-Demo-Android.git
