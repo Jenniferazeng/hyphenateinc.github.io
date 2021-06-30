@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['lastreceivedmessage',['lastReceivedMessage',['../interface_agora_conversation.html#a41980a87b606c8a24d28e824b7bc7426',1,'AgoraConversation']]],
+  ['leavechatroom_3acompletion_3a',['leaveChatroom:completion:',['../protocol_i_agora_chatroom_manager-p.html#a8d826792816408a32b82cbfbbce74671',1,'IAgoraChatroomManager-p']]],
+  ['leavechatroom_3aerror_3a',['leaveChatroom:error:',['../protocol_i_agora_chatroom_manager-p.html#a06b63913641399ee982c7b1b1f4e6d1c',1,'IAgoraChatroomManager-p']]],
+  ['leavegroup_3acompletion_3a',['leaveGroup:completion:',['../protocol_i_agora_group_manager-p.html#a65ef23e3637008a5c133d668c535d22e',1,'IAgoraGroupManager-p']]],
+  ['leavegroup_3aerror_3a',['leaveGroup:error:',['../protocol_i_agora_group_manager-p.html#a6ff6267b083926779eb135ab29ae139b',1,'IAgoraGroupManager-p']]],
+  ['loadcustommsgwithkeyword_3atimestamp_3acount_3afromuser_3asearchdirection_3acompletion_3a',['loadCustomMsgWithKeyword:timestamp:count:fromUser:searchDirection:completion:',['../interface_agora_conversation.html#ac30f339f92b669f1e48f159fb1e23bad',1,'AgoraConversation']]],
+  ['loadmessagesfrom_3ato_3acount_3acompletion_3a',['loadMessagesFrom:to:count:completion:',['../interface_agora_conversation.html#a58c6b5c5d3fe00186eec3919e18b9fd5',1,'AgoraConversation']]],
+  ['loadmessagesstartfromid_3acount_3asearchdirection_3acompletion_3a',['loadMessagesStartFromId:count:searchDirection:completion:',['../interface_agora_conversation.html#a9c565bb7b13faa6f77042f869355d96e',1,'AgoraConversation']]],
+  ['loadmessageswithkeyword_3atimestamp_3acount_3afromuser_3asearchdirection_3acompletion_3a',['loadMessagesWithKeyword:timestamp:count:fromUser:searchDirection:completion:',['../interface_agora_conversation.html#a3ba1a55f495c7d6330b1b541a00c2e10',1,'AgoraConversation::loadMessagesWithKeyword:timestamp:count:fromUser:searchDirection:completion:()'],['../protocol_i_agora_chat_manager-p.html#aea1d9bbb73d1b1c9adc49bb8a83a861a',1,'IAgoraChatManager-p::loadMessagesWithKeyword:timestamp:count:fromUser:searchDirection:completion:()']]],
+  ['loadmessageswithtype_3atimestamp_3acount_3afromuser_3asearchdirection_3acompletion_3a',['loadMessagesWithType:timestamp:count:fromUser:searchDirection:completion:',['../interface_agora_conversation.html#ac6be7247d3e2a0b8cc291070c6076d5c',1,'AgoraConversation::loadMessagesWithType:timestamp:count:fromUser:searchDirection:completion:()'],['../protocol_i_agora_chat_manager-p.html#a4c876c8a384ef017b2e6188327e2a724',1,'IAgoraChatManager-p::loadMessagesWithType:timestamp:count:fromUser:searchDirection:completion:()']]],
+  ['loadmessagewithid_3a',['loadMessageWithId:',['../interface_agora_conversation.html#a1c0222976f480c4dd31a43b2c2ed49ae',1,'AgoraConversation']]],
+  ['loadmessagewithid_3aerror_3a',['loadMessageWithId:error:',['../interface_agora_conversation.html#af9ebec13ad55522201c6eb0fc29eb084',1,'AgoraConversation']]],
+  ['loadmoremessagescontain_3abefore_3alimit_3afrom_3adirection_3a',['loadMoreMessagesContain:before:limit:from:direction:',['../interface_agora_conversation.html#a3667a0c69a53a65bbdb796d7a4e35148',1,'AgoraConversation']]],
+  ['loadmoremessagesfrom_3ato_3amaxcount_3a',['loadMoreMessagesFrom:to:maxCount:',['../interface_agora_conversation.html#aca5981a906d1881e84d6c5885e38f47e',1,'AgoraConversation']]],
+  ['loadmoremessagesfromid_3alimit_3adirection_3a',['loadMoreMessagesFromId:limit:direction:',['../interface_agora_conversation.html#af40f6960eb97a57b5d6395aad00aa040',1,'AgoraConversation']]],
+  ['loadmoremessageswithtype_3abefore_3alimit_3afrom_3adirection_3a',['loadMoreMessagesWithType:before:limit:from:direction:',['../interface_agora_conversation.html#a9bbc301d96bd562040548f5bcb233f06',1,'AgoraConversation']]],
+  ['log_3a',['log:',['../interface_agora_chat_client.html#a62acfb0dec09f2145f48ab18b52218fe',1,'AgoraChatClient']]],
+  ['loginwithusername_3apassword_3a',['loginWithUsername:password:',['../interface_agora_chat_client.html#ae71976ded3ad8a36408bf0c2648601b5',1,'AgoraChatClient']]],
+  ['loginwithusername_3apassword_3acompletion_3a',['loginWithUsername:password:completion:',['../interface_agora_chat_client.html#a7d1cd350097047d18244953ca4f10cba',1,'AgoraChatClient']]],
+  ['loginwithusername_3atoken_3a',['loginWithUsername:token:',['../interface_agora_chat_client.html#a8c5a12cdae1cd47a4614f6620863ecd7',1,'AgoraChatClient']]],
+  ['loginwithusername_3atoken_3acompletion_3a',['loginWithUsername:token:completion:',['../interface_agora_chat_client.html#a944e4be8dcb4aa2437b4490074f57d00',1,'AgoraChatClient']]],
+  ['logout_3a',['logout:',['../interface_agora_chat_client.html#a50153dbdbc8a8fef8147319d71f2d8da',1,'AgoraChatClient']]],
+  ['logout_3acompletion_3a',['logout:completion:',['../interface_agora_chat_client.html#aecd0ff6804573a9d5b2967e3db23c1dc',1,'AgoraChatClient']]]
+];

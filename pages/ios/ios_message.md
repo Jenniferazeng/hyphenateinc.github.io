@@ -1,320 +1,1187 @@
 ---
-title: ios Message
+title: iOS Message
 keywords: ios
 sidebar: ios_sidebar
 toc: true
 permalink: ios_message.html
 folder: ios
 ---
-# Android SDK's Introduction and import
+# iOS SDK's Introduction and import
 
 ------------------------------------------------------------------------
 
-## DEMO（EaseIM App） experience
+## DEMO（ChatDemo-UI3.0 App） experience
+
 
 Download link：[download page](http://www.easemob.com/download/im)
 
-## Android SDK introduction
+# Message
 
-Easemob SDK provides a complete development framework for users to develop IM-related applications. It includes the following parts:
+Message: IM interaction entity, the corresponding type in the SDK is **AgoraMessage**. **AgoraMessage** consists of 
+AgoraMessageBody.
 
-![](/im/android/sdk/development-framework.png){.align-center}
+The Easemob SDK header files involved in the message are as follows:
 
--   Message synchronization protocol implementation with the core of SDK_Core achieves the information exchange with the servers.
--   SDK is a complete IM function based on the core protocol, which implements functions such as sending and receiving of different types of messages, conversation management, groups, friends, and chat rooms.
--   EaseUI is a set of IM-related UI widgets, designed to help developers quickly integrate Easemob SDK.
+``` objc
+// Message building
+AgoraMessage.h
+AgoraMessageBody.h
+AgoraTextMessageBody.h
+AgoraImageMessageBody.h
+AgoraVoiceMessageBody.h
+AgoraVideoMessageBody.h
+AgoraFileMessageBody.h
+AgoraLocationMessageBody.h
+AgoraCmdMessageBody.h
 
-Developers can develop their own applications based on EaseUI or Easemob SDK. The former encapsulates the functions of sending messages, receiving messages and etc. Thus, developers don't need to pay much  attention on the logic of how messages are sent and received during integration. Please refer to [EaseIMKit User Guide](/im/android/other/easeui).
+// The message method calling, such as adding proxy, removing proxy, sending messages, etc. It also includes conversation related operations, such as creating or obtaining a conversation, obtaining a list of conversation, etc.
+IAgoraChatManager.h
 
-The SDK adopts a modular design, and the function of each module is relatively independent and complete. Users can choose to use the following modules according to their needs:
-
-![Modular Design](/im/android/sdk/image005.png){.align-center}
-
--   EMClient: The <u>entrance</u> of SDK mainly implements the functions such as login, logout, and connection management. It is also the <u>entrance</u> to other modules.
--   EMChatManager: Manage the sending messages, receiving messages and implements functions such as conversation management.
--   EMContactManager: Responsible for adding friends, deleting friends and managing the blacklist.
--   EMGroupManager: Responsible for group management, creating groups, deleting groups, managing group members and other functions.
--   EMChatroomManager: Responsible for the management of chat rooms.
-
-**note**：If you upgrade from SDK2.x to 3.0, you can refer to [Easemob SDK2.x to 3.0
-Upgrade document](/im/android/sdk/upgradetov).
-
-## Video tutorial
-
-The following is the SDK integration reference video, you can learn how to integrate the Easemob SDK through the video.
-
--   [Android_SDK integration](https://ke.qq.com/webcourse/index.html#cid=320169&term_id=100380031&taid=2357945635758761&vid=t14287kwfgl)
-
-## Android SDK import
-
-### <u>Preparation before integration</u>
-
-[Register and create application](/im/quickstart/guide/experience)
-
-### <u>Manually</u> copy the jar package and the import of so
-
-Go to [Easemob official website](http://www.easemob.com/download/im) to download Easemo SDK.
-
-There is a libs folder in the downloaded SDK, which contains jar packages and files of so.
-
-### Import via gradle remote link
-
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
-
-``` gradle
-       repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
+// The callback method of the protocol of the message, such as the callback method of listening and receiving messages, etc.
+AgoraChatManagerDelegate.h
 ```
 
-Then add the following code to the `build.gradle` of your module
+## Construct message
 
-``` java
-android {
-    //use legacy for android 6.0（The apache library was removed after version 3.6.8）
-    //useLibrary 'org.apache.http.legacy'
-    
-    //Requires java8 support since 3.6.0
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-dependencies {
-    //other necessary dependencies
-    ......
-    implementation 'io.hyphenate:hyphenate-chat:xxx version number'
-}
-```
+Description of the "Initialize Message Instance" method used in the following example of constructing a message:
 
-SDK version number reference [Release Note](/im/android/sdk/releasenote)
-
-**note：** If you use 3.8.0 below, gradle dependencies need to be added in the following format:
-
-    implementation 'io.hyphenate:hyphenate-sdk:3.7.4' //Full version, including audio and video functions
-    //implementation 'io.hyphenate:hyphenate-sdk-lite:3.7.4' //Lite version, only contains IM function
-
-``Major changes``
-
-JFrog announced in February 2021 that JCenter will no longer provide updates to dependent libraries after March 31, 2021, <u>and</u> will no longer support the download of remote libraries after February 1, 2022. For details, see [JFrog statement](https://jfrog .com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/).
-<u>IM</u>
-The SDK only supports downloading from the mavenCentral repository after version 3.8.1. Developers need to do the following configuration when using mavenCentral() warehouse:
-
-1、Add the mavenCentral() warehouse to the project's build.gradle
-
-    buildscript {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-
-    allprojects {
-        repositories {
-            ...
-            mavenCentral()
-        }
-    }
-
-2、Modify the domain name that the SDK depends on,from \"com.hyphenate\" to \"io.hyphenate\", as follows:：
-
-    implementation 'io.hyphenate:hyphenate-chat:xxx'
-
-SDK versions prior to 3.8.0 can also be downloaded from mavenCentral.Before IMSDK3.8.0, the SDK is divided video version with audio and video version with audio, the added dependencies are slightly different, as follows：
-
-1、 version with audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk:xxx'
-
-注：hyphenate-sdk supports versions before 3.8.0
-
-2、version without audio and video communication
-
-    implementation 'io.hyphenate:hyphenate-sdk-lite:xxx'
-
-注：hyphenate-sdk-lite supports versions before 3.8.0
-
-### SDK directory explanation
-
-The unzipped package downloaded from the official website is as follows:
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-Here we mainly introduce the contents of the following four folders:
-
--   doc folder: SDK related API documentation
--   Examples folder: EaseIm3.0
--   Libs folder: Contains the JAR and files of so needed for the IM function
-
-### Introduction to third-party libraries
-
-#### Third party libraries used in the SDK
-
--   android-support-v4.jar：This is a jar package that is indispensable in every APP. 
--   org.apache.http.legacy.jar： after 3.6.8 version of the SDK and remove the jar package; Versions prior to 3.6.8 are compatible with this library. It is recommended not to remove it, otherwise the SDK will have problems on 6.0 systems
-
-#### Third-party libraries used in EaseIMKit
-
--   glide-4.9.0：Image processing library, used when displaying user avatars
--   BaiduLBS_Android.jar：Baidu Map’s jar package, related so are libBaiduMapSDK_base_v4_0\_0.so, libBaiduMapSDK_map_v4_0\_0.so, libBaiduMapSDK_util_v4_0\_0.so and liblocSDK7.so. When depending on the local EaseIMKit library, you can delete these if you don't use Baidu. If the project will report an error after deleting it, fix the corresponding error (the error code is very small, and it is easy to complete the modification)
-
-### Configuration project
-
-#### Import SDK
-
-In the self-developed application, to integrate Easemob chat, you need to copy the .jar and .so files in the libs folder to the corresponding location in the libs folder of your project.
-
-![](/im/android/sdk/f1a7b52fe99d623bd798b05566c46f3.png){width="200"}
-
-#### Configuration information
-
-Add the following permissions in the list file AndroidManifest.xml, and write your registered AppKey.
-
-Permission configuration (more permissions may be needed in actual development, please refer to Demo):
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="Your Package"
-    android:versionCode="100"
-    android:versionName="1.0.0">
-  
-    <!-- IM SDK required start -->
-    <!-- Allow the program to vibrate -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Access to the network -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Microphone permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- get operator information to support the related interfaces which provides operator information--->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Write extended storage permissions-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- This permission is used to access GPS location (used for location messages, and can be removed if location is not required) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- After api 21 is marked as deprecated -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Used to access wifi network information-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- Used to get access permission for wifi -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- Allow background processes to run still after the phone screen is turned off -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Allow the program to modify the sound setting information -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- Allow program to access phone status -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Allow the program to run automatically after startup -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Permission required to capture the screen, added permission after Q (multi-person audio and video screen sharing use) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!-- IM SDK required end -->
+``` objc
+/*!
+ *  Initialize the message instance
+ *
+ *  @param aConversationId  Conversation ID
+ *  @param aFrom            sender
+ *  @param aTo              receiver
+ *  @param aBody            message body instance
+ *  @param aExt             extended information
+ *
+ *  @result Message instance
+ */
+- (id)initWithConversationID:(NSString *)aConversationId
+                        from:(NSString *)aFrom
+                          to:(NSString *)aTo
+                        body:(AgoraMessageBody *)aBody
+                         ext:(NSDictionary *)aExt;
  
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="Your Application">
-  
-    <!-- Set AppKey of Easemob application -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
-        <!-- Declare the core functions of the service SDK required by the SDK-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-            />
-        <!-- Declare the receiver required by the SDK -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-            <!-- Optional filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-    </application>
-</manifest>
 ```
 
-About the method of getting the value corresponding to EASEMOB_APPKEY: After creating the application, apply for the AppKey and set related configuration.
+aConversationId:
+Conversation id. For example, if a sends a message to b, then the SDK will generate a conversation on the side of a. The conversation id is b. When constructing the message, aConversationId is consistent with to .
 
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
+to: Represents the Easemob id of the receiver.
 
-### Summary of common problems
+from: Represents the currently logged-in Client ID, generally use \[AgoraChatClient
+sharedClient\].currentUsername; method to get.
 
-1\. The user use HttpClient to report an error after integrating the SDK
+`Note: If you are sending a message to a group or chat room, then aConversationId and to should be replaced by the group id or chat room id`
 
-`It is recommended to upgrade the SDK to version 3.6.8 or higher. The apache library has been removed after SDK 3.6.8.`
+In general, the currently logged-in Easemob id should send a message to which Easemob id or group id or chat room id.
 
-For versions before 3.6.8, please configure as follows:
+### Construct a text message
 
-\- Android 6.0 and above versions need to add following code in `module-level/build.gradle` android block:
+``` objc
+/*!
+ *  Initialization of the text message body
+ *
+ *  @param aText   Text content
+ *  
+ *  @result Text message body instant
+ */
+- (instancetype)initWithText:(NSString *)aText;
 
-       android {
-        //use legacy for android > 6.0
-        useLibrary 'org.apache.http.legacy'
-       }
+// Calling:
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to send"];
+// Get the currently logged-in Easemob id
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
-\- Android 9.0 also needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2\. In Android 9.0, compulsory use of https
-
-Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
-
-The solution can be referred to: [StackOverFlow](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted), or directly set android:usesCleartextTraffic=\"true\"in the `application` tag of the `AndroidManifest.xml` 
-
-      <application
-            android:usesCleartextTraffic="true" >
-      </application>
-
-3\.
-Upgrade to AndroidX and use SDK version 3.7.3 or above, reporting the problem that LocalBroadcastManager cannot be found
-
-The details of the error are as follows:
-
-    java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/localbroadcastmanager/content/LocalBroadcastManager;
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13)
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2)
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62)
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197)
-            ......
-         Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.localbroadcastmanager.content.LocalBroadcastManager" on path: DexPathList[[zip file "/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk"],nativeLibraryDirectories=[/data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/lib/arm64, /data/app/com.hyphenate.easeim-3yS1c2quwGEzgNmhDyf7dA==/base.apk!/lib/arm64-v8a, /system/lib64, /product/lib64]]
-            ......
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.h(Unknown Source:13) 
-            at com.hyphenate.chat.core.EMAdvanceDebugManager.a(Unknown Source:2) 
-            at com.hyphenate.chat.EMClient.onNewLogin(Unknown Source:62) 
-            at com.hyphenate.chat.EMClient$7.run(Unknown Source:197) 
-            ...... 
-
-Solution:\
-Add the following dependencies to the project:
-
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-
-## App packaging confusion
-
-Add the following keep in the ProGuard.
-
-``` java
--keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
-//Remove apache after 3.6.8 version, no need to add
--keep class internal.org.apache.http.entity.** {*;}
-//If you use live audio and live video
--keep class com.superrtc.** {*;}
--dontwarn  com.superrtc.**
+// Generate Message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
 ```
+
+### Construct emoticons
+
+Sending emoticons is actually sending text messages. After receiving the text message, the receiver first check whether the text message is an emoticon message, and if it is, the text message is displayed as a corresponding emoticon picture. You can use [emoji standard](https://unicode.org/emoji/charts/full-emoji-list.html) to create emoji pictures and mapping corresponding to text strings . You can also maintain emoji pictures and the mapping corresponding to text strings 
+
+``` objc
+/*!
+ *  Initialize of emoticon message body
+ *
+ *  @param aText  Emoticon message text string
+ *  
+ *  @result  Emoticon message body instant
+ */
+- (instancetype)initWithText:(NSString *)aText;
+
+// Calling:
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"The emoticon message text string to be sent"];
+// Get the currently logged-in Easemob id
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+//Generate Message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct a picture message
+
+``` objc
+/*!
+ *  Initialization of file message body--------------------------
+ *
+ *  @param aData        Attachment data
+ *  @param aDisplayName Attachment display name （not include path)
+ *
+ *  @result Message body instance
+ */
+- (instancetype)initWithData:(NSData *)aData
+                 displayName:(NSString *)aDisplayName;
+                 
+// Calling:               
+AgoraImageMessageBody *body = [[AgoraImageMessageBody alloc] initWithData:data displayName:@"image.png"];
+// body.compressionRatio = 1.0f; 1.0 means the original image is sent without compression. The default value is 0.6, and the compression factor is 0.6 times
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+//Generate Message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct location message
+
+``` objc
+/*!
+ *  Initialize the location message body
+ *
+ *  @param aLatitude   latitude
+ *  @param aLongitude  longitude
+ *  @param aAddress    geographic location information
+ *  
+ *  @result Location message body instant
+ */
+- (instancetype)initWithLatitude:(double)aLatitude
+                       longitude:(double)aLongitude
+                         address:(NSString *)aAddress;
+                         
+// Calling:                         
+AgoraLocationMessageBody *body = [[AgoraLocationMessageBody alloc] initWithLatitude:39 longitude:116 address:@"Address"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+// Generate message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct a voice message
+
+``` objc
+/*!
+ *  Initialization of file message body
+ *
+ *  @param aLocalPath   Attachment local path
+ *  @param aDisplayName Attachment display name (does not include path)
+ *
+ *  @result Message body instance
+ */
+- (instancetype)initWithLocalPath:(NSString *)aLocalPath
+                      displayName:(NSString *)aDisplayName;
+
+// Calling:                      
+AgoraVoiceMessageBody *body = [[AgoraVoiceMessageBody alloc] initWithLocalPath:@"audioPath" displayName:@"audio"];
+body.duration = duration;
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+// Generate message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct a video message
+
+``` objc
+/*!
+ *  Initialization of file message body
+ *
+ *  @param aLocalPath   Attachment local path
+ *  @param aDisplayName Attachment display name (not include path)
+ *
+ *  @result Message body instance
+ */
+- (instancetype)initWithLocalPath:(NSString *)aLocalPath
+                      displayName:(NSString *)aDisplayName;
+                      
+// Calling:                      
+AgoraVideoMessageBody *body = [[AgoraVideoMessageBody alloc] initWithLocalPath:@"videoPath" displayName:@"video.mp4"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+// Generate message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Structure file message
+
+``` objc
+/*!
+ *  Initialization of file message body
+ *
+ *  @param aLocalPath   Attachment local path
+ *  @param aDisplayName Attachment display name (not include path)
+ *
+ *  @result Message body instance
+ */
+- (instancetype)initWithLocalPath:(NSString *)aLocalPath
+                      displayName:(NSString *)aDisplayName;
+                      
+// Calling:                      
+AgoraFileMessageBody *body = [[AgoraFileMessageBody alloc] initWithLocalPath:@"filePath" displayName:@"file"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+// generate message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct a pass-through message
+
+A special type of message provided by the SDK, namely CMD, will not store db, nor will it be pushed through APNS, similar to a command-type message. For example, if your server wants to notify the client to perform specific operations, you can ask the server and the client to agree on a certain field in advance, and when the client receives the agreed field, perform a certain special operation. In addition, actions beginning with "em\_" and "easemob::" are internal reserved fields, so be careful not to use them
+
+``` objc
+/*!
+ *  Initialize the command message body
+ *  After receiving the user-defined string, parse the user-defined string, and then know that something has been sent.
+ *  ex. The user wants to share location, the string here can be "loc", after parsing "loc", you know that this message is a location sharing message, and then other information can be placed in the .ext attribute to parse.
+ *  ex. If the user needs to perform the "snapchat" function, here you can write a string yourself, such as "Snap", and then bring the messageid to be deleted into the .ext, and the receiver can delete the corresponding after receiving it to achieve the function of "snapchat"
+ *
+ *  @param aAction  Command content
+ *  
+ *  @result Command message body instant
+ */
+- (instancetype)initWithAction:(NSString *)aAction;
+
+// Calling:
+AgoraCmdMessageBody *body = [[AgoraCmdMessageBody alloc] initWithAction:action];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+// generate message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct a custom type message
+
+`SDK support of 3.6.5 and above`
+
+In addition to the above types of messages, users can define their own message types to have the benefits the user's business.
+The custom message type supports users to set a message type name by themselves, so that users can add a variety of custom messages.
+The content of the custom message is in key and value format, and the user needs to add and parse the content by himself.
+
+``` objc
+// event is a custom message event that needs to be delivered, such as a gift message, you can set event = @"gift"
+// The params type is NSDictionary<String, String>
+AgoraCustomMessageBody *body = [[AgoraCustomMessageBody alloc] initWithEvent:event ext: params];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+//Generate Message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];  // ext:Extended message section
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Construct extended message
+
+When the message types provided by the SDK do not meet the requirements, developers can generate the message types they need by extending the text, voice, picture, location and other message types provided by the SDK.
+
+`Key value type must be NSString, Value value type must be NSString or NSNumber type BOOL, int, unsigned in, long long, double`
+
+Here is an extended text message. If this custom message needs to use voice or pictures, it can be extended from voice, picture messages, or location messages.
+
+``` objc
+// Take a single chat message as an example
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to send"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+//generate Message
+NSDictionary *messageExt = @{@"key":@"value"};
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];  // ext:Extended message section
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+```
+
+### Insert message
+
+#### Method One
+
+Insert directly, inserting in this way will not verify the existence of the AgoraConversation object where the message is located, and insert the message directly into the database
+
+``` objc
+AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to insert"];
+NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+
+//generate Message
+AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:messageExt];
+message.chatType = AgoraChatTypeChat;// Set as single chat message
+//message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+//message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+
+[[AgoraChatClient sharedClient].chatManager importMessages:@[message] completion:^(AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"Import a set of messages to DB successfully");
+    } else {
+        NSLog(@"Reasons for failure to import a set of messages to DB --- %@", aError.errorDescription);
+    }
+}];
+```
+
+#### Method Two
+
+This insertion method will verify the existence of the AgoraConversation object where it is located. After insertion, the attribute in the AgoraConversation object will be updated, such as LatestMessage
+
+
+    AgoraTextMessageBody *body = [[AgoraTextMessageBody alloc] initWithText:@"Message to insert"];
+    NSString *from = [[AgoraChatClient sharedClient] currentUsername];
+        
+    //generate Message
+    AgoraMessage *message = [[AgoraMessage alloc] initWithConversationID:@"6001" from:from to:@"6001" body:body ext:nil];
+    message.chatType = AgoraChatTypeChat;// Set as single chat message
+    //message.chatType = AgoraChatTypeGroupChat;// Set as group chat message
+    //message.chatType = AgoraChatTypeChatRoom;// Set as chat room message
+    //message.timestamp = 1509689222137; Message time
+    AgoraConversation *conversation =  [[AgoraChatClient sharedClient].chatManager getConversation:message.conversationId type:AgoraConversationTypeChat createIfNotExist:YES];
+        // type: Conversation type
+        //      AgoraConversationTypeChat // single chat
+        //      AgoraConversationTypeGroupChat // group chat
+        //      AgoraConversationTypeChatRoom // chat room
+    [conversation insertMessage:message error:nil];
+
+### Update message attribute
+
+``` objc
+/*!
+ *  Update message to DB
+ *
+ *  @param aMessage         Messages
+ *  @param aCompletionBlock The completed callback
+ */
+- (void)updateMessage:(AgoraMessage *)aMessage
+           completion:(void (^)(AgoraMessage *aMessage, AgoraError *aError))aCompletionBlock;
+
+//Call:
+[[AgoraChatClient sharedClient].chatManager updateMessage:nil completion:^(AgoraMessage *aMessage, AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"Update message to DB successfully");
+    } else {
+        NSLog(@"The reason for the failure to update the message to the DB --- %@", aError.errorDescription);
+    }
+}];
+```
+
+## Conversation
+
+The Easemob SDK header files involved in the session are as follows:
+
+``` objc
+// Conversation, including session id, session type, etc.
+AgoraConversation.h
+
+// Conversation method call, including creating or obtaining session, obtaining session list, etc.
+IAgoraChatManager.h
+
+```
+
+Conversation：The container for operating the chat message **AgoraMessage**, the corresponding type in the SDK is**AgoraConversation**.
+
+### Create/Get a Conversation
+
+Create a conversation based on conversationId.
+
+``` objc
+/*!
+ *  Get a conversation
+ *
+ *  @param aConversationId  Conversation id
+ *  @param aType            Conversation type
+ *  @param aIfCreate        if does not exist, create
+ *
+ *  @result Conversation object
+ */
+- (AgoraConversation *)getConversation:(NSString *)aConversationId
+                               type:(AgoraConversationType)aType
+                   createIfNotExist:(BOOL)aIfCreate;
+                   
+// Call:   
+
+aConversationId:
+The Easemob id of the receiver in a single chat conversation---------
+The group id of the group conversations to send messages to the group
+The chat room ID of the chat room which messages are sent to
+
+aType:
+//AgoraConversationTypeChat            single chat
+//AgoraConversationTypeGroupChat       group chat
+//AgoraConversationTypeChatRoom        chat room
+                
+[[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
+```
+
+### Delete conversation
+
+#### Delete a single conversation
+
+``` objc
+/*!
+ *  Delete conversation
+ *
+ *  @param aConversationId      Conversation ID
+ *  @param aIsDeleteMessages    Whether to delete messages in the conversation
+ *  @param aCompletionBlock     the completed callback
+ */
+- (void)deleteConversation:(NSString *)aConversationId
+          isDeleteMessages:(BOOL)aIsDeleteMessages
+                completion:(void (^)(NSString *aConversationId, AgoraError *aError))aCompletionBlock;
+                
+// Call:
+[[AgoraChatClient sharedClient].chatManager deleteConversation:@"8001" isDeleteMessages:YES completion:^(NSString *aConversationId, AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"Conversation deleted successfully");
+    } else {
+        NSLog(@"Reasons for the failure to delete the Conversation--- %@", aError.errorDescription);
+    }
+}];                
+```
+
+#### Batch delete conversations based on conversationId
+
+``` objc
+/*!
+ *  Delete a batch of conversations
+ *
+ *  @param aConversations       Conversation list <AgoraConversation>
+ *  @param aIsDeleteMessages    Whether to delete messages in the conversation
+ *  @param aCompletionBlock     the completed callback
+ */
+- (void)deleteConversations:(NSArray *)aConversations
+           isDeleteMessages:(BOOL)aIsDeleteMessages
+                 completion:(void (^)(AgoraError *aError))aCompletionBlock;
+                 
+                 
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:NO];
+// Call:
+[[AgoraChatClient sharedClient].chatManager deleteConversations:@[conversation] isDeleteMessages:YES completion:^(AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"A batch of Conversation deleted successfully");
+    } else {
+        NSLog(@"Reasons for the failure to delete a batch of Conversation --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Get conversations list
+
+``` objc
+/*!
+ *  Get all conversation, if they do not exist in memory, they will be loaded from DB
+ *
+ *  @result Conversation list<AgoraConversation>
+ */
+- (NSArray *)getAllConversations;
+
+// Call:
+NSArray *conversations = [[AgoraChatClient sharedClient].chatManager getAllConversations];
+```
+
+### Get the number of unread messages in a single Conversation
+
+``` objc
+/*!
+ *  \~chinese
+ *  Get a conversation
+ *
+ *  @param aConversationId  conversation ID
+ *  @param aType            conversation type
+ *  @param aIfCreate        if does not exist, create
+ *
+ *  @result Conversation object
+ */
+- (AgoraConversation *)getConversation:(NSString *)aConversationId
+                               type:(AgoraConversationType)aType
+                   createIfNotExist:(BOOL)aIfCreate;
+                   
+// Get the number of unread messages in a single chat conversation                   
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
+[conversation unreadMessagesCount];
+
+// Get the number of unread messages in a group chat conversation                   
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"121828583195137" type:AgoraConversationTypeGroupChat createIfNotExist:YES];
+[conversation unreadMessagesCount];
+```
+
+### Get the number of unread messages in all conversations
+
+The SDK currently does not provide a method to directly obtain the number of unread messages in all conversations. It can only obtain the conversation list first, and then traverse the number of unread messages in each conversation and accumulate them to calculate the number of unread messages in all conversations.
+
+``` objc
+NSArray *conversations = [[AgoraChatClient sharedClient].chatManager getAllConversations];
+NSInteger unreadCount = 0;
+for (AgoraConversation *conversation in conversations) {
+    unreadCount += conversation.unreadMessagesCount;
+}
+```
+
+### Message retrieval
+
+You can retrieve messages in a certain conversation by keyword, message type, and start and end time. Use the AgoraConversation session object to call.
+
+``` objc
+/*!
+ *  Get the specified number of messages from the database, the retrieved messages are sorted by time, and do not contain the referenced message, if the ID of the referenced message is null, then the latest message will be fetched
+ *
+ *  @param aMessageId       ID of the reference message
+ *  @param count            Number of records obtained
+ *  @param aDirection       Message search direction
+ *  @param aCompletionBlock the completed callback
+ */
+- (void)loadMessagesStartFromId:(NSString *)aMessageId
+                          count:(int)aCount
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+                     
+// Call:
+AgoraConversation *conversation = [[AgoraChatClient sharedClient].chatManager getConversation:@"8001" type:AgoraConversationTypeChat createIfNotExist:YES];
+[conversation loadMessagesStartFromId:messageId count:10 searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
+    if (!aError) {
+        // AgoraMessage is stored in the aMessage array
+        NSLog(@"get the message from the database Successfully --- %@", aMessages);
+    } else {
+        NSLog(@"Reasons for the failure to delete the message from the database--- %@", aError.errorDescription);
+    }
+}];
+
+/*!
+ *  Get the specified type of messages from the database, and the retrieved messages are sorted by time. If the reference timestamp is a negative number, it will be taken from the latest message. If aCount is less than or equal to 0, it will be treated as 1
+ *
+ *  @param aType            Message type
+ *  @param aTimestamp       Reference timestamp
+ *  @param aCount           Number of records obtained
+ *  @param aUsername        The sender, if it is null, it will be neglected
+ *  @param aDirection       Message search direction
+ *  @param aCompletionBlock the completed callback
+ */
+- (void)loadMessagesWithType:(AgoraMessageBodyType)aType
+                   timestamp:(long long)aTimestamp
+                       count:(int)aCount
+                    fromUser:(NSString*)aUsername
+             searchDirection:(AgoraMessageSearchDirection)aDirection
+                  completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+
+/*!
+ *  Get the message containing the specified content from the database, and the fetched messages are sorted by time. If the reference timestamp is a negative number, it will be fetched from the latest message forward. If aCount is less than or equal to 0, it will be treated as 1
+ *
+ *  @param aKeywords        Search keyword. if it is null, it will be neglected
+ *  @param aTimestamp       Reference timestamp
+ *  @param aCount           Number of records obtained
+ *  @param aSender          The sender. if it is null, it will be neglected
+ *  @param aDirection       Message search direction
+ *  @param aCompletionBlock the completed callback
+ */
+- (void)loadMessagesWithKeyword:(NSString*)aKeyword
+                      timestamp:(long long)aTimestamp
+                          count:(int)aCount
+                       fromUser:(NSString*)aSender
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+
+/*!
+ *  Get the messages within a specified time period from the database, and the retrieved messages are sorted by time. In order to prevent taking up too much memory, the user should set the maximum number of loaded messages
+ *
+ *  @param aStartTimestamp  start time in Millisecond
+ *  @param aEndTimestamp    End Time
+ *  @param aCount           Maximum number of loaded messages
+ *  @param aCompletionBlock the Completed callback
+ */
+- (void)loadMessagesFrom:(long long)aStartTimestamp
+                      to:(long long)aEndTimestamp
+                   count:(int)aCount
+              completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+
+```
+
+### Global Message retrieval
+
+The messages in all conversations can be retrieved by message type and keywords. Use \[AgoraChatClient
+sharedClient\].chatManager singleton Call.
+
+``` objc
+/*!
+ *  Get the specified type of messages from the database, and the retrieved messages are sorted by time. If the reference timestamp is a negative number, it will be taken from the latest message. If aCount is less than or equal to 0, it will be treated as 1
+ *
+ *  @param aType            Message type
+ *  @param aTimestamp       Reference timestamp
+ *  @param aCount           Number of records obtained
+ *  @param aUsername        The sender, if it is null, it will be neglected
+ *  @param aDirection       Message search direction
+ *  @param aCompletionBlock the completed callback
+ */
+- (void)loadMessagesWithType:(AgoraMessageBodyType)aType
+                   timestamp:(long long)aTimestamp
+                       count:(int)aCount
+                    fromUser:(NSString*)aUsername
+             searchDirection:(AgoraMessageSearchDirection)aDirection
+                  completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+// Call:
+[[AgoraChatClient sharedClient].chatManager loadMessagesWithKeyword:@"Hello" timestamp:1575997248290 count:10 fromUser:nil searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
+    if (!aError) {
+        // AgoraMessage is stored in the aMessage array
+        NSLog(@"get the message from the database Successfully--- %@", aMessages);
+    } else {
+        NSLog(@"Reasons for the failure to delete the message from the database --- %@", aError.errorDescription);
+    }
+}];
+                  
+/*!
+ *  Get the message containing the specified content from the database, and the fetched messages are sorted by time. If the reference timestamp is a negative number, it will be fetched from the latest message forward. If aCount is less than or equal to 0, it will be treated as 1
+ *
+ *  @param aKeywords        Search keyword. if it is null, it will be neglected
+ *  @param aTimestamp       Reference timestamp
+ *  @param aCount           Number of records obtained
+ *  @param aSender          The sender. if it is null, it will be neglected
+ *  @param aDirection       Message search direction
+ *  @param aCompletionBlock the completed callback     
+ */
+- (void)loadMessagesWithKeyword:(NSString*)aKeywords
+                      timestamp:(long long)aTimestamp
+                          count:(int)aCount
+                       fromUser:(NSString*)aSender
+                searchDirection:(AgoraMessageSearchDirection)aDirection
+                     completion:(void (^)(NSArray *aMessages, AgoraError *aError))aCompletionBlock;
+// Call:
+[[AgoraChatClient sharedClient].chatManager loadMessagesWithType:AgoraMessageBodyTypeText timestamp:1575997248290 count:10 fromUser:nil searchDirection:AgoraMessageSearchDirectionUp completion:^(NSArray *aMessages, AgoraError *aError) {
+    if (!aError) {
+        // AgoraMessage is stored in the aMessage array
+        NSLog(@"get the specified message from the database Successfully --- %@", aMessages);
+    } else {
+        NSLog(@"Reasons for the failure to delete the specified message from the database --- %@", aError.errorDescription);
+    }
+}];
+                                  
+```
+
+## Chat
+
+The chat operation can only be performed after the successful login. When sending messages, single chat and group chat call have a unified interface, the difference is only to set the message.chatType.
+
+### Send a message
+
+``` objc
+/*!
+ *  Send a message
+ *
+ *  @param aMessage         message
+ *  @param aProgressBlock   Attachment upload progress callback block
+ *  @param aCompletionBlock Send finished callback block
+ */
+- (void)sendMessage:(AgoraMessage *)aMessage
+           progress:(void (^)(int progress))aProgressBlock
+         completion:(void (^)(AgoraMessage *message, AgoraError *error))aCompletionBlock;
+
+//Call:
+[[AgoraChatClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+    NSLog(@"Attachment upload progress --- %d", progress);
+} completion:^(AgoraMessage *message, AgoraError *error) {
+    if (!error) {
+        NSLog(@"Message sent successfully");
+    } else {
+        NSLog(@"The reason for the failure to send the message --- %@", error.errorDescription);
+    }
+}];
+```
+
+### Receive message
+
+``` objc
+protocol:AgoraChatManagerDelegate
+
+proxy:
+// Registered message 
+[[AgoraChatClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+
+// Remove message proxy
+[[AgoraChatClient sharedClient].chatManager removeDelegate:self];
+
+```
+
+Receiving ordinary messages will use the following callbacks:
+
+If you use the chat page in the demo of the Easemob during integration, the message proxy has been registered in the chat page, and the callback method for receiving common messages is monitored, and no other addition is required.
+
+If you use chat page written by yourself during integration, you need to register your own message proxy in the chat page to monitor the callback method for receiving common messages.
+
+In addition, it is recommended to register the message agent in the root controller of your own project, monitor the callback method for receiving common messages, and use it for ringtones or local notifications for receiving messages when you are not on the chat page.
+
+``` objc
+/*!
+ @method
+ @brief receive one or more non-cmd messages
+ */
+- (void)messagesDidReceive:(NSArray *)aMessages;
+```
+
+When receiving a pass-through (cmd) message, the following callbacks will be used:
+
+``` objc
+/*!
+ @method
+ @brief receive one or more non-cmd messages
+ */
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages;
+```
+
+### Parse common messages (including custom type messages)
+
+``` objc
+// Callback for receiving a message. Messages with attachments can be downloaded using the method of downloading attachments provided by the SDK (the details will be mentioned later)
+- (void)messagesDidReceive:(NSArray *)aMessages {
+    for (AgoraMessage *message in aMessages) {
+    AgoraMessageBody *msgBody = message.body;
+    switch (msgBody.type) {
+        case AgoraMessageBodyTypeText:
+        {
+            // Text message received
+            AgoraTextMessageBody *textBody = (AgoraTextMessageBody *)msgBody;
+            NSString *txt = textBody.text;
+            NSLog(@"The text received is txt -- %@",txt);
+        }
+        break;
+        case AgoraMessageBodyTypeImage:
+        {
+            // Get a picture message body
+            AgoraImageMessageBody *body = ((AgoraImageMessageBody *)msgBody);
+            NSLog(@"remote path of Large image  -- %@"   ,body.remotePath);
+            NSLog(@"local path of Large image  -- %@"    ,body.localPath); // // Need to use the download method provided by the SDK to exist
+            NSLog(@"The secret of the large picture -- %@"    ,body.secretKey);
+            NSLog(@"W of large pic -- %f ,H of large pic -- %f",body.size.width,body.size.height);
+            NSLog(@"Download status of the large picture -- %lu",body.downloadStatus);
+
+
+            // 
+            NSLog(@"remote path of small image -- %@"   ,body.thumbnailRemotePath);
+            NSLog(@"local path of small image -- %@"    ,body.thumbnailLocalPath);
+            NSLog(@"secret of small image -- %@"    ,body.thumbnailSecretKey);
+            NSLog(@"W of small pic -- %f ,H of small picture -- %f",body.thumbnailSize.width,body.thumbnailSize.height);
+            NSLog(@"Download status of the small picture -- %lu",body.thumbnailDownloadStatus);
+        }
+        break;
+        case AgoraMessageBodyTypeLocation:
+        {
+            AgoraLocationMessageBody *body = (AgoraLocationMessageBody *)msgBody;
+            NSLog(@"latitude-- %f",body.latitude);
+            NSLog(@"longitude-- %f",body.longitude);
+            NSLog(@"address-- %@",body.address);
+            }
+            break;
+        case AgoraMessageBodyTypeVoice:
+        {
+            // sdk will automatically download audio
+            AgoraVoiceMessageBody *body = (AgoraVoiceMessageBody *)msgBody;
+            NSLog(@"Audio remote path -- %@"      ,body.remotePath);
+            NSLog(@"Audio local path -- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used (the audio will automatically call)
+            NSLog(@"Audio secret -- %@"        ,body.secretKey);
+            NSLog(@"Audio file size -- %lld"       ,body.fileLength);
+            NSLog(@"Audio file download status -- %lu"   ,body.downloadStatus);
+            NSLog(@"Audio duration -- %lu"      ,body.duration);
+        }
+        break;
+        case AgoraMessageBodyTypeVideo:
+        {
+            AgoraVideoMessageBody *body = (AgoraVideoMessageBody *)msgBody;
+
+            NSLog(@"Video remote path -- %@"      ,body.remotePath);
+            NSLog(@"Video local path-- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used
+            NSLog(@"Video secret -- %@"        ,body.secretKey);
+            NSLog(@"Video file size -- %lld"       ,body.fileLength);
+            NSLog(@"Download status of video files -- %lu"   ,body.downloadStatus);
+            NSLog(@"The length of the video -- %lu"      ,body.duration);
+            NSLog(@"W of video -- %f ,H of video -- %f", body.thumbnailSize.width, body.thumbnailSize.height);
+
+            // sdk will automatically download thumbnails
+            NSLog(@"The remote path of the thumbnail -- %@"     ,body.thumbnailRemotePath);
+            NSLog(@"The local path of the thumbnail -- %@"      ,body.thumbnailLocalPath);
+            NSLog(@"Thumbnail secret -- %@"        ,body.thumbnailSecretKey);
+            NSLog(@"Thumbnail download status -- %lu"      ,body.thumbnailDownloadStatus);
+        }
+        break;
+        case AgoraMessageBodyTypeFile:
+        {
+            AgoraFileMessageBody *body = (AgoraFileMessageBody *)msgBody;
+            NSLog(@"File remote path -- %@"      ,body.remotePath);
+            NSLog(@"File local path -- %@"       ,body.localPath); // it will only exist after the download method provided by the sdk is used
+            NSLog(@"File secret -- %@"        ,body.secretKey);
+            NSLog(@"File size -- %lld"       ,body.fileLength);
+            NSLog(@"File download status-- %lu"   ,body.downloadStatus);
+        }
+        break;
+        case AgoraMessageBodyTypeCustom:
+        {
+            // Custom type message received
+            AgoraCustomMessageBody *body = (AgoraCustomMessageBody *)msgBody;
+            NSLog(@"event -- %@", body.event);
+            NSLog(@"ext -- %@", body.ext);
+        }
+        break;
+
+        default:
+        break;
+    }
+    }
+}
+```
+
+### Parse the pass-through message
+
+``` objc
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
+    for (AgoraMessage *message in aCmdMessages) {
+        AgoraCmdMessageBody *body = (AgoraCmdMessageBody *)message.body;
+         NSLog(@"The action received is -- %@",body.action);
+    }    
+}
+```
+
+### Parse message extended attributes
+
+``` objc
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
+    for (AgoraMessage *message in aCmdMessages) {
+        // Extended attributes in cmd messages
+        NSDictionary *ext = message.ext;
+        NSLog(@"The extended attributes in the cmd message are-- %@",ext)
+    }    
+}
+// Message received callback
+- (void)messagesDidReceive:(NSArray *)aMessages {
+    for (AgoraMessage *message in aMessages) {
+        // Extended attributes in the message
+        NSDictionary *ext = message.ext;
+        NSLog(@"The extended attributes in the message are -- %@",ext);
+    }
+}
+```
+
+### Automatically download attachments in messages
+
+After the SDK receives the message, it will download by default: the thumbnail of the image message, the voice of the voice message, and the first frame of the video of the video message.
+
+**Please first judge that the attachment you want to download is not downloaded successfully, then download the method under Call, otherwise the SDK download method will get the attachment from the server again. **
+
+``` objc
+/*!
+ *  Download the thumbnail (the thumbnail of the picture message or the first frame of the video message). The SDK will automatically download the thumbnail, so unless the automatic download fails, the user does not need to download the thumbnail by himself
+ *
+ *  @param aMessage            Message
+ *  @param aProgressBlock      Attachment download progress callback block
+ *  @param aCompletionBlock    Download complete callback block
+ */
+- (void)downloadMessageThumbnail:(AgoraMessage *)aMessage
+                        progress:(void (^)(int progress))aProgressBlock
+                      completion:(void (^)(AgoraMessage *message, AgoraError *error))aCompletionBlock;
+                      
+// Call:                      
+[[AgoraChatClient sharedClient].chatManager downloadMessageThumbnail:message progress:nil completion:^(AgoraMessage *message, AgoraError *error) {
+    if (!error) {
+        NSLog(@"Thumbnail downloaded successfully");
+    } else {
+        NSLog(@"Reasons for failure to download thumbnails ---%@",error.errorDescription);
+    }
+}];
+```
+
+### Download the original attachment in the message
+
+``` objc
+/*!
+ *  Download message attachments (voice, video, original picture, file). The SDK will automatically download the voice message, so unless the automatic download of the voice fails, the user does not need to download the voice attachment by himself
+ *
+ *  Asynchronous method
+ *
+ *  @param aMessage            Message
+ *  @param aProgressBlock      Attachment download progress callback block
+ *  @param aCompletionBlock    Download complete callback block
+ */
+[[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(AgoraMessage *message, AgoraError *error) {
+        if (!error) {
+        NSLog(@"Download the message attachment successfully");
+    } else {
+        NSLog(@"Reasons for failure to download message attachments --- %@",error.errorDescription);
+    }
+}];
+```
+
+### Message delivered receipt
+
+The SDK provides a delivery receipt. When the other party receives your message, you will receive the following callback
+
+``` objc
+/*!
+ @method
+ @brief Received one or more delivery receipts
+ */
+- (void)messagesDidDeliver:(NSArray *)aMessages;
+```
+
+### Message read receipt
+
+The read receipt requires the developer to actively call back. When the user reads the message, the developer actively call back the methods.
+The message read receipt function is currently only available for single chat (ChatType.Chat). The recommended solution is conversation read receipt (conversation ack) combined with a single message read receipt (read ack), which can reduce the amount of read ack messages sent
+**`Note: The group message read receipt function is a value-added service. For specific usage, please skip to the group message read receipt. `**
+
+#### Send read receipt
+
+It is recommended to send the conversation ack first when entering the conversation
+
+``` objc
+[[AgoraChatClient sharedClient].chatManager ackConversationRead:@"conversation id" completion:nil];
+```
+
+On the conversation page, when a message is received, you can send a message read ack according to the message type
+
+``` objc
+/*!
+ *  Send message read receipt
+ *
+ *  Asynchronous method
+ *
+ *  @param aMessage             Message id
+ *  @param aUsername            Receiver of read messages
+ *  @param aCompletionBlock     Completed callback
+ */
+- (void)sendMessageReadAck:(NSString *)aMessageId
+                    toUser:(NSString *)aUsername
+                completion:(void (^)(AgoraError *aError))aCompletionBlock;
+                
+// Call:                
+// Send a read receipt. It is written here just to show the progress of sending, and the developer needs to decide where to send it in the APP.
+[[AgoraChatClient sharedClient].chatManager sendMessageReadAck:@"messageId" toUser:@"username" completion:^(AgoraError *aError) {
+    if (!aError) {
+         NSLog(@"Successfully sent the read receipt");
+    } else {
+        NSLog(@"Reasons for failure to send read receipt --- %@", aError.errorDescription);
+    }
+}];
+```
+
+#### Receive read receipt
+
+Receive conversation read receipt
+
+``` objc
+/**
+ * \~chinese
+ * Conversation read callback received
+ *
+ * @param from  CHANNEL_ACK sender
+ * @param to      CHANNEL_ACK receiver
+ *
+ * \~english
+ * received conversation read ack
+ * @param from  the username who send channel_ack
+ * @param to      the username who receive channel_ack
+ */
+- (void)onConversationRead:(NSString *)from to:(NSString *)to;
+```
+
+After receiving the callback of the conversation read receipt（channel ack）, the SDK will set the session-related messages as read by the other party. After receiving this callback, you need to perform page refresh and other operations
+
+Receive message read receipt
+
+``` objc
+/*!
+ *  Received one or more read receipts
+ *
+ *  @param aMessages  Message list<AgoraMessage>
+ */
+- (void)messagesDidRead:(NSArray *)aMessages;
+```
+
+### Set whether the group message needs a read receipt (value-added service)
+
+When the message is a group message, the message sender (currently the administrator and the group owner) can set whether the message needs a read receipt, if necessary, set the AgoraMessage attribute isNeedGroupAck to YES, and then send it.
+
+    @property (nonatomic) BOOL isNeedGroupAck;
+
+### Send group message read receipt
+
+``` objc
+/*!
+ *  \~chinese
+ *  Send group message read receipt
+ *
+ *  Asynchronous method
+ *
+ *  @param aMessageId           Message id
+ *  @param aGroupId             group id
+ *  @param aContent             attachment content
+ *  @param aCompletionBlock     Completed callback
+ *
+ *  \~english
+ *  Send read acknowledgement for message
+ *
+ *  @param aMessageId           Message id
+ *  @param aGroupId             group receiver
+ *  @param aContent             Content
+ *  @param aCompletionBlock     The callback of completion block
+ *
+ */
+- (void)sendGroupMessageReadAck:(NSString *)aMessageId
+                        toGroup:(NSString *)aGroupId
+                        content:(NSString *)aContent
+                     completion:(void (^)(AgoraError *aError))aCompletionBlock;
+                     
+    // Call
+    // Send group message read receipt. It is written here just to show the progress of sending. The developer needs to decide where to send it in the APP.
+    [[AgoraChatClient sharedClient].chatManager sendGroupMessageReadAck:@"messageId"
+                                                         toGroup:@"GroupId"
+                                                         content:@"Receipt content"
+                                                      completion:^(AgoraError *aError)
+    {
+        if (!aError) {
+            NSLog(@"sent the read receipt Successfully");
+        } else {
+            NSLog(@"Reasons for failure to send read receipt --- %@", aError.errorDescription);
+        }
+    }];
+```
+
+After sending the group read receipt, the groupAckCount attribute of AgoraMessage corresponding to message sender will change;
+
+``` objc
+@property (nonatomic, readonly) int groupAckCount;
+```
+
+### Group message read callback
+
+``` objc
+/*!
+ *  \~chinese
+ *  Receipt of group message read receipt
+ *
+ *  @param aMessages  List of read messages<AgoraGroupMessageAck>
+ *
+ *  \~english
+ *  Invoked when receiving read acknowledgement in message list
+ *
+ *  @param aMessages  Acknowledged message list<AgoraGroupMessageAck>
+ */
+- (void)groupMessageDidRead:(AgoraMessage *)aMessage
+                  groupAcks:(NSArray *)aGroupAcks;
+```
+
+### Get group read details
+
+    /**
+     *  \~chinese
+     *  get the read receipt of the specified group from the server
+     *
+     *  Asynchronous method
+     *
+     *  @param  aMessageId           The message id to be get
+     *  @param  aGroupId             The group id corresponding to the receipt To get
+     *  @param  aGroupAckId          Group receipt id to go back
+     *  @param  aPageSize            Get the number of messages
+     *  @param  aCompletionBlock     Get the callback for the end of the message
+     */
+    - (void)asyncFetchGroupMessageAcksFromServer:(NSString *)aMessageId
+                                         groupId:(NSString *)aGroupId
+                                 startGroupAckId:(NSString *)aGroupAckId
+                                        pageSize:(int)aPageSize
+                                      completion:(void (^)(AgoraCursorResult *aResult, AgoraError *error, int totalCount))aCompletionBlock;
+
+### Message roaming
+
+The SDK provides an interface for obtaining historical information from the server
+
+``` objc
+/**
+ *  get the history of the specified Conversation from the server
+ *
+ *  Asynchronous method
+ *
+ *  @param  aConversationId     Conversation id of the roaming message to get
+ *  @param  aConversationType   Conversation type roaming message to get
+ *  @param  aStartMessageId     refers to the ID of the start message
+ *  @param  aPageSize           Get the number of messages (up to 50 messages at a time)
+ *  @param  aCompletionBlock    Get the callback for the end of the message
+ */
+- (void)asyncFetchHistoryMessagesFromServer:(NSString *)aConversationId
+                           conversationType:(AgoraConversationType)aConversationType
+                             startMessageId:(NSString *)aStartMessageId
+                                   pageSize:(int)aPageSize
+                                 complation:(void (^)(AgoraCursorResult *aResult, AgoraError *aError))aCompletionBlock;
+                                 
+// Call:
+[[AgoraChatClient sharedClient].chatManager asyncFetchHistoryMessagesFromServer:@"6001" conversationType:AgoraConversationTypeChat startMessageId:messageId pageSize:10 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"Get the message from the server successfully");
+    } else {
+        NSLog(@"The reason for the failure to get the message from the server --- %@", aError.errorDescription);
+    }
+}];
+```
+
+### Message withdrawn
+
+``` objc
+/*!
+*  Withdraw message
+*
+*  Asynchronous method
+*
+*  @param aMessageId           Message Id
+*  @param aCompletionBlock     Completed callback
+*/
+- (void)recallMessageWithMessageId:(NSString *)aMessageId
+                        completion:(void (^)(AgoraError *aError))aCompletionBlock;
+           
+// Call:
+[[AgoraChatClient sharedClient].chatManager recallMessageWithMessageId:messageId completion:^(AgoraError *aError) {
+    if (!aError) {
+        NSLog(@"Withdraw the message successfully");
+    } else {
+        NSLog(@"Reasons for failure to withdraw the message--- %@", aError.errorDescription);
+    }
+}];
+```
+
+Message withdrawal receipt
+
+``` objc
+/*!
+ *  withdrawn Received message 
+
+ *
+ *  @param aMessages  Withdraw messages list<AgoraMessage>
+ */
+- (void)messagesDidRecall:(NSArray *)aMessages;
+```
+
+Note: The message withdrawal is a value-added function, please contact Easemob Business Opening.
 
 ------------------------------------------------------------------------
+

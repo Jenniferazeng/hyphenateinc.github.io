@@ -7,11 +7,7 @@ permalink: server_upload_and_download_files.html
 folder: server
 ---
 
-# Upload and Download files
-
-------------------------------------------------------------------------
-
-Easemob uses REST to upload and download files such as voice and images. Also, to ensure the security of chat files, our API ensures the following.
+Chat uses Platform API to upload and download files such as audio and images. Also, to ensure the security of chat files, our API ensures the following.
 
 - Only the logged-in user of the APP can upload files.
 - When uploading files, you can choose whether to restrict the access rights.
@@ -20,9 +16,9 @@ Easemob uses REST to upload and download files such as voice and images. Also, t
 
 ------------------------------------------------------------------------
 
-# REST API
+# Platform API
 
-The REST API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Easemob REST API](http://api-docs.easemob.com/) embedded in the documentation.
+The Platform API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Platform API](http://api-docs.easemob.com/) embedded in the documentation.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -31,14 +27,14 @@ The REST API document that needs to be used during the file upload and download 
     <th>Description</th>
   </tr>
   <tr>
-    <td>Upload voice/image files</td>
+    <td>Upload audio/image files</td>
     <td>/{org_name}/{app_name}/chatfiles</td>
-    <td>Upload voice/image files</td>
+    <td>Upload audio/image files</td>
   </tr>
   <tr>
-    <td>Download voice/image files</td>
+    <td>Download audio/image files</td>
     <td>/{org_name}/{app_name}/chatfiles/{filestream}</td>
-    <td>Download voice/image files</td>
+    <td>Download audio/image files</td>
   </tr>
   <tr>
     <td>Download thumbnails</td>
@@ -47,7 +43,7 @@ The REST API document that needs to be used during the file upload and download 
   </tr>
 </table>
 
-## Upload voice/image files
+## Upload audio/image files
 
 **Note:**The uploading file size cannot exceed 10M, it will fail to upload if exceeded. Required HTTP Header: *Authorization -- the token getted* restrict-access -- whether to restrict access.
 Whether to restrict access. 
@@ -106,10 +102,10 @@ View the information contained in the entities field in the return value
 #### Request example
 
 ``` php
-curl -X POST 'https://a1.easemob.com/easemob-demo/testapp/chatfiles' -H 'Authorization: Bearer YWMtS1pRuFa-EemixAMhJgmGUAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFp57yd7QBPGgDNLstNggrzgHV3JAbqbznTptqLhpG0fTOCaBFJZgduZA' -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'  -H 'restrict-access: true' -F file=@/Users/test/9.2/Easemob/image/IMG_2953.JPG
+curl -X POST 'https://a1.easecdn.com/chat-demo/testapp/chatfiles' -H 'Authorization: Bearer YWMtS1pRuFa-EemixAMhJgmGUAAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFp57yd7QBPGgDNLstNggrzgHV3JAbqbznTptqLhpG0fTOCaBFJZgduZA' -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'  -H 'restrict-access: true' -F file=@/Users/test/9.2/Chat/image/IMG_2953.JPG
 ```
 
-**Note:** In the above request example, `-F file=@/Users/test/9.2/Easemob/image/IMG_2953.JPG` is the local file path of Easemob, please replace it with your own file path when using it, otherwise the request will fail.
+**Note:** In the above request example, `-F file=@/Users/test/9.2/Chat/image/IMG_2953.JPG` is the local file path of Chat, please replace it with your own file path when using it, otherwise the request will fail.
 
 Example of possible returned results
 
@@ -120,7 +116,7 @@ Example of possible returned results
     "action": "post",
     "application": "8be024f0-e978-11e8-b697-5d598d5f8402",
     "path": "/chatfiles",
-    "uri": "https://a1.easemob.com/easemob-demo/testapp/chatfiles",
+    "uri": "https://a1.easecdn.com/chat-demo/testapp/chatfiles",
     "entities": [
         {
             "uuid": "5fd74830-56be-11e9-822a-81ea50bb049d",
@@ -130,7 +126,7 @@ Example of possible returned results
     ],
     "timestamp": 1554371126338,
     "duration": 0,
-    "organization": "easemob-demo",
+    "organization": "chat-demo",
     "applicationName": "testapp"
 }
 ```
@@ -149,11 +145,11 @@ Example of possible returned results
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Easemob REST API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
-## Downloading voice/image files
+## Downloading audio/image files
 
 Here we need to note that we need to bring the share-secret and the token of the currently logged in user in the HTTP header to be able to download, and we need to set the value of accept in the header to application/octet-stream.
 
@@ -192,7 +188,7 @@ The uuid and share-secret will be returned after the file is uploaded successful
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'share-secret: f0Vr-uyyEeiHpHmsu53Togur4ngZYgyLkdfsZ4xo2Z0cSBnB' 'http://a1.easemob.com/easemob-demo/testapp/chatfiles/7f456bf0-ecb2-11e8-b630-777db304f26c'
+curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'share-secret: f0Vr-uyyEeiHpHmsu53Togur4ngZYgyLkdfsZ4xo2Z0cSBnB' 'http://a1.easecdn.com/chat-demo/testapp/chatfiles/7f456bf0-ecb2-11e8-b630-777db304f26c'
 ```
 
 #### Example of possible returned results 
@@ -219,13 +215,13 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Easemob REST API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
 ## Download thumbnails
 
-Easemob supports creating thumbnails of images automatically on the server side. You can download the thumbnails first, and then download the larger image when the user has a need for it.
+Chat supports creating thumbnails of images automatically on the server side. You can download the thumbnails first, and then download the larger image when the user has a need for it.
 The only difference between this and downloading a large image is that the header has an additional "thumbnail: true", when the server sees that the header of the request includes this, it will return the thumbnail, otherwise it returns the original large image.
 
 #### HTTP Request
@@ -259,7 +255,7 @@ You need to fill in {file_uuid} when requesting, you need to get the uuid return
 #### Request Example
 
 ``` php
-curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'share-secret: f0Vr-uyyEeiHpHmsu53Togur4ngZYgyLkdfsZ4xo2Z0cSBnB' -H 'thumbnail: true' 'http://a1.easemob.com/easemob-demo/testapp/chatfiles/7f456bf0-ecb2-11e8-b630-777db304f26c'
+curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' -H 'share-secret: f0Vr-uyyEeiHpHmsu53Togur4ngZYgyLkdfsZ4xo2Z0cSBnB' -H 'thumbnail: true' 'http://a1.easecdn.com/chat-demo/testapp/chatfiles/7f456bf0-ecb2-11e8-b630-777db304f26c'
 ```
 
 #### Example of possible returned results 
@@ -286,5 +282,5 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Easemob REST API](http://api-docs.easemob.com/)
+[Test online using Platform API](http://api-docs.easemob.com/)
 

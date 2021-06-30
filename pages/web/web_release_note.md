@@ -9,6 +9,11 @@ folder: web
 
 # Chat SDK Update log 
 
+## version：v3.6.1 2021-06-30
+-   \[IM SDK\] update dnsconfig
+-   \[IM SDK\] Use dynamic port
+-   \[IM SDK\] Optimize output log
+
 ## version：v3.5.1 2021-04-14
 
 -   \[IM SDK\] Add user attribute functions[user attribute](/im/web/basics/

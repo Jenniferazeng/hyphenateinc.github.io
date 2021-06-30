@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['fetchchatroominfo_3aincludememberslist_3aerror_3a',['fetchChatroomInfo:includeMembersList:error:',['../protocol_i_agora_chatroom_manager-p.html#a6353e541cf5545bda22810b77a22dbbb',1,'IAgoraChatroomManager-p']]],
+  ['fetchgroupbanslist_3aerror_3a',['fetchGroupBansList:error:',['../protocol_i_agora_group_manager-p.html#a51d2217cfd512bd7841bcd9311d091d7',1,'IAgoraGroupManager-p']]],
+  ['fetchgroupinfo_3aincludememberslist_3aerror_3a',['fetchGroupInfo:includeMembersList:error:',['../protocol_i_agora_group_manager-p.html#a566f3cba36a0cb9e001fdd4d71ca45f3',1,'IAgoraGroupManager-p']]],
+  ['fetchhistorymessagesfromserver_3aconversationtype_3astartmessageid_3apagesize_3aerror_3a',['fetchHistoryMessagesFromServer:conversationType:startMessageId:pageSize:error:',['../protocol_i_agora_chat_manager-p.html#a106e5b2781d22d826a1c286da8f4dad5',1,'IAgoraChatManager-p']]],
+  ['fetchtokenwithusername_3apassword_3acompletion_3a',['fetchTokenWithUsername:password:completion:',['../interface_agora_chat_client.html#aae051a8be2af751d8daf7818feac823b',1,'AgoraChatClient']]],
+  ['fetchuserinfobyid_3acompletion_3a',['fetchUserInfoById:completion:',['../protocol_i_agora_user_info_manager-p.html#ad2b128898eb565c41927fca765e948c2',1,'IAgoraUserInfoManager-p']]],
+  ['fetchuserinfobyid_3atype_3acompletion_3a',['fetchUserInfoById:type:completion:',['../protocol_i_agora_user_info_manager-p.html#a06c8ea5d7f91c059a526027e0240e703',1,'IAgoraUserInfoManager-p']]],
+  ['fileid',['fileId',['../interface_agora_group_shared_file.html#a5175806193b0582435b24d6e8afc5f52',1,'AgoraGroupSharedFile']]],
+  ['filelength',['fileLength',['../interface_file_message_body.html#a60cd1738086505a4a1d6b6542e376f98',1,'FileMessageBody']]],
+  ['filemessagebody',['FileMessageBody',['../interface_file_message_body.html',1,'']]],
+  ['filename',['fileName',['../interface_agora_group_shared_file.html#a7b3fe3281569c400b5c832bd2c952b89',1,'AgoraGroupSharedFile']]],
+  ['fileowner',['fileOwner',['../interface_agora_group_shared_file.html#a8c40b0c606d4773c254f2572003c337d',1,'AgoraGroupSharedFile']]],
+  ['filesize',['fileSize',['../interface_agora_group_shared_file.html#a257d9a6ed9ef0cff818c8e5d93386862',1,'AgoraGroupSharedFile']]],
+  ['friendrequestdidapprovebyuser_3a',['friendRequestDidApproveByUser:',['../protocol_agora_contact_manager_delegate-p.html#ab70ff534e18639d8d8821cbe88f562a1',1,'AgoraContactManagerDelegate-p']]],
+  ['friendrequestdiddeclinebyuser_3a',['friendRequestDidDeclineByUser:',['../protocol_agora_contact_manager_delegate-p.html#a09d8ff6ce54142c4bc43d8724ba9f92a',1,'AgoraContactManagerDelegate-p']]],
+  ['friendrequestdidreceivefromuser_3amessage_3a',['friendRequestDidReceiveFromUser:message:',['../protocol_agora_contact_manager_delegate-p.html#a8599c459c90ac7d7a16d6640d5b19a85',1,'AgoraContactManagerDelegate-p']]],
+  ['friendshipdidaddbyuser_3a',['friendshipDidAddByUser:',['../protocol_agora_contact_manager_delegate-p.html#a8562da0e13d1eca9fa43700815b6b01d',1,'AgoraContactManagerDelegate-p']]],
+  ['friendshipdidremovebyuser_3a',['friendshipDidRemoveByUser:',['../protocol_agora_contact_manager_delegate-p.html#a4673fd3e476f4403278e19ae99bb7086',1,'AgoraContactManagerDelegate-p']]],
+  ['from',['from',['../interface_group_message_ack.html#ab6aa2975c6912c34dc5103ac4bb1a4f0',1,'GroupMessageAck::from()'],['../interface_message.html#afb22c9604ffbb275b9df7e23e197c052',1,'Message::from()']]]
+];
