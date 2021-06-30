@@ -1,5 +1,5 @@
 ---
-title: web Produce Overview
+title: Produce Overview
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -34,9 +34,9 @@ Agora chat sdk already supports the following functions:
     -  Demo Audio message format supported by default：MP3、AMR、WMV
     -  Demo File message format supported by default：zip、txt、doc、PDF
 
-## Web IM Demo
+## Web Chat Demo
 
-Agora Web IM Demo shows how to use Agora Web IM SDK and quickly creates a complete web chat example like WeChat.
+Agora Web Chat Demo shows how to use Agora Web Chat SDK and quickly creates a complete web chat example like WeChat.
 The shown functions include:
 
 -   log in, log out, operate friends, send and receive individual messages/group messages, etc.
@@ -45,11 +45,11 @@ The shown functions include:
 
 -   Add ip policy function for http access to prevent DNS hijacking（`isHttpDNS:true`）
 
--   Web IM Demo supports mobile device layout 
+-   Web Chat Demo supports mobile device layout 
 
--   Web IM Demo supports browser local cache(IndexDB)
+-   Web Chat Demo supports browser local cache(IndexDB)
 
-Agora Web IM demo source code is open-source on GitHub [react version](https://github.com/HyphenateInc/Hyphenate-Demo-Web)
+Agora Web Chat demo source code is open-source on GitHub [react version](https://github.com/HyphenateInc/Hyphenate-Demo-Web)
 
 Demo uses the react framework and supports advanced browsers such as Microsoft Edge, Chrome54+, and Firefox. 
 The SDK supports IE9+. 

@@ -1,5 +1,5 @@
 ---
-title: web Chatroom
+title: Chatroom
 keywords: web
 sidebar: web_sidebar
 toc: true

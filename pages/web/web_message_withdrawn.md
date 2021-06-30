@@ -1,5 +1,5 @@
 ---
-title: message withdrawn
+title: Message withdrawn
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -7,8 +7,6 @@ permalink: web_message_withdrawn.html
 folder: web
 ---
 
-# Message withdrawn
-------------------------------------------------------------------------
 ## Send a recall message. After receiving the message, the other party deletes the message to be withdrawn
 
 sender

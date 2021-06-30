@@ -1,5 +1,5 @@
 ---
-title: message roaming
+title: Message roaming
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -7,8 +7,6 @@ permalink: web_message_roaming.html
 folder: web
 ---
 
-# Message roaming
-----------------------------------------------------------
 ## You can call this API to get historical messages
 
 
