@@ -1,5 +1,5 @@
 ---
-title: message roaming
+title: Group chat read receipt
 keywords: web
 sidebar: web_sidebar
 toc: true
