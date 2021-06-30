@@ -6,7 +6,14 @@ toc: false
 permalink: index.html
 folder: / 
 ---
-<div class="row">
+<div class="post-content">
+    <h2 id="overview">Overview</h2>
+    <p>AgoraChat is a cloud-based provider of in-app chat. We provide the SDKs and a hosted Platform API to add chat to mobile and web apps. We offer the ability to add one-to-one chat, group chat, chat rooms, text messages, image and file sharing, emojis, typing indicators, delivery status and self-destructing messages.</p>
+    <p>Stop reinventing the wheel and spending valuable engineering resources on building a chat infrastructure yourself. Chat has your in-app chat system covered, so you can focus on building and optimizing the core features of your app.</p>
+    <p>Chat provides SDKs for native mobile apps for Android and iOS, Javascript for Web, and the APIs for server communication between the Chat server and your developer server.</p>
+
+
+    <div class="row">
         <div class="col-lg-12">
             <h2 class="page-header">Documentation</h2>
         </div>
@@ -65,8 +72,8 @@ folder: /
                 </div>
                 <div class="panel-body">
                     <h4>Platform API</h4>
-                    <p>Learn how to use server side API.</p>
-                    <a href="/server_product_overview.html" class="btn btn-primary">Learn More</a>
+                    <p>Learn how to use server side REST API.</p>
+                    <a href="#/server_product_overview.html" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
@@ -123,3 +130,80 @@ folder: /
             </div>
         </div>
     </div>
+<br>
+<br>
+
+
+
+
+    <h2 id="client-server-relationship" class="clickable-header top-level-header">Client Server Relationship</h2r>
+    <p><img src="/images/index/PlatformArchitecture.jpeg" alt="Client Server Relationship" /></p>
+    <h2 id="chat-platform-advantages">Chat Platform Advantages</h2>
+    <p>Chat offers five core architecture design enhancements that efficiently handle a variety of complex services:</p>
+
+<ol>
+  <li>Asynchronous - High concurrent asynchronous architecture that can easily handle millions of concurrent requests.</li>
+  <li>Stateless - Stateless modules allow services to seamlessly switch between clusters in real time.</li>
+  <li>Cluster Service - Ensures high availability.</li>
+  <li>Horizontal Scaling - Optimized server configuration to ensure that each service cluster has high horizontal scalability.</li>
+  <li>Peak Traffic Handling - Resource optimization with additional system redundancy, 50% for core services and 30% for other services, which takes care of the peak volume in various conditions.</li>
+</ol>
+
+<h2 id="chat-protocol">Chat Protocol</h2>
+
+<ul>
+  <li>
+    <p>MSYNC is Chat’s patent pending protocol that is optimized for mobile device performance and built to handle sporadic and unstable mobile networks. It is based on a binary format instead of raw text like XML, which is able to compress message data up to 80%. MSYNC also reduces the message relay between the client and server. As a result, Chat is able to deliver more information with significantly less overhead, less network bandwidth consumption, and better battery preservation. In addition, MSYNC is based on a persistent socket connection to establish real-time message delivery with extremely low latency in milliseconds scale.</p>
+  </li>
+  <li>
+    <p>Chat employs a smart heartbeat, meaning it adjusts the frequency of packet relay dynamically based on the communication channel and environment. It minimizes the mobile device power consumption and cellular data usage without compromising connection continuity.</p>
+  </li>
+</ul>
+
+<h2 id="features">Features</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Feature</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">User Management</td>
+      <td style="text-align: left">1. Provide basic user management functions, add/delete friends, and blacklist friends. Support user metadata, can store user profile information for easy integration.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Message</td>
+      <td style="text-align: left">Support all message types, including: text, emoji, picture, voice, video, location, files, CMD, custom messages.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Group</td>
+      <td style="text-align: left">Provides a complete group management function, supporting different roles in group: owner, administrator and member. Support group blacklist, user ban and other functions.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Chatroom</td>
+      <td style="text-align: left">4. Provides a complete chatroom management function and supports live interactive scenes.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Multi-Device</td>
+      <td style="text-align: left">Support one same account to log in to multiple devices at the same time, message roaming synchronization.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Push notification</td>
+      <td style="text-align: left">Support push platforms such as Apple APNS and Google FCM.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Messageing Roaming</td>
+      <td style="text-align: left">The roaming service can realize that the terminal user’s historical messages are saved and synchronized through the server to ensure that the messages are synchronized in real time</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Message Withdraw</td>
+      <td style="text-align: left">Users can withdraw the message within the withdrawal time limit after the message is sent.</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
