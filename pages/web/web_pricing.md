@@ -1,5 +1,5 @@
 ---
-title: web_Pricing
+title: Pricing
 keywords: web
 sidebar: web_sidebar
 toc: true

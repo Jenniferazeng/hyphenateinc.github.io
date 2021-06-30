@@ -50,7 +50,7 @@ entries:
     - title: Connect to chat server
       url: /web_init_login.html
       output: web, pdf
-      
+
     - title: Message
       url: /web_message.html
       output: web, pdf
@@ -63,11 +63,11 @@ entries:
       url: /web_chatroom.html
       output: web, pdf
 
-    - title: Relationship
+    - title: Contact
       url: /web_relationship.html
       output: web, pdf
 
-    - title: User
+    - title: User metadata
       url: /web_user.html
       output: web, pdf
 
@@ -87,12 +87,12 @@ entries:
         url: /web_message_roaming.html
         output: web, pdf
 
-      - title: Group message read receipt
-        url: /web_grp_msg_read.html
-        output: web, pdf
-
       - title: Message withdrawn
         url: /web_message_withdrawn.html
+        output: web, pdf
+
+      - title: Group message read receipt
+        url: /web_grp_msg_read.html
         output: web, pdf
 
   - title: Reference Docs

@@ -1,5 +1,5 @@
 ---
-title: web User
+title: User metadata
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -7,17 +7,16 @@ permalink: web_user.html
 folder: web
 ---
 
-# User attributes
 
 ## Product description 
 
-User attributes refer to user information, including nickname, avatar, age, mobile phone number, etc.
-User attributes are optional services. users can maintain it by themselves if they do not want to storesensitive information in the Agora server.
+User metadata refer to user information, including nickname, avatar, age, mobile phone number, etc.
+User metadata are optional services. users can maintain it by themselves if they do not want to storesensitive information in the Agora server.
 
 Use the user attribute function to obtain the following capabilities:
 
-- Reading and writing ability of standard user attributes, including nickname, avatar url, email address, phone number, gender, signature, birthday;
-- Customize the read and write capabilities of user attributes, provide custom extensions, and add multiple attributes through JSON strings.
+- Reading and writing ability of standard user metadata, including nickname, avatar url, email address, phone number, gender, signature, birthday;
+- Customize the read and write capabilities of user metadata, provide custom extensions, and add multiple metadata through JSON strings.
 
 ## Integration overview
 
@@ -33,12 +32,12 @@ The user attribute information that can be managed by Agora is as follows:
 * birth - birthday
 * ext - extension 
 
-## Set user attributes
+## Set user metadata
 
-Each user only has permission to set his own user attributes.
-When setting user attributes, you can set all attributes of the user, or only one attribute of the user
+Each user only has permission to set his own user metadata.
+When setting user metadata, you can set all metadata of the user, or only one attribute of the user
 
-- Set multiple user attributes 
+- Set multiple user metadata 
 
 ```js
 let options = {
@@ -58,20 +57,20 @@ WebIM.conn.updateOwnUserInfo(options).then((res) => {
     console.log(res)
 })
 ```
--   Set individual user attributes
+-   Set individual user metadata
 
 ```js
 WebIM.conn.updateOwnUserInfo('nickname', 'Tom').then((res) => {
     console.log(res)
 })
 ```
-## Get user attributes
+## Get user metadata
 
-When getting user attributes, you can get all the attributes of the user, or you can get the attributes specified by the user, such as getting only nickname, avatar, etc.
+When getting user metadata, you can get all the metadata of the user, or you can get the metadata specified by the user, such as getting only nickname, avatar, etc.
 
--Get all attributes of the user
+-Get all metadata of the user
 
-The interface for obtaining all attributes of a user is as follows:
+The interface for obtaining all metadata of a user is as follows:
 
 ```js
 /**
@@ -88,20 +87,20 @@ The interface for obtaining a single attribute of a user is as follows:
 ```js
 /**
  * @param {String|Array} users - user id
- * @param {String|Array} properties - query attributes
+ * @param {String|Array} properties - query metadata
  */
 WebIM.conn.fetchUserInfoById('userId', 'nickname').then((res) => {
     console.log(res)
 })
 
-// Query multiple user attributes at the same time
+// Query multiple user metadata at the same time
 WebIM.conn.fetchUserInfoById(['user1', 'user2'], ['nickname', 'avatarurl']).then((res) => {
     console.log(res)
 })
 ```
 ## User avatar management
 
-Agora User-Attribute Hosting Service is not responsible for managing user avatar files, which only stores the remote url address of avatar files. Users need to use third-party file hosting services such as Alibaba Cloud and Tencent Cloud to store avatar files. When a user sets an avatar, he needs to upload the avatar file to a third-party file hosting server first, and then pass the url address obtained after uploading to the avatar url field of the user attribute to set the user attribute. When displaying the avatar, get the user attributes from the SDK first. Next,Please get the avatar url field, and then display the remote avatar image on the UI layer.
+Agora User-Attribute Hosting Service is not responsible for managing user avatar files, which only stores the remote url address of avatar files. Users need to use third-party file hosting services such as Alibaba Cloud and Tencent Cloud to store avatar files. When a user sets an avatar, he needs to upload the avatar file to a third-party file hosting server first, and then pass the url address obtained after uploading to the avatar url field of the user attribute to set the user attribute. When displaying the avatar, get the user metadata from the SDK first. Next,Please get the avatar url field, and then display the remote avatar image on the UI layer.
 
 ## Card message 
 

@@ -1,5 +1,5 @@
 ---
-title: web Relationship
+title: Contact
 keywords: web
 sidebar: web_sidebar
 toc: true
@@ -8,20 +8,20 @@ folder: web
 ---
 
 
-# Friends management 
+# Contact management 
 
-Friends management gives you a better experience in IM functions. 
-Easemob Web IM SDK supports friend system management. The operations related to friends are as follows:
+Contact management gives you a better experience in chat functions. 
+Easemob Web IM SDK supports friend system management. The operations related to contact are as follows:
 
--   Query friends list 
+-   Query contact list 
 
 -   Monitor friend status events
 
--   Add friends
+-   Add contact
 
 -   Handling friend requests
 
--   Delete friends 
+-   Delete contact 
 
 -   Blacklist
 
@@ -35,9 +35,9 @@ Multiple friend system managing operations, which covers various integration sce
   | ---- | --------- | -------- | ----------- |
   | User ID | username  |  String |  User ID is the only identification of Agora users, which is unique within the scope of AppKey |
 
-## Query friends list 
+## Query contact list 
 
-Call getRoster to query the list of friends, the sample code is as follows: 
+Call getRoster to query the list of contact, the sample code is as follows: 
 
 ``` javascript
 conn.getRoster().then( (res) => {
@@ -49,7 +49,7 @@ conn.getRoster().then( (res) => {
 
 ## Listen to friend status events
 
-Register the following events in the SDK conn.listen() to monitor the status of your friends. The sample code is as follows: 
+Register the following events in the SDK conn.listen() to monitor the status of your contact. The sample code is as follows: 
 
 ``` javascript
 conn.listen({
@@ -86,7 +86,7 @@ The specific code implementation example is as follows:
 
 ### Agree to add as a friend
 
-Call acceptInvitation method to agree to add friends, the sample code is as follows:
+Call acceptInvitation method to agree to add contact, the sample code is as follows:
 
 ``` javascript
 conn.acceptInvitation('username')
@@ -116,13 +116,13 @@ conn.deleteContact('username');
 
 In the integrated blacklist operations, there are the following blacklist function operations: 
 
--   Add friends to blacklist
+-   Add contact to blacklist
 
 -   Get blacklist list 
 
--   Remove friends from the blacklist 
+-   Remove contact from the blacklist 
 
-### Add friends to blacklist
+### Add contact to blacklist
 
 After adding a friend to the blacklist, you can still be found on its friend list, but it cannot send you messages. 
 
@@ -147,7 +147,7 @@ conn.getBlacklist().then((res)=>{
 
 ------------------------------------------------------------------------
 
-### Remove friends from blacklist 
+### Remove contact from blacklist 
 
 ``` javascript
 // Delete one as a single user ID; batch delete as an array of user IDs, such as ["user1","user2"] 

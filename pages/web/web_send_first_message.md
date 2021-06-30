@@ -1,15 +1,11 @@
 ---
-title: web send first message
+title: send first message
 keywords: web
 sidebar: web_sidebar
 toc: true
 permalink: web_send_first_message.html
 folder: web
 ---
-
-# Send your first message
-
-## Follow these steps to send your first message
 
 1、 Initialize the Chat SDK
 

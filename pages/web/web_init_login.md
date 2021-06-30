@@ -72,7 +72,7 @@ conn.listen({
 
 ## Register
 
-Register Agora Web IM according to username/password/nickname:
+Register Agora Chat user acount with username/password/nickname:
 
 ``` javascript
   var options = { 
@@ -101,9 +101,17 @@ Register Agora Web IM according to username/password/nickname:
   conn.registerUser(options);
 ```
 
+## Modify pushed nickname 
+
+Set a nickname during registration. This nickname is used to display when pushing messages. Call the following API to modify the nickname 
+
+``` javascript
+conn.updateCurrentUserNick('newNick')
+```
+
 ## Login 
 
-#### Username/password login 
+### Username/password login 
 
 Use username/password to log in to Agora Web IM: 
 
@@ -116,7 +124,7 @@ var options = {
 conn.open(options);
 ```
 
-#### Login with Token 
+### Login with Token 
 
 1\. Log in with username/password and get Token. 
 
@@ -151,9 +159,9 @@ conn.open(options);
 conn.close();
 ```
 
-## Upload and push token
+## Upload push token
 
-If using the SDK in the native client and integrate the third-party push functions, call this method to upload the token to the Easemob server
+If using the SDK in the native client and integrate the third-party push functions, call this method to upload the token to the chat server
 
 ``` javascript
 /**
@@ -165,13 +173,6 @@ If using the SDK in the native client and integrate the third-party push functio
 conn.uploadToken(options);
 ```
 
-## Modify pushed nickname 
-
-Set a nickname during registration. This nickname is used to display when pushing messages. Call the following API to modify the nickname 
-
-``` javascript
-conn.updateCurrentUserNick('newNick')
-```
 
 ## Common Quastions
 
