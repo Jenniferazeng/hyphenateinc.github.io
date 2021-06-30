@@ -266,7 +266,7 @@ Chat provides several interfaces to manage the registration, acquisition, modifi
     <td>Register an Chat user in open registration and authorized registration modes</td>
   </tr>
   <tr>
-    <td>Bulk registration of users</td>
+    <td>Registration of users'</td>
     <td>/{org_name}/{app_name}/users</td>
     <td>Register multiple Chat users, only authorized registration is supported</td>
   </tr>
@@ -276,19 +276,19 @@ Chat provides several interfaces to manage the registration, acquisition, modifi
     <td>Get a single Chat user</td>
   </tr>
   <tr>
-    <td>Bulk user acquisition</td>
+    <td>Users' acquisition</td>
     <td>/{org_name}/{app_name}/users</td>
     <td>Get multiple Chat users under the application</td>
   </tr>
   <tr>
     <td>Delete a single user</td>
     <td>/{org_name}/{app_name}/users/{username}</td>
-    <td>Bulk delete multiple Chat users</td>
+    <td>Delete a single Chat user</td>
   </tr>
   <tr>
-    <td>Bulk delete users</td>
+    <td>Delete users'</td>
     <td>/{org_name}/{app_name}/users</td>
-    <td>Bulk delete multiple</td>
+    <td>Delete multiple</td>
   </tr>
   <tr>
     <td>Modify user password</td>
@@ -631,9 +631,9 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
 
 ------------------------------------------------------------------------
 
-### Bulk registration of users
+### Registration of users'
 
-Batch registration is the authorized registration method, and the server needs to verify the valid token authority to operate. Each time the interface is called, there is a maximum limit on the number of registered users, see [interface limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
+A list of registrations is the authorized registration method, and the server needs to verify the valid token authority to operate. Each time the interface is called, there is a maximum limit on the number of registered users, see [interface limit description](/server_rest_interface_flow_limiting_instructions.html) for details.
 
 #### HTTP Request
 
@@ -978,7 +978,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
 
 ------------------------------------------------------------------------
 
-### Bulk user acquisition
+### Users' acquisition
 
 This interface returns by default sorted by creation time, if you need to specify the number of fetches, you need to add the parameter limit=N, N is the number value. About paging: If the number in the DB is greater than N, it returns JSON will carry a field "cursor", we call it "cursor", the cursor can be understood as a pointer to the result set, the value is variable. When fetching data down the page with the cursor, you can get the value of the next page. If there is a next page, the return value still has this field, until there is no field, it means that the last page has been reached. cursor's meaning is data (true) paging.
 
@@ -1333,7 +1333,7 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
 
 ------------------------------------------------------------------------
 
-### Bulk delete users
+### Delete users'
 
 Delete the specified number of Chat accounts under an APP. You can delete N users at a time, and the value can be modified. It is recommended that this value is between 100-500 and not too large. It should be noted that here is just a batch to delete the N users, which ones are not specified, you can see which users are deleted in the return value.
 
@@ -2749,9 +2749,9 @@ Chat provides several interfaces to view the online/offline status of users, the
     <td>View the online status of a user</td>
   </tr>
   <tr>
-    <th>Get user online status in bulk</th>
+    <th>Users' online status</th>
     <th>/{org_name}/{app_name}/users/batch/status</th>
-    <th>Bulk view of users' online status</th>
+    <th>View of users' online status</th>
   </tr>
   <tr>
     <th>Get the number of offline messages</th>
@@ -2879,9 +2879,9 @@ If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
 
 ------------------------------------------------------------------------
 
-### Get user online status in bulk
+### Get users' online status
 
-Batch view the online status of users, up to 100 users at the same time.
+View the online status of users, up to 100 users at the same time.
 
 #### HTTP Request
 
