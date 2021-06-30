@@ -6,14 +6,6 @@ toc: true
 permalink: ios_push_configuration.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
-
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 ##  APNs Push configuration
 

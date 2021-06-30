@@ -6,14 +6,6 @@ toc: true
 permalink: ios_release_note.html
 folder: ios
 ---
-# iOS SDK's Introduction and import
-
-------------------------------------------------------------------------
-
-## DEMO（ChatDemo-UI3.0 App） experience
-
-
-Download link：[download page](http://www.easemob.com/download/im)
 
 ## iOS SDK introduction
 ===== 版本 V3.8.2 2021-06-05 =====
