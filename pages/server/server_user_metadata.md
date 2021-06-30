@@ -270,7 +270,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Bulk Get User Attributes
+### Get Users' Metadata
 
 Query user metadata based on the specified list of usernames and list of metadata.
 Returns empty data if the specified user/attribute does not exist {}. Specify up to 100 users at a time.
@@ -473,7 +473,7 @@ If the return result is <font color='red'> 429, 503 </font> or other <font color
 
 ------------------------------------------------------------------------
 
-### Delete User Attributes
+### Delete User Metadata
 
 Deletes all user metadata for the specified user.
 If the specified user does not exist, or if its user metadata do not exist (perhaps they have already been deleted), the deletion is also considered successful.
