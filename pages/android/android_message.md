@@ -393,46 +393,6 @@ conversation.getAllMsgCount();
 conversation.getAllMessages().size();
 ```
 
-## Message Roaming
-
-Agora sdk of version 3.3.4, a message roaming interface is added. You can pull historical messages from the server to the local, so that it can synchronize messages when users switch to different device (`This function is a value-added service, you need to contact Agora business to activate`)
-
-This method belongs to `ChatManager` class, which is called by `ChatClient.getInstance().chatManager()`, and the usage method refers to `loadMoreRoamingMessages()` method of the `EaseChatFragment` class in the demo
-
-``` java
-   /**
-     * Get historical information from the server
-     *
-     * @param conversationId    conversation name
-     * @param type        conversation type
-     * @param pageSize     geted page size (up to 50 items at a time)
-     * @param startMsgId    The starting message id of the roaming message, if it is null, it will be retrieved forward, starting from the latest message 
-     * @return      return the message list and the Cursor used to continue to get history
-     */
-    public CursorResult<ChatMessage> fetchHistoryMessages(String conversationId, ConversationType type, int pageSize,String startMsgId);
-
-    /**
-     * Get history from the server
-     *
-     * @param conversationId    conversation name
-     * @param type          conversation type
-     * @param pageSize     geted page size
-     * @param startMsgId    The starting message id of the roaming message, if it is null, it will be retrieved forward, starting from the latest message
-     * @param callBack     return the message list and the Cursor used to continue to get historical messages
-     */
-    public void asyncFetchHistoryMessage(String conversationId, ConversationType type, int pageSize, String startMsgId, ValueCallBack<CursorResult<ChatMessage>> callBack)
-```
-
-## Withdraw message function
-
-The message withdrawal function can withdraw messages sent out within a certain period of time. The message withdrawal time limit is 2 minutes by default, which can be individually set in units of AppKey according to the developer's needs. If you need to modify it, please contact Agora Business.
-
-Message withdrawal is a value-added feature, please contact Agora Business to activate.
-
-``` java
-ChatClient.getInstance().chatManager().recallMessage(contextMenuMessage);
-```
-
 ## Message read receipt
 
 The message read receipt function is currently only available for single chat (ChatType.Chat). The recommended solution is the combination of conversation read receipt(conversation

@@ -12,11 +12,11 @@ folder: android
 
 In the Android SDK, the exception mechanism uses the error code to determine the specific error, and you can check the reason of the error according to the specific error code.
 
-The class of error codes in Android is EMError.
+The class of error codes in Android is Error.
 
 For example, if the user returns an existing error during registration, it can be detected as follows：
 
-`EMError.USER_ALREADY_EXISTS`
+`Error.USER_ALREADY_EXISTS`
 
 For details, see [V3.X Java Doc](http://sdkdocs.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html).
 
@@ -84,30 +84,6 @@ For details, see [V3.X Java Doc](http://sdkdocs.easemob.com/apidoc/android/chat3
 |  703      |CHATROOM_PERMISSION_DENIED
 |  704      |CHATROOM_MEMBERS_FULL
 |  705      |CHATROOM_NOT_EXIST
-|  800      |CALL_INVALID_ID
-|  801      |CALL_BUSY
-|  802      |CALL_REMOTE_OFFLINE
-|  803      |CALL_CONNECTION_ERROR
-|  804      |CALL_CONFERENCE_CREATE_FAILED
-|  805      |CALL_CONFERENCE_CANCEL
-|  806      |CALL_ALREADY_JOIN
-|  807      |CALL_ALREADY_PUB
-|  808      |CALL_ALREADY_SUB
-|  809      |CALL_NO_SESSION
-|  810      |CALL_NO_PUBLISH
-|  811      |CALL_NO_SUBSCRIBE
-|  812      |CALL_NO_STREAM
-|  813      |CALL_TICKET_INVALID
-|  814      |CALL_TICKET_EXPIRED
-|  815      |CALL_SESSION_EXPIRED
-|  816      |CALL_CONFERENCE_NO_EXIST
-|  817      |CALL_INVALID_CAMERA_INDEX
-|  818      |CALL_INVALID_PARAMS
-|  819      |CALL_CONNECTION_TIMEOUT
-|  820      |CALL_JOIN_TIMEOUT
-|  821      |CALL_OTHER_DEVICE
-|  822      |CALL_CONFERENCE_DISMISS
-|  823      |CALL_TALKER_ISFULL
 |  900      |PUSH_NOT_SUPPORT
 |  901      |PUSH_BIND_FAILED
 |  902      |PUSH_UNBIND_FAILED	          
