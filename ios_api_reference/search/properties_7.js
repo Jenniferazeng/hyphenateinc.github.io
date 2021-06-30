@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['isautoacceptfriendinvitation',['isAutoAcceptFriendInvitation',['../interface_agora_options.html#a001157a4e9cfeeef9247899e9af7c4bf',1,'AgoraOptions']]],
+  ['isautoacceptgroupinvitation',['isAutoAcceptGroupInvitation',['../interface_agora_options.html#a81327d405337ea0ce3ef13426a310cd4',1,'AgoraOptions']]],
+  ['isautodownloadthumbnail',['isAutoDownloadThumbnail',['../interface_agora_options.html#adb46e02653f156278a6eb2f0ad7f4e09',1,'AgoraOptions']]],
+  ['isautologin',['isAutoLogin',['../interface_agora_chat_client.html#a473a4233eaf7226dc87554225e3d438d',1,'AgoraChatClient::isAutoLogin()'],['../interface_agora_options.html#a03aa4641a62a6971207a787d52ec83ad',1,'AgoraOptions::isAutoLogin()']]],
+  ['isautotransfermessageattachments',['isAutoTransferMessageAttachments',['../interface_agora_options.html#a3df902ae01a18819bc6c8da9d2b43fd5',1,'AgoraOptions']]],
+  ['isblocked',['isBlocked',['../interface_agora_group.html#a16e92a3705f27012a0736cf69f1ed6a7',1,'AgoraGroup']]],
+  ['ischatroomownerleaveallowed',['isChatroomOwnerLeaveAllowed',['../interface_agora_options.html#a7deea05bfa5d733c818ad85324c30f82',1,'AgoraOptions']]],
+  ['isconnected',['isConnected',['../interface_agora_chat_client.html#a253e6b8211e8547bcd0f5188434ec9dd',1,'AgoraChatClient']]],
+  ['isdeletemessageswhenexitchatroom',['isDeleteMessagesWhenExitChatRoom',['../interface_agora_options.html#a1416dfdae993ef658d2464897ad85e67',1,'AgoraOptions']]],
+  ['isdeletemessageswhenexitgroup',['isDeleteMessagesWhenExitGroup',['../interface_agora_options.html#a7997a1869ac0a1286723f088b2f401b3',1,'AgoraOptions']]],
+  ['isdeliveracked',['isDeliverAcked',['../interface_message.html#a65b30d4ddf9af53b2d2a3c7fe401f547',1,'Message']]],
+  ['isdeliveronlineonly',['isDeliverOnlineOnly',['../interface_cmd_message_body.html#a19fbc153d7f2b0054ae9942cd13de00f',1,'CmdMessageBody']]],
+  ['isinviteneedconfirm',['IsInviteNeedConfirm',['../interface_agora_group_options.html#a65d88bd3b4b58953f0dde6bc7858e009',1,'AgoraGroupOptions']]],
+  ['islistened',['isListened',['../interface_message.html#aa54d4dbc5ea0e39134960e3ff6c475f9',1,'Message']]],
+  ['isloggedin',['isLoggedIn',['../interface_agora_chat_client.html#aa69dbf36e3d84e4732be5b1e78aa248e',1,'AgoraChatClient']]],
+  ['ismuteallmembers',['isMuteAllMembers',['../interface_agora_chatroom.html#a4768769d53c4a1f29e7217fe2fb0659a',1,'AgoraChatroom::isMuteAllMembers()'],['../interface_agora_group.html#a346536786e37ccf0daa1e0a921710b62',1,'AgoraGroup::isMuteAllMembers()']]],
+  ['isneedgroupack',['isNeedGroupAck',['../interface_message.html#a1ecffcd83fc47d968fea4354b8caf32a',1,'Message']]],
+  ['isnodisturbenable',['isNoDisturbEnable',['../interface_agora_push_options.html#a3472a58c29a744bf9774cf0a1bf1a0d8',1,'AgoraPushOptions']]],
+  ['ispublic',['isPublic',['../interface_agora_group.html#a8c59fb4542bacec1a84ff57bb3bde7bd',1,'AgoraGroup']]],
+  ['ispushnotificationenabled',['isPushNotificationEnabled',['../interface_agora_group.html#a0ac1c22795ed6b0954b40550e69061b0',1,'AgoraGroup']]],
+  ['isread',['isRead',['../interface_message.html#afc8100a7a4fba99ea36dacc3eb1c92f4',1,'Message']]],
+  ['isreadacked',['isReadAcked',['../interface_message.html#ab30feeb4321a870fb58c0f5c9f4e2928',1,'Message']]]
+];
