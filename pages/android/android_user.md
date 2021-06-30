@@ -6,9 +6,9 @@ toc: true
 permalink: android_user.html
 folder: android
 ---
-- # User attributes
+# User attributes
 
-  ## product description
+  ## Product description
 
   User attributes refer to user's information, including: nickname, avatar, age, mobile phone number, etc.
   User attributes are optional services. If users do not want sensitive information to be stored in the Agora server, they can maintain it by themselves.
@@ -24,13 +24,7 @@ The SDK provides a user attribute function, which can be used to save fields suc
 
 The user attribute module is getted as follows:
 
-     /**
-         * \~chinese
-         * Get UserInfoManager
-         *
-         * @return UserInfoManager
-         *
-         * \~english
+        /**
          * get userInfo manager
          *
          * @return UserInfoManager
@@ -39,19 +33,7 @@ The user attribute module is getted as follows:
 
 UserInfo is an encapsulation of all fields of user attributes. The fields are described as follows:
 
-    * \~chinese
-     * User attribute entity class, information about the user, the following attributes:
-     * userId: Agora ID
-     * nickName: Nickname (recommended not to exceed 64 bytes)
-     * avatarUrl: Avatar URL (recommended not to exceed 256 bytes)
-     * email: Email (recommended not to exceed 64 bytes)
-     * phoneNumber: phone number (recommended not to exceed 32 bytes)
-     * gender: gender (default is 0, 1 means male, 2 means female, others are invalid)
-     * signature: signature (recommended not to exceed 256 bytes)
-     * birthday: birthday (recommended not to exceed 64 bytes)
-     * ext: extended field (users can extend it by themselves, it is recommended to encapsulate it into a JSON string, or it can be set to an null string)
-     *
-     * \~english
+    /** 
      * User attribute entity class, information about the user,
      * the following attributes:
      * nickName; avatarUrl; email; phoneNumber; isMale;
@@ -75,18 +57,11 @@ UserInfo is an encapsulation of all fields of user attributes. The fields are de
 
 Users can set their own user attributes. When setting user attributes, they can set all attributes or only one attribute
 
--Set all attributes of the user
+- Set all attributes of the user
 
 The interface for setting all attributes of the user is as follows
 
-      /**
-         * \~chinese
-         * Modify your own user attributes
-         *
-         * @param userInfo user attributes to be modified
-         * @param callBack result callback
-         *
-         * \~english
+        /**
          * Update own userInfo.
          *
          * @param callBack result callback
@@ -107,17 +82,19 @@ The calling process is as follows:
     ChatClient.getInstance().userInfoManager().updateOwnInfo(userInfo, new ValueCallBack<String>() {
                 @Override
                 public void onSuccess(String value) {
+
                 }
                 @Override
                 public void onError(int error, String errorMsg) {
+
                 }
       });
 
--Set one or several attributes
+- Set one or several attributes
 
 The user attribute types that users can specify include:
 
-    /**
+         /**
           * Related user attributes The attribute types are defined as follows:
           * NICKNAME
           * AVATAR_URL Avatar
@@ -141,15 +118,7 @@ The user attribute types that users can specify include:
 
 The interface for setting the attributes of a specified user is as follows:
 
-     /**
-         * \~chinese
-         * Modify an attribute in user information
-         *
-         * @param attribute user attribute field
-         * @param value modified information (when the value is null, the set attribute will be deleted)
-         * @param callBack result callback
-         *
-         * \~english
+        /**
          * Update own userInfo.
          *
          * @param callBack result callback
@@ -174,18 +143,11 @@ The examples are as follows (an example to modify the user profile picture):
 
 When getting user attributes, you can get all the attributes of the user, or you can get a specific item or some of them. If you only get a nickname or avatar:
 
--Get all attributes of the user
+- Get all attributes of the user
 
 The interface for getting all attributes of the user is as follows:
 
-     /**
-          * \~chinese
-          * get user information according to Agora ID
-          *
-          * @param userIds   list of user IDs
-          * @param callBack   result callback
-          *
-          * \~english
+         /**
           * Update own userInfo.
           *
           * @param callBack result callback
@@ -194,23 +156,15 @@ The interface for getting all attributes of the user is as follows:
 
 The call is as follows
 
-      String[] userId = new String[1];
+     String[] userId = new String[1];
      userId[0] = username;
      ChatClient.getInstance().userInfoManager().fetchUserInfoByUserId(userId, new ValueCallBack<Map<String, UserInfo>>() {}
 
--get a certain item or properties specified by the user
+- Get a certain item or properties specified by the user
 
 The interface for geting the attributes of a specified user is as follows:
 
-      /**
-          * \~chinese
-          * get user information according to Agora ID user attributes
-          *
-          * @param userIds list of user IDs
-          * @param attributes user attributes
-          * @param callBack result callback
-          *
-          * \~english
+         /**
           * Update own userInfo.
           *
           * @param callBack result callback
@@ -219,7 +173,7 @@ The interface for geting the attributes of a specified user is as follows:
 
 The call is as follows:
 
-     String[] userId = new String[1];
+    String[] userId = new String[1];
     userId[0] = ChatClient.getInstance().getCurrentUser();
     UserInfoType[] userInfoTypes = new UserInfoType[2];
     userInfoTypes[0] = UserInfoType.NICKNAME;
@@ -233,7 +187,7 @@ The user attribute function does not provide file storage service and avatar fil
 
 ## Card Message
 
-The SDK does not have a card type of message, but the card function can be realized by customizing the message type. You can set the event of the custom message to \"userCard\", and add fields such as the Agora id, nickname and avatar needed to display the business card in the ext to realize the function of sending and receiving business cards.
+The SDK does not have a card type of message, but the card function can be realized by customizing the message type. You can set the event of the custom message to \"userCard\", and add fields such as the chat id, nickname and avatar needed to display the business card in the ext to realize the function of sending and receiving business cards.
 
 The business card message sending process is as follows:
 
@@ -249,9 +203,6 @@ The business card message sending process is as follows:
      ChatClient.getInstance().chatManager().sendMessage(message);
 
 If you need to display more information in the card, you can add more fields in the ext.
-
-For the specific implementation of business cards, please refer to ChatUserCardAdapterDelegate 
-ChatUserCardViewHolder chatRowUserCard and other classes in Demo.
 
 
 ------------------------------------------------------------------------
