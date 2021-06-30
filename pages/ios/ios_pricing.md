@@ -1,5 +1,5 @@
 ---
-title: ios Group
+title: iOS  Pricing
 keywords: ios
 sidebar: ios_sidebar
 toc: true

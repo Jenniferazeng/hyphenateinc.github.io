@@ -1,9 +1,9 @@
 ---
-title: ios Group
+title: iOS Offline Push
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_multi_device.html
+permalink: ios_offline_push.html
 folder: ios
 ---
 # iOS SDK's Introduction and import

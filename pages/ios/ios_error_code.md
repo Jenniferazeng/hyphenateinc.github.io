@@ -1,5 +1,5 @@
 ---
-title: ios Error Code
+title: iOS Error Code
 keywords: ios
 sidebar: ios_sidebar
 toc: true

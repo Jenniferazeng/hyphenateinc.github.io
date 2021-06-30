@@ -1,9 +1,9 @@
 ---
-title: ios Group
+title: iOS Push Configuration
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_message.html
+permalink: ios_push_configuration.html
 folder: ios
 ---
 # iOS SDK's Introduction and import

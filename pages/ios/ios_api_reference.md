@@ -1,5 +1,5 @@
 ---
-title: ios Group
+title: IOS API Reference
 keywords: ios
 sidebar: ios_sidebar
 toc: true

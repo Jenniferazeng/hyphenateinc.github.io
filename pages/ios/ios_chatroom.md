@@ -1,5 +1,5 @@
 ---
-title: ios Chatroom
+title: iOS Chatroom
 keywords: ios
 sidebar: ios_sidebar
 toc: true

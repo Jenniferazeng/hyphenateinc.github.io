@@ -1,9 +1,9 @@
 ---
-title: ios Group
+title: iOS Push Content
 keywords: ios
 sidebar: ios_sidebar
 toc: true
-permalink: ios_multi_device.html
+permalink: ios_push_content.html
 folder: ios
 ---
 # iOS SDK's Introduction and import
@@ -14,6 +14,7 @@ folder: ios
 
 
 Download link：[download page](http://www.easemob.com/download/im)
+
 ## Parse APNs content
 
 ## Single chat
