@@ -11,55 +11,49 @@ folder: android
 
 1、 Initialize the Chat SDK
 
-```java
-// set init sdk options
-ChatOptions options = new ChatOptions();
-// set your appkey
-options.setAppKey("Your appkey");
-//init hyphenate sdk with options
-ChatClient.getInstance().init(context, options);
+```ios 
+AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
+// AgoraChat cert keys
+[options setApnsCertName:"your certificate"];
+[options setEnableConsoleLog:YES];
+[options setIsDeleteMessagesWhenExitGroup:NO];
+[options setIsDeleteMessagesWhenExitChatRoom:NO];
+[options setUsingHttpsOnly:YES];
+[[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
+
 ```
 
 2、Login chat server
 
-```java
-ChatClient.getInstance().login(mAccount, mPassword, new CallBack() {
-            /**
-             * Sign in success callback
-             */
-            @Override 
-            public void onSuccess() {
-                // Sign in success jump MainActivity
-                Intent intent = new Intent(mActivity, MainActivity.class);
-                startActivity(intent);
-                // finish activity;
-                finish();
-            }
+```ios
 
-            /**
-             * Sign in failed callback
-             * @param code failed code
-             * @param message failed message
-             */
-            @Override 
-            public void onError(final int code, final String message) {
-                
-            }
+[[AgoraChatClient sharedClient] loginWithUsername:@"username"
+                password:@"password"
+            completion:^(NSString *aUsername, AgoraError *aError) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                if (!aError) {
+                    [[AgoraChatClient sharedClient].options setIsAutoLogin:YES];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+                } else {
+                    NSString *alertStr = NSLocalizedString(@"login.failure", @"Login failure");
+                    
+                }
+}];
 
-            @Override 
-            public void onProgress(int progress, String content) {
-                
-            }
-        });
 ```
 
 3、Construct and send the message
 
-```java
+```ios
 // create a message
-ChatMessage message = ChatMessage.createTxtSendMessage("Hello world!", toChatUsername);
+  Message *message = [[Message alloc] initWithConversationID:receiver
+                                                              from:sender
+                                                                to:receiver
+                                                              body:body
+                                                               ext:messageExt];
 // send message
-ChatClient.getInstance().chatManager().sendMessage(message);
+[[AgoraChatClient sharedClient].chatManager sendMessageReadAck:@"message" completion:nil];
+
 ```
 
 ------------------------------------------------------------------------
