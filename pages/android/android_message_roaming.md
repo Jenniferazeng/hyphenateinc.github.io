@@ -6,11 +6,10 @@ toc: true
 permalink: android_message_roaming.html
 folder: android
 ---
-# Message Roaming
 
 You can pull historical messages from the server to the local, so that it can synchronize messages when users switch to different device (`This function is a value-added service, you need to contact Agora business to activate`)
 
-This method belongs to `ChatManager` class, which is called by `ChatClient.getInstance().chatManager()`, and the usage method refers to `loadMoreRoamingMessages()` method of the `EaseChatFragment` class in the demo
+This method belongs to `ChatManager` class, which is called by `ChatClient.getInstance().chatManager()`
 
 ``` java
    /**
