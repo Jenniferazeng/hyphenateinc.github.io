@@ -27,10 +27,6 @@ entries:
       url: /ios_product_overview.html
       output: web
 
-    - title: Pricing
-      url: /ios_pricing.html
-      output: web, pdf
-
     - title: Release Note
       url: /ios_release_note.html
       output: web, pdf
@@ -43,20 +39,24 @@ entries:
       url: /ios_run_the_sample_project.html
       output: web, pdf
 
+    - title: Send first message
+      url: /ios_send_first_message.html
+      output: web, pdf
+
   - title: Basic Features
     output: web, pdf
 
     folderitems:
-    - title: User
-      url: /ios_user.html
-      output: web, pdf
-
-    - title: Relationship
-      url: /ios_relationship.html
+    - title: Connect To Chat Server
+      url: /android_connect_to_chat_server.html
       output: web, pdf
 
     - title: Message
       url: /ios_message.html
+      output: web, pdf
+
+    - title: Contact
+      url: /ios_relationship.html
       output: web, pdf
 
     - title: Group
@@ -67,20 +67,8 @@ entries:
       url: /ios_chatroom.html
       output: web, pdf
 
-    - title: IMKit
-      url: /ios_imkit.html
-      output: web, pdf  
-
-    - title: CallKit
-      url: /ios_callkit.html
-      output: web, pdf
-
-    - title: Multi-Device
-      url: /ios_multi_device.html
-      output: web, pdf
-
-    - title: Push notification
-      url: /ios_push_notification.html
+    - title: User metadata
+      url: /ios_user.html
       output: web, pdf
 
   - title: Advanced Features
@@ -90,6 +78,10 @@ entries:
     
     - title: Multi-device Sync
       url: /ios_multi_device.html
+      output: web, pdf
+
+    - title: Push notification
+      url: /ios_push_notification.html
       output: web, pdf
       
     - title: Message Roaming
