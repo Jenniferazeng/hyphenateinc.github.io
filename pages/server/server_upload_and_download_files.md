@@ -7,7 +7,7 @@ permalink: server_upload_and_download_files.html
 folder: server
 ---
 
-Chat uses REST to upload and download files such as voice and images. Also, to ensure the security of chat files, our API ensures the following.
+Chat uses Platform API to upload and download files such as voice and images. Also, to ensure the security of chat files, our API ensures the following.
 
 - Only the logged-in user of the APP can upload files.
 - When uploading files, you can choose whether to restrict the access rights.
@@ -16,9 +16,9 @@ Chat uses REST to upload and download files such as voice and images. Also, to e
 
 ------------------------------------------------------------------------
 
-# REST API
+# Platform API
 
-The REST API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Chat REST API](http://api-docs.easemob.com/) embedded in the documentation.
+The Platform API document that needs to be used during the file upload and download integration is detailed and can be tested online by using the [Chat Platform API](http://api-docs.easemob.com/) embedded in the documentation.
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
@@ -145,7 +145,7 @@ Example of possible returned results
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -215,7 +215,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -282,5 +282,5 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 

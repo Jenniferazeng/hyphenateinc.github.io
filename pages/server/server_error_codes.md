@@ -1,5 +1,5 @@
 ---
-title: Common Error Codes of Server-side REST API
+title: Common Error Codes of Server-side Platform API
 keywords: server
 sidebar: server_sidebar
 toc: true
@@ -9,7 +9,7 @@ folder: server
 
 ## Example of HTTP return results
 
-After the REST interface calling, HTTP will use status code and the standard JSON format to return the  result. The specific error can be determined by the error field in the return data.
+After the Platform API interface calling, HTTP will use status code and the standard JSON format to return the  result. The specific error can be determined by the error field in the return data.
 
 -   HTTP status return code 200 (success)
 -   HTTP status return code 4xx (Request Error). These status codes indicate that the request may have error and interfere the processing of server.
@@ -18,7 +18,7 @@ After the REST interface calling, HTTP will use status code and the standard JSO
 #### Return Example
 ![](/images/server_return_error_example.png)
 
-It is recommended to do fault tolerance for the Chat REST API results called by APP's own server side. For example, It should catch the exception returned by the interface calling, and the timeout errors should be retried. For system errors or errors after retries, they should be recorded in the system log and provide the alert to DevOps staff to do remedial measures, such as manual retransmission.
+It is recommended to do fault tolerance for the Chat Platform API results called by APP's own server side. For example, It should catch the exception returned by the interface calling, and the timeout errors should be retried. For system errors or errors after retries, they should be recorded in the system log and provide the alert to DevOps staff to do remedial measures, such as manual retransmission.
 
 ## Index Error Status Code
 

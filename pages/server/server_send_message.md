@@ -12,7 +12,7 @@ The API can send text messages, send image messages, send audio messages, send v
 
 To send a file type message, you need to upload the file to the Chat server first, refer to the documentation: [file upload and download](/server/server_upload_and_download_files.html)
 
-REST interface to send messages, will not determine whether the Chat id exists under appkey.
+Platform API interface to send messages, will not determine whether the Chat id exists under appkey.
 
 ## Process description
 
@@ -162,7 +162,7 @@ Return value 400, means massage structure error
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details 
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -312,7 +312,7 @@ curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages'   -H 'Author
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -465,7 +465,7 @@ curl -X POST -H "Authorization: Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) 
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -620,7 +620,7 @@ curl -X POST -i 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Authoriz
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Test online using Chat REST API](http://api-docs.easemob.com/)
+[Test online using Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -756,7 +756,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -893,7 +893,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1045,7 +1045,7 @@ curl -L -X POST 'https://a1.easecdn.com/chat-demo/testapp/messages' -H 'Accept: 
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
 
@@ -1190,7 +1190,7 @@ curl -X POST -H "Authorization:Bearer YWMtxc6K0L1aEeKf9LWFzT9xEAAAAT7MNR_9OcNq-G
 
 If the return result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause for a while and retry. See [interface flow restriction instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
-[Testing online with Chat REST API](http://api-docs.easemob.com/)
+[Testing online with Chat Platform API](http://api-docs.easemob.com/)
 
 ### iOS extension messages
 
@@ -1203,7 +1203,7 @@ Chat provides the following types of extension fields.
   </tr>
   <tr>
     <td>em_push_content</td>
-    <td><a href="/im/ios/apns/content#custom display"> custom push display </a></td>
+    <td><a href="/ios/apns/content#custom display"> custom push display </a></td>
   </tr>
   <tr>
     <td>em_push_category</td>

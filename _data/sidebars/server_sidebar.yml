@@ -84,7 +84,7 @@ entries:
       url: /server_error_codes.html
       output: web, pdf
 
-    - title: REST interface flow limiting instructions
+    - title: Platform API interface flow limiting instructions
       url: /server_rest_interface_flow_limiting_instructions.html
       output: web, pdf  
   

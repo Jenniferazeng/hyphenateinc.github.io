@@ -1,5 +1,5 @@
 ---
-title: REST interface flow limiting instructions
+title: Platform API interface flow limiting instructions
 keywords: server
 sidebar: server_sidebar
 toc: true
@@ -7,7 +7,7 @@ permalink: server_rest_interface_flow_limiting_instructions.html
 folder: server
 ---
 
-# REST interface flow limiting instructions
+# Platform API interface flow limiting instructions
 
 <table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
