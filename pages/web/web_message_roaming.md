@@ -7,6 +7,8 @@ permalink: web_message_roaming.html
 folder: web
 ---
 
+You can pull historical messages from the server to the local, so that it can synchronize messages when users switch to different device
+
 ## You can call this API to get historical messages
 
 
