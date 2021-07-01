@@ -1,5 +1,5 @@
 ---
-title: iOS Push Configuration
+title:  Push Configuration
 keywords: ios
 sidebar: ios_sidebar
 toc: true

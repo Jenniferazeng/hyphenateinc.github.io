@@ -1,16 +1,15 @@
-- - -
-
-## title: iOS Error Code
+---
+title:  Error Code
 keywords: ios
-sidebar: ios\_sidebar
+sidebar: ios_sidebar
 toc: true
-permalink: ios\_error\_code.html
+permalink: ios_error_code.html
 folder: ios
+---
 
 ## Common error codes of iOS API
 
 - - -
-
 The header file AgoraErrorCode.h in the SDK. Please determine the error based on its type, not the number.
 
 The class of error codes in iOS is AgoraError.

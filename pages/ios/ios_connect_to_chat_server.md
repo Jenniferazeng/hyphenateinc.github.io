@@ -1,5 +1,5 @@
 ---
-title: iOS Connect To Chat Server
+title: Connect To Chat Server
 keywords: ios
 sidebar: ios_sidebar
 toc: true

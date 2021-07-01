@@ -1,5 +1,5 @@
 ---
-title: iOS Push Content
+title:  Push Content
 keywords: ios
 sidebar: ios_sidebar
 toc: true

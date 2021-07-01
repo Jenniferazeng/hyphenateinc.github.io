@@ -1,5 +1,5 @@
 ---
-title: iOS Message
+title:  Message
 keywords: ios
 sidebar: ios_sidebar
 toc: true
