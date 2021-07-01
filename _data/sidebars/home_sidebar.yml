@@ -39,6 +39,6 @@ entries:
       url: /web_product_overview.html
       output: web, pdf
 
-    - title: Server-Side
+    - title: Platform API
       url: /server_product_overview.html
       output: web, pdf

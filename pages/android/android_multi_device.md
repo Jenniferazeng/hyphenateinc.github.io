@@ -1,5 +1,5 @@
 ---
-title: Android Multi Device
+title: Multi Device
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -7,7 +7,7 @@ permalink: android_multi_device.html
 folder: android
 ---
 
-## The ID of the device logged in by the other end
+## The ID of the device logged in by other devices
 
 When the PC terminal and the mobile terminal log in to the same account, the device ID of the PC terminal can be got through a specific method on the mobile terminal. The device ID is equivalent to a special friend Username and can be used directly for chat, and the usage method is similar to friend.
 

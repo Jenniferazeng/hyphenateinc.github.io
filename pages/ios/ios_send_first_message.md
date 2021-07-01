@@ -1,7 +1,7 @@
 ---
 title: Send First Message
-keywords: iOS
-sidebar: iOS_sidebar
+keywords: ios
+sidebar: ios_sidebar
 toc: true
 permalink: ios_send_first_message.html
 folder: android

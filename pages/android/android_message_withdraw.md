@@ -1,5 +1,5 @@
 ---
-title: Android Message Withdraw
+title: Message Withdraw
 keywords: android
 sidebar: android_sidebar
 toc: true

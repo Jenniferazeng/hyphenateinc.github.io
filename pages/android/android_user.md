@@ -1,28 +1,27 @@
 ---
-title: Android User
+title: User Metadata
 keywords: android
 sidebar: android_sidebar
 toc: true
 permalink: android_user.html
 folder: android
 ---
-# User attributes
 
-  ## Product description
+## Product description
 
-  User attributes refer to user's information, including: nickname, avatar, age, mobile phone number, etc.
-  User attributes are optional services. If users do not want sensitive information to be stored in the Agora server, they can maintain it by themselves.
+  User metadata refer to user's information, including: nickname, avatar, age, mobile phone number, etc.
+  User metadata are optional services. If users do not want sensitive information to be stored in the Agora server, they can maintain it by themselves.
 
-  Use the user attribute function to get the following capabilities:
+  Use the user metadata function to get the following capabilities:
 
-  - Reading and writing ability of standard user attributes, including: nickname, avatar url, email address, phone number, gender, signature, birthday;
-  - the read and write capabilities of custom user attributes, provide custom extensions, and add multiple attributes through JSON strings.
+  - Reading and writing ability of standard user metadata, including: nickname, avatar url, email address, phone number, gender, signature, birthday;
+  - the read and write capabilities of custom user metadata, provide custom extensions, and add multiple metadata through JSON strings.
 
 ## Integration overview
 
-The SDK provides a user attribute function, which can be used to save fields such as avatar address, nickname, phone number, and extension fields. The related interfaces are introduced as follows:
+The SDK provides a user metadata function, which can be used to save fields such as avatar address, nickname, phone number, and extension fields. The related interfaces are introduced as follows:
 
-The user attribute module is getted as follows:
+The user metadata module is getted as follows:
 
         /**
          * get userInfo manager
@@ -31,11 +30,11 @@ The user attribute module is getted as follows:
          */
         public UserInfoManager userInfoManager() {}
 
-UserInfo is an encapsulation of all fields of user attributes. The fields are described as follows:
+UserInfo is an encapsulation of all fields of user metadata. The fields are described as follows:
 
     /** 
-     * User attribute entity class, information about the user,
-     * the following attributes:
+     * User metadata entity class, information about the user,
+     * the following metadata:
      * nickName; avatarUrl; email; phoneNumber; isMale;
      * signature; birthday; userId;ext;
      *
@@ -53,13 +52,13 @@ UserInfo is an encapsulation of all fields of user attributes. The fields are de
         public UserInfo(){}
      }
 
-## Set user attributes
+## Set user metadata
 
-Users can set their own user attributes. When setting user attributes, they can set all attributes or only one attribute
+Users can set their own user metadata. When setting user metadata, they can set all metadata or only one metadata
 
-- Set all attributes of the user
+- Set all metadata of the user
 
-The interface for setting all attributes of the user is as follows
+The interface for setting all metadata of the user is as follows
 
         /**
          * Update own userInfo.
@@ -90,12 +89,12 @@ The calling process is as follows:
                 }
       });
 
-- Set one or several attributes
+- Set one or several metadata
 
-The user attribute types that users can specify include:
+The user metadata types that users can specify include:
 
          /**
-          * Related user attributes The attribute types are defined as follows:
+          * Related user metadata The metadata types are defined as follows:
           * NICKNAME
           * AVATAR_URL Avatar
           * EMAIL mailbox
@@ -116,14 +115,14 @@ The user attribute types that users can specify include:
              EXT(100,"ext");
        }
 
-The interface for setting the attributes of a specified user is as follows:
+The interface for setting the metadata of a specified user is as follows:
 
         /**
          * Update own userInfo.
          *
          * @param callBack result callback
          */
-        public void updateOwnInfoByAttribute(final UserInfoType attribute, final String value, final ValueCallBack<String> callBack){}
+        public void updateOwnInfoByAttribute(final UserInfoType metadata, final String value, final ValueCallBack<String> callBack){}
 
 The examples are as follows (an example to modify the user profile picture):
 
@@ -139,13 +138,13 @@ The examples are as follows (an example to modify the user profile picture):
                   }
        });
 
-## Get user attributes
+## Get user metadata
 
-When getting user attributes, you can get all the attributes of the user, or you can get a specific item or some of them. If you only get a nickname or avatar:
+When getting user metadata, you can get all the metadata of the user, or you can get a specific item or some of them. If you only get a nickname or avatar:
 
-- Get all attributes of the user
+- Get all metadata of the user
 
-The interface for getting all attributes of the user is as follows:
+The interface for getting all metadata of the user is as follows:
 
          /**
           * Update own userInfo.
@@ -162,14 +161,14 @@ The call is as follows
 
 - Get a certain item or properties specified by the user
 
-The interface for geting the attributes of a specified user is as follows:
+The interface for geting the metadata of a specified user is as follows:
 
          /**
           * Update own userInfo.
           *
           * @param callBack result callback
           */
-         public void fetchUserInfoByAttribute(final String[] userIds, final UserInfoType[] attributes, ValueCallBack<Map<String,UserInfo>> callBack){}
+         public void fetchUserInfoByAttribute(final String[] userIds, final UserInfoType[] metadata, ValueCallBack<Map<String,UserInfo>> callBack){}
 
 The call is as follows:
 
@@ -183,7 +182,7 @@ The call is as follows:
 
 ## User avatar management
 
-The user attribute function does not provide file storage service and avatar file storage service, only the url address of the avatar file is stored. Therefore, users need to use third-party file storage services such as Alibaba Cloud and Tencent Cloud. When a user sets an avatar, he needs to upload the avatar file to a third-party file storage service first, and then set the url address getted after uploading as the avatar url field of the user attribute. When the avatar is displayed, the avatar url is getted by calling the SDK method to get user attributes, and then the avatar is displayed on the local UI.
+The user metadata function does not provide file storage service and avatar file storage service, only the url address of the avatar file is stored. Therefore, users need to use third-party file storage services. When a user sets an avatar, he needs to upload the avatar file to a third-party file storage service first, and then set the url address getted after uploading as the avatar url field of the user metadata. When the avatar is displayed, the avatar url is getted by calling the SDK method to get user metadata, and then the avatar is displayed on the local UI.
 
 ## Card Message
 

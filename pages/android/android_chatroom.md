@@ -1,5 +1,5 @@
 ---
-title: Android Chatroom
+title: Chatroom
 keywords: android
 sidebar: android_sidebar
 toc: true
@@ -10,13 +10,12 @@ folder: android
 
 -------------------------------------------------- ----------------------
 
-The Agora chat room model supports 5000 members as the maximum. Unlike a group, after a member in the chat room is offline, the server will not send any pushes to this member after it detects that the member is offline.
+The Agora chat room, unlike a group, after a member in the chat room is offline, the server will not send any pushes to this member after it detects that the member is offline.
 
-- Support up to 5000 members;
 - Agora’s chat room has three identities: owner, administrator and tourist;
 - Support operations such as mute, blacklist, and kick;
 - Client invitation is not supported;
-- REST invitation is not supported.
+- Platform API invitation is not supported.
 - The chat room API is usually a synchronous operation and needs to be executed in a separate thread. If you need to use asynchronous API, please use the corresponding API  with async prefix
 
 The main features of Agora chat room client include:
@@ -121,7 +120,7 @@ room.getOwner();//Chat room creator
 .
 ```
 
-Refer to [API document](http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1chat_1_1_e_m_chat_room.html)
+Refer to [API document](https://hyphenateinc.github.io/android_reference/classio_1_1agora_1_1chat_1_1_chat_room.html)
 
 parameter:
 

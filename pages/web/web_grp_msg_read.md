@@ -7,8 +7,6 @@ permalink: web_grp_msg_read.html
 folder: web
 ---
 
-# Group chat read receipt
-----------------------------
 ## Sending groups can receive messages with read receipts (group owner or administrator rights are required) 
 
 ``` javascript

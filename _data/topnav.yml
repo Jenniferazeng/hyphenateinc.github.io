@@ -30,6 +30,6 @@ topnav_dropdowns:
           url: /ios_product_overview.html
         - title: Web
           url: /web_product_overview.html
-        - title: Server-Side
+        - title: Platform API
           url: /server_product_overview.html
 
