@@ -93,7 +93,6 @@ Then add the following code to the `build.gradle` of your module
 ``` java
 android {
     
-    //Requires java8 support since 3.6.0
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -208,15 +207,7 @@ If you are sensitive to the size of the generated apk, we recommend using the ja
 
 ### Summary of common problems
 
-1. The user use HttpClient to report an error after integrating the SDK
-
-- Android 9.0 needs to add following code in the `application` tag of `AndroidManifest.xml`:
-
-       <application>
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-       </application>
-
-2. In Android 9.0, compulsory use of https
+#### 1. In Android 9.0, compulsory use of https
 
 Performance: There will be an error of `UnknownServiceException: CLEARTEXT communication to localhost not permitted by network security policy` or `IOException java.io.IOException: Cleartext HTTP traffic to * not permitted`
 

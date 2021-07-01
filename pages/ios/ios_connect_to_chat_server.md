@@ -1,10 +1,10 @@
 ---
-title: Android Connect To Chat Server
-keywords: android
-sidebar: android_sidebar
+title: Connect To Chat Server
+keywords: ios
+sidebar: ios_sidebar
 toc: true
-permalink: android_connect_to_chat_server.html
-folder: android
+permalink: ios_connect_to_chat_server.html
+folder: ios
 ---
 
 ## Introduction to asynchronous/synchronous methods in SDK
