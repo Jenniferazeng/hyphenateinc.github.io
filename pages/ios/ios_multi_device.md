@@ -1,5 +1,5 @@
 ---
-title: iOS Multi Device
+title:  Multi Device
 keywords: ios
 sidebar: ios_sidebar
 toc: true

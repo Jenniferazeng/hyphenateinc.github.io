@@ -1,5 +1,5 @@
 ---
-title: iOS Run The Sample Project
+title:  Run The Sample Project
 keywords: ios
 sidebar: ios_sidebar
 toc: true

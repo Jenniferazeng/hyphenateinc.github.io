@@ -1,5 +1,5 @@
 ---
-title: iOS Group
+title:  Group
 keywords: ios
 sidebar: ios_sidebar
 toc: true

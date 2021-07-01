@@ -1,5 +1,5 @@
 ---
-title: iOS Release Note
+title:  Release Note
 keywords: ios
 sidebar: ios_sidebar
 toc: true

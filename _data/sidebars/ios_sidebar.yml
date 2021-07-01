@@ -80,10 +80,19 @@ entries:
       url: /ios_multi_device.html
       output: web, pdf
 
-    - title: Push notification
-      url: /ios_push_notification.html
+    - title: Push Configuration
+      url: /ios_push_configuration.html
       output: web, pdf
       
+    - title: Offline Push
+      url: /ios_offline_push.html
+      output: web, pdf
+      
+    - title: Push Content
+      url: /ios_push_content.html
+      output: web, pdf
+        
+
     - title: Message Roaming
       url: /ios_message_roaming.html
       output: web, pdf
