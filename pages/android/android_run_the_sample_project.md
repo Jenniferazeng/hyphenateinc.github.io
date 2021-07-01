@@ -7,7 +7,9 @@ permalink: android_run_the_sample_project.html
 folder: android
 ---
 
-This repository will help you learn how to use Agora chat SDK to implement a simple chat android application, like whatsapp or wechat.
+Agora chat provides an open-source Agora chat demo sample project on GitHub. This document introduces how to run this project and experience a chat demo implemented by the Agora Chat SDK.
+
+[chat-demo](https://github.com/HyphenateInc/Hyphenate-Demo-Android)
 
 With this sample app, you can:
 
