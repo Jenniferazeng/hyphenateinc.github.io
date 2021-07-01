@@ -11,7 +11,7 @@ folder: android
 
 1、 Initialize the Chat SDK
 
-```ios 
+```objc 
 AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
 // AgoraChat cert keys
 [options setApnsCertName:"your certificate"];
@@ -25,7 +25,7 @@ AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
 
 2、Login chat server
 
-```ios
+```objc
 
 [[AgoraChatClient sharedClient] loginWithUsername:@"username"
                 password:@"password"
@@ -44,7 +44,7 @@ AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
 
 3、Construct and send the message
 
-```ios
+```objc
 // create a message
   Message *message = [[Message alloc] initWithConversationID:receiver
                                                               from:sender
