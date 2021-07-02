@@ -15,6 +15,7 @@ var searchData=
   ['message_5fsend_5ftraffic_5flimit',['MESSAGE_SEND_TRAFFIC_LIMIT',['../classio_1_1agora_1_1_error.html#a980f164d1eef49a05f9eb32a1d98e479',1,'io::agora::Error']]],
   ['messagebody',['MessageBody',['../classio_1_1agora_1_1chat_1_1_message_body.html',1,'io::agora::chat']]],
   ['messagelistener',['MessageListener',['../interfaceio_1_1agora_1_1_message_listener.html',1,'io::agora']]],
+  ['monitorreceiver',['MonitorReceiver',['../classio_1_1agora_1_1chat_1_1_monitor_receiver.html',1,'io::agora::chat']]],
   ['msgtype2conversationtype',['msgType2ConversationType',['../classio_1_1agora_1_1chat_1_1_conversation.html#acfe9c4c7af5ceea4916e8a689594ab40',1,'io::agora::chat::Conversation']]],
   ['mucsharedfile',['MucSharedFile',['../classio_1_1agora_1_1chat_1_1_muc_shared_file.html',1,'io::agora::chat']]],
   ['multidevicelistener',['MultiDeviceListener',['../interfaceio_1_1agora_1_1_multi_device_listener.html',1,'io::agora']]],

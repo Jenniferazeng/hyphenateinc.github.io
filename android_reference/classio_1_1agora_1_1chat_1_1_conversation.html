@@ -104,9 +104,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_conversation_type.html">ConversationType</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>MessageCache</b></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -123,16 +123,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abb427e43b0592ca0658de691e104ef49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49135a1e780146b2d8324797857bc671"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a49135a1e780146b2d8324797857bc671">loadMoreMsgFromDB</a> (String startMsgId, int pageSize)</td></tr>
 <tr class="separator:a49135a1e780146b2d8324797857bc671"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a353b13653953d46ebb1d269715b091d8"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a353b13653953d46ebb1d269715b091d8">searchMsgFromDB</a> (long timeStamp, int maxCount, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a> direction)</td></tr>
-<tr class="separator:a353b13653953d46ebb1d269715b091d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b448063139a9916211d2d7e7e3b9bd1"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a3b448063139a9916211d2d7e7e3b9bd1">searchMsgFromDB</a> (ChatMessage.Type type, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a> direction)</td></tr>
-<tr class="separator:a3b448063139a9916211d2d7e7e3b9bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d2d21977f27039205555fd20209e04d"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a4d2d21977f27039205555fd20209e04d">searchMsgFromDB</a> (String keywords, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a> direction)</td></tr>
-<tr class="separator:a4d2d21977f27039205555fd20209e04d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4108b8b860a757be16ba600775128f97"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a4108b8b860a757be16ba600775128f97">searchMsgFromDB</a> (long timeStamp, int maxCount, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a> direction)</td></tr>
+<tr class="separator:a4108b8b860a757be16ba600775128f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a688f407ce74a99ae9f0f72b3e5ad6815"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a688f407ce74a99ae9f0f72b3e5ad6815">searchMsgFromDB</a> (ChatMessage.Type type, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a> direction)</td></tr>
+<tr class="separator:a688f407ce74a99ae9f0f72b3e5ad6815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3fb2e1717fce3360944b076b0f0cda7"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#ac3fb2e1717fce3360944b076b0f0cda7">searchMsgFromDB</a> (String keywords, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a> direction)</td></tr>
+<tr class="separator:ac3fb2e1717fce3360944b076b0f0cda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a260e80a22aa7b467c52431d42cb60465"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a260e80a22aa7b467c52431d42cb60465">searchMsgFromDB</a> (long startTimeStamp, long endTimeStamp, int maxCount)</td></tr>
 <tr class="separator:a260e80a22aa7b467c52431d42cb60465"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb93f6a4cb4a9ba7fe1d3391a01a9b8b"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#abb93f6a4cb4a9ba7fe1d3391a01a9b8b">searchCustomMsgFromDB</a> (String keywords, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a> direction)</td></tr>
-<tr class="separator:abb93f6a4cb4a9ba7fe1d3391a01a9b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbce6c27f6cfc36d382941bd95640f27"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#adbce6c27f6cfc36d382941bd95640f27">searchCustomMsgFromDB</a> (String keywords, long timeStamp, int maxCount, String from, <a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a> direction)</td></tr>
+<tr class="separator:adbce6c27f6cfc36d382941bd95640f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d3021f48fa7b7838f54330849df8ad1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a2d3021f48fa7b7838f54330849df8ad1">getMessage</a> (String messageId, boolean markAsRead)</td></tr>
 <tr class="separator:a2d3021f48fa7b7838f54330849df8ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dc013453685c56cb7c92617cf917973"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classio_1_1agora_1_1chat_1_1_chat_message.html">ChatMessage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_conversation.html#a8dc013453685c56cb7c92617cf917973">loadMessages</a> (List&lt; String &gt; msgIds)</td></tr>
@@ -619,7 +619,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abb93f6a4cb4a9ba7fe1d3391a01a9b8b"></a>
+<a class="anchor" id="adbce6c27f6cfc36d382941bd95640f27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -650,7 +650,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a>&#160;</td>
           <td class="paramname"><em>direction</em>&#160;</td>
         </tr>
         <tr>
@@ -674,7 +674,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a353b13653953d46ebb1d269715b091d8"></a>
+<a class="anchor" id="a4108b8b860a757be16ba600775128f97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -693,7 +693,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a>&#160;</td>
           <td class="paramname"><em>direction</em>&#160;</td>
         </tr>
         <tr>
@@ -715,7 +715,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3b448063139a9916211d2d7e7e3b9bd1"></a>
+<a class="anchor" id="a688f407ce74a99ae9f0f72b3e5ad6815"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -746,7 +746,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a>&#160;</td>
           <td class="paramname"><em>direction</em>&#160;</td>
         </tr>
         <tr>
@@ -770,7 +770,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4d2d21977f27039205555fd20209e04d"></a>
+<a class="anchor" id="ac3fb2e1717fce3360944b076b0f0cda7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -801,7 +801,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html">EMSearchDirection</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html">SearchDirection</a>&#160;</td>
           <td class="paramname"><em>direction</em>&#160;</td>
         </tr>
         <tr>
@@ -919,7 +919,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 29 2021 16:01:31 for agora_chat_SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 2 2021 12:04:31 for agora_chat_SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9
 </small></address>

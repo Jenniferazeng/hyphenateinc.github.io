@@ -118,10 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a405bdabd9d0fc8eea393ad4a25349842"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa388d8b1690296eb900dbccc98b6837f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#aa388d8b1690296eb900dbccc98b6837f">asyncGetAllContactsFromServer</a> (final <a class="el" href="interfaceio_1_1agora_1_1_value_call_back.html">ValueCallBack</a>&lt; List&lt; String &gt;&gt; callback)</td></tr>
 <tr class="separator:aa388d8b1690296eb900dbccc98b6837f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59b431c2999d1af4718c17bb11c0f72e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a59b431c2999d1af4718c17bb11c0f72e">setContactListener</a> (<a class="el" href="interfaceio_1_1agora_1_1_e_m_contact_listener.html">EMContactListener</a> contactListener)</td></tr>
-<tr class="separator:a59b431c2999d1af4718c17bb11c0f72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67ec4a5cf5b008f894f2d68def4495c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a67ec4a5cf5b008f894f2d68def4495c0">removeContactListener</a> (<a class="el" href="interfaceio_1_1agora_1_1_e_m_contact_listener.html">EMContactListener</a> contactListener)</td></tr>
-<tr class="separator:a67ec4a5cf5b008f894f2d68def4495c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace0ca2d9a8ec2a8e584899b6d52cc799"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#ace0ca2d9a8ec2a8e584899b6d52cc799">setContactListener</a> (<a class="el" href="interfaceio_1_1agora_1_1_contact_listener.html">ContactListener</a> contactListener)</td></tr>
+<tr class="separator:ace0ca2d9a8ec2a8e584899b6d52cc799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e42f3ea7b1bbcda546730ccfbee3ea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a4e42f3ea7b1bbcda546730ccfbee3ea2">removeContactListener</a> (<a class="el" href="interfaceio_1_1agora_1_1_contact_listener.html">ContactListener</a> contactListener)</td></tr>
+<tr class="separator:a4e42f3ea7b1bbcda546730ccfbee3ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1da4787e3e961ed7ba533a558365a451"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a1da4787e3e961ed7ba533a558365a451">addUserToBlackList</a> (String username, boolean both)  throws ChatException </td></tr>
 <tr class="separator:a1da4787e3e961ed7ba533a558365a451"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa327bcea03a2c1d53fa00f6f592ffe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#afa327bcea03a2c1d53fa00f6f592ffe0">asyncAddUserToBlackList</a> (final String username, final boolean both, final <a class="el" href="interfaceio_1_1agora_1_1_call_back.html">CallBack</a> callback)</td></tr>
@@ -795,20 +795,20 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a67ec4a5cf5b008f894f2d68def4495c0"></a>
+<a class="anchor" id="a4e42f3ea7b1bbcda546730ccfbee3ea2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void io.agora.chat.ContactManager.removeContactListener </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interfaceio_1_1agora_1_1_e_m_contact_listener.html">EMContactListener</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interfaceio_1_1agora_1_1_contact_listener.html">ContactListener</a>&#160;</td>
           <td class="paramname"><em>contactListener</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Remove contact listener Add contact listener calls <a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a59b431c2999d1af4718c17bb11c0f72e">setContactListener(EMContactListener)</a> </p>
+<p>Remove contact listener Add contact listener calls <a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#ace0ca2d9a8ec2a8e584899b6d52cc799">setContactListener(ContactListener)</a> </p>
 
 </div>
 </div>
@@ -866,20 +866,20 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a59b431c2999d1af4718c17bb11c0f72e"></a>
+<a class="anchor" id="ace0ca2d9a8ec2a8e584899b6d52cc799"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void io.agora.chat.ContactManager.setContactListener </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interfaceio_1_1agora_1_1_e_m_contact_listener.html">EMContactListener</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interfaceio_1_1agora_1_1_contact_listener.html">ContactListener</a>&#160;</td>
           <td class="paramname"><em>contactListener</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register new contact listener Call <a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a67ec4a5cf5b008f894f2d68def4495c0">removeContactListener(EMContactListener)</a> to remove listener</p>
+<p>Register new contact listener Call <a class="el" href="classio_1_1agora_1_1chat_1_1_contact_manager.html#a4e42f3ea7b1bbcda546730ccfbee3ea2">removeContactListener(ContactListener)</a> to remove listener</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">contactListener</td><td></td></tr>
@@ -895,7 +895,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 29 2021 16:01:31 for agora_chat_SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 2 2021 12:04:30 for agora_chat_SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9
 </small></address>

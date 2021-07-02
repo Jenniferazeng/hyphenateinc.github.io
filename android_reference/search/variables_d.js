@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['up',['UP',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html#a6ca5f65950f2cff43d4a3e69365aded3',1,'io::agora::chat::Conversation::EMSearchDirection']]],
+  ['up',['UP',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html#ac760658544ac1fb82ab145b3bc563356',1,'io::agora::chat::Conversation::SearchDirection']]],
   ['user_5falready_5fexist',['USER_ALREADY_EXIST',['../classio_1_1agora_1_1_error.html#a842caced889a9757c9a955e4e74c0538',1,'io::agora::Error']]],
   ['user_5falready_5flogin',['USER_ALREADY_LOGIN',['../classio_1_1agora_1_1_error.html#a344033fd7e39eb3a140538a046067719',1,'io::agora::Error']]],
   ['user_5fauthentication_5ffailed',['USER_AUTHENTICATION_FAILED',['../classio_1_1agora_1_1_error.html#a8e5d7973673323cc4f4a4583ed3a467a',1,'io::agora::Error']]],
