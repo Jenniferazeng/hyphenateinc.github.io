@@ -1,13 +1,8 @@
 var searchData=
 [
   ['em_5fno_5ferror',['EM_NO_ERROR',['../classio_1_1agora_1_1_error.html#a5bf531404387ffc2c1fdb5e8d98e455f',1,'io::agora::Error']]],
-  ['emchatservice',['EMChatService',['../classio_1_1agora_1_1chat_1_1_e_m_chat_service.html',1,'io::agora::chat']]],
-  ['emcontactlistener',['EMContactListener',['../interfaceio_1_1agora_1_1_e_m_contact_listener.html',1,'io::agora']]],
   ['emdownloadstatus',['EMDownloadStatus',['../enumio_1_1agora_1_1chat_1_1_file_message_body_1_1_e_m_download_status.html',1,'io::agora::chat::FileMessageBody']]],
   ['emencryptutils',['EMEncryptUtils',['../classio_1_1agora_1_1chat_1_1_e_m_encrypt_utils.html',1,'io::agora::chat']]],
-  ['emjobservice',['EMJobService',['../classio_1_1agora_1_1chat_1_1_e_m_job_service.html',1,'io::agora::chat']]],
-  ['emmonitorreceiver',['EMMonitorReceiver',['../classio_1_1agora_1_1chat_1_1_e_m_monitor_receiver.html',1,'io::agora::chat']]],
-  ['emsearchdirection',['EMSearchDirection',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html',1,'io::agora::chat::Conversation']]],
   ['enablednsconfig',['enableDNSConfig',['../classio_1_1agora_1_1chat_1_1_chat_options.html#a36cd91b4de477816e3101dc2e1e40b4e',1,'io::agora::chat::ChatOptions']]],
   ['enableofflinepush',['enableOfflinePush',['../classio_1_1agora_1_1chat_1_1_push_manager.html#abd4bc84c825469a475a29bf0d0a48d6e',1,'io::agora::chat::PushManager']]],
   ['encryptfile',['encryptFile',['../classio_1_1agora_1_1chat_1_1_e_m_encrypt_utils.html#a55d43eea68b9efd8a1b1f482b1874459',1,'io::agora::chat::EMEncryptUtils']]],

@@ -6,7 +6,7 @@ var searchData=
   ['removechatroomlistener',['removeChatRoomListener',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a5d054c734d8d3a593cf574b1e0f61367',1,'io::agora::chat::ChatRoomManager']]],
   ['removechatroommembers',['removeChatRoomMembers',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#ab59c77e32a2b1baf0cc6ab99ae66c433',1,'io::agora::chat::ChatRoomManager']]],
   ['removeconnectionlistener',['removeConnectionListener',['../classio_1_1agora_1_1chat_1_1_chat_client.html#a36c8e1815c8d54e43d02f66168695fdc',1,'io::agora::chat::ChatClient']]],
-  ['removecontactlistener',['removeContactListener',['../classio_1_1agora_1_1chat_1_1_contact_manager.html#a67ec4a5cf5b008f894f2d68def4495c0',1,'io::agora::chat::ContactManager']]],
+  ['removecontactlistener',['removeContactListener',['../classio_1_1agora_1_1chat_1_1_contact_manager.html#a4e42f3ea7b1bbcda546730ccfbee3ea2',1,'io::agora::chat::ContactManager']]],
   ['removeconversationlistener',['removeConversationListener',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#a79476748c67f77c060f64e275fb70296',1,'io::agora::chat::ChatManager']]],
   ['removefromchatroomwhitelist',['removeFromChatRoomWhiteList',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a82341e516f88a62b61b7d6f8c2f79c0b',1,'io::agora::chat::ChatRoomManager']]],
   ['removefromgroupwhitelist',['removeFromGroupWhiteList',['../classio_1_1agora_1_1chat_1_1_group_manager.html#ad825de0843e01eae40fb011b90815cd8',1,'io::agora::chat::GroupManager']]],

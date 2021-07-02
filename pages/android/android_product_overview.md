@@ -204,7 +204,7 @@ Permission configuration (more permissions may be needed in actual development, 
 </manifest>
 ```
 
-If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory, and it is recommended to keep only armeabi. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
+If you are sensitive to the size of the generated apk, we recommend using the jar and copying the so manually instead of using Aar, because the Aar method will include the so files of each platform. Using the jar method, you can keep only one ARCH directory. In this way, although the execution speed on the corresponding platform will be reduced, it can effectively reduce the size of the apk.
 
 ### Summary of common problems
 

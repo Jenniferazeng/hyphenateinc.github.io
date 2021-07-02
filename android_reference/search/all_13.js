@@ -7,7 +7,7 @@ var searchData=
   ['unmuteallmembers',['unmuteAllMembers',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#a5601baddade90a9e5af0f344297fbe8a',1,'io.agora.chat.ChatRoomManager.unmuteAllMembers()'],['../classio_1_1agora_1_1chat_1_1_group_manager.html#aee24c0e0e4acc1a6df3e2be4e63b0d7e',1,'io.agora.chat.GroupManager.unmuteAllMembers()']]],
   ['unmutechatroommembers',['unMuteChatRoomMembers',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#aaef81705b29e4531f0b90f66db9ec422',1,'io::agora::chat::ChatRoomManager']]],
   ['unmutegroupmembers',['unMuteGroupMembers',['../classio_1_1agora_1_1chat_1_1_group_manager.html#af14a3fa71a0264870e4f4dfbc92fbd2d',1,'io::agora::chat::GroupManager']]],
-  ['up',['UP',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html#a6ca5f65950f2cff43d4a3e69365aded3',1,'io::agora::chat::Conversation::EMSearchDirection']]],
+  ['up',['UP',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html#ac760658544ac1fb82ab145b3bc563356',1,'io::agora::chat::Conversation::SearchDirection']]],
   ['updatechatroomannouncement',['updateChatRoomAnnouncement',['../classio_1_1agora_1_1chat_1_1_chat_room_manager.html#aca55d596acbc339a4aaaa2b4cb89b166',1,'io::agora::chat::ChatRoomManager']]],
   ['updatecurrentusernick',['updateCurrentUserNick',['../classio_1_1agora_1_1chat_1_1_chat_client.html#a33eccb7935eab2a5aed061aaa783d8b2',1,'io::agora::chat::ChatClient']]],
   ['updategroupannouncement',['updateGroupAnnouncement',['../classio_1_1agora_1_1chat_1_1_group_manager.html#a4da22e03f62cf6a8c704b193903b57d0',1,'io::agora::chat::GroupManager']]],

@@ -17,7 +17,7 @@ var searchData=
   ['discussiongroup',['DiscussionGroup',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_conversation_type.html#a4a7f55396459198513476544ea01dab8',1,'io::agora::chat::Conversation::ConversationType']]],
   ['displayname',['displayName',['../classio_1_1agora_1_1chat_1_1_file_message_body.html#a4b42cf1852daaea1e5e408d7d297159a',1,'io::agora::chat::FileMessageBody']]],
   ['displaystyle',['DisplayStyle',['../enumio_1_1agora_1_1chat_1_1_push_manager_1_1_display_style.html',1,'io::agora::chat::PushManager']]],
-  ['down',['DOWN',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_e_m_search_direction.html#ab094942df751706c998e183c8163b8d9',1,'io::agora::chat::Conversation::EMSearchDirection']]],
+  ['down',['DOWN',['../enumio_1_1agora_1_1chat_1_1_conversation_1_1_search_direction.html#ac245786890f592f0990e6ff53ba76318',1,'io::agora::chat::Conversation::SearchDirection']]],
   ['downloadattachment',['downloadAttachment',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#af5298f55319dd769b69623c111cc8dcb',1,'io::agora::chat::ChatManager']]],
   ['downloadfile',['downloadFile',['../classio_1_1agora_1_1chat_1_1_chat_manager.html#a8f369cf5337f3f08d400dab55f3a9c30',1,'io::agora::chat::ChatManager']]],
   ['downloadgroupsharedfile',['downloadGroupSharedFile',['../classio_1_1agora_1_1chat_1_1_group_manager.html#adb634eee6c44805cc6fe25d017f65f7e',1,'io::agora::chat::GroupManager']]],

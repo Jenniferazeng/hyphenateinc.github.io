@@ -6,7 +6,7 @@ var searchData=
   ['loadallgroups',['loadAllGroups',['../classio_1_1agora_1_1chat_1_1_group_manager.html#ad4c307c7a9f9942945ce954c3938ff60',1,'io::agora::chat::GroupManager']]],
   ['loadmessages',['loadMessages',['../classio_1_1agora_1_1chat_1_1_conversation.html#a8dc013453685c56cb7c92617cf917973',1,'io::agora::chat::Conversation']]],
   ['loadmoremsgfromdb',['loadMoreMsgFromDB',['../classio_1_1agora_1_1chat_1_1_conversation.html#a49135a1e780146b2d8324797857bc671',1,'io::agora::chat::Conversation']]],
-  ['localbinder',['LocalBinder',['../classio_1_1agora_1_1chat_1_1_e_m_chat_service_1_1_local_binder.html',1,'io::agora::chat::EMChatService']]],
+  ['localbinder',['LocalBinder',['../classio_1_1agora_1_1chat_1_1_chat_service_1_1_local_binder.html',1,'io::agora::chat::ChatService']]],
   ['localtime',['localTime',['../classio_1_1agora_1_1chat_1_1_chat_message.html#a3209a5983a9d62e926384fc76ce35996',1,'io::agora::chat::ChatMessage']]],
   ['locationmessagebody',['LocationMessageBody',['../classio_1_1agora_1_1chat_1_1_location_message_body.html',1,'io::agora::chat']]],
   ['locationmessagebody',['LocationMessageBody',['../classio_1_1agora_1_1chat_1_1_location_message_body.html#afbe82c798d56df5619baa14841865032',1,'io::agora::chat::LocationMessageBody']]],
