@@ -16,7 +16,7 @@ The class of error codes in iOS is AgoraError.
 
 For example, if the user returns an existing error during registration, it can be detected as follows: error.code
 
-For details, see [iOS error Doc](https://hyphenateinc.github.io/ios_reference/_agora_error_code_8h_source.html).
+For details, see [iOS error Doc](https://hyphenateinc.github.io/ios_api_reference/_agora_error_code_8h_source.html).
 
 - - -
 
@@ -62,7 +62,7 @@ For details, see [iOS error Doc](https://hyphenateinc.github.io/ios_reference/_a
 | AgoraErrorCallInvalidId | Invalid live call ID |
 | AgoraErrorCallBusy | Already in a real-time call |
 | AgoraErrorCallRemoteOffline | The other party is not online |
-| AgoraErrorCallConnectFailed | failed to establish connection for real-time call |
+| AgoraErrorCallConnectFailed | Failed to establish connection for real-time call |
 | AgoraErrorApnsBindDeviceTokenFailed | Failed to register device token |
 
 - - -

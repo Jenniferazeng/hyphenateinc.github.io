@@ -52,7 +52,8 @@ AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
                                                               body:body
                                                                ext:messageExt];
 // send message
-[[AgoraChatClient sharedClient].chatManager sendMessageReadAck:@"message" completion:nil];
+  [[AgoraChatClient sharedClient].chatManager sendMessage:message progress:nil completion:^(Message *message, AgoraError *error) {
+    }];
 
 ```
 
