@@ -102,7 +102,7 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorization: Bearer WMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw12' -d 'avatar=http://www.easemob.com/avatar.png&ext=ext&nickname=nickname' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
+curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorization: Bearer WMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw12' -d 'avatar=http://www.chat.com/avatar.png&ext=ext&nickname=nickname' 'http://a1.easecdn.com/chat-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned
@@ -115,7 +115,7 @@ curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorizati
     "data":{
         "ext":"ext",
         "nickname":"nickname",
-        "avatar":"http://www.easemob.com/avatar.png"
+        "avatar":"http://www.chat.com/avatar.png"
     },
     "duration":166
 }
@@ -222,7 +222,7 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
+curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned
@@ -235,7 +235,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
     "data":{
         "ext":"ext",
         "nickname":"nickname",
-        "avatar":"http://www.easemob.com/avatar.png"
+        "avatar":"http://www.chat.com/avatar.png"
     },
     "duration":2
 }
@@ -336,7 +336,7 @@ curl -X POST -H 'Content-Type:  application/json' -H 'Authorization: Bearer YWMt
     "user2",
     "user3"
   ]
-}' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/get'
+}' 'http://a1.easecdn.com/chat-demo/testapp/metadata/user/get'
 ```
 
 #### Examples of possible results returned
@@ -350,17 +350,17 @@ curl -X POST -H 'Content-Type:  application/json' -H 'Authorization: Bearer YWMt
         "user1":{
             "ext":"ext",
             "nickname":"nickname",
-            "avatar":"http://www.easemob.com/avatar.png"
+            "avatar":"http://www.chat.com/avatar.png"
         },
         "user2":{
             "ext":"ext",
             "nickname":"nickname",
-            "avatar":"http://www.easemob.com/avatar.png"
+            "avatar":"http://www.chat.com/avatar.png"
         },
         "user3":{
             "ext":"ext",
             "nickname":"nickname",
-            "avatar":"http://www.easemob.com/avatar.png"
+            "avatar":"http://www.chat.com/avatar.png"
         }
     },
     "duration":3
@@ -431,7 +431,7 @@ View the information contained in the data field in the return value
 #### Example request
 
 ``` php
-curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/capacity'
+curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/metadata/user/capacity'
 ```
 
 #### Examples of possible results returned
@@ -511,7 +511,7 @@ See the information contained in the data field in the return value, true means 
 #### Example request
 
 ``` php
-curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/easemob-demo/testapp/metadata/user/user1'
+curl -X DELETE -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3bGuOukEeiTkNP4grL7iwAAAAAAAAAAAAAAAAAAAAGL4CTw6XgR6LaXXVmNX4QCAgMAAAFnKdc-ZgBPGgBFTrLhhyK8woMEI005emtrLJFJV6aoxsZSioSIZkr5kw' 'http://a1.easecdn.com/chat-demo/testapp/metadata/user/user1'
 ```
 
 #### Examples of possible results returned

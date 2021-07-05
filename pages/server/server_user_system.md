@@ -75,7 +75,7 @@ When the APP is integrated with Chat, you need to integrate the APP system, crea
 
 Also: This document may use the terms "Chat user ID" and "Chat username", but please note that both mean the same thing here.
 
-Because a user's Chat user ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example\@easemob.com, when this user logs into the APP When this user logs into the APP, he can log into Chat's server after successful login. so at this time, he only needs to be able to log in from example\@easemob.com to derive this user's Chat user ID.
+Because a user's Chat user ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example\@chat.com, when this user logs into the APP When this user logs into the APP, he can log into Chat's server after successful login. so at this time, he only needs to be able to log in from example\@chat.com to derive this user's Chat user ID.
 
 **Note：**All of the following APIs require org administrator or APP administrator permission to access.
 
