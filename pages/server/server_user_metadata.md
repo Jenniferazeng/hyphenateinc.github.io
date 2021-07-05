@@ -235,7 +235,7 @@ curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer YWMte3
     "data":{
         "ext":"ext",
         "nickname":"nickname",
-        "avatar":"http://www..com/avatar.png"
+        "avatar":"http://www.chat.com/avatar.png"
     },
     "duration":2
 }
