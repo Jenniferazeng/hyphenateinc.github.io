@@ -15,7 +15,7 @@ Introduce the data structure and usage rules of Appkey and Chat user ID.
 
 When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the string can only consist of lowercase alphanumeric, the AppKey is the unique identifier of the Chat application. The first half **org_name** is the unique tenant identifier under the multi-tenant system, and the second half **app_name** is the unique identifier of the app under the tenant (the app id filled in when creating an app in the Chat backend is the app_name). In the following Platform API, **/{org_name}/{app_name}** requests are made for a unique appkey. At present, the appkey registered by Chat cannot be deleted by users themselves at the moment, If you are interested in APP deletion, you need to contact Chat to complete the operation.
 
-<table border="1px" cellspacing="0px" bordercolor="#000000">
+<table border="1" cellspacing="0" bordercolor="#000000">
   <tr>
     <th>Appkey</th>
     <th>xxxx</th>
@@ -231,20 +231,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the returned result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -447,20 +434,7 @@ curl -X POST -i "https://a1.easecdn.com/chat-demo/testapp/users" -d '{"username"
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is stream-limited, please pause for a while and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -611,20 +585,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -805,7 +766,7 @@ When there is a registered user3 in the request body, then the request will be s
 }
 ```
 
-If the returned result is <font color='red'> 429, 503 </font> or other \<wrapem>5xx\</wrap>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -958,20 +919,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is restricted, please pause a little and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -1133,20 +1081,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -1204,20 +1139,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyjusb
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -1313,20 +1235,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMt7Coyj
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -1423,20 +1332,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -1519,20 +1415,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -1674,20 +1557,7 @@ curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json' -H
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -1803,20 +1673,7 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
 ------------------------------------------------------------------------
@@ -1959,20 +1816,7 @@ curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -2112,20 +1956,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -2221,20 +2052,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -2334,20 +2152,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -2446,20 +2251,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -2591,20 +2383,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -2713,20 +2492,7 @@ curl -X DELETE -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGu
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -2859,20 +2625,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -2976,20 +2729,7 @@ If an incorrect user name is requested, i.e., a user state that does not exist i
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause a little and retry; or or the number of requested users is greater than 100, please resend the correct number of requests. See [interface flow limiting instructions](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause a little and retry; or or the number of requested users is greater than 100, please resend the correct number of requests. See [interface flow limiting instructions](/server_rest_interface_flow_limiting_instructions.html) for details
 
 ------------------------------------------------------------------------
 
@@ -3088,20 +2828,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -3202,20 +2929,7 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -3355,20 +3069,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
 
@@ -3461,20 +3162,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using the Platform API](http://api-docs.easemob.com/)
 
@@ -3575,19 +3263,6 @@ curl -X GET -H 'Accept: application/json' -H 'Authorization: Bearer YWMte3bGuOuk
 }
 ```
 
-If the return result is <table border="1" cellspacing="0" bordercolor="#000000">
-  <tr>
-    <th>Parameter</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Content-Type</td>
-    <td>application/json</td>
-  </tr>
-  <tr>
-    <td>Authorization</td>
-    <td>Bearer ${token}</td>
-  </tr>
-</table>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
+If the returned result is <font color='red'> 429, 503 </font> or other <font color='red'> 5xx </font>, it may mean that the interface is flow-limited, please pause slightly and retry. See [interface flow restriction description](/server_rest_interface_flow_limiting_instructions.html) for details
 
 [Online testing using Platform API](http://api-docs.easemob.com/)
