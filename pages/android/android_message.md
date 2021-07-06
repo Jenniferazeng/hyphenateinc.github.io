@@ -439,10 +439,10 @@ occasionally, if the size of conversations returned is 0, it is very likely that
 
 ## Get conversation from server
 
-`Need to contact business for activation`
+`Need to contact Sales for activation`
 
 It is recommended that this api should be called when the application is installed for the first time or when there is no local conversation. At other times, you can use the local conversation api. By default, up to 100 pieces of data can be returned. \
-To use this function, you need to contact your Agora business to activate it. (You can scan the QR code to contact your business manager on the home page of the Agora Communication Cloud Management Console)
+To use this function, you need to contact your Agora Sales to activate it. (You can scan the QR code to contact your Sales manager on the home page of the Agora Communication Cloud Management Console)
 
     ChatClient.getInstance().chatManager().asyncFetchConversationsFromServer(new ValueCallBack<Map<String, Conversation>>() {
         @Override

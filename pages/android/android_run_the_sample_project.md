@@ -25,7 +25,7 @@ With this sample app, you can:
 
 ## Prerequisites
 
-* Make sure you have made the preparations mentioned in the [Agora Chat Sdk Introduction](https://hyphenateinc.github.io/android_product_overview.html).
+* Make sure you have made the preparations mentioned in the [Agora Chat Sdk Introduction](https://hyphenateinc.github.io/android_product_overview.html#android-sdk-introduction).
 * Prepare the development environment:
     * JDK
     * Android Studio 3.2 or later
@@ -50,7 +50,7 @@ options.setAppKey("Your appkey");
 //initialization
 ChatClient.getInstance().init(applicationContext, options);
 ```
-For details, see the [prerequisites](https://hyphenateinc.github.io/android_product_overview.html) in Agora Chat SDK Guide.
+For details, see the [introduction](https://hyphenateinc.github.io/android_product_overview.html#android-sdk-introduction) in Agora Chat SDK Guide.
 
 
 ------------------------------------------------------------------------
