@@ -19,7 +19,7 @@ Easemob Web IM SDK supports friend system management. The operations related to 
 
 -   Add contact
 
--   Handling friend requests
+-   Handling contact requests
 
 -   Delete contact 
 

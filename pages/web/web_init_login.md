@@ -72,7 +72,7 @@ conn.listen({
 
 ## Register
 
-Register Agora Chat user acount with username/password/nickname:
+Register Agora chat user account with username/password/nickname:
 
 ``` javascript
   var options = { 
@@ -113,7 +113,7 @@ conn.updateCurrentUserNick('newNick')
 
 ### Username/password login 
 
-Use username/password to log in to Agora Web IM: 
+Use username/password to log in to Agora chat: 
 
 ``` javascript
 var options = { 
@@ -142,7 +142,7 @@ var options = {
 conn.open(options);
 ```
 
-2\. Log in to Easemob Web IM using Token.
+2\. Log in to Agora chat using Token.
 
 ``` javascript
 var options = {

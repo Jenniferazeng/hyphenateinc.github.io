@@ -85,7 +85,7 @@ https : false,                            // Whether to use https
 
 isHttpDNS: true,                          // 3.0 SDK support to prevent DNS hijacking to obtain XMPPUrl, restUrl from the server
 
-isMultiLoginSessions: false,              // Whether to enable multi-page synchronization to receive messages, note that you need  to contact the business to activate this function
+isMultiLoginSessions: false,              // Whether to enable multi-page synchronization to receive messages, note that you need  to contact the sales to activate this function
 
 isDebug: false,                           // Turn on debugging, the log will be automatically printed, and you can view the log in the console of the console 
 
