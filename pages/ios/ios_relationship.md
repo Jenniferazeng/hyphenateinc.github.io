@@ -1,5 +1,5 @@
 ---
-title: iOS Relationship
+title:  Contact
 keywords: ios
 sidebar: ios_sidebar
 toc: true

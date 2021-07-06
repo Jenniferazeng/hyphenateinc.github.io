@@ -1,5 +1,5 @@
 ---
-title: iOS Push Configuration
+title:  Push Configuration
 keywords: ios
 sidebar: ios_sidebar
 toc: true
@@ -24,13 +24,11 @@ Note：**`Since local notifications are hard to distinguish from APNs, it is rec
 
 ### When the SDK is in the foreground or background active state:
 
-![](/images/ios/image006.png){.align-center}
-
-{{ :im:ios:apns:image006.png?nolink |}}
+![](/images/ios/server_push_app_inActive.jpeg){.align-center}
 
 ### When the SDK is inactive or the App process is killed:
 
-![](/images/ios/image007.png){.align-center}
+![](/images/ios/server_push_app_inActive.jpeg)
 
 `APNs only work as the notifications here. When the user launched the App, the message will be received by clients through the SDK persistent connection. `
 
@@ -253,8 +251,4 @@ Multiple certificates can be transferred under one appkey, which can implement a
 
 ------------------------------------------------------------------------
 
-\<WRAP group> \<WRAP half column>
-Previous page：[multiple devices](/im/ios/basics/multidevices) \</WRAP>
 
-\<WRAP half column> Next Page：[APNs offline push](/images/ios/offline)
-\</WRAP> \</WRAP>

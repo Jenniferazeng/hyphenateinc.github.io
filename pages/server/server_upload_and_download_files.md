@@ -131,7 +131,7 @@ Example of possible returned results
 }
 ```
 
-**return value 401, unauthorized\[no token, token error, token expired\]**
+**return value 401, unauthorized [no token, token error, token expired]**
 
 ``` json
 {
@@ -201,7 +201,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 }
 ```
 
-**return value 401, unauthorized \ [no token, token error, token expired \]**
+**return value 401, unauthorized [no token, token error, token expired ]**
 
 ``` json
 {
@@ -268,7 +268,7 @@ curl -X GET -H 'Accept: application/octet-stream' -H 'Authorization: Bearer YWMt
 }
 ```
 
-**return value 401, unauthorized\[no token, token error, token expired\]**
+**return value 401, unauthorized [no token, token error, token expired]**
 
 ``` json
 {

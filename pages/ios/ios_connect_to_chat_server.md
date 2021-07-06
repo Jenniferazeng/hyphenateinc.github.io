@@ -20,7 +20,7 @@ In the SDK, most interfaces provide both synchronous and asynchronous methods (n
 {
     //AppKey:The registered AppKey, see note below for details.
     //apnsCertName:Push the certificate name (no suffix required), see note below for details.
-    EMOptions *options = [EMOptions optionsWithAppkey:@"douser#istore"];
+    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"douser#istore"];
     options.apnsCertName = @"istore_dev";
     [[AgoraChatClient sharedClient] initializeSDKWithOptions:options];
 
@@ -38,7 +38,7 @@ There are two registration modes, open registration and authorized registration.
 Registered user names will be automatically converted to lowercase letters. It is recommended that all user names are registered in lowercase. (It is strongly recommended that developers call the REST interface in the backend to register the chat user ID. The client registration method is not recommended.)
 
 ``` objc
-    [[AgoraChatClient sharedClient] registerWithUsername:@"8001" password:@"111111" completion:^(NSString *aUsername, EMError *aError) {
+    [[AgoraChatClient sharedClient] registerWithUsername:@"8001" password:@"111111" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Register successfully");
     } else {
@@ -57,7 +57,7 @@ Registered user names will be automatically converted to lowercase letters. It i
 
 
 ``` objc
-    [[AgoraChatClient sharedClient] loginWithUsername:@"8001" password:@"111111" completion:^(NSString *aUsername, EMError *aError) {
+    [[AgoraChatClient sharedClient] loginWithUsername:@"8001" password:@"111111" completion:^(NSString *aUsername, AgoraError *aError) {
     if (!aError) {
         NSLog(@"Login successful");
     } else {
@@ -104,7 +104,7 @@ Automatic login will be cancelled in the following situations:
  *    2.Too many logged-in devicesï¼›
  *    3.Forced to be taken offline from the server sideï¼›
  */
-- (void)userAccountDidForcedToLogout:(EMError *)aError;
+- (void)userAccountDidForcedToLogout:(AgoraError *)aError;
 ```
 
 In the SDK, if an automatic login occurs, the following callbacks will be madeï¼š
@@ -115,7 +115,7 @@ In the SDK, if an automatic login occurs, the following callbacks will be madeï¼
  *
  *  @param error Error message
  */
-- (void)autoLoginDidCompleteWithError:(EMError *)error
+- (void)autoLoginDidCompleteWithError:(AgoraError *)error
 
 //Add a callback listener proxy: [[AgoraChatClient sharedClient] addDelegate:self delegateQueue:nil];
 ```
@@ -124,7 +124,7 @@ In the SDK, if an automatic login occurs, the following callbacks will be madeï¼
 
 
 ``` objc
-[[AgoraChatClient sharedClient] logout:YES completion:^(EMError *aError) {
+[[AgoraChatClient sharedClient] logout:YES completion:^(AgoraError *aError) {
     if (!aError) {
         NSLog(@"Log out successfully");
     } else {
@@ -146,7 +146,7 @@ When the connection is dropped, the iOS SDK will automatically reconnect, just l
  *
  *  @param aConnectionState Current Status
  */
-- (void)connectionStateDidChange:(EMConnectionState)aConnectionState;
+- (void)connectionStateDidChange:(AgoraConnectionState)aConnectionState;
 ```
 
 ## Exporting information to log files

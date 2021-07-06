@@ -1,5 +1,5 @@
 ---
-title: iOS Offline Push
+title:  Offline Push
 keywords: ios
 sidebar: ios_sidebar
 toc: true

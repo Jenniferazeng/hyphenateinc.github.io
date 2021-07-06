@@ -238,7 +238,7 @@ Example of text type message format
 ``` json
 "bodies": [ 
    {
-       "msg":"welcome to easemob!",
+       "msg":"welcome to chat!",
        "type":"txt"
    }
 ]

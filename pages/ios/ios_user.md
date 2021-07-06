@@ -1,5 +1,5 @@
 ---
-title: iOS User
+title: User Metadata
 keywords: ios
 sidebar: ios_sidebar
 toc: true
