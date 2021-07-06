@@ -10,7 +10,7 @@ folder: server
 Chat Related information
 The API can send text messages, send image messages, send audio messages, send video messages, send signal messages and send extended messages.
 
-To send a file type message, you need to upload the file to the Chat server first, refer to the documentation: [file upload and download](/server/server_upload_and_download_files.html)
+To send a file type message, you need to upload the file to the Chat server first, refer to the documentation: [file upload and download](/server_upload_and_download_files.html)
 
 Platform API interface to send messages, will not determine whether the Chat id exists under appkey.
 
