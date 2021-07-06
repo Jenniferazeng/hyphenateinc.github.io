@@ -954,11 +954,11 @@ Custom message: If the normal message type does not meet the user's message need
   </tr>
   <tr>
     <td>customEvent</td>
-    <td>user custom event type, must be string, value must satisfy the regular expression  [a-zA-Z0-9-\_/\. ]{1,32}, shortest 1 character longest 32 characters</td>
+    <td>user custom event type, must be string, value must satisfy the regular expression  [a-zA-Z0-9-_/\. ]{1,32}, shortest 1 character longest 32 characters</td>
   </tr>
   <tr>
     <td>customExts</td>
-    <td>user custom event attribute, type must be Map\<String,String>, can contain up to 16 elements. customExts is optional and can be left out if not needed</td>
+    <td>user custom event attribute, type must be Map<String,String>, can contain up to 16 elements. customExts is optional and can be left out if not needed</td>
   </tr>
   <tr>
     <td>from</td>
@@ -1110,7 +1110,7 @@ Extended messages: If the normal message type does not meet the user's messaging
   </tr>
   <tr>
     <td>ext</td>
-    <td>Extended attribute, defined by APP itself.  It is fine that there is not this field, but if there is, the value can not be \"ext:null\"\this form. Key value type must be NSString, Value value type must be NSString or NSNumber type BOOL, int, unsigned in, long long, double</td>
+    <td>Extended attribute, defined by APP itself.  It is fine that there is not this field, but if there is, the value can not be "ext:null" this form. Key value type must be NSString, Value value type must be NSString or NSNumber type BOOL, int, unsigned in, long long, double</td>
   </tr>
   <tr>
     <td>attr1</td>
