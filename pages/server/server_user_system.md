@@ -26,7 +26,7 @@ When you apply for an AppKey, you will get a string in **xxxx#xxxx** format, the
   <tr>
     <td>Unique identifier for Chat app</td>
     <td>org_name</td>
-    <td>\#</td>
+    <td>#</td>
     <td>app_name</td>
     <td>The app_name can only be a combination of letters, numbers, and horizontal lines. Length cannot exceed 32</td>
   </tr>
@@ -69,13 +69,13 @@ When the APP is integrated with Chat, you need to integrate the APP system, crea
 -   UUID cannot be used
 -   The length of the user ID is 64 bytes or less
 -   No spaces or special characters such as tic-tac-toe (#) in between
--   Allowed user name rules "[a-z0-9_-.]*" (a\~z lowercase letters/numbers/underscores/crosses/English periods), all others are not allowed
+-   Allowed user name rules "[a-z0-9_-.]*" (a~z lowercase letters/numbers/underscores/crosses/English periods), all others are not allowed
     **If it is an uppercase letter it will be automatically converted to lowercase**
 -   Not case-sensitive. The system ignores case and considers AA, Aa, aa, aA to be the same. If the system already has a user with Chat user ID AA, and then try to register a new user with aa as Chat user ID, the system returns a duplicate user name, and so on, so it is recommended that users use lowercase letters, otherwise they may encounter some exceptions. However, please note: the form of Chat user ID in the data is still the form of the user's initial registration, and the upper case used in the registration is saved in upper case, and the lower case is saved in lower case. That is: if you register with AA, the ID saved by Chat is AA; if you register with Aa, the ID saved by Chat is Aa, and so on.
 
 Also: This document may use the terms "Chat user ID" and "Chat username", but please note that both mean the same thing here.
 
-Because a user's Chat user ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example\@chat.com, when this user logs into the APP When this user logs into the APP, he can log into Chat's server after successful login. so at this time, he only needs to be able to log in from example\@chat.com to derive this user's Chat user ID.
+Because a user's Chat user ID and his username in the APP does not need to be the same, there just needs to be a clear correspondence. For example, if the user name is example@chat.com, when this user logs into the APP When this user logs into the APP, he can log into Chat's server after successful login. so at this time, he only needs to be able to log in from example@chat.com to derive this user's Chat user ID.
 
 **Note：**All of the following APIs require org administrator or APP administrator permission to access.
 
@@ -304,7 +304,7 @@ Create a new user in the org and APP specified by the URL Create a new user in t
 -   "Open registration" mode: when registering for an Chat account, you do not need to bring your administrator identification information.
 -   "Authorized Registration" mode: When registering for an Chat account, you must bring your administrator identification information. It is recommended to use "Authorized Registration" to prevent people who have already geted the registration URLs and people with knowledge of the registration process from registering a large number of spam users to the server.
 
-`Note：* The \${token} mentioned in the following API is a variable that needs to be replaced with the token geted through the APP's client_id and client_secret.`
+`Note：* The ${token} mentioned in the following API is a variable that needs to be replaced with the token geted through the APP's client_id and client_secret.`
 
 `* When registering Chat ids, it is recommended not to use ordered ids to prevent others from knowing the order of registered ids and sending a lot of spam messages maliciously.`
 
@@ -839,7 +839,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>notification_no_disturbing</td>
-    <td>Do not disturb setting. \ "false\" means no disturbance off, "true" no disturbance on, no setting back will not return</td>
+    <td>Do not disturb setting. "false" means no disturbance off, "true" no disturbance on, no setting back will not return</td>
   </tr>
   <tr>
     <td>notification_no_disturbing_start</td>
@@ -992,7 +992,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <td>notification_no_disturbing</td>
-    <td>Do not disturb setting. \ "false\" means no disturbance off, "true" no disturbance on, no setting back will not return</td>
+    <td>Do not disturb setting. "false" means no disturbance off, "true" no disturbance on, no setting back will not return</td>
   </tr>
   <tr>
     <td>notification_no_disturbing_start</td>
@@ -1639,7 +1639,7 @@ View the information contained in the entities field in the return value
 #### Request Example
 
 ``` php
-curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  https://a1.easecdn.com/chat-demo/testapp/users/a -d '{"notification_display_style": "1"}'
+curl -X PUT -H "Authorization: Bearer YWMtSozP9jHNEeSQegV9EKeAQAAAUlmBR2bTGr-GP2xNh8GhUCdKViBFDSEF2E" -i  "https://a1.easecdn.com/chat-demo/testapp/users/a" -d '{"notification_display_style": "1"}'
 ```
 
 #### Examples of possible returned results
@@ -1719,7 +1719,7 @@ You need to fill in {username} when requesting, and you need to set the Chat use
   </tr>
   <tr>
     <td>notification_no_disturbing</td>
-    <td>Whether to be free from disturbance, \"0\" means free from disturbance off, "1" free from disturbance on</td>
+    <td>Whether to be free from disturbance, "0" means free from disturbance off, "1" free from disturbance on</td>
   </tr>
   <tr>
     <td>notification_no_disturbing_start</td>
@@ -1759,7 +1759,7 @@ View the information contained in the entities field in the return value
   </tr>
   <tr>
     <th>notification_display_style</th>
-    <th>Do not disturb setting. \"0\" means do not disturb off, "1" do not disturb on</th>
+    <th>Do not disturb setting. "0" means do not disturb off, "1" do not disturb on</th>
   </tr>
   <tr>
     <th>notification_no_disturbing_start</th>
@@ -2670,7 +2670,7 @@ View the online status of users, up to 100 users at the same time.
   </tr>
   <tr>
     <td>usernames</td>
-    <td>"user1", "user2"，the user name to be queried for status is submitted as an array，\<wrap em>no more than 100 at most\</wrap></td>
+    <td>"user1", "user2", the user name to be queried for status is submitted as an array, <wrap em>no more than 100 at most</wrap></td>
   </tr>
 </table>
 
@@ -3116,7 +3116,7 @@ You need to fill in {username} corresponding to the username to be unblocked in 
   </tr>
   <tr>
     <td>action</td>
-    <td>operation, "activate user\" means unblock/activate Chat user</td>
+    <td>operation, "activate user" means unblock/activate Chat user</td>
   </tr>
 </table>
 
@@ -3211,7 +3211,7 @@ View the information contained in the data field in the return value
   </tr>
   <tr>
     <td>result</td>
-    <td>The result of the operation, "true\" means that the user has been forced offline</td>
+    <td>The result of the operation, "true" means that the user has been forced offline</td>
   </tr>
 </table>
 

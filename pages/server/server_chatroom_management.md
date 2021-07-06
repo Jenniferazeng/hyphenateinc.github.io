@@ -65,7 +65,7 @@ There is a [limit](http://www.easemob.com/pricing/im) on the number of chat room
 
 In addition to chat room creator (owner) and general chat room members, a new chat room administrator role has been added.
 
-Chat room roles have a range of permissions: creator \> chat room administrator \> general chat room member
+Chat room roles have a range of permissions: creator > chat room administrator > general chat room member
 
 -   The chat room creator has all chat room permissions
 -   The chat room administrator has permissions to add/remove blacklists, add/remove bans, etc.
