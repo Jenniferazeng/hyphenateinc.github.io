@@ -30,7 +30,7 @@ The user attribute management module can be got from the SDK using the following
 The user attribute information that can be managed by AgoraChat is as follows:
 
     @interface AgoraUserInfo : NSObject<NSCopying>
-    @property (nonatomic,copy) NSString *userId; /*! *\~ User AgoraChat Id *\~english user's id */
+    @property (nonatomic,copy) NSString *userId; /*! *\~ Chat user ID *\~english user's id */
     @property (nonatomic,copy) NSString *nickName; /*! *\~ User name. maximum of 64 bytes is recommended *\~english user's nickname */
     @property (nonatomic,copy) NSString *avatarUrl; /*! *\~ User avatar address. maximum of 256 bytes is recommended *\~english user's avatar file uri */
     @property (nonatomic,copy) NSString *mail; /*! *\~ User email address. maximum of 64 bytes is recommended *\~english user's mail  address */
@@ -132,9 +132,9 @@ The interface for getting all attributes of a user is as follows:
 
     /*!
      *  \~chinese
-     *  Get user attributes based on user ID
+     *  Get user attributes based on Chat user ID
      *
-     *  @param aUserIds  			User ID to get user attributes
+     *  @param aUserIds  			Chat user ID to get user attributes
      *  @param aCompletionBlock     Completed callback
      *
      *  \~english
@@ -160,9 +160,9 @@ The interface for getting the attributes of a specified user is as follows:
 
     /*!
      *  \~chinese
-     *  Get user-specified attributes based on user ID
+     *  Get user-specified attributes based on Chat user ID
      *
-     *  @param aUserIds  	 		User ID to get user attributes
+     *  @param aUserIds  	 		Chat user ID to get user attributes
      *  @param aType         		What types of user attributes are to be got
      *  @param aCompletionBlock     Completed callback
      *
@@ -191,7 +191,7 @@ AgoraChat User-Attribute Hosting Service is not responsible for managing user av
 
 ## Business card message
 
-There is no card-type message in the SDK. The sending and receiving of card messages in the Demo use the existing custom message type, by specifying the event of the custom message as \"userCard\", and adding required AgoraChat id, nickname, and avatar in the ext to display the user’s business card.
+There is no card-type message in the SDK. The sending and receiving of card messages in the Demo use the existing custom message type, by specifying the event of the custom message as \"userCard\", and adding required Chat user ID, nickname, and avatar in the ext to display the user’s business card.
 
 The business card message sending process is as follows:
 

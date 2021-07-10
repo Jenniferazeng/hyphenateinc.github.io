@@ -60,14 +60,14 @@ Description of the "Initialize Message Instance" method used in the following ex
 aConversationId:
 Conversation id. For example, if a sends a message to b, then the SDK will generate a conversation on the side of a. The conversation id is b. When constructing the message, aConversationId is consistent with to .
 
-to: Represents the user id of the receiver.
+to: Represents the Chat user ID of the receiver.
 
 from: Represents the currently logged-in Client ID, generally use \[AgoraChatClient
 sharedClient\].currentUsername; method to get.
 
 `Note: If you are sending a message to a group or chat room, then aConversationId and to should be replaced by the group id or chat room id`
 
-In general, the currently logged-in user id should send a message to which user id or group id or chat room id.
+In general, the currently logged-in Chat user ID should send a message to which Chat user ID or group id or chat room id.
 
 ### Construct a text message
 
@@ -83,7 +83,7 @@ In general, the currently logged-in user id should send a message to which user 
 
 // Calling:
 TextMessageBody *body = [[TextMessageBody alloc] initWithText:@"Message to send"];
-// Get the currently logged-in user id
+// Get the currently logged-in Chat user ID
 NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate Message
@@ -109,7 +109,7 @@ Sending emoticons is actually sending text messages. After receiving the text me
 
 // Calling:
 TextMessageBody *body = [[TextMessageBody alloc] initWithText:@"The emoticon message text string to be sent"];
-// Get the currently logged-in user id
+// Get the currently logged-in Chat user ID
 NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //Generate Message
@@ -422,7 +422,7 @@ Create a conversation based on conversationId.
 // Call:   
 
 aConversationId:
-The user id of the receiver in a single chat conversation---------
+The Chat user ID of the receiver in a single chat conversation---------
 The group id of the group conversations to send messages to the group
 The chat room ID of the chat room which messages are sent to
 

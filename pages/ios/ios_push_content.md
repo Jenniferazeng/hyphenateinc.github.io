@@ -30,8 +30,8 @@ folder: ios
 -   alert: messages display
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receving APNs
--   f: Chat User ID of the message sender
--   t: Chat User ID of the message recevier
+-   f: Chat user ID of the message sender
+-   t: Chat user ID of the message recevier
 -   m: message ID
 
 ------------------------------------------------------------------------
@@ -56,8 +56,8 @@ folder: ios
 -   xxxx: Content of message（it will show what the sender sent）
 -   badge:corner mark, represent the number of offline messages
 -   sound: sound of alert when receving APNs
--   f: Chat User ID of the message sender
--   t: Chat User ID of the message recevier
+-   f: Chat user ID of the message sender
+-   t: Chat user ID of the message recevier
 -   m:  message ID
 
 ------------------------------------------------------------------------
@@ -83,8 +83,8 @@ folder: ios
 -   alert: messages display
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receiving APNs
--   f: Chat User ID of the message sender
--   t: Chat User ID of the message receiver
+-   f: Chat user ID of the message sender
+-   t: Chat user ID of the message receiver
 -   g: group ID
 -   m: message ID
 
@@ -111,8 +111,8 @@ folder: ios
 -   xxxx: Content of message（it will show what the sender sent）
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receiving APNs
--   f: Chat User ID of the message sender
--   t: Chat User ID of the message receivier
+-   f: Chat user ID of the message sender
+-   t: Chat user ID of the message receivier
 -   g: group ID
 -   m: message ID
 

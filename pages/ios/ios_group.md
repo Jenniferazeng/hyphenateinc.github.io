@@ -469,7 +469,7 @@ The group members are sorted according to the time when the group members enter 
 // call:                                 
 [[AgoraChatClient sharedClient].groupManager getGroupMemberListFromServerWithId:@"groupId" cursor:@"cursor" pageSize:10 completion:^(AgoraCursorResult *aResult, AgoraError *aError) {
     if (!aError) {
-        // aResult.list: The returned list of members, the internal value of which is the member's user id.
+        // aResult.list: The returned list of members, the internal value of which is the member's Chat user ID.
         // aResult.cursor: The returned cursor, if you want to get the list of the next page, you need to pass this cursor as an argument to get the list of group members.
         NSLog(@"Get group members list successfully --- %@", aResult);
     } else {
