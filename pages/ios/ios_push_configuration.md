@@ -118,9 +118,9 @@ Save, and you will get a file with a suffix of p12
 
 ![](/images/ios/apns_create21.jpg){width="800"}
 
-### Upload the push certificate to Easemob
+### Upload the push certificate to developer console
 
-Log in to the Easemob management background, find the Appkey of certificate which you want to upload, and click to enter and see more details.
+Log in to the developer console management background, find the Appkey of certificate which you want to upload, and click to enter and see more details.
 
 ![](/images/ios/uploadCer1.png)
 
@@ -177,7 +177,7 @@ Give the certificate a name, and remember the name, it will be useful later. Sel
 When the SDK is initialized, set the push certificate which you going to be used.
 
     // set Appkey
-    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
+    AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"your applyed key"];
     // Set the name of the push certificate
     options.apnsCertName = @"apnsTest";
     // Initialize SDK
@@ -187,7 +187,7 @@ When the SDK is initialized, set the push certificate which you going to be used
 
 ### How to implement local notification
 
-When the persistent connection still exists, Local notification  `receive the message through the callback of the Easemob receiving message`, and then judge the current App status, if it is in the background, you can use the code to actively pop up a notification  to notify the user. The specific reference is as follows:
+When the persistent connection still exists, Local notification  `receive the message through the callback of the AgoraChat receiving message`, and then judge the current App status, if it is in the background, you can use the code to actively pop up a notification  to notify the user. The specific reference is as follows:
 
         - (void)messagesDidReceive:(NSArray *)aMessages {
             for (AgoraMessage *msg in aMessages) {
@@ -219,7 +219,7 @@ When the persistent connection still exists, Local notification  `receive the me
 
 ### Parse of push content 
 
-In the Easemob, APNs are only generated when the persistent connection does not exist (the App process does not exist or is suspended). At this time, iOS will not be allowed direct access to the APNs content, but when the user clicks on the push notification bar, it can be found in launchOptions from
+In the AgoraChat, APNs are only generated when the persistent connection does not exist (the App process does not exist or is suspended). At this time, iOS will not be allowed direct access to the APNs content, but when the user clicks on the push notification bar, it can be found in launchOptions from
 
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
@@ -243,7 +243,7 @@ For more usage, please refer to（[APNs parse](/images/ios/content)）
 
 ### How to renew the certificate
 
-After the certificate expires, if you want to renew the push certificate, you need to delete the old one in the Easemob management background, and then upload it again. `The name of the upload should be the same as the name of the old certificate`.
+After the certificate expires, if you want to renew the push certificate, you need to delete the old one in the developer console, and then upload it again. `The name of the upload should be the same as the name of the old certificate`.
 
 ### Can multiple sets of push certificates be delivered under one Appkey
 

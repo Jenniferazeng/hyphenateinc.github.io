@@ -30,8 +30,8 @@ folder: ios
 -   alert: messages display
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receving APNs
--   f: Easemob ID of the message sender
--   t: Easemob ID of the message recevier
+-   f: Chat User ID of the message sender
+-   t: Chat User ID of the message recevier
 -   m: message ID
 
 ------------------------------------------------------------------------
@@ -52,12 +52,12 @@ folder: ios
     }
 
 -   alert: messages display
--   ApnsName: User name set by the sender(the user's nickname seen in the backstage of Easemob)
+-   ApnsName: User name set by the sender(the user's nickname seen in the backstage of developer console)
 -   xxxx: Content of message（it will show what the sender sent）
 -   badge:corner mark, represent the number of offline messages
 -   sound: sound of alert when receving APNs
--   f: Easemob ID of the message sender
--   t: Easemob ID of the message recevier
+-   f: Chat User ID of the message sender
+-   t: Chat User ID of the message recevier
 -   m:  message ID
 
 ------------------------------------------------------------------------
@@ -83,8 +83,8 @@ folder: ios
 -   alert: messages display
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receiving APNs
--   f: Easemob ID of the message sender
--   t: Easemob ID of the message receiver
+-   f: Chat User ID of the message sender
+-   t: Chat User ID of the message receiver
 -   g: group ID
 -   m: message ID
 
@@ -107,12 +107,12 @@ folder: ios
     }
 
 -   alert: messages display
--   Apns Name: User name set by the sender(the user's nickname seen in the backstage of Easemob)
+-   Apns Name: User name set by the sender(the user's nickname seen in the backstage of developer console)
 -   xxxx: Content of message（it will show what the sender sent）
 -   badge: corner mark, represent the number of offline messages
 -   sound: sound of alert when receiving APNs
--   f: Easemob ID of the message sender
--   t: Easemob ID of the message receivier
+-   f: Chat User ID of the message sender
+-   t: Chat User ID of the message receivier
 -   g: group ID
 -   m: message ID
 
@@ -122,7 +122,7 @@ folder: ios
 
 APNs extension fields(em_apns_ext): After adding it, the APNs you received will contain the fields you filled in, which can help you distinguish APNs.
 
-Easemob provides the following extension fields:
+AgoraChat provides the following extension fields:
 
   extension fields 			descriptions
 ------------------------- --------------------------------------

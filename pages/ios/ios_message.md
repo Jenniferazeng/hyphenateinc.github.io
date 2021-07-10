@@ -12,7 +12,7 @@ folder: ios
 Message: IM interaction entity, the corresponding type in the SDK is **Message**. **Message** consists of 
 MessageBody.
 
-The Easemob SDK header files involved in the message are as follows:
+The AgoraChat SDK header files involved in the message are as follows:
 
 ``` objc
 // Message building
@@ -60,14 +60,14 @@ Description of the "Initialize Message Instance" method used in the following ex
 aConversationId:
 Conversation id. For example, if a sends a message to b, then the SDK will generate a conversation on the side of a. The conversation id is b. When constructing the message, aConversationId is consistent with to .
 
-to: Represents the Easemob id of the receiver.
+to: Represents the user id of the receiver.
 
 from: Represents the currently logged-in Client ID, generally use \[AgoraChatClient
 sharedClient\].currentUsername; method to get.
 
 `Note: If you are sending a message to a group or chat room, then aConversationId and to should be replaced by the group id or chat room id`
 
-In general, the currently logged-in Easemob id should send a message to which Easemob id or group id or chat room id.
+In general, the currently logged-in user id should send a message to which user id or group id or chat room id.
 
 ### Construct a text message
 
@@ -83,7 +83,7 @@ In general, the currently logged-in Easemob id should send a message to which Ea
 
 // Calling:
 TextMessageBody *body = [[TextMessageBody alloc] initWithText:@"Message to send"];
-// Get the currently logged-in Easemob id
+// Get the currently logged-in user id
 NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 // Generate Message
@@ -109,7 +109,7 @@ Sending emoticons is actually sending text messages. After receiving the text me
 
 // Calling:
 TextMessageBody *body = [[TextMessageBody alloc] initWithText:@"The emoticon message text string to be sent"];
-// Get the currently logged-in Easemob id
+// Get the currently logged-in user id
 NSString *from = [[AgoraChatClient sharedClient] currentUsername];
 
 //Generate Message
@@ -250,7 +250,7 @@ message.chatType = AgoraChatTypeChat;// Set as single chat message
 
 ### Construct a pass-through message
 
-A special type of message provided by the SDK, namely CMD, will not store db, nor will it be pushed through APNS, similar to a command-type message. For example, if your server wants to notify the client to perform specific operations, you can ask the server and the client to agree on a certain field in advance, and when the client receives the agreed field, perform a certain special operation. In addition, actions beginning with "em\_" and "easemob::" are internal reserved fields, so be careful not to use them
+A special type of message provided by the SDK, namely CMD, will not store db, nor will it be pushed through APNS, similar to a command-type message. For example, if your server wants to notify the client to perform specific operations, you can ask the server and the client to agree on a certain field in advance, and when the client receives the agreed field, perform a certain special operation. 
 
 ``` objc
 /*!
@@ -388,7 +388,7 @@ This insertion method will verify the existence of the AgoraConversation object 
 
 ## Conversation
 
-The Easemob SDK header files involved in the session are as follows:
+The AgoraChat SDK header files involved in the session are as follows:
 
 ``` objc
 // Conversation, including session id, session type, etc.
@@ -422,7 +422,7 @@ Create a conversation based on conversationId.
 // Call:   
 
 aConversationId:
-The Easemob id of the receiver in a single chat conversation---------
+The user id of the receiver in a single chat conversation---------
 The group id of the group conversations to send messages to the group
 The chat room ID of the chat room which messages are sent to
 
@@ -722,7 +722,7 @@ proxy:
 
 Receiving ordinary messages will use the following callbacks:
 
-If you use the chat page in the demo of the Easemob during integration, the message proxy has been registered in the chat page, and the callback method for receiving common messages is monitored, and no other addition is required.
+If you use the chat page in the demo during integration, the message proxy has been registered in the chat page, and the callback method for receiving common messages is monitored, and no other addition is required.
 
 If you use chat page written by yourself during integration, you need to register your own message proxy in the chat page to monitor the callback method for receiving common messages.
 
