@@ -224,7 +224,7 @@ if (err) {
 
 ## Set Do Not Disturb Time
 
-When you don’t want to receive offline pushes during certain periods of time，You can set the do not disturb time period. After set up, within the time period you specify, Easemob will not send you offline pushes.
+When you don’t want to receive offline pushes during certain periods of time，You can set the do not disturb time period. After set up, within the time period you specify, AgoraChat will not send you offline pushes.
 This setting has the highest priority. When it is set, the push of group and single chat cannot be received within the specified time period.
 
 Enable offline push

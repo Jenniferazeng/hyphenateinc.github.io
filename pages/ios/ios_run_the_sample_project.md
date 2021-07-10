@@ -32,7 +32,6 @@ git clone git@github.com:HyphenateInc/Hyphenate-Demo-iOS.git
 2.Import  'AgoraChat' in your podfile 
 ```
 pod 'AgoraChat' 
-
 ```
 
 3.Install dependencies.

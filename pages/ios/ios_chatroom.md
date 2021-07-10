@@ -13,7 +13,7 @@ folder: ios
 
 ` The client SDK does not support creating chat rooms, you can call the REST interface to create `
 
-The chat room management mainly involves the following header files of the Easemob SDK:
+The chat room management mainly involves the following header files of the AgoraChat SDK:
 
 ``` objc
 // Chat room, with chat room id and other attributes
@@ -26,7 +26,7 @@ IAgoraChatroomManager.h
 AgoraChatroomManagerDelegate.h
 ````
 
-The Easemob chat room model supports a maximum membership of 5000. Unlike groups, after a member in a chat room goes offline for 2 minutes, the server will remove that member from the chat room and will not send push to that member. This member will not be able to automatically enter the chat room after going online.
+The agora chat room model supports a maximum membership of 5000. Unlike groups, after a member in a chat room goes offline for 2 minutes, the server will remove that member from the chat room and will not send push to that member. This member will not be able to automatically enter the chat room after going online.
 
 - The maximum number of members supported is 5000.
 - The chat room has three identities: owner, administrator and -.
@@ -35,7 +35,7 @@ The Easemob chat room model supports a maximum membership of 5000. Unlike groups
 - No support for REST invitations.
 - The chat room API is usually synchronous and needs to be executed in a separate thread; if you need to use the asynchronous API, please use the API with the async prefix.
 
-The main features of the Easemob chat room client include
+The main features of the agora chat room client include
 
 - support for querying all APP chat rooms.
 - support for querying chat room details.

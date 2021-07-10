@@ -12,7 +12,7 @@ folder: ios
 ## Introduction to the product
 
 User attributes are user's information, including: nickname, avatar, age, mobile phone number, etc.
-User attributes are optional services. If the user does not want sensitive information to be stored in the Easemob server, users can maintain it by themselves.
+User attributes are optional services. If the user does not want sensitive information to be stored in the Chat server, users can maintain it by themselves.
 
 Use the user attribute function to obtain the following capabilities:
 
@@ -21,16 +21,16 @@ Use the user attribute function to obtain the following capabilities:
 
 ## overview of Integration 
 
-The SDK provides user attribute hosting services, allowing users to save common fields such as avatars, nicknames, and an extended field. If the user does not want Easemob to get your user attribute information, the user needs to maintain the relevant data by himself.
+The SDK provides user attribute hosting services, allowing users to save common fields such as avatars, nicknames, and an extended field. If the user does not want AgoraChat to get your user attribute information, the user needs to maintain the relevant data by himself.
 
 The user attribute management module can be got from the SDK using the following methods as follows
 
     [[AgoraChatClient sharedClient] userInfoManager];
 
-The user attribute information that can be managed by Easemob is as follows:
+The user attribute information that can be managed by AgoraChat is as follows:
 
     @interface AgoraUserInfo : NSObject<NSCopying>
-    @property (nonatomic,copy) NSString *userId; /*! *\~ User Easemob Id *\~english user's id */
+    @property (nonatomic,copy) NSString *userId; /*! *\~ Chat user ID *\~english user's id */
     @property (nonatomic,copy) NSString *nickName; /*! *\~ User name. maximum of 64 bytes is recommended *\~english user's nickname */
     @property (nonatomic,copy) NSString *avatarUrl; /*! *\~ User avatar address. maximum of 256 bytes is recommended *\~english user's avatar file uri */
     @property (nonatomic,copy) NSString *mail; /*! *\~ User email address. maximum of 64 bytes is recommended *\~english user's mail  address */
@@ -132,9 +132,9 @@ The interface for getting all attributes of a user is as follows:
 
     /*!
      *  \~chinese
-     *  Get user attributes based on user ID
+     *  Get user attributes based on Chat user ID
      *
-     *  @param aUserIds  			User ID to get user attributes
+     *  @param aUserIds  			Chat user ID to get user attributes
      *  @param aCompletionBlock     Completed callback
      *
      *  \~english
@@ -160,9 +160,9 @@ The interface for getting the attributes of a specified user is as follows:
 
     /*!
      *  \~chinese
-     *  Get user-specified attributes based on user ID
+     *  Get user-specified attributes based on Chat user ID
      *
-     *  @param aUserIds  	 		User ID to get user attributes
+     *  @param aUserIds  	 		Chat user ID to get user attributes
      *  @param aType         		What types of user attributes are to be got
      *  @param aCompletionBlock     Completed callback
      *
@@ -187,11 +187,11 @@ The calling process is as follows:
 
 ## User avatar management
 
-Easemob User-Attribute Hosting Service is not responsible for managing user avatar files, which only stores the remote url address of avatar files. Users need to use third-party file hosting services such as Alibaba Cloud and Tencent Cloud to store avatar files. When a user sets an avatar, he needs to upload the avatar file to a third-party file hosting server first, and then pass the url address obtained after uploading to the avatar url field of the user attribute to set the user attribute. When displaying the avatar, get the user attributes from the SDK first. Next,Please get the avatar's url, and then display the remote avatar image on the UI layer.
+AgoraChat User-Attribute Hosting Service is not responsible for managing user avatar files, which only stores the remote url address of avatar files. Users need to use third-party file hosting services such as Alibaba Cloud and Tencent Cloud to store avatar files. When a user sets an avatar, he needs to upload the avatar file to a third-party file hosting server first, and then pass the url address obtained after uploading to the avatar url field of the user attribute to set the user attribute. When displaying the avatar, get the user attributes from the SDK first. Next,Please get the avatar's url, and then display the remote avatar image on the UI layer.
 
 ## Business card message
 
-There is no card-type message in the SDK. The sending and receiving of card messages in the Demo use the existing custom message type, by specifying the event of the custom message as \"userCard\", and adding required Easemob id, nickname, and avatar in the ext to display the user’s business card.
+There is no card-type message in the SDK. The sending and receiving of card messages in the Demo use the existing custom message type, by specifying the event of the custom message as \"userCard\", and adding required Chat user ID, nickname, and avatar in the ext to display the user’s business card.
 
 The business card message sending process is as follows:
 

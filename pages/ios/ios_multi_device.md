@@ -50,7 +50,7 @@ When the PC terminal and the mobile terminal log in to the same account, the dev
 ``` objc
 [[AgoraChatClient sharedClient] getLoggedInDevicesFromServerWithUsername:@"username" password:@"password" completion:^(NSArray *aList, AgoraError *aError) {
     if (!aError) {
-        // The returned aList array contains the AgoraDeviceConfig object. AgoraDeviceConfig is the information of the logged-in device. For details, please check the introduction in the AgoraDeviceConfig.h header file of the Easemob SDK
+        // The returned aList array contains the AgoraDeviceConfig object. AgoraDeviceConfig is the information of the logged-in device. For details, please check the introduction in the AgoraDeviceConfig.h header file of the AgoraChat SDK
         NSLog(@"Successfully get all logged-in device information from the server --- %@", aList);
     } else {
         NSLog(@"Successfully get reason for failure information of all logged-in device  from the server --- %@", aError.errorDescription);

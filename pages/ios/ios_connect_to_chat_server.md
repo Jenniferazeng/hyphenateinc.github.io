@@ -35,7 +35,7 @@ There are two registration modes, open registration and authorized registration.
 -   The open registration is for test . It is not recommended to use this method to register a chat account in a formal environment.
 -   The authorization registration process should be that the server registers through the Platform API provided by Agora, and then saves it to your server or returns it to the client.
 
-Registered user names will be automatically converted to lowercase letters. It is recommended that all user names are registered in lowercase. (It is strongly recommended that developers call the REST interface in the backend to register the chat user ID. The client registration method is not recommended.)
+Registered user names will be automatically converted to lowercase letters. It is recommended that all user names are registered in lowercase. (It is strongly recommended that developers call the REST interface in the backend to register the Chat user ID. The client registration method is not recommended.)
 
 ``` objc
     [[AgoraChatClient sharedClient] registerWithUsername:@"8001" password:@"111111" completion:^(NSString *aUsername, AgoraError *aError) {

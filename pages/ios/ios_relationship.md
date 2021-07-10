@@ -11,9 +11,9 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-Note: In the Easemob, if you are not a friend, you can also chat. It is not recommended to use the friend mechanism of Easemob. If you have your own server or friend mechanism, please maintain the friend mechanism yourself.
+Note: In the AgoraChat, if you are not a friend, you can also chat. It is not recommended to use the friend mechanism of AgoraChat. If you have your own server or friend mechanism, please maintain the friend mechanism yourself.
 
-The Easemob SDK header files involved in friend management are as follows:
+The AgoraChat SDK header files involved in friend management are as follows:
 
 ``` objc
 // Friend method call, such as adding agent, removing agent, adding, deleting friend, etc.
@@ -25,7 +25,7 @@ AgoraContactManagerDelegate.h
 
 ## Query friends list
 
-To query the list of friends, Easemob provides two methods.
+To query the list of friends, AgoraChat provides two methods.
 
 ### Get all friends from the server
 
@@ -50,7 +50,7 @@ NSArray *userlist = [[AgoraChatClient sharedClient].contactManager getContacts];
 
 ### Send friend request
 
-Easemob iOS SDK provides a method to add friends.
+AgoraChat iOS SDK provides a method to add friends.
 
 ``` objc
 /*!
@@ -205,9 +205,9 @@ Listen to callbacks
 
 ### Query friends blacklist
 
-Easemob's blacklist system is independent and not related to friends. In other words, you can add anyone to the blacklist, regardless of whether he is a friend of you. At the same time, if you add a friend to the blacklist, he is still your friend, but he is also on the blacklist at the same time.
+AgoraChat's blacklist system is independent and not related to friends. In other words, you can add anyone to the blacklist, regardless of whether he is a friend of you. At the same time, if you add a friend to the blacklist, he is still your friend, but he is also on the blacklist at the same time.
 
-To query the blacklist list, Easemob provides two methods.
+To query the blacklist list, AgoraChat provides two methods.
 
 #### Asynchronous method
 

@@ -12,7 +12,7 @@ folder: android
 1、 Initialize the Chat SDK
 
 ```objc 
-AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"easemob-demo#easeim"];
+AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"your applyed key"];
 // AgoraChat cert keys
 [options setApnsCertName:"your certificate"];
 [options setEnableConsoleLog:YES];
