@@ -6,18 +6,29 @@ toc: true
 permalink: web_send_first_message.html
 folder: web
 ---
+1、Install the Chat SDK
 
-1、 Initialize the Chat SDK
+Web SDK has been released to[NPM](https://www.npmjs.com/package/agora-chat-sdk). Use the following methods to integrate:
+- Install the Web SDK via NPM.
+```bash
+  npm install agora-chat-sdk --save
+```
+- Import first, then use SDK APIs.
+```bash
+  import websdk from "agora-chat-sdk"
+```
+
+2、 Initialize the Chat SDK
 
 ```js
-const conn = WebIM.conn = new WebIM.connection({
+const WebIM = {};
+const conn = WebIM.conn = new websdk.connection({
     appKey: 'your app key',
     isHttpDNS: true,
     https: true
 })
 ```
-
-2、Login chat server
+3、Login chat server
 
 ```js
 const options = { 
@@ -28,7 +39,7 @@ const options = {
 conn.open(options);
 ```
 
-3、Construct and send the message
+4、Construct and send the message
 
 ```js
 let id = conn.getUniqueId()
