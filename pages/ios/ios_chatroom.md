@@ -11,7 +11,7 @@ folder: ios
 
 ------------------------------------------------------------------------
 
-` The client SDK does not support creating chat rooms, you can call the REST interface to create `
+The client SDK does not support creating chat rooms, you can call the REST interface to create.
 
 The chat room management mainly involves the following header files of the AgoraChat SDK:
 
@@ -735,5 +735,4 @@ Callback method:
 ```
 
 ------------------------------------------------------------------------
-
 
