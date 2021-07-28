@@ -78,14 +78,23 @@ There is a libs folder in the downloaded SDK, which contains jar packages and fi
 
 ### Import via gradle remote link
 
-First, add the remote library address under the `allprojects->repositories` attribute of the `build.gradle` file in your project root directory
+First, add the remote library address to the `build.gradle` file in your project root directory
 
 ``` gradle
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'http://developer.huawei.com/repo'} //If you need to use Huawei to push HMS, please add this sentence
-    }
+buildscript {
+   repositories {
+       ...
+       mavenCentral()
+   }
+}
+
+
+allprojects {
+   repositories {
+       ...
+       mavenCentral()
+   }
+}
 ```
 
 Then add the following code to the `build.gradle` of your module
@@ -93,7 +102,6 @@ Then add the following code to the `build.gradle` of your module
 ``` java
 android {
     
-    //Requires java8 support since 3.6.0
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -9,7 +9,46 @@ folder: android
 
 ## Follow these steps to send your first message
 
-1、 Initialize the Chat SDK
+1、Add remote library address of `mavenCentral` and remote library dependencies in your project
+
+Add the remote library address to the `build.gradle` file in your project root directory
+
+```
+buildscript {
+   repositories {
+       ...
+       mavenCentral()
+   }
+}
+
+
+allprojects {
+   repositories {
+       ...
+       mavenCentral()
+   }
+}
+```
+Then add the following code to the `build.gradle` of your module
+
+``` java
+android {
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+dependencies {
+    //other necessary dependencies
+    ......
+    implementation 'io.hyphenate:chat-sdk:xxx version number'
+}
+```
+
+SDK version number reference [Release Note](https://hyphenateinc.github.io/android_release_note.html)
+
+2、 Initialize the Chat SDK
 
 ```java
 // set init sdk options
@@ -20,7 +59,7 @@ options.setAppKey("Your appkey");
 ChatClient.getInstance().init(context, options);
 ```
 
-2、Login chat server
+3、Login chat server
 
 ```java
 ChatClient.getInstance().login(mAccount, mPassword, new CallBack() {
@@ -53,7 +92,7 @@ ChatClient.getInstance().login(mAccount, mPassword, new CallBack() {
         });
 ```
 
-3、Construct and send the message
+4、Construct and send the message
 
 ```java
 // create a message
