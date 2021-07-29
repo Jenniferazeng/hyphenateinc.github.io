@@ -8,8 +8,19 @@ folder: android
 ---
 
 ## Follow these steps to send your first message
+1、Import the AgoraChat Framework
 
-1、 Initialize the Chat SDK
+1).Import  'AgoraChat' in your podfile 
+```
+pod 'AgoraChat' 
+```
+
+2).Install dependencies.
+```
+pod install
+```
+
+2、 Initialize the Chat SDK
 
 ```objc 
 AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"your applyed key"];
@@ -23,7 +34,7 @@ AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"your applyed key"];
 
 ```
 
-2、Login chat server
+3、Login chat server
 
 ```objc
 
@@ -42,7 +53,7 @@ AgoraOptions *options = [AgoraOptions optionsWithAppkey:@"your applyed key"];
 
 ```
 
-3、Construct and send the message
+4、Construct and send the message
 
 ```objc
 // create a message

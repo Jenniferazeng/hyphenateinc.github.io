@@ -29,7 +29,9 @@ Agora chat provides an open-source Agora chat demo sample project on GitHub. Thi
 ```
 git clone git@github.com:HyphenateInc/Hyphenate-Demo-iOS.git
 ```
+
 2.Import  'AgoraChat' in your podfile 
+
 ```
 pod 'AgoraChat' 
 ```
