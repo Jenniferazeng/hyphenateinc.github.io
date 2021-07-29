@@ -15,68 +15,15 @@
 
 SDK提供了用户属性功能，可供用保存头像地址、昵称、电话等字段以及扩展字段。
 
-设置用户属性的主要步骤如下：
+用户属性主要操作：
 
-1. 调用 userInfoManager 方法获取用户属性模块；
-2. 调用 设置单个用户所有属性，设置指定某个或者某几个用户属性
+1. 调用 `userInfoManager` 获取用户属性模块；
+2. 调用 `updateOwnInfo` 修改自己的用户信息；
+3. 调用 `updateOwnInfoByAttribute` 修改自己用户信息中的某个属性；
+4. 调用 `fetchUserInfoByUserId` 根据环信 ID 获取用户信息；
+5. 调用 `fetchUserInfoByAttribute` 根据环信 ID 用户属性获取用户信息；
 
 示例代码
-
-有关接口介绍如下:
-
-用户属性模块获取如下：
-
-```java
-/**
-     * \~chinese
-     * 获取EMUserInfoManager
-     *
-     * @return EMUserInfoManager
-     *
-     * \~english
-     * get userInfo manager
-     *
-     * @return EMUserInfoManager
-     */
-    public EMUserInfoManager userInfoManager() {}
-```
-
-EMUserInfo 是用户属性所有字段的一个封装，字段介绍如下：
-
-```java
-* \~chinese
- * 用户属性实体类，有关用户的信息,如下属性：
- * userId：环信ID
- * nickName：昵称(建议不超过64字节)
- * avatarUrl：头像url(建议不超过256字节)
- * email：邮箱(建议不超过64字节)
- * phoneNumber：电话(建议不超过32字节)
- * gender：性别(默认为0 ,1表示男,2表示女,其他为非法)
- * signature: 签名(建议不超过256字节)
- * birthday：生日(建议不超过64字节)
- * ext：扩展字段(用户可自行扩展，建议封装成JSON字符串，也可以设置为空字符串)
- *
- * \~english
- * User attribute entity class, information about the user,
- * the following attributes:
- * nickName; avatarUrl; email; phoneNumber; isMale;
- * signature; birthday; userId;ext;
- *
- */
-public class EMUserInfo {
-    private String nickName;
-    private String avatarUrl;
-    private String email;
-    private String phoneNumber;
-    private int gender = 0;
-    private String signature;
-    private String birth;
-    private String userId;
-    private String ext;
-    public EMUserInfo(){ }
- }
-```
-
 
 ### 设置用户属性
 
@@ -84,25 +31,7 @@ public class EMUserInfo {
 
 - 设置用户所有属性
 
-设置用户所有属性的接口如下：
-
-```java
-/**
-     * \~chinese
-     * 修改自己的用户属性
-     *
-     * @param userInfo 要修改的用户属性
-     * @param callBack 结果回调
-     *
-     * \~english
-     * Update own userInfo.
-     *
-     * @param callBack result callback
-     */
-    public void updateOwnInfo(final EMUserInfo userInfo, final EMValueCallBack<String> callBack) {}
-```
-
-调用过程如下：
+调用实例过程如下：
 
 ```java
 EMUserInfo userInfo = new EMUserInfo();
@@ -126,52 +55,7 @@ EMClient.getInstance().userInfoManager().updateOwnInfo(userInfo, new EMValueCall
 
 - 设置某个或者某几个属性
 
-用户可以指定的用户属性类型包括：
-
-```java
-/**
-     * 有关用户属性 属性类型定义如下：
-     * NICKNAME 昵称
-     * AVATAR_URL  头像
-     * EMAIL  邮箱
-     * PHONE 电话
-     * GENDER  性别
-     * SIGN  签名
-     * BIRTH 生日
-     * EXT  扩展字段
-     */
-    public enum EMUserInfoType {
-        NICKNAME(0,"nickname"),
-        AVATAR_URL(1,"avatarurl"),
-        EMAIL(2,"mail"),
-        PHONE(3,"phone"),
-        GENDER(4,"gender"),
-        SIGN(5,"sign"),
-        BIRTH(6,"birth"),
-        EXT(100,"ext");
-  }
-```
-
-设置指定用户属性的接口如下：
-
-```java
-/**
-     * \~chinese
-     * 修改自己用户信息中的某个属性
-     *
-     * @param attribute 用户属性字段
-     * @param value 修改后的信息(value为空的时候会把设置的attribute删除)
-     * @param callBack 结果回调
-     *
-     * \~english
-     * Update own userInfo.
-     *
-     * @param callBack result callback
-     */
-    public void updateOwnInfoByAttribute(final EMUserInfoType attribute, final String value, final EMValueCallBack<String> callBack){}
-```
-
-实例如下 （修改用户头像为例）：
+调用实例如下 （修改用户头像为例）：
 
 ```java
 String url = "https://download-sdk.oss-cn-beijing.aliyuncs.com/downloads/IMDemo/avatar/Image1.png";
@@ -197,25 +81,8 @@ String url = "https://download-sdk.oss-cn-beijing.aliyuncs.com/downloads/IMDemo/
 
 <div class="alert note">以下获取用户属性的接口中用户ID数组长度不能超过100。</div>
 
-获取用户所有的属性接口如下：
 
-```java
-/**
-     * \~chinese
-     * 根据环信ID获取用户信息
-     *
-     * @param userIds 用户ID列表
-     * @param callBack 结果回调
-     *
-     * \~english
-     * Update own userInfo.
-     *
-     * @param callBack result callback
-     */
-    public void fetchUserInfoByUserId(final String[] userIds, final EMValueCallBack<Map<String,EMUserInfo>> callBack) {}
-```
-
-调用如下：
+调用实例如下：
 
 ```java
 String[] userId = new String[1];
@@ -225,26 +92,7 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByUserId(userId, new EMVal
 
 - 获取用户指定某项或某几项属性
 
-获取指定用户属性的接口如下：
-
-```java
-/**
-     * \~chinese
-     * 根据环信ID 用户属性获取用户信息
-     *
-     * @param userIds 用户ID列表
-     * @param attributes 用户属性
-     * @param callBack 结果回调
-     *
-     * \~english
-     * Update own userInfo.
-     *
-     * @param callBack result callback
-     */
-    public void fetchUserInfoByAttribute(final String[] userIds, final EMUserInfoType[] attributes, EMValueCallBack<Map<String,EMUserInfo>> callBack){}
-```
-
-调用如下：
+调用实例如下：
 
 ```java
 String[] userId = new String[1];
