@@ -1,14 +1,20 @@
 # 用户属性
 
 
+
 ## 功能描述
 
 用户属性指的是用户的信息，包括：昵称、头像、年龄、手机号等。 用户属性为可选服务，如果不希望敏感信息存储在环信服务器，用户可以自行维护。
+
+
 
 使用用户属性功能可以获得以下能力：
 
 - 标准的用户属性的读写能力，包括：昵称、头像 URL 、邮箱、电话、性别、签名、生日；
 - 自定义用户属性的读写能力，提供自定义扩展，可以通过 `JSON` 字符串添加多个属性。
+
+
+
 
 
 ## 实现方法
@@ -23,11 +29,17 @@ SDK 提供了用户属性功能，可供用保存头像地址、昵称、电话�
 4. 调用 `fetchUserInfoByUserId` 根据环信 ID 获取用户信息；
 5. 调用 `fetchUserInfoByAttribute` 根据环信 ID 用户属性获取用户信息；
 
+
+
+
+
 ## 示例代码
+
+
 
 ### 设置用户属性
 
-用户可以设置自己的用户属性,设置用户属性时,可以设置所有的属性，也可以只设置某一项属性。
+用户可以设置自己的用户属性,设置用户属性时，可以设置所有的属性，也可以只设置某一项属性。
 
 - 设置用户所有属性
 
@@ -55,7 +67,7 @@ EMClient.getInstance().userInfoManager().updateOwnInfo(userInfo, new EMValueCall
 
 - 设置某个或者某几个属性
 
-调用实例如下 （修改用户头像为例）：
+调用实例如下（修改用户头像为例）：
 
 ```java
 String url = "https://download-sdk.oss-cn-beijing.aliyuncs.com/downloads/IMDemo/avatar/Image1.png";
@@ -76,6 +88,8 @@ String url = "https://download-sdk.oss-cn-beijing.aliyuncs.com/downloads/IMDemo/
 ### 获取用户属性
 
 获取用户属性时，可以获取用户所有的属性，也可以获取某一项或其中某几项，如只获取昵称或头像。
+
+
 
 - 获取用户所有属性
 
@@ -108,6 +122,8 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByAttribute(userId, userIn
 
 ## 开发注意事项
 
+
+
 ### 用户头像管理
 
 用户属性功能不提供文件存储服务，只存储头像文件的 URL 地址，不存储头像文件，因此用户需要使用阿里云、腾讯云等第三方文件存储服务。
@@ -124,9 +140,13 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByAttribute(userId, userIn
 
 SDK 没有名片类型的消息，但是可以通过自定义消息类型实现名片功能。
 
+
+
 实现方法：
 
 设置自定义消息的 `event` 为 `“userCard”` ，并在 `ext` 中添加展示名片所需要的环信 ID 、昵称和头像等字段。
+
+
 
 名片消息发送过程如下：
 
@@ -143,6 +163,10 @@ EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CUSTOM);
  EMClient.getInstance().chatManager().sendMessage(message);
 ```
 
+
+
 如果需要在名片中展示更丰富的信息，可以在 `ext` 中增加更多字段。
+
+
 
 名片的具体实现可参考[示例项目](https://www.easemob.com/download/im) 中的ChatUserCardAdapterDelegate ChatUserCardViewHolder chatRowUserCard等类。
