@@ -7,7 +7,7 @@
 
 用户属性指的是 app 用户的信息，包括昵称、头像、年龄、手机号等。
 
-SDK 提供用户属性功能，可供用保存包括昵称、头像 URL、邮箱、电话、性别、签名、生日等字段以及扩展字段，支持设置及查询用户属性。
+SDK 提供用户属性功能，可以保存包括昵称、头像 URL、邮箱、电话、性别、签名、生日等字段以及扩展字段，支持设置及查询用户属性。
 
 <div class="alert note">用户属性为可选服务，如果不希望敏感信息存储在环信服务器，你可以自行维护。</div>
 
@@ -19,10 +19,12 @@ SDK 提供用户属性功能，可供用保存包括昵称、头像 URL、邮箱
 设置和查询用户属性的主要步骤如下：
 
 1. 调用 `userInfoManager` 获取用户属性模块；
-2. 调用 `updateOwnInfo` 修改自己的用户信息；
-3. 调用 `updateOwnInfoByAttribute` 修改自己用户信息中的某个属性；
-4. 调用 `fetchUserInfoByUserId` 根据环信 ID 获取用户信息；
-5. 调用 `fetchUserInfoByAttribute` 根据环信 ID 用户属性获取用户信息；
+
+2. 调用 `EMUuserInfoManage` 类的方法修改和查询用户属性信息。
+   - 调用 `updateOwnInfo` 修改自己的用户信息；
+   - 调用 `updateOwnInfoByAttribute` 修改自己用户信息中的某个属性；
+   - 调用 `fetchUserInfoByUserId` 根据环信 ID 获取用户信息；
+   - 调用 `fetchUserInfoByAttribute` 根据环信 ID 用户属性获取用户信息。
 
 // TODO：不太理解 `fetchUserInfoByUserId`和 `fetchUserInfoByAttribute` 的区别，需要确认。
 
