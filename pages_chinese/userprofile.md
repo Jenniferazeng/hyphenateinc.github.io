@@ -159,7 +159,7 @@ EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CUSTOM);
 如果需要在名片中展示更丰富的信息，可以在 `ext` 中增加更多字段。
 
 可参考[示例项目](https://www.easemob.com/download/im) 中的以下类：
-- ChatUserCardAdapterDelegate
-- ChatUserCardAdapterDelegate
-- ChatRowUserCard
+- `ChatUserCardAdapterDelegate`
+- `ChatUserCardAdapterDelegate`
+- `ChatRowUserCard`
 
