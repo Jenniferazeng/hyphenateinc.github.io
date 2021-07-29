@@ -13,7 +13,16 @@
 
 ## 实现方法
 
-SDK提供了用户属性功能，可供用保存头像地址、昵称、电话等字段以及扩展字段,有关接口介绍如下:
+SDK提供了用户属性功能，可供用保存头像地址、昵称、电话等字段以及扩展字段。
+
+设置用户属性的主要步骤如下：
+
+1. 调用 userInfoManager 方法获取用户属性模块；
+2. 调用 设置单个用户所有属性，设置指定某个或者某几个用户属性
+
+示例代码
+
+有关接口介绍如下:
 
 用户属性模块获取如下：
 
@@ -37,14 +46,14 @@ EMUserInfo 是用户属性所有字段的一个封装，字段介绍如下：
 ```java
 * \~chinese
  * 用户属性实体类，有关用户的信息,如下属性：
- * userId:  环信ID
+ * userId：环信ID
  * nickName：昵称(建议不超过64字节)
  * avatarUrl：头像url(建议不超过256字节)
- * email： 邮箱(建议不超过64字节)
+ * email：邮箱(建议不超过64字节)
  * phoneNumber：电话(建议不超过32字节)
  * gender：性别(默认为0 ,1表示男,2表示女,其他为非法)
  * signature: 签名(建议不超过256字节)
- * birthday： 生日(建议不超过64字节)
+ * birthday：生日(建议不超过64字节)
  * ext：扩展字段(用户可自行扩展，建议封装成JSON字符串，也可以设置为空字符串)
  *
  * \~english
@@ -249,15 +258,27 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByAttribute(userId, userIn
 
 
 
+## 开发注意事项
+
 ### 用户头像管理
 
-用户属性功能不提供文件存储服务，只存储头像文件的url地址，不存储头像文件，因此用户需要使用阿里云、腾讯云等第三方文件存储服务。当用户设置头像时，需要先将头像文件上传到第三方文件存储服务，然后将上传后得到的url地址设置为用户属性的头像url字段。显示头像时，通过调用SDK获取用户属性方法，获取到头像url，然后在本地UI显示头像。
+用户属性功能不提供文件存储服务，只存储头像文件的 URL 地址，不存储头像文件，因此用户需要使用阿里云、腾讯云等第三方文件存储服务。
+
+实现方法：
+
+1. 将头像文件上传到第三方文件存储服务；
+2. 将上传后得到的 URL 地址设置为用户属性的头像 URL 字段；
+3. 显示头像时，通过调用 SDK 获取用户属性方法，获取到头像 URL ，然后在本地 UI 显示头像。
 
 
 
 ### 名片消息
 
-SDK没有名片类型的消息，但是可以通过自定义消息类型可以实现名片功能，可通过设置自定义消息的event为“userCard”, 并在ext中添加展示名片所需要的环信id、昵称和头像等字段，就可以实现名片收发功能。
+SDK 没有名片类型的消息，但是可以通过自定义消息类型实现名片功能。
+
+实现方法：
+
+设置自定义消息的 `event` 为 `“userCard”` ，并在 `ext` 中添加展示名片所需要的环信 ID 、昵称和头像等字段。
 
 名片消息发送过程如下：
 
@@ -274,6 +295,6 @@ EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CUSTOM);
  EMClient.getInstance().chatManager().sendMessage(message);
 ```
 
-如果需要在名片中展示更丰富的信息，可以在ext中增加更多字段。
+如果需要在名片中展示更丰富的信息，可以在 `ext` 中增加更多字段。
 
 名片的具体实现可参考[示例项目](https://www.easemob.com/download/im) 中的ChatUserCardAdapterDelegate ChatUserCardViewHolder chatRowUserCard等类。
