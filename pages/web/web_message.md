@@ -262,6 +262,9 @@ var sendPrivateImg = function () {
             onFileUploadError: function () {      // Message upload failed
                 console.log('onFileUploadError');
             },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
+            },
             onFileUploadComplete: function () {   // Message uploaded successfully
                 console.log('onFileUploadComplete');
             },
@@ -385,6 +388,9 @@ var sendPrivateFile = function () {
             onFileUploadError: function () {      // Message upload failed
                 console.log('onFileUploadError');
             },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
+            },
             onFileUploadComplete: function () {   // Message uploaded successfully
                 console.log('onFileUploadComplete');
             },
@@ -425,6 +431,9 @@ var sendPrivateAudio = function () {
             chatType: 'singleChat',               // Set to single chat
             onFileUploadError: function () {      // Message upload failed
                 console.log('onFileUploadError');
+            },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
             },
             onFileUploadComplete: function () {   // Message uploaded successfully
                 console.log('onFileUploadComplete');
@@ -467,6 +476,9 @@ var sendPrivateVideo = function () {
             chatType: singleChat,                 // Set to single chat
             onFileUploadError: function () {      // Message upload failed
                 console.log('onFileUploadError');
+            },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
             },
             onFileUploadComplete: function () {   // Message uploaded successfully
                 console.log('onFileUploadComplete');
@@ -570,6 +582,9 @@ conn.listen({
                 var objectURL = WebIM.utils.parseDownloadResponse.call(conn, response);
                 node.src = objectURL;
             },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
+            },
             onFileDownloadError: function () {
                 console.log('File down load error.')
             }
@@ -657,18 +672,21 @@ conn.listen({
 addAudioMessage: (message, bodyType) => {
   return (dispatch, getState) => {
     let options = {
-          url: message.url,
-          headers: {
-            Accept: 'audio/mp3'
-          },
-          onFileDownloadComplete: function (response) {
-            let objectUrl = WebIM.utils.parseDownloadResponse.call(WebIM.conn, response)
-            message.audioSrcUrl = message.url
-              message.url = objectUrl
+            url: message.url,
+            headers: {
+                Accept: 'audio/mp3'
             },
-          onFileDownloadError: function () {}
+            onFileDownloadComplete: function (response) {
+                let objectUrl = WebIM.utils.parseDownloadResponse.call(WebIM.conn, response)
+                message.audioSrcUrl = message.url
+                message.url = objectUrl
+            },
+            onFileUploadProgress: function (e) {  // Callback of upload progress
+                console.log(e)
+            },
+            onFileDownloadError: function () {}
         }
-      WebIM.utils.download.call(WebIM.conn, options)
+        WebIM.utils.download.call(WebIM.conn, options)
    }
 }
 ```
