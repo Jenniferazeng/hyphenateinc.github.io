@@ -9,7 +9,9 @@
 
 SDK 提供用户属性功能，可以保存包括昵称、头像 URL、邮箱、电话、性别、签名、生日等字段以及扩展字段，支持设置及查询用户属性。
 
-<div class="alert note">用户属性为可选服务，如果不希望敏感信息存储在环信服务器，你可以自行维护。</div>
+// TO DO :补充使用场景举例：@产品经理
+
+<div class="alert note">用户属性为可选服务，如果不希望敏感信息存储在环信服务器，可以自行维护。</div>
 
 
 
@@ -18,26 +20,18 @@ SDK 提供用户属性功能，可以保存包括昵称、头像 URL、邮箱、
 
 设置和查询用户属性的主要步骤如下：
 
-1. 调用 `userInfoManager` 获取用户属性模块；
-
-2. 调用 `EMUuserInfoManage` 类的方法修改和查询用户属性信息。
-   - 调用 `updateOwnInfo` 修改自己的用户信息；
-   - 调用 `updateOwnInfoByAttribute` 修改自己用户信息中的某个属性；
-   - 调用 `fetchUserInfoByUserId` 根据环信 ID 获取用户信息；
-   - 调用 `fetchUserInfoByAttribute` 根据环信 ID 用户属性获取用户信息。
-
-// TODO：不太理解 `fetchUserInfoByUserId`和 `fetchUserInfoByAttribute` 的区别，需要确认。
+2. 调用 `EMUserInfoManager` 类的方法设置，修改和查询用户属性信息。
+   - 调用 `userInfo.set` 设置指定用户 ID 的用户信息；
+   - 调用 `updateOwnInfo` 可设置和修改指定用户 ID的用户信息；
+   - 调用 `updateOwnInfoByAttribute` 可设置和修改指定用户 ID 的用户信息中的某个属性；
+   - 调用 `fetchUserInfoByUserId` 根据指定用户  ID  获取该用户所有用户属性信息；
+   - 调用 `fetchUserInfoByAttribute` 传入指定的环信 ID 和指定的用户属性，可以从服务端获取到指定环信 ID 的指定用户属性。
 
 
-### 获取用户属性模块
-
-示例代码如下：
-
-// TODO：示例代码缺失，需要补充内容。
 
 ### 设置用户属性
 
-你设置用户属性时，可以设置所有的属性，也可以只设置某一项属性。
+设置用户属性时，可以设置所有的属性，也可以只设置某一项属性。
 
 #### 设置用户所有属性
 
@@ -122,7 +116,7 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByAttribute(userId, userIn
 
 ### 用户头像管理
 
-用户属性功能不提供文件存储服务，只存储头像文件的 URL 地址，不存储头像文件，因此你需要使用阿里云、腾讯云等第三方文件存储服务。
+用户属性功能不提供文件存储服务，只存储头像文件的 URL 地址，不存储头像文件，因此您需要使用阿里云、腾讯云等第三方文件存储服务。
 
 实现流程如下：
 
@@ -130,15 +124,13 @@ EMClient.getInstance().userInfoManager().fetchUserInfoByAttribute(userId, userIn
 2. 将上传后得到的 URL 地址设置为用户属性的头像 URL 字段；
 3. 显示头像时，通过调用 `fetchUserInfoByUserId` 或者 `fetchUserInfoByAttribute` 获取头像 URL ，然后在本地 UI 显示头像。
 
-// TODO：不太理解 `fetchUserInfoByUserId`和 `fetchUserInfoByAttribute` 的区别，需要确认。
-
 
 
 ### 名片消息
 
 实现方法：
 
-你可以设置自定义消息的 `event` 为 `"userCard"` ，并在 `ext` 中添加展示名片所需要的环信 ID 、昵称和头像等字段。
+可以设置自定义消息的 `event` 为 `"userCard"` ，并在 `ext` 中添加展示名片所需要的环信 ID 、昵称和头像等字段。
 
 发送名片消息的示例代码如下：
 
