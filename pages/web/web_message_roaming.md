@@ -19,6 +19,7 @@ You can pull historical messages from the server to the local, so that it can sy
  * @param {String} options.queue   - The user id of the other party (if the user id contains uppercase letters, please change to lowercase letters)/group id/chat room id
  * @param {String} options.count   - Number of items pulled at a time
  * @param {Boolean} options.isGroup - Whether it is a group chat, the default is false
+ * @param {String} options.start - (not required) The message ID of the starting position, starting from the latest one by default
  * @param {Function} options.success
  * @param {Funciton} options.fail
  */
