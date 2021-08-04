@@ -89,6 +89,8 @@ function sendPrivateText() {
             //e.type === '504' the withdrawal time exceeded the withdrawal time when the message was withdrawn
             //e.type === '505' unopened message withdrawn
             //e.type === '506' not in the whitelist of the group or chat room
+            //e.type === '501' The message contains sensitive words
+            //e.type === '502' Custom intercepts that are set to capture
             //e.type === '503' unknown error 
             console.log("Send private text error");  
         }
