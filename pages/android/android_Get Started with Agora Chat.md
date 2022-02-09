@@ -621,6 +621,7 @@ public void signOut(View view) {
 
 7. Start a chat. To enable the function of sending messages, add the following lines after the signOut function:
 
+```
 // Send your first message.
 public void sendFirstMessage(View view) {
     if(!ChatClient.getInstance().isLoggedInBefore()) {
