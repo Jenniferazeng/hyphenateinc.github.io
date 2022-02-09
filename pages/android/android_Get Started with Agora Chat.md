@@ -15,7 +15,11 @@ This page shows a sample code to add peer-to-peer messaging into your app by usi
 
 ### Understand the tech
 
-The workflow of peer-to-peer messaging is as follows:
+The following figure shows the workflow of how clients send and receive peer-to-peer messages.
+
+![](https://web-cdn.agora.io/docs-files/1636443945728)
+
+As shown in the figure, the workflow of peer-to-peer messaging is as follows:
 
 - The clients retrieve a token from your app server.
 - Client A and Client B sign in to Agora Chat.
@@ -27,10 +31,14 @@ The workflow of peer-to-peer messaging is as follows:
 
 In order to follow the procedure in this page, you must have:
 
-A simulator or a physical mobile device.
-Android Studio 3.2 or higher.
-Java Development Kit (JDK). You can refer to the User Guide of Android for applicable versions.
-Project setup
+- A valid [Agora account](https://docs.agora.io/cn/AgoraPlatform/sign_in_and_sign_up). 
+- A valid [Agora project]() with an AppKey.
+- A token: In a test or production environment, your app client retrieves tokens from your server.
+- A simulator or a physical mobile device.
+- Android Studio 3.2 or higher.
+- Java Development Kit (JDK). You can refer to the [User Guide of Android](https://developer.android.com/studio/write/java8-support) for applicable versions.
+
+## Project setup
 
 To create the environment necessary to add peer-to-peer messaging into your app, do the following:
 
@@ -38,19 +46,21 @@ To create the environment necessary to add peer-to-peer messaging into your app,
 
 Use Android Studio to create a new project.
 
-In the Android Studio Welcome page, click New Project.
-In New Project, select Empty Activity and click Next.
-Set Name to AgoraChatQuickstart. Package name is automatically set to io.agora.agorachatquickstart.
-Select Language as Java and click Finish.
+- In the Android Studio Welcome page, click **New Project**.
+- In **New Project**, select **Empty Activity** and click **Next**.
+- Set **Name** to `AgoraChatQuickstart`. **Package name** is automatically set to `io.agora.agorachatquickstart`. 
+- Select **Language** as **Java** and click **Finish**.
+
 Android Studio opens your new project and Gradle syncs automatically.
 
-By default, Android Studio displays your project files in the Android view
+By default, Android Studio displays your project files in the **Android** view:
+<img src="https://web-cdn.agora.io/docs-files/1636957233790" style="zoom:50%;" />
 
 ### Integrate Agora Chat SDK into your project
 
 For easy integration, Agora publishes all Android SDKs to Maven Central. To add the library to your project, take the following steps:
 
-To add the Agora SDK maven dependency, in Gradle Scripts, open build.gradle (Project: AgoraChatQuickstart) and add the following lines. If you are using the latest version of Android Studio, the maven dependency is automatically added into your project.
+1. To add the Agora SDK maven dependency, in `Gradle Scripts`, open `build.gradle (Project: AgoraChatQuickstart)` and add the following lines. If you are using the latest version of Android Studio, the maven dependency is automatically added into your project.
 
 ```
 buildscript {
@@ -67,7 +77,7 @@ allprojects {
 }
 ```
 
-To integrate the Agora Chat SDK into your Android project, in Gradle Scripts, open build.gradle (Module: app) and add the following lines. For X.Y.Z, please fill in the current SDK version number; you can visit Sonatype to see the latest version number.
+2. To integrate the Agora Chat SDK into your Android project, in `Gradle Scripts`, open `build.gradle (Module: app)` and add the following lines. For X.Y.Z, please fill in the current SDK version number; you can visit [Sonatype](https://search.maven.org/search?q=a:chat-sdk) to see the latest version number.
 
 ```
 android {
@@ -87,22 +97,27 @@ dependencies {
 ```
 
 Caution：
-minSdkVersion must be 19 or higher for the build process to succeed.
+`minSdkVersion` must be 19 or higher for the build process to succeed.
 
 ### Prevent code obfuscation
 
 To prevent code obfuscation, in Gradle Script, open proguard-rules.pro and add the following lines:
 
+```java
 -keep class io.agora.** {*;}
 -dontwarn  io.agora.**
+```
 
 ### Add permissions
 
-In /app/Manifests/AndroidManifest.xml, add the following permissions:
+In `/app/Manifests/AndroidManifest.xml`, add the following permissions:
 
+```java
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 <uses-permission android:name="android.permission.WAKE_LOCK"/>
+```
+
 These are the minimum permissions necessary for building the app. You can add other permissions according to your scenarios.
 
 ### Implement peer-to-peer messaging
@@ -111,9 +126,9 @@ This section shows how to use the Agora Chat SDK to implement peer-to-peer messa
 
 #### Create the UI
 
-1. To add the text strings used by the UI, open app/res/values/strings.xml and replace the content with the following codes:
+1. To add the text strings used by the UI, open `app/res/values/strings.xml ` and  replace the content with the following codes. To validate any connection to Agora Chat, you need to supply the App key for your project. Update "Your App Key" with your App key.
 
-```
+```xml
 <resources>
     <string name="app_name">AgoraChatQuickstart</string>
 
@@ -143,9 +158,9 @@ This section shows how to use the Agora Chat SDK to implement peer-to-peer messa
 Caution:
 In a production environment, you need to replace app_key with the App Key of your Agora project.
 
-2. To add the UI framework, open app/res/layout/activity_main.xml and replace the content with the following codes:
+2. To add the UI framework, open  `app/res/layout/activity_main.xml` and replace the content with the following codes:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -284,9 +299,9 @@ In a production environment, you need to replace app_key with the App Key of you
 
 To enable your app to send and receive messages between individual users, do the following:
 
-1. Import classes. In app/java/io.agora.agorachatquickstart/MainActivity, add the following lines after import android.os.Bundle; :
+1. Import classes. In  `app/java/io.agora.agorachatquickstart/MainActivity`, add the following lines after `import android.os.Bundle;` :
 
-```
+```java
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -315,9 +330,9 @@ import io.agora.cloud.HttpResponse;
 import io.agora.util.EMLog;
 ```
 
-2. Define global variables. In app/java/io.agora.agorachatquickstart/MainActivity, before adding the following lines after AppCompatActivity {, ensure you delete the OnCreate funtion created by default.
+2.  Define global variables. In `app/java/io.agora.agorachatquickstart/MainActivity`,  before adding the following lines after `AppCompatActivity {`, ensure you delete the `OnCreate` funtion created by default.
 
-```
+```java
 private final String TAG = getClass().getSimpleName();
 private static final String NEW_LOGIN = "NEW_LOGIN";
 private static final String RENEW_TOKEN = "RENEW_TOKEN";
@@ -344,9 +359,9 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-3. Initialize the view and the app. In app/java/io.agora.agorachatquickstart/MainActivity, add the following lines after the onCreate function:
+3. Initialize the view and the app. In `app/java/io.agora.agorachatquickstart/MainActivity`, add the following lines after the `onCreate` function: 
 
-```
+```java
 // Initialize the view.
 private void initView() {
         et_username = findViewById(R.id.et_username);
@@ -374,9 +389,9 @@ private void initView() {
     }
 ```
 
-4. Retrieve a token. To get a token from the app server, add the following lines after the initSDK function:
+4. Retrieve a token. To get a token from the app server, add the following lines after the `initSDK` function:
 
-```
+```java
 // Retrieve a token from the app server.
 private void getTokenFromAppServer(String requestType) {
     if(ChatClient.getInstance().isLoggedInBefore()) {
@@ -443,9 +458,9 @@ private void getTokenFromAppServer(String requestType) {
 }
 ```
 
-5. Add event callbacks. In app/java/io.agora.agorachatquickstart/MainActivity, add the following lines after the getTokenFromAppServer function:
+5. Add event callbacks. In `app/java/io.agora.agorachatquickstart/MainActivity`, add the following lines after the `getTokenFromAppServer` function:
 
-```
+```java
 // Add message events callbacks. 
 private void addMessageListener() {
     ChatClient.getInstance().chatManager().addMessageListener(new MessageListener() {
@@ -544,9 +559,9 @@ private void addConnectionListener() {
     }
 ```
 
-6. Create a user account, log in to the app. To implement this logic, in app/java/io.agora.agorachatquickstart/MainActivity, add the following lines after the addConnectionListener function:
+6. Create a user account, log in to the app. To implement this logic, in `app/java/io.agora.agorachatquickstart/MainActivity`, add the following lines after the `addConnectionListener` function:
 
-```
+```java
 // Sign up with a username and password.
 public void signUp(View view) {
     String username = et_username.getText().toString().trim();
@@ -619,9 +634,9 @@ public void signOut(View view) {
 }
 ```
 
-7. Start a chat. To enable the function of sending messages, add the following lines after the signOut function:
+7. Start a chat. To enable the function of sending messages, add the following lines after the `signOut` function:
 
-```
+```java
 // Send your first message.
 public void sendFirstMessage(View view) {
     if(!ChatClient.getInstance().isLoggedInBefore()) {
@@ -674,9 +689,9 @@ private void sendMessage(ChatMessage message) {
 }
 ```
 
-8. To make troubleshooting less time-consuming, this quickstart also uses LogUtils class for logs. Navigate to app/java/io.agora.agorachatquickstart/, create a folder named utils. In this new folder, create a .java file, name it LogUtils, and copy the following codes into the file.
+8. To make troubleshooting less time-consuming, this quickstart also uses `LogUtils` class for logs. Navigate to `app/java/io.agora.agorachatquickstart/`, create a folder named `utils`. In this new folder, create a `.java` file, name it `LogUtils`, and copy the following codes into the file.
 
-```
+```java
 package io.agora.agorachatquickstart.utils;
 
 import android.app.Activity;
@@ -748,27 +763,26 @@ public class LogUtils {
 }
 ```
 
-9. Click Sync Project with Gradle Files to sync your project. Now you are ready to test your app.
+9. Click `Sync Project with Gradle Files` to sync your project. Now you are ready to test your app.
 
-### Test your app
+## Test your app
 
 To validate the peer-to-peer messaging you have just integrated into your app using Agora Chat:
 
-1. In Android Studio, click Run 'app'.
+1. In Android Studio, click `Run 'app'`.
 
    You see the following interface on your simulator or physical device: 
    <img src="https://web-cdn.agora.io/docs-files/1637661621212" style="zoom:50%;" />
-   
-2. Create a user account and click SIGN UP.
+
+2. Create a user account and click **SIGN UP**. 
+
 3. Sign in with the user account you just created and send a message.
-
-
    <img src="https://web-cdn.agora.io/docs-files/1637562675862" style="zoom:50%;" />
-   
-4. Run the app on another Android device or simulator and create another user account. Ensure that the usernames you created are unique.
-5. Send messages between the users.
 
-<img src="https://web-cdn.agora.io/docs-files/1637562770527" style="zoom:50%;" />
+4. Run the app on another Android device or simulator and create another user account. Ensure that the usernames you created are unique.
+
+5. Send messages between the users.
+   <img src="https://web-cdn.agora.io/docs-files/1637562770527" style="zoom:50%;" />
 
 ### Next Step
 
@@ -776,11 +790,11 @@ In a production context, the best practice is for your app to retrieve the token
 
 ### See also
 
-In addition to integrating the Agora Chat SDK into your project with mavenCentral, you can also manually download the Agora Chat SDK for Android.
+In addition to integrating the Agora Chat SDK into your project with mavenCentral, you can also manually download the [Agora Chat SDK for Android](https://download.agora.io/sdk/release/Agora_Chat_SDK_for_Android_v1.0.0.zip). 
 
 1. Download the latest version of the Agora Chat SDK for Android, and extract the files from the downloaded SDK package.
-2. Copy the following files or subfolders from the libs folder of the downloaded SDK to the corresponding directory of your project.
 
+2. Copy the following files or subfolders from the **libs** folder of the downloaded SDK to the corresponding directory of your project.
 | File or subfolder                                      | Path of your project                  |
 | :----------------------------------------------------- | :------------------------------------ |
 | `agorachat_X.Y.Z.jar`                                  | `~/app/libs/`                         |
