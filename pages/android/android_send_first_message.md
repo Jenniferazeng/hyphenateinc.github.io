@@ -7,7 +7,7 @@ permalink: android_send_first_message.html
 folder: android
 ---
 
-## Get Started with Agora Chat
+## Send first message with Agora Chat
 
 Instant messaging connects people wherever they are and allows them to communicate with others in real time. The Agora Chat SDK enables you to embed real-time messaging in any app, on any device, anywhere.
 
